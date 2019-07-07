@@ -1,8 +1,10 @@
-package com.fearefull.todoreminder;
+package com.fearefull.todoreminder.ui.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.fearefull.todoreminder.R;
 
 public class MainActivity extends AppCompatActivity {
 

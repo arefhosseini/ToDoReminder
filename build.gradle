@@ -47,7 +47,7 @@ ext {
     roomDatabaseVersion = '2.1.0'
 
     // network
-    retrofitVersion = '2.6.0'
+    rx2FastAndroidNetworking = '1.0.2'
 
     // font
     calligraphyVersion = '2.3.0'
