@@ -17,11 +17,67 @@ buildscript {
 allprojects {
     repositories {
         google()
+        maven { url 'https://maven.google.com' }
         jcenter()
-        
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+// define versions in a single place
+ext {
+    // sdk and tools
+    minSdkVersion = 21
+    targetSdkVersion = 29
+    compileSdkVersion = 29
+    buildToolsVersion = '29.0.0'
+
+    // android support libraries
+    supportLibraryVersion = '1.1.0-rc01'
+    recyclerViewVersion = '1.1.0-beta01'
+    cardViewVersion = '1.0.0-alpha1'
+    materialVersion = '1.1.0-alpha07'
+    vectorDrawableVersion = '1.1.0-rc01'
+    animatedVectorDrawableVersion = '1.0.0-alpha1'
+    constraintLayoutVersion = '2.0.0-beta2'
+
+    // database
+    roomDatabaseVersion = '2.1.0'
+
+    // network
+    retrofitVersion = '2.6.0'
+
+    // font
+    calligraphyVersion = '2.3.0'
+
+    // image
+    glideVersion = '4.9.0'
+
+    // parser
+    gsonVersion = '2.8.5'
+
+    // debug database
+    debugDBVersion = '1.0.6'
+
+    // dependency injection
+    dagger2Version = '2.23.2'
+
+    // reactive
+    rxjava2Version = '2.2.10'
+    rxandroidVersion = '2.1.1'
+
+    // logger
+    timberVersion = '4.7.1'
+
+    // dependencies for local unit tests
+    junitVersion = '4.12'
+    mockitoVersion = '2.28.2'
+
+    // UI Testing
+    espressoVersion = '3.1.0'
+
+    // view model
+    lifecycleVersion = '2.0.0'
 }
