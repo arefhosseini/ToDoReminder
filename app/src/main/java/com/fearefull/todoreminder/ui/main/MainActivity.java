@@ -5,6 +5,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
@@ -19,6 +21,7 @@ import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
 import com.fearefull.todoreminder.databinding.ActivityMainBinding;
 import com.fearefull.todoreminder.databinding.NavigationHeaderMainBinding;
+import com.fearefull.todoreminder.ui.about.AboutFragment;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
 import com.fearefull.todoreminder.ui.login.LoginActivity;
 import com.google.android.material.navigation.NavigationView;
@@ -27,8 +30,15 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator {
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 
+public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel>
+        implements MainNavigator, HasSupportFragmentInjector {
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
     @Inject
     ViewModelProviderFactory factory;
     private MainViewModel viewModel;
@@ -62,6 +72,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
@@ -84,8 +99,30 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(AboutFragment.TAG);
+        if (fragment == null) {
+            if (drawer.isDrawerOpen(Gravity.RIGHT))
+                lockDrawer();
+            else
+                super.onBackPressed();
+        }
+        else
+            onFragmentDetached(AboutFragment.TAG);
+    }
+
     public void onFragmentDetached(String tag) {
-        unlockDrawer();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentByTag(tag);
+        if (fragment != null) {
+            fragmentManager
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .remove(fragment)
+                    .commitNow();
+            unlockDrawer();
+        }
     }
 
     private void lockDrawer() {
@@ -152,7 +189,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                             //
                             return true;
                         case R.id.navigationItemAbout:
-                            //
+                            showAboutFragment();
                             return true;
                         case R.id.navigationItemLogout:
                             viewModel.logout();
@@ -161,5 +198,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                             return false;
                     }
                 });
+    }
+
+    private void showAboutFragment() {
+        lockDrawer();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                .add(R.id.mainRootView, AboutFragment.newInstance(), AboutFragment.TAG)
+                .commit();
     }
 }

@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fearefull.todoreminder.data.DataManager;
+import com.fearefull.todoreminder.ui.about.AboutViewModel;
+import com.fearefull.todoreminder.ui.home.HomeViewModel;
 import com.fearefull.todoreminder.ui.login.LoginViewModel;
 import com.fearefull.todoreminder.ui.main.MainViewModel;
 import com.fearefull.todoreminder.ui.splash.SplashViewModel;
@@ -41,6 +43,14 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         if (modelClass.isAssignableFrom(MainViewModel.class)) {
             //noinspection unchecked
             return (T) new MainViewModel(dataManager, schedulerProvider);
+        }
+        if (modelClass.isAssignableFrom(HomeViewModel.class)) {
+            //noinspection unchecked
+            return (T) new HomeViewModel(dataManager, schedulerProvider);
+        }
+        if (modelClass.isAssignableFrom(AboutViewModel.class)) {
+            //noinspection unchecked
+            return (T) new AboutViewModel(dataManager, schedulerProvider);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

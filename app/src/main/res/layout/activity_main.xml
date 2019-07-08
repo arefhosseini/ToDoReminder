@@ -16,13 +16,14 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layoutDirection="rtl">
+        android:id="@+id/mainRootView">
 
         <androidx.drawerlayout.widget.DrawerLayout
 
             android:id="@+id/drawerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layoutDirection="rtl"
             android:fitsSystemWindows="true">
 
             <androidx.coordinatorlayout.widget.CoordinatorLayout
