@@ -43,16 +43,6 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Long getCurrentUserId() {
-        return preferencesHelper.getCurrentUserId();
-    }
-
-    @Override
-    public void setCurrentUserId(Long userId) {
-        preferencesHelper.setCurrentUserId(userId);
-    }
-
-    @Override
     public int getCurrentUserLoggedInMode() {
         return preferencesHelper.getCurrentUserLoggedInMode();
     }
@@ -90,7 +80,6 @@ public class AppDataManager implements DataManager {
     @Override
     public void setUserAsLoggedOut() {
         updateUserInfo(
-                null,
                 LoggedInMode.LOGGED_OUT,
                 null,
                 null
@@ -99,12 +88,10 @@ public class AppDataManager implements DataManager {
 
     @Override
     public void updateUserInfo(
-            Long userId,
             LoggedInMode loggedInMode,
             String userName,
             String password) {
 
-        setCurrentUserId(userId);
         setCurrentUserLoggedInMode(loggedInMode);
         setCurrentUsername(userName);
         setCurrentPassword(password);

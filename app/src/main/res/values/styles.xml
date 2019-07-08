@@ -14,7 +14,7 @@
         <item name="android:typeface">sans</item>
         <item name="drawerArrowStyle">@style/MaterialDrawer.DrawerArrowStyle</item>
         <item name="android:textAppearance">@style/TextAppearance.Text.Regular</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_white_24px</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
     </style>
 
     <style name="AppThemeFullScreen" parent="AppTheme">
@@ -29,19 +29,19 @@
     </style>
 
     <style name="TextAppearance.Text.Regular" parent="android:TextAppearance">
-        <item name="fontPath">fonts/source-sans-pro/SourceSansPro-Regular.ttf</item>
+        <item name="fontPath">fonts/iran_sans_web.ttf</item>
     </style>
 
     <style name="TextAppearance.Text.Bold" parent="android:TextAppearance">
-        <item name="fontPath">fonts/source-sans-pro/SourceSansPro-Bold.ttf</item>
+        <item name="fontPath">fonts/iran_sans_web_bold.ttf</item>
     </style>
 
     <style name="TextAppearance.Text.Light" parent="android:TextAppearance">
-        <item name="fontPath">fonts/source-sans-pro/SourceSansPro-Light.ttf</item>
+        <item name="fontPath">fonts/iran_sans_web.ttf</item>
     </style>
 
     <style name="TextAppearance.Text.Italic" parent="android:TextAppearance">
-        <item name="fontPath">fonts/source-sans-pro/SourceSansPro-Italic.ttf</item>
+        <item name="fontPath">fonts/iran_sans_web.ttf</item>
     </style>
 
     <style name="TextStyle">
@@ -111,10 +111,6 @@
         <item name="android:background">@drawable/button_secondary_bg</item>
     </style>
 
-    <style name="TextAppearance.App.TextInputLayout" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/gray</item>
-    </style>
-
     <style name="TextStyle.EditText" parent="TextStyle">
         <item name="android:textAppearance">@style/TextAppearance.Text.Regular</item>
     </style>
@@ -131,6 +127,10 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">16sp</item>
         <item name="android:background">@color/transparent</item>
+    </style>
+
+    <style name="TextAppearance.App.TextInputLayout" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/gray</item>
     </style>
 
     <style name="AppTab" parent="Widget.Design.TabLayout">

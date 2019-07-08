@@ -4,12 +4,17 @@ import com.fearefull.todoreminder.data.model.api.LoginRequest;
 import com.fearefull.todoreminder.data.model.api.LoginResponse;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Single;
 
 @Singleton
 public class AppApiHelper implements ApiHelper{
+
+    @Inject
+    public AppApiHelper() {
+    }
 
     @Override
     public Single<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest request) {

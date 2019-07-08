@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/navItemAbout"
+            android:checked="true"
+            android:icon="@drawable/ic_assistant_photo_white_24dp"
+            android:title="title" />
+        <item
+            android:id="@+id/navItemRateUs"
+            android:checked="true"
+            android:icon="@drawable/ic_assistant_photo_white_24dp"
+            android:title="title" />
+        <item
+            android:id="@+id/navItemFeed"
+            android:checked="true"
+            android:icon="@drawable/ic_assistant_photo_white_24dp"
+            android:title="title" />
+        <item
+            android:id="@+id/navItemLogout"
+            android:checked="true"
+            android:icon="@drawable/ic_assistant_photo_white_24dp"
+            android:title="title" />
+    </group>
+</menu>

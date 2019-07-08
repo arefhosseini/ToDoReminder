@@ -4,10 +4,6 @@ import com.fearefull.todoreminder.data.model.db.LoggedInMode;
 
 public interface PreferencesHelper {
 
-    Long getCurrentUserId();
-
-    void setCurrentUserId(Long userId);
-
     int getCurrentUserLoggedInMode();
 
     void setCurrentUserLoggedInMode(LoggedInMode mode);

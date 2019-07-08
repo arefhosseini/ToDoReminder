@@ -10,7 +10,6 @@ public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
     void setUserAsLoggedOut();
 
     void updateUserInfo(
-            Long userId,
             LoggedInMode loggedInMode,
             String username,
             String password);

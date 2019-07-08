@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.fearefull.todoreminder.BR;
+import com.fearefull.todoreminder.databinding.ActivitySplashBinding;
 import com.fearefull.todoreminder.ui.login.LoginActivity;
 import com.fearefull.todoreminder.ui.main.MainActivity;
 import com.fearefull.todoreminder.R;
@@ -18,7 +19,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
     @Inject
     ViewModelProviderFactory factory;
-    private SplashViewModel mSplashViewModel;
+    private SplashViewModel viewModel;
 
     @Override
     public int getBindingVariable() {
@@ -32,8 +33,8 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
     @Override
     public SplashViewModel getViewModel() {
-        mSplashViewModel = ViewModelProviders.of(this, factory).get(SplashViewModel.class);
-        return mSplashViewModel;
+        viewModel = ViewModelProviders.of(this, factory).get(SplashViewModel.class);
+        return viewModel;
     }
 
     @Override
@@ -53,7 +54,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSplashViewModel.setNavigator(this);
-        mSplashViewModel.start();
+        viewModel.setNavigator(this);
+        viewModel.start();
     }
 }

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">To Do Reminder</string>
+    <string name="login_dummy">ورود</string>
+    <string name="username">نام کاربری</string>
+    <string name="password">رمزعبور</string>
+    <string name="login">ورود</string>
+    <string name="invalid_username_password">نام کاربری یا رمزعبور اشتباه است</string>
 </resources>

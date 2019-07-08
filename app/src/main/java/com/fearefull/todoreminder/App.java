@@ -5,6 +5,8 @@ import android.app.Application;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.interceptors.HttpLoggingInterceptor;
+import com.fearefull.todoreminder.di.component.DaggerAppComponent;
+
 
 import javax.inject.Inject;
 

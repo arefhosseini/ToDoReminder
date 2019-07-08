@@ -11,8 +11,6 @@ import javax.inject.Inject;
 
 public class AppPreferencesHelper implements PreferencesHelper {
 
-    private static final String PREF_KEY_CURRENT_USER_ID = "PREF_KEY_CURRENT_USER_ID";
-
     private static final String PREF_KEY_CURRENT_USERNAME = "PREF_KEY_CURRENT_USERNAME";
 
     private static final String PREF_KEY_CURRENT_PASSWORD = "PREF_KEY_CURRENT_PASSWORD";
@@ -22,20 +20,8 @@ public class AppPreferencesHelper implements PreferencesHelper {
     private final SharedPreferences mPrefs;
 
     @Inject
-    public AppPreferencesHelper(Context context, @PreferenceInfo String prefFileName) {
+    AppPreferencesHelper(Context context, @PreferenceInfo String prefFileName) {
         mPrefs = context.getSharedPreferences(prefFileName, Context.MODE_PRIVATE);
-    }
-
-    @Override
-    public Long getCurrentUserId() {
-        long userId = mPrefs.getLong(PREF_KEY_CURRENT_USER_ID, AppConstants.NULL_INDEX);
-        return userId == AppConstants.NULL_INDEX ? null : userId;
-    }
-
-    @Override
-    public void setCurrentUserId(Long userId) {
-        long id = userId == null ? AppConstants.NULL_INDEX : userId;
-        mPrefs.edit().putLong(PREF_KEY_CURRENT_USER_ID, id).apply();
     }
 
     @Override

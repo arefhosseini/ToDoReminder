@@ -1,5 +1,6 @@
 package com.fearefull.todoreminder.di.builder;
 
+import com.fearefull.todoreminder.ui.login.LoginActivity;
 import com.fearefull.todoreminder.ui.main.MainActivity;
 import com.fearefull.todoreminder.ui.splash.SplashActivity;
 
@@ -14,4 +15,7 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract SplashActivity bindSplashActivity();
+
+    @ContributesAndroidInjector
+    abstract LoginActivity bindLoginActivity();
 }
