@@ -1,35 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/blue_black_light</color>
-    <color name="colorPrimaryDark">@color/black</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="light_gray">#dbdbdb</color>
-    <color name="gray">#7e7e7e</color>
-    <color name="semi_gray">#979797</color>
-    <color name="dark_gray">#696969</color>
-    <color name="bg_color">#f7f7f7</color>
-    <color name="black">#000000</color>
-    <color name="white">#ffffff</color>
-    <color name="black_effective">#2a2a2a</color>
-    <color name="shadow">#d0d8dc</color>
-    <color name="transparent">#00000000</color>
-    <color name="translucent_white">#88ffffff</color>
-    <color name="fb">#3b5998</color>
-    <color name="google">#d34836</color>
+    <!--primary colors for light theme-->
+    <color name="primaryColorLightTheme">#512da8</color>
+    <color name="primaryLightColorLightTheme">#8559da</color>
+    <color name="primaryGlassColorLightTheme">#E8E3EE</color>
+    <color name="primaryDarkColorLightTheme">#140078</color>
+
+    <!--secondary colors for light theme-->
+    <color name="secondaryColorLightTheme">#ffb74d</color>
+    <color name="secondaryLightColorLightTheme">#ffe97d</color>
+    <color name="secondaryDarkColorLightTheme">#c88719</color>
+
+    <!--primary colors for dark theme-->
+    <color name="primaryColorDarkTheme">#212121</color>      // status bar
+    <color name="primaryLightColorDarkTheme">#424242</color> // app bar
+    <color name="primaryDarkColorDarkTheme">#000000</color>  // cards/dialogs
+
+    <!--background colors for light theme-->
+    <color name="backgroundColorLightTheme">#FFFAFAFA</color>
+
+    <!--background colors for dark theme-->
+    <color name="backgroundColorDarkTheme">#303030</color>
+
+    <!--text colors for light theme-->
+    <color name="primaryTextColorLightTheme">#DE000000</color>
+    <color name="secondaryTextColorLightTheme">#8A000000</color>
+
+    <!--text colors for dark theme-->
+    <color name="primaryTextColorDarkTheme">#FFFFFF</color>
+    <color name="secondaryTextColorDarkTheme">#B3FFFFFF</color>
+
+    <!--hint, disabled text and icon colors for light theme-->
+    <color name="hintColorLightTheme">#61000000</color>
+    <color name="disabledTextColorLightTheme">#61000000</color>
+    <color name="iconColorLightTheme">#61000000</color>
+
+    <!--hint, disabled text and icon colors for dark theme-->
+    <color name="hintColorDarkTheme">#80FFFFFF</color>
+    <color name="disabledTextColorDarkTheme">#80FFFFFF</color>
+    <color name="iconColorDarkTheme">#80FFFFFF</color>
+
+    <!--divider color for light theme-->
+    <color name="dividerColorLightTheme">#1F000000</color>
+
+    <!--divider color for dark theme-->
+    <color name="dividerColorDarkTheme">#1FFFFFFF</color>
+
+    <!--graph colors-->
+    <color name="defaultGraphColorLightTheme">#222</color>
+    <color name="graphEdgeColorLightTheme">#FFFFFF</color>
+    <color name="graphNodeColorLightTheme">#FFFFFF</color>
+    <color name="graphNodeBackgroundColorLightTheme">#ffffffff</color>
 
     <!--Design colors-->
-    <color name="red_dark">#F06423</color>
-    <color name="red_dark2">#D85A1B</color>
-    <color name="cyan_light">#c9ebee</color>
-    <color name="cyan">#b5e3e7</color>
-    <color name="cyan_dark">#70BDC6</color>
-    <color name="navy_blue">#214258</color>
-    <color name="navy_blue_dark">#1C3A4E</color>
-    <color name="light_green">#78DC96</color>
-    <color name="light_blue">#55C8F0</color>
-    <color name="blue_black_dark">#13171d</color>
-    <color name="blue_black_light">#516179</color>
-    <color name="blue_grey_light">#A5B4C8</color>
-    <color name="orange">#FFA500</color>
-    <color name="yellow">#fff44f</color>
+    <color name="blackColor">#000000</color>
+    <color name="lightGrayColor">#dbdbdb</color>
+    <color name="grayColor">#7e7e7e</color>
+    <color name="semiGrayColor">#979797</color>
+    <color name="darkGrayColor">#696969</color>
+    <color name="whiteColor">#ffffff</color>
+    <color name="redDarkColor">#F06423</color>
+    <color name="redDark2Color">#D85A1B</color>
+    <color name="cyanLightColor">#c9ebee</color>
+    <color name="cyanColor">#b5e3e7</color>
+    <color name="cyanDarkColor">#70BDC6</color>
+    <color name="navyBlueColor">#214258</color>
+    <color name="navyBlueDarkColor">#1C3A4E</color>
+    <color name="lightGreenColor">#78DC96</color>
+    <color name="lightBlueColor">#55C8F0</color>
+    <color name="blueBlackDarkColor">#13171d</color>
+    <color name="blueBlackLightColor">#516179</color>
+    <color name="blueGreyLightColor">#A5B4C8</color>
+    <color name="orangeColor">#FFA500</color>
+    <color name="yellowColor">#fff44f</color>
+    <color name="transparent">#00000000</color>
 </resources>

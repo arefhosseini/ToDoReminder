@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group>
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
         <item
-            android:id="@+id/navItemAbout"
+            android:id="@+id/navigationItemHome"
             android:checked="true"
-            android:icon="@drawable/ic_assistant_photo_white_24dp"
-            android:title="title" />
+            android:checkable="true"
+            android:icon="@drawable/ic_alarm_on_black_24dp"
+            android:title="@string/home" />
         <item
-            android:id="@+id/navItemRateUs"
-            android:checked="true"
-            android:icon="@drawable/ic_assistant_photo_white_24dp"
-            android:title="title" />
+            android:id="@+id/navigationItemHistory"
+            android:icon="@drawable/ic_assignment_turned_in_black_24dp"
+            android:checkable="true"
+            android:title="@string/history" />
+    </group>
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
         <item
-            android:id="@+id/navItemFeed"
-            android:checked="true"
-            android:icon="@drawable/ic_assistant_photo_white_24dp"
-            android:title="title" />
+            android:id="@+id/navigationItemSettings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:checkable="true"
+            android:title="@string/settings" />
         <item
-            android:id="@+id/navItemLogout"
-            android:checked="true"
-            android:icon="@drawable/ic_assistant_photo_white_24dp"
-            android:title="title" />
+            android:id="@+id/navigationItemAbout"
+            android:icon="@drawable/ic_info_outline_black_24dp"
+            android:checkable="true"
+            android:title="@string/about" />
+        <item
+            android:id="@+id/navigationItemLogout"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="@string/logout" />
     </group>
 </menu>

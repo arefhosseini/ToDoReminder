@@ -3,45 +3,49 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowContentOverlay">@null</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/black_effective</item>
-        <item name="android:textColor">@color/black_effective</item>
-        <item name="android:windowBackground">@color/bg_color</item>
+        <item name="colorPrimary">@color/primaryColorLightTheme</item>
+        <item name="colorPrimaryDark">@color/primaryColorLightTheme</item>
+        <item name="colorAccent">@color/secondaryColorLightTheme</item>
+        <item name="android:textColorPrimary">@color/primaryTextColorLightTheme</item>
+        <item name="android:textColor">@color/primaryTextColorLightTheme</item>
+        <item name="android:windowBackground">@color/backgroundColorLightTheme</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:typeface">sans</item>
-        <item name="drawerArrowStyle">@style/MaterialDrawer.DrawerArrowStyle</item>
         <item name="android:textAppearance">@style/TextAppearance.Text.Regular</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_black_24dp</item>
     </style>
 
-    <style name="AppThemeFullScreen" parent="AppTheme">
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/white</item>
-        <item name="android:windowBackground">@color/white</item>
+    <style name="AppTheme.FullScreen" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="colorPrimary">@color/whiteColor</item>
+        <item name="colorPrimaryDark">@color/whiteColor</item>
+        <item name="android:windowBackground">@color/whiteColor</item>
     </style>
 
-    <style name="MaterialDrawer.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="spinBars">false</item>
-        <item name="color">@color/white</item>
-    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="TextAppearance.Text.Regular" parent="android:TextAppearance">
         <item name="fontPath">fonts/iran_sans_web.ttf</item>
+        <item name="android:textColor">@color/primaryTextColorLightTheme</item>
     </style>
 
     <style name="TextAppearance.Text.Bold" parent="android:TextAppearance">
-        <item name="fontPath">fonts/iran_sans_web_bold.ttf</item>
+        <item name="fontPath">fonts/iran_sans_web_bold.TTF</item>
+        <item name="android:textColor">@color/primaryTextColorLightTheme</item>
     </style>
 
     <style name="TextAppearance.Text.Light" parent="android:TextAppearance">
         <item name="fontPath">fonts/iran_sans_web.ttf</item>
+        <item name="android:textColor">@color/secondaryTextColorLightTheme</item>
     </style>
 
     <style name="TextAppearance.Text.Italic" parent="android:TextAppearance">
         <item name="fontPath">fonts/iran_sans_web.ttf</item>
+        <item name="android:textColor">@color/primaryTextColorLightTheme</item>
     </style>
 
     <style name="TextStyle">
@@ -49,7 +53,6 @@
         <item name="android:layout_marginBottom">2dp</item>
         <item name="android:layout_marginLeft">2dp</item>
         <item name="android:layout_marginRight">2dp</item>
-        <item name="android:textColor">@color/black_effective</item>
     </style>
 
     <style name="TextStyle.Title" parent="TextStyle">
@@ -58,16 +61,16 @@
 
     <style name="TextStyle.Title.Sub" parent="TextStyle.Title">
         <item name="android:textAppearance">@style/TextAppearance.Text.Light</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="TextStyle.Heading" parent="TextStyle">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textAppearance">@style/TextAppearance.Text.Bold</item>
     </style>
 
     <style name="TextStyle.Comment" parent="TextStyle">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textAppearance">@style/TextAppearance.Text.Italic</item>
     </style>
 
@@ -75,40 +78,44 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:minHeight">?attr/actionBarSize</item>
-        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlNormal">@color/whiteColor</item>
     </style>
 
     <style name="Toolbar.TitleText" parent="TextStyle.Heading">
-        <item name="android:textColor">@color/dark_gray</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/primaryTextColorDarkTheme</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="Button" parent="Widget.AppCompat.Button">
-        <item name="android:textColor">@color/black_effective</item>
+        <item name="android:textColor">@color/primaryTextColorLightTheme</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/button_background</item>
         <item name="android:foreground">?selectableItemBackground</item>
     </style>
 
     <style name="Button.ImageButton" parent="Widget.AppCompat.ImageButton">
         <item name="android:padding">5dp</item>
         <item name="android:scaleType">centerInside</item>
-        <item name="android:background">@null</item>
+        <item name="android:background">?actionBarItemBackground</item>
     </style>
 
     <style name="Button.Primary" parent="Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/button_primary_bg</item>
+        <item name="android:textColor">@color/primaryTextColorDarkTheme</item>
+        <item name="android:background">@drawable/button_primary_background</item>
     </style>
 
     <style name="Button.Secondary" parent="Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/button_secondary_bg</item>
+        <item name="android:textColor">@color/primaryTextColorDarkTheme</item>
+        <item name="android:background">@drawable/button_secondary_background</item>
+    </style>
+
+    <style name="TextAppearence.App.TextInputLayout" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/secondaryTextColorLightTheme</item>
     </style>
 
     <style name="TextStyle.EditText" parent="TextStyle">
@@ -118,19 +125,15 @@
     <style name="Button.Action.Positive" parent="Button">
         <item name="android:textColor">@drawable/button_positive_text_drawable</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:background">@color/transparent</item>
     </style>
 
     <style name="Button.Action.Negative" parent="Button">
         <item name="android:textColor">@drawable/button_negative_text_drawable</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:background">@color/transparent</item>
-    </style>
-
-    <style name="TextAppearance.App.TextInputLayout" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/gray</item>
     </style>
 
     <style name="AppTab" parent="Widget.Design.TabLayout">
@@ -138,13 +141,13 @@
         <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="tabTextAppearance">@style/AppTab.TextAppearance</item>
         <item name="tabIndicatorHeight">2dp</item>
-        <item name="tabSelectedTextColor">@color/white</item>
-        <item name="tabTextColor">@color/white</item>
+        <item name="tabSelectedTextColor">@color/primaryTextColorDarkTheme</item>
+        <item name="tabTextColor">@color/primaryTextColorDarkTheme</item>
     </style>
 
     <style name="AppTab.TextAppearance" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textStyle">normal</item>
     </style>

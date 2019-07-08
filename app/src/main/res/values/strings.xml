@@ -1,8 +1,21 @@
 <resources>
-    <string name="app_name">To Do Reminder</string>
+    <string name="app_name">یادآور</string>
     <string name="login_dummy">ورود</string>
     <string name="username">نام کاربری</string>
     <string name="password">رمزعبور</string>
     <string name="login">ورود</string>
     <string name="invalid_username_password">نام کاربری یا رمزعبور اشتباه است</string>
+
+    <!--Drawer-->
+    <string name="open_drawer">Drawer Open</string>
+    <string name="close_drawer">Drawer Close</string>
+
+    <!--Drawer Navigation Item-->
+    <string name="home">یادآورهای من</string>
+    <string name="history">تاریخچه</string>
+    <string name="settings">تنظیمات</string>
+    <string name="about">درباره ما</string>
+    <string name="logout">خروج</string>
+
+    <string name="version">نسخه</string>
 </resources>

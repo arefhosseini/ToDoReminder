@@ -21,7 +21,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_design">
+            android:background="@drawable/background_design">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -53,8 +53,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColorHint="@color/gray"
-                        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
+                        android:textColorHint="@color/hintColorLightTheme">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextUsername"
@@ -69,19 +68,18 @@
                             android:hint="@string/username"
                             android:inputType="textNoSuggestions"
                             android:maxLength="50"
-                            app:backgroundTint="@color/colorPrimary"
-                            android:textColor="@color/black_effective"
-                            android:textSize="18sp" />
+                            app:backgroundTint="@color/primaryColorLightTheme"
+                            android:textColor="@color/primaryTextColorLightTheme"
+                            android:textSize="14sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColorHint="@color/gray"
+                        android:textColorHint="@color/hintColorLightTheme"
                         android:layout_marginTop="20dp"
                         android:layoutDirection="rtl"
-                        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
                         app:passwordToggleEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -96,10 +94,10 @@
                             android:gravity="center_vertical"
                             android:hint="@string/password"
                             android:maxLength="50"
-                            app:backgroundTint="@color/colorPrimary"
+                            app:backgroundTint="@color/primaryColorLightTheme"
+                            android:textColor="@color/primaryTextColorLightTheme"
                             app:passwordToggleEnabled="true"
-                            android:textColor="@color/black_effective"
-                            android:textSize="18sp" />
+                            android:textSize="14sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,7 +111,7 @@
                         android:onClick="@{() -> viewModel.onServerLoginClick()}"
                         android:padding="10dp"
                         android:text="@string/login"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
