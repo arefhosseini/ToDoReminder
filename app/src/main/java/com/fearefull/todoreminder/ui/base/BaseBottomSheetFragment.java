@@ -13,9 +13,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
 import dagger.android.support.AndroidSupportInjection;
 
-public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment {
+public abstract class BaseBottomSheetFragment<T extends ViewDataBinding, V extends BaseViewModel> extends BottomSheetDialogFragment {
 
     private BaseActivity activity;
     private View rootView;

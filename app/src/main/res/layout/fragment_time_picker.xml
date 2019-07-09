@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fearefull.todoreminder.ui.alarm_manager.time_picker.TimePickerViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/default_layout_padding"
+        android:background="@color/backgroundColorLightTheme">
+
+        <NumberPicker
+            android:id="@+id/hoursPicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onHourPickerValueChange(oldVal, newVal)}"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text=":"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:textColor="@color/secondaryTextColorLightTheme"/>
+
+        <NumberPicker
+            android:id="@+id/minutesPicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onMinutePickerValueChange(oldVal, newVal)}"
+            android:layout_gravity="center_horizontal" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <NumberPicker
+            android:id="@+id/typePicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onTypePickerValueChange(oldVal, newVal)}"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+</layout>

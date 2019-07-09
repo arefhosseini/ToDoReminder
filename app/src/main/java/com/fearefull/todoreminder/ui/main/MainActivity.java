@@ -26,6 +26,7 @@ import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerActivity;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
 import com.fearefull.todoreminder.ui.home.HomeFragment;
 import com.fearefull.todoreminder.ui.login.LoginActivity;
+import com.fearefull.todoreminder.utils.CommonUtils;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -172,8 +173,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         drawer.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
         setupNavigationMenu();
-        String version = getString(R.string.version) + " " + BuildConfig.VERSION_NAME;
-        viewModel.updateAppVersion(version);
+
+        viewModel.updateAppVersion(CommonUtils.getAppVersionString(getApplicationContext()));
         viewModel.onNavigationMenuCreated();
 
         showHomeFragment();

@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.provider.Settings;
 import android.util.Patterns;
 
+import com.fearefull.todoreminder.BuildConfig;
 import com.fearefull.todoreminder.R;
 
 import java.io.IOException;
@@ -48,5 +49,9 @@ public final class CommonUtils {
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
         return progressDialog;
+    }
+
+    public static String getAppVersionString(Context context) {
+        return context.getString(R.string.version) + " " + BuildConfig.VERSION_NAME;
     }
 }

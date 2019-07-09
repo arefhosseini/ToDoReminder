@@ -4,17 +4,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
+import com.fearefull.todoreminder.data.model.other.MyTime;
 import com.fearefull.todoreminder.databinding.ActivityAlarmManagerBinding;
+import com.fearefull.todoreminder.ui.alarm_manager.time_picker.TimePickerFragment;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
+
+import java.util.Date;
 
 import javax.inject.Inject;
 
-public class AlarmManagerActivity extends BaseActivity<ActivityAlarmManagerBinding, AlarmManagerViewModel> implements AlarmManagerNavigator {
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+import timber.log.Timber;
+
+public class AlarmManagerActivity extends BaseActivity<ActivityAlarmManagerBinding, AlarmManagerViewModel>
+        implements AlarmManagerNavigator, HasSupportFragmentInjector, TimePickerFragment.TimePickerCallBack {
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
     @Inject
     ViewModelProviderFactory factory;
     private AlarmManagerViewModel viewModel;
@@ -41,9 +55,32 @@ public class AlarmManagerActivity extends BaseActivity<ActivityAlarmManagerBindi
     }
 
     @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
         viewModel.setNavigator(this);
+        //viewModel.setDefaultDate(TimeUtils.getTime(new MyTime("12", "59", TimeType.PM)));
+        viewModel.setMyTime(new MyTime(new Date()));
+    }
+
+    @Override
+    public void openTimePickerFragment() {
+        TimePickerFragment.newInstance(viewModel.getMyTime()).show(getSupportFragmentManager(), TimePickerFragment.TAG);
+    }
+
+    @Override
+    public void onFragmentDetached(String tag) {
+        super.onFragmentDetached(tag);
+    }
+
+    @Override
+    public void onGetTime(MyTime myTime) {
+        Timber.d(myTime.toString());
+        viewModel.setMyTime(myTime);
     }
 }
