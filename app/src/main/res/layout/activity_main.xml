@@ -54,10 +54,24 @@
                 </com.google.android.material.appbar.AppBarLayout>
 
                 <RelativeLayout
-                    android:id="@+id/cardsContainer"
+                    android:id="@+id/mainSubRootView"
                     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@color/backgroundColorLightTheme"/>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="@dimen/fab_margin"
+                    android:tint="@color/whiteColor"
+                    app:rippleColor="@color/whiteColor"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{() -> viewModel.onOpenAlarmManager()}"
+                    android:src="@drawable/ic_add_black_24dp" />
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
             <com.google.android.material.navigation.NavigationView

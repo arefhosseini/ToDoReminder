@@ -2,13 +2,13 @@ package com.fearefull.todoreminder.ui.main;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +22,9 @@ import com.fearefull.todoreminder.ViewModelProviderFactory;
 import com.fearefull.todoreminder.databinding.ActivityMainBinding;
 import com.fearefull.todoreminder.databinding.NavigationHeaderMainBinding;
 import com.fearefull.todoreminder.ui.about.AboutFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerActivity;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
+import com.fearefull.todoreminder.ui.home.HomeFragment;
 import com.fearefull.todoreminder.ui.login.LoginActivity;
 import com.google.android.material.navigation.NavigationView;
 
@@ -99,6 +101,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     @Override
+    public void openAlarmManagerActivity() {
+        startActivity(AlarmManagerActivity.newIntent(this));
+    }
+
+    @SuppressLint("RtlHardcoded")
+    @Override
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(AboutFragment.TAG);
         if (fragment == null) {
@@ -167,8 +175,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         String version = getString(R.string.version) + " " + BuildConfig.VERSION_NAME;
         viewModel.updateAppVersion(version);
         viewModel.onNavigationMenuCreated();
+
+        showHomeFragment();
     }
 
+    @SuppressLint("RtlHardcoded")
     private void setupNavigationMenu() {
         NavigationHeaderMainBinding navHeaderMainBinding = DataBindingUtil.inflate(getLayoutInflater(),
                 R.layout.navigation_header_main, binding.navigationView, false);
@@ -207,6 +218,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 .disallowAddToBackStack()
                 .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
                 .add(R.id.mainRootView, AboutFragment.newInstance(), AboutFragment.TAG)
+                .commit();
+    }
+
+
+    private void showHomeFragment() {
+        lockDrawer();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .add(R.id.mainSubRootView, HomeFragment.newInstance(), HomeFragment.TAG)
                 .commit();
     }
 }

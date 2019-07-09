@@ -11,7 +11,7 @@ public class SplashViewModel extends BaseViewModel<SplashNavigator> {
         super(dataManager, schedulerProvider);
     }
 
-    public void start() {
+    void start() {
         decideNextActivity();
     }
 

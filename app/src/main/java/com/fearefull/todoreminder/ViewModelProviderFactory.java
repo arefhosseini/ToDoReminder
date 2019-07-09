@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.ui.about.AboutViewModel;
+import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerViewModel;
 import com.fearefull.todoreminder.ui.home.HomeViewModel;
 import com.fearefull.todoreminder.ui.login.LoginViewModel;
 import com.fearefull.todoreminder.ui.main.MainViewModel;
@@ -51,6 +52,10 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         if (modelClass.isAssignableFrom(AboutViewModel.class)) {
             //noinspection unchecked
             return (T) new AboutViewModel(dataManager, schedulerProvider);
+        }
+        if (modelClass.isAssignableFrom(AlarmManagerViewModel.class)) {
+            //noinspection unchecked
+            return (T) new AlarmManagerViewModel(dataManager, schedulerProvider);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

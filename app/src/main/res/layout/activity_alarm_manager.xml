@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.fearefull.todoreminder.ui.splash.SplashViewModel" />
+            type="com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerViewModel" />
 
     </data>
 
