@@ -1,17 +1,11 @@
 package com.fearefull.todoreminder.ui.alarm_manager.time_picker;
 
-import android.widget.NumberPicker;
-
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.other.MyTime;
-import com.fearefull.todoreminder.data.model.other.TimeType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.TimeUtils;
-import com.fearefull.todoreminder.utils.ViewUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import timber.log.Timber;
@@ -31,12 +25,8 @@ public class TimePickerViewModel extends BaseViewModel<TimePickerNavigator> {
         return TimeUtils.getMinutes().toArray(new String[0]);
     }
 
-    public ArrayList<TimeType> getTimeTypes() {
-        return TimeUtils.getTimeTypes();
-    }
-
-    String[] getStringTimeTypes() {
-        return TimeUtils.getStringTimeTypes().toArray(new String[0]);
+    String[] getTimeTypes() {
+        return TimeUtils.getTimeTypes().toArray(new String[0]);
     }
 
     void setDefaultTime(MyTime myTime) {
@@ -45,26 +35,22 @@ public class TimePickerViewModel extends BaseViewModel<TimePickerNavigator> {
         this.myTime = myTime;
     }
 
-    public void onHourPickerValueChange(int oldVal, int newVal) {
-        Timber.i("hour " + String.valueOf(newVal));
-        myTime.setHour(newVal + 1);
-        myTime.setChanged(true);
+    public void onHoursPickerValueChange(int oldVal, int newVal) {
+        Timber.i("hour index %d", newVal);
+        myTime.setHour(TimeUtils.indexToHour(newVal));
     }
 
-    public void onMinutePickerValueChange(int oldVal, int newVal) {
-        Timber.i("minute " + String.valueOf(newVal));
-        myTime.setMinute(newVal);
-        myTime.setChanged(true);
+    public void onMinutesPickerValueChange(int oldVal, int newVal) {
+        Timber.i("minute index %d", newVal);
+        myTime.setMinute(TimeUtils.indexToMinute(newVal));
     }
 
-    public void onTypePickerValueChange(int oldVal, int newVal) {
-        Timber.i("type " + String.valueOf(newVal));
-        if (newVal == 0)
-            myTime.setTimeType(TimeType.AM);
-        else
-            myTime.setTimeType(TimeType.PM);
-        myTime.setChanged(true);
+    public void onTypesPickerValueChange(int oldVal, int newVal) {
+        Timber.i("type index %d", newVal);
+        myTime.setTimeType(TimeUtils.indexToTimeType(newVal));
     }
+
+
 
     MyTime getMyTime() {
         return myTime;

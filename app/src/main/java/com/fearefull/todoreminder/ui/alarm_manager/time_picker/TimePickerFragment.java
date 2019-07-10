@@ -17,8 +17,6 @@ import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerActivity;
 import com.fearefull.todoreminder.ui.base.BaseBottomSheetFragment;
 import com.fearefull.todoreminder.utils.ViewUtils;
 
-import java.util.Date;
-
 import javax.inject.Inject;
 
 public class TimePickerFragment extends BaseBottomSheetFragment<FragmentTimePickerBinding, TimePickerViewModel> implements TimePickerNavigator {
@@ -72,8 +70,8 @@ public class TimePickerFragment extends BaseBottomSheetFragment<FragmentTimePick
 
     private void setUp() {
         setUpNumberPicker(binding.hoursPicker, viewModel.getHours(), viewModel.getMyTime().getHourIndex());
-        setUpNumberPicker(binding.minutesPicker, viewModel.getMinutes(), viewModel.getMyTime().getMinute());
-        setUpNumberPicker(binding.typePicker, viewModel.getStringTimeTypes(), viewModel.getMyTime().getTimeType().getIndex());
+        setUpNumberPicker(binding.minutesPicker, viewModel.getMinutes(), viewModel.getMyTime().getMinuteIndex());
+        setUpNumberPicker(binding.typePicker, viewModel.getTimeTypes(), viewModel.getMyTime().getTimeTypeIndex());
     }
 
     private void setUpNumberPicker(NumberPicker picker, String[] data, int defaultIndex) {
@@ -82,10 +80,6 @@ public class TimePickerFragment extends BaseBottomSheetFragment<FragmentTimePick
         picker.setValue(defaultIndex);
         picker.setDisplayedValues(data);
         picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-    }
-
-    public interface TimePickerCallBack {
-        void onGetTime(MyTime myTime);
     }
 
     @Override

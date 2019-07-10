@@ -17,23 +17,11 @@ public enum TimeType {
         return index;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
     public String getPersianText() {
         return persianText;
     }
 
-    public void setPersianText(String persianText) {
-        this.persianText = persianText;
-    }
-
     public String getEnglishText() {
         return englishText;
-    }
-
-    public void setEnglishText(String englishText) {
-        this.englishText = englishText;
     }
 }

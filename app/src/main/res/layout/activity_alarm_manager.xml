@@ -102,6 +102,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
+                android:onClick="@{() -> viewModel.onDatePickerClick()}"
                 android:padding="16dp"
                 android:orientation="horizontal">
 
@@ -119,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="14/4/1375"
+                    android:text="@{viewModel.date}"
                     android:textColor="@color/secondaryTextColorLightTheme" />
             </LinearLayout>
         </LinearLayout>

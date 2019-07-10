@@ -1,5 +1,6 @@
 package com.fearefull.todoreminder.utils;
 
+import com.fearefull.todoreminder.data.model.other.MonthType;
 import com.fearefull.todoreminder.data.model.other.MyTime;
 import com.fearefull.todoreminder.data.model.other.TimeType;
 
@@ -46,14 +47,7 @@ public final class TimeUtils {
         return getNumbersWithZero(0, 59);
     }
 
-    public static ArrayList<TimeType> getTimeTypes() {
-        ArrayList<TimeType> types = new ArrayList<>();
-        types.add(TimeType.AM);
-        types.add(TimeType.PM);
-        return types;
-    }
-
-    public static ArrayList<String> getStringTimeTypes() {
+    public static ArrayList<String> getTimeTypes() {
         ArrayList<String> stringTypes = new ArrayList<>();
         stringTypes.add(TimeType.AM.getPersianText());
         stringTypes.add(TimeType.PM.getPersianText());
@@ -69,5 +63,168 @@ public final class TimeUtils {
             e.printStackTrace();
         }
         return new Date();
+    }
+
+    public static ArrayList<String> getYears() {
+        return getNumbers(AppConstants.START_YEAR, AppConstants.END_YEAR);
+    }
+
+    public static ArrayList<String> getMonths() {
+        ArrayList<String> stringTypes = new ArrayList<>();
+        stringTypes.add(MonthType.FARVARDIN.getText());
+        stringTypes.add(MonthType.ORDIBEHESHT.getText());
+        stringTypes.add(MonthType.KHORDAD.getText());
+        stringTypes.add(MonthType.TIR.getText());
+        stringTypes.add(MonthType.MORDAD.getText());
+        stringTypes.add(MonthType.SHAHRIVAR.getText());
+        stringTypes.add(MonthType.MEHR.getText());
+        stringTypes.add(MonthType.ABAN.getText());
+        stringTypes.add(MonthType.AZAR.getText());
+        stringTypes.add(MonthType.DEY.getText());
+        stringTypes.add(MonthType.BAHMAN.getText());
+        stringTypes.add(MonthType.ESFAND.getText());
+        return stringTypes;
+    }
+
+    public static ArrayList<String> getDays(MonthType monthType) {
+        return getNumbers(1, monthType.getDays());
+    }
+
+    public static MonthType getMonth(int month) {
+        switch (month) {
+            case 1:
+                return MonthType.FARVARDIN;
+            case 2:
+                return MonthType.ORDIBEHESHT;
+            case 3:
+                return MonthType.KHORDAD;
+            case 4:
+                return MonthType.TIR;
+            case 5:
+                return MonthType.MORDAD;
+            case 6:
+                return MonthType.SHAHRIVAR;
+            case 7:
+                return MonthType.MEHR;
+            case 8:
+                return MonthType.ABAN;
+            case 9:
+                return MonthType.AZAR;
+            case 10:
+                return MonthType.DEY;
+            case 11:
+                return MonthType.BAHMAN;
+            case 12:
+                return MonthType.ESFAND;
+            default:
+                return MonthType.TIR;
+        }
+    }
+
+    public static int indexToHour(int index) {
+        return index + 1;
+    }
+
+    public static int hourToIndex(int hour) {
+        return hour - 1;
+    }
+
+    public static TimeType indexToTimeType(int index) {
+        if (index == 0)
+            return TimeType.AM;
+        return TimeType.PM;
+    }
+
+    public static int indexToMinute(int index) {
+        return index;
+    }
+
+    public static int indexToYear(int index) {
+        return index + AppConstants.START_YEAR;
+    }
+
+    public static int yearToIndex(int year) {
+        return year - AppConstants.START_YEAR;
+    }
+
+    public static MonthType indexToMonth(int index) {
+        switch (index) {
+            case 0:
+                return MonthType.FARVARDIN;
+            case 1:
+                return MonthType.ORDIBEHESHT;
+            case 2:
+                return MonthType.KHORDAD;
+            case 3:
+                return MonthType.TIR;
+            case 4:
+                return MonthType.MORDAD;
+            case 5:
+                return MonthType.SHAHRIVAR;
+            case 6:
+                return MonthType.MEHR;
+            case 7:
+                return MonthType.ABAN;
+            case 8:
+                return MonthType.AZAR;
+            case 9:
+                return MonthType.DEY;
+            case 10:
+                return MonthType.BAHMAN;
+            case 11:
+                return MonthType.ESFAND;
+            default:
+                return MonthType.TIR;
+        }
+    }
+
+    public static int indexToDay(int index) {
+        return index + 1;
+    }
+
+    public static int dayToIndex(int day) {
+        return day - 1;
+    }
+
+    private static ArrayList<MonthType> get31DaysMonths() {
+        ArrayList<MonthType> list = new ArrayList<>();
+        list.add(MonthType.FARVARDIN);
+        list.add(MonthType.ORDIBEHESHT);
+        list.add(MonthType.KHORDAD);
+        list.add(MonthType.TIR);
+        list.add(MonthType.MORDAD);
+        list.add(MonthType.SHAHRIVAR);
+        return list;
+    }
+
+    private static ArrayList<MonthType> get30DaysMonths() {
+        ArrayList<MonthType> list = new ArrayList<>();
+        list.add(MonthType.MEHR);
+        list.add(MonthType.ABAN);
+        list.add(MonthType.AZAR);
+        list.add(MonthType.DEY);
+        list.add(MonthType.BAHMAN);
+        return list;
+    }
+
+    private static ArrayList<MonthType> get29DaysMonths() {
+        ArrayList<MonthType> list = new ArrayList<>();
+        list.add(MonthType.ESFAND);
+        return list;
+    }
+
+    public static boolean shouldDayChange(MonthType beforeMonthType, MonthType afterMonthType) {
+        ArrayList<MonthType> checkMonths = new ArrayList<>();
+        checkMonths.add(beforeMonthType);
+        checkMonths.add(afterMonthType);
+        return !get31DaysMonths().containsAll(checkMonths) &&
+                !get30DaysMonths().containsAll(checkMonths) &&
+                !get29DaysMonths().containsAll(checkMonths);
+    }
+
+    public static int changeDay(int day, MonthType month) {
+        if (month.getDays() > day)
+            return day;
+        return month.getDays();
     }
 }

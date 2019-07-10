@@ -60,6 +60,9 @@ dependencies {
     // parser
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
 
+    // persian date
+    implementation "com.github.samanzamani.persiandate:PersianDate:$rootProject.persianDateVersion"
+
     // debug database
     debugImplementation "com.amitshekhar.android:debug-db:$rootProject.debugDBVersion"
 

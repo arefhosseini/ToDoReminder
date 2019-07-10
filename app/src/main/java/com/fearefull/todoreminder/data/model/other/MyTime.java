@@ -1,5 +1,8 @@
 package com.fearefull.todoreminder.data.model.other;
 
+import com.fearefull.todoreminder.utils.TimeUtils;
+import com.fearefull.todoreminder.utils.ViewUtils;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -20,7 +23,7 @@ public class MyTime implements Serializable {
     }
 
     public MyTime(Date date) {
-        this.change(date);
+        change(date);
         isChanged = false;
     }
 
@@ -29,27 +32,38 @@ public class MyTime implements Serializable {
     }
 
     public int getHourIndex() {
-        return hour - 1;
+        return TimeUtils.hourToIndex(hour);
     }
 
     public void setHour(int hour) {
         this.hour = hour;
+        isChanged = true;
     }
 
     public int getMinute() {
         return minute;
     }
 
+    public int getMinuteIndex() {
+        return minute;
+    }
+
     public void setMinute(int minute) {
         this.minute = minute;
+        isChanged = true;
     }
 
     public TimeType getTimeType() {
         return timeType;
     }
 
+    public int getTimeTypeIndex() {
+        return timeType.getIndex();
+    }
+
     public void setTimeType(TimeType timeType) {
         this.timeType = timeType;
+        isChanged = true;
     }
 
     public boolean isChanged() {

@@ -1,5 +1,6 @@
 package com.fearefull.todoreminder.ui.alarm_manager;
 
-interface AlarmManagerNavigator {
+interface AlarmManagerNavigator extends AlarmManagerCallBack {
     void openTimePickerFragment();
+    void openDatePickerFragment();
 }

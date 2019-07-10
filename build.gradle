@@ -58,6 +58,9 @@ ext {
     // parser
     gsonVersion = '2.8.5'
 
+    // persian date
+    persianDateVersion = '0.7'
+
     // debug database
     debugDBVersion = '1.0.6'
 

@@ -10,8 +10,10 @@ import androidx.lifecycle.ViewModelProviders;
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
+import com.fearefull.todoreminder.data.model.other.MyDate;
 import com.fearefull.todoreminder.data.model.other.MyTime;
 import com.fearefull.todoreminder.databinding.ActivityAlarmManagerBinding;
+import com.fearefull.todoreminder.ui.alarm_manager.date_picker.DatePickerFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.time_picker.TimePickerFragment;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
 
@@ -25,7 +27,7 @@ import dagger.android.support.HasSupportFragmentInjector;
 import timber.log.Timber;
 
 public class AlarmManagerActivity extends BaseActivity<ActivityAlarmManagerBinding, AlarmManagerViewModel>
-        implements AlarmManagerNavigator, HasSupportFragmentInjector, TimePickerFragment.TimePickerCallBack {
+        implements AlarmManagerNavigator, HasSupportFragmentInjector {
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
@@ -66,11 +68,17 @@ public class AlarmManagerActivity extends BaseActivity<ActivityAlarmManagerBindi
         viewModel.setNavigator(this);
         //viewModel.setDefaultDate(TimeUtils.getTime(new MyTime("12", "59", TimeType.PM)));
         viewModel.setMyTime(new MyTime(new Date()));
+        viewModel.setMyDate(new MyDate(new Date()));
     }
 
     @Override
     public void openTimePickerFragment() {
         TimePickerFragment.newInstance(viewModel.getMyTime()).show(getSupportFragmentManager(), TimePickerFragment.TAG);
+    }
+
+    @Override
+    public void openDatePickerFragment() {
+        DatePickerFragment.newInstance(viewModel.getMyDate()).show(getSupportFragmentManager(), DatePickerFragment.TAG);
     }
 
     @Override
@@ -82,5 +90,11 @@ public class AlarmManagerActivity extends BaseActivity<ActivityAlarmManagerBindi
     public void onGetTime(MyTime myTime) {
         Timber.d(myTime.toString());
         viewModel.setMyTime(myTime);
+    }
+
+    @Override
+    public void onGetDate(MyDate myDate) {
+        Timber.d(myDate.toString());
+        viewModel.setMyDate(myDate);
     }
 }
