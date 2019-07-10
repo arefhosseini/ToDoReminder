@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 
 import com.fearefull.todoreminder.data.model.db.LoggedInMode;
 import com.fearefull.todoreminder.di.PreferenceInfo;
-import com.fearefull.todoreminder.utils.AppConstants;
 
 import javax.inject.Inject;
 
@@ -17,41 +16,41 @@ public class AppPreferencesHelper implements PreferencesHelper {
 
     private static final String PREF_KEY_USER_LOGGED_IN_MODE = "PREF_KEY_USER_LOGGED_IN_MODE";
 
-    private final SharedPreferences mPrefs;
+    private final SharedPreferences prefs;
 
     @Inject
     AppPreferencesHelper(Context context, @PreferenceInfo String prefFileName) {
-        mPrefs = context.getSharedPreferences(prefFileName, Context.MODE_PRIVATE);
+        prefs = context.getSharedPreferences(prefFileName, Context.MODE_PRIVATE);
     }
 
     @Override
     public int getCurrentUserLoggedInMode() {
-        return mPrefs.getInt(PREF_KEY_USER_LOGGED_IN_MODE,
+        return prefs.getInt(PREF_KEY_USER_LOGGED_IN_MODE,
                 LoggedInMode.LOGGED_OUT.getType());
     }
 
     @Override
     public void setCurrentUserLoggedInMode(LoggedInMode mode) {
-        mPrefs.edit().putInt(PREF_KEY_USER_LOGGED_IN_MODE, mode.getType()).apply();
+        prefs.edit().putInt(PREF_KEY_USER_LOGGED_IN_MODE, mode.getType()).apply();
     }
 
     @Override
     public String getCurrentUsername() {
-        return mPrefs.getString(PREF_KEY_CURRENT_USERNAME, null);
+        return prefs.getString(PREF_KEY_CURRENT_USERNAME, null);
     }
 
     @Override
     public void setCurrentUsername(String username) {
-        mPrefs.edit().putString(PREF_KEY_CURRENT_USERNAME, username).apply();
+        prefs.edit().putString(PREF_KEY_CURRENT_USERNAME, username).apply();
     }
 
     @Override
     public String getCurrentPassword() {
-        return mPrefs.getString(PREF_KEY_CURRENT_PASSWORD, null);
+        return prefs.getString(PREF_KEY_CURRENT_PASSWORD, null);
     }
 
     @Override
     public void setCurrentPassword(String password) {
-        mPrefs.edit().putString(PREF_KEY_CURRENT_PASSWORD, password).apply();
+        prefs.edit().putString(PREF_KEY_CURRENT_PASSWORD, password).apply();
     }
 }

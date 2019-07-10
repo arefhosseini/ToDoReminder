@@ -22,8 +22,8 @@ public class MyTime implements Serializable {
         isChanged = false;
     }
 
-    public MyTime(Date date) {
-        change(date);
+    public MyTime() {
+        change(new Date());
         isChanged = false;
     }
 

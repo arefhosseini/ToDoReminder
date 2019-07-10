@@ -8,6 +8,7 @@ public final class AppConstants {
     public static final String TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
     public static final int START_YEAR = 1397;
     public static final int END_YEAR = 1450;
+    public static final String ALARM_KEY = "alarm_key";
 
     private AppConstants() {
         // This utility class is not publicly instantiable

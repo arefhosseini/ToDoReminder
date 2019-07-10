@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
+import com.fearefull.todoreminder.data.model.other.Alarm;
 import com.fearefull.todoreminder.data.model.other.MyDate;
 import com.fearefull.todoreminder.databinding.FragmentDatePickerBinding;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerActivity;
@@ -19,20 +20,21 @@ import com.fearefull.todoreminder.utils.ViewUtils;
 
 import javax.inject.Inject;
 
+import static com.fearefull.todoreminder.utils.AppConstants.ALARM_KEY;
+
 public class DatePickerFragment extends BaseBottomSheetFragment<FragmentDatePickerBinding, DatePickerViewModel> implements DatePickerNavigator {
 
     public static final String TAG = DatePickerFragment.class.getSimpleName();
-    private static final String DEFAULT_DATE_KEY = "default_date";
 
     @Inject
     ViewModelProviderFactory factory;
     private DatePickerViewModel viewModel;
     private FragmentDatePickerBinding binding;
 
-    public static DatePickerFragment newInstance(MyDate myDate) {
+    public static DatePickerFragment newInstance(Alarm alarm) {
         Bundle args = new Bundle();
         DatePickerFragment fragment = new DatePickerFragment();
-        args.putSerializable(DEFAULT_DATE_KEY, myDate);
+        args.putSerializable(ALARM_KEY, alarm);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,7 +60,7 @@ public class DatePickerFragment extends BaseBottomSheetFragment<FragmentDatePick
         super.onCreate(savedInstanceState);
         viewModel.setNavigator(this);
         assert getArguments() != null;
-        viewModel.setDefaultDate((MyDate) getArguments().getSerializable(DEFAULT_DATE_KEY));
+        viewModel.setAlarm((Alarm) getArguments().getSerializable(ALARM_KEY));
     }
 
     @Override
@@ -69,9 +71,9 @@ public class DatePickerFragment extends BaseBottomSheetFragment<FragmentDatePick
     }
 
     private void setUp() {
-        setUpNumberPicker(binding.yearsPicker, viewModel.getYears(), viewModel.getMyDate().getYearIndex());
-        setUpNumberPicker(binding.monthsPicker, viewModel.getMonths(), viewModel.getMyDate().getMonthIndex());
-        setUpNumberPicker(binding.daysPicker, viewModel.getDays(), viewModel.getMyDate().getDayIndex());
+        setUpNumberPicker(binding.yearsPicker, viewModel.getYears(), viewModel.getAlarm().getDate().getYearIndex());
+        setUpNumberPicker(binding.monthsPicker, viewModel.getMonths(), viewModel.getAlarm().getDate().getMonthIndex());
+        setUpNumberPicker(binding.daysPicker, viewModel.getDays(), viewModel.getAlarm().getDate().getDayIndex());
     }
 
     private void setUpNumberPicker(NumberPicker picker, String[] data, int defaultIndex) {
@@ -85,20 +87,20 @@ public class DatePickerFragment extends BaseBottomSheetFragment<FragmentDatePick
     @Override
     public void onDestroy() {
         AlarmManagerActivity activity = (AlarmManagerActivity) getBaseActivity();
-        activity.onGetDate(viewModel.getMyDate());
+        activity.onUpdateAlarm(viewModel.getAlarm(), TAG);
         super.onDestroy();
     }
 
     @Override
     public void onMonthChanged() {
-        if (binding.daysPicker.getMaxValue() < viewModel.getMyDate().getMonth().getDays()) {
+        if (binding.daysPicker.getMaxValue() < viewModel.getAlarm().getDate().getMonth().getDays()) {
             binding.daysPicker.setDisplayedValues(viewModel.getDays());
             binding.daysPicker.setMaxValue(viewModel.getDays().length - 1);
-            binding.daysPicker.setValue(viewModel.getMyDate().getDayIndex());
+            binding.daysPicker.setValue(viewModel.getAlarm().getDate().getDayIndex());
         }
         else {
             binding.daysPicker.setMaxValue(viewModel.getDays().length - 1);
-            binding.daysPicker.setValue(viewModel.getMyDate().getDayIndex());
+            binding.daysPicker.setValue(viewModel.getAlarm().getDate().getDayIndex());
             binding.daysPicker.setDisplayedValues(viewModel.getDays());
         }
     }

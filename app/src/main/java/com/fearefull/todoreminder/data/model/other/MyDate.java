@@ -23,8 +23,8 @@ public class MyDate implements Serializable {
         isChanged = false;
     }
 
-    public MyDate(Date date) {
-        change(date);
+    public MyDate() {
+        change(new Date());
         isChanged = false;
     }
 

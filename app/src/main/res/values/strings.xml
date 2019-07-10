@@ -20,4 +20,5 @@
     <string name="version">نسخه</string>
     <string name="time">ساعت</string>
     <string name="date">تاریخ</string>
+    <string name="repeat">تکرار</string>
 </resources>

@@ -1,8 +1,7 @@
 package com.fearefull.todoreminder.ui.alarm_manager.date_picker;
 
 import com.fearefull.todoreminder.data.DataManager;
-import com.fearefull.todoreminder.data.model.other.MyDate;
-import com.fearefull.todoreminder.data.model.other.TimeType;
+import com.fearefull.todoreminder.data.model.other.Alarm;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.TimeUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
@@ -12,7 +11,7 @@ import java.util.Date;
 import timber.log.Timber;
 
 public class DatePickerViewModel extends BaseViewModel<DatePickerNavigator> {
-    private MyDate myDate;
+    private Alarm alarm;
 
     public DatePickerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -27,35 +26,35 @@ public class DatePickerViewModel extends BaseViewModel<DatePickerNavigator> {
     }
 
     String[] getDays() {
-        return TimeUtils.getDays(myDate.getMonth()).toArray(new String[0]);
+        return TimeUtils.getDays(alarm.getDate().getMonth()).toArray(new String[0]);
     }
 
-    MyDate getMyDate() {
-        return myDate;
+    Alarm getAlarm() {
+        return alarm;
     }
 
-    void setDefaultDate(MyDate myDate) {
-        if (!myDate.isChanged())
-            myDate.change(new Date());
-        this.myDate = myDate;
+    void setAlarm(Alarm alarm) {
+        if (!alarm.getDate().isChanged())
+            alarm.getDate().change(new Date());
+        this.alarm = alarm;
     }
 
     public void onYearsPickerValueChange(int oldVal, int newVal) {
         Timber.i("year index %d", newVal);
-        myDate.setYear(TimeUtils.indexToYear(newVal));
+        alarm.getDate().setYear(TimeUtils.indexToYear(newVal));
     }
 
     public void onMonthsPickerValueChange(int oldVal, int newVal) {
         Timber.i("month index %d", newVal);
-        myDate.setMonth(TimeUtils.indexToMonth(newVal));
+        alarm.getDate().setMonth(TimeUtils.indexToMonth(newVal));
         if (TimeUtils.shouldDayChange(TimeUtils.indexToMonth(oldVal), TimeUtils.indexToMonth(newVal))) {
-            myDate.setDay(TimeUtils.changeDay(myDate.getDay(), myDate.getMonth()));
+            alarm.getDate().setDay(TimeUtils.changeDay(alarm.getDate().getDay(), alarm.getDate().getMonth()));
             getNavigator().onMonthChanged();
         }
     }
 
     public void onDaysPickerValueChange(int oldVal, int newVal) {
         Timber.i("day index %d", newVal);
-        myDate.setDay(TimeUtils.indexToDay(newVal));
+        alarm.getDate().setDay(TimeUtils.indexToDay(newVal));
     }
 }

@@ -10,14 +10,11 @@ import androidx.lifecycle.ViewModelProviders;
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
-import com.fearefull.todoreminder.data.model.other.MyDate;
-import com.fearefull.todoreminder.data.model.other.MyTime;
+import com.fearefull.todoreminder.data.model.other.Alarm;
 import com.fearefull.todoreminder.databinding.ActivityAlarmManagerBinding;
 import com.fearefull.todoreminder.ui.alarm_manager.date_picker.DatePickerFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.time_picker.TimePickerFragment;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
-
-import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -67,18 +64,23 @@ public class AlarmManagerActivity extends BaseActivity<ActivityAlarmManagerBindi
         binding = getViewDataBinding();
         viewModel.setNavigator(this);
         //viewModel.setDefaultDate(TimeUtils.getTime(new MyTime("12", "59", TimeType.PM)));
-        viewModel.setMyTime(new MyTime(new Date()));
-        viewModel.setMyDate(new MyDate(new Date()));
+        viewModel.setAlarm(new Alarm());
+        viewModel.updateAlarm();
     }
 
     @Override
     public void openTimePickerFragment() {
-        TimePickerFragment.newInstance(viewModel.getMyTime()).show(getSupportFragmentManager(), TimePickerFragment.TAG);
+        TimePickerFragment.newInstance(viewModel.getAlarm()).show(getSupportFragmentManager(), TimePickerFragment.TAG);
     }
 
     @Override
     public void openDatePickerFragment() {
-        DatePickerFragment.newInstance(viewModel.getMyDate()).show(getSupportFragmentManager(), DatePickerFragment.TAG);
+        DatePickerFragment.newInstance(viewModel.getAlarm()).show(getSupportFragmentManager(), DatePickerFragment.TAG);
+    }
+
+    @Override
+    public void openRepeatPickerFragment() {
+
     }
 
     @Override
@@ -87,14 +89,12 @@ public class AlarmManagerActivity extends BaseActivity<ActivityAlarmManagerBindi
     }
 
     @Override
-    public void onGetTime(MyTime myTime) {
-        Timber.d(myTime.toString());
-        viewModel.setMyTime(myTime);
-    }
-
-    @Override
-    public void onGetDate(MyDate myDate) {
-        Timber.d(myDate.toString());
-        viewModel.setMyDate(myDate);
+    public void onUpdateAlarm(Alarm alarm, String fragmentTag) {
+        Timber.d(fragmentTag);
+        viewModel.setAlarm(alarm);
+        if (fragmentTag.equals(TimePickerFragment.TAG))
+            viewModel.updateTime();
+        else if (fragmentTag.equals(DatePickerFragment.TAG))
+            viewModel.updateDate();
     }
 }
