@@ -2,6 +2,7 @@ package com.fearefull.todoreminder.utils;
 
 import com.fearefull.todoreminder.data.model.other.MonthType;
 import com.fearefull.todoreminder.data.model.other.MyTime;
+import com.fearefull.todoreminder.data.model.other.RepeatType;
 import com.fearefull.todoreminder.data.model.other.TimeType;
 
 import java.text.ParseException;
@@ -10,9 +11,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public final class TimeUtils {
+public final class AlarmUtils {
 
-    private TimeUtils() {
+    private AlarmUtils() {
 
     }
 
@@ -226,5 +227,35 @@ public final class TimeUtils {
         if (month.getDays() > day)
             return day;
         return month.getDays();
+    }
+
+    public static ArrayList<String> getRepeatTypes() {
+        ArrayList<String> types = new ArrayList<>();
+        types.add(RepeatType.NEVER.getText());
+        types.add(RepeatType.DAILY.getText());
+        types.add(RepeatType.WEEKLY.getText());
+        types.add(RepeatType.MONTHLY.getText());
+        types.add(RepeatType.YEARLY.getText());
+        types.add(RepeatType.CUSTOM.getText());
+        return types;
+    }
+
+    public static RepeatType indexToRepeatType(int index) {
+        switch (index) {
+            case 0:
+               return RepeatType.NEVER;
+            case 1:
+                return RepeatType.DAILY;
+            case 2:
+                return RepeatType.WEEKLY;
+            case 3:
+                return RepeatType.MONTHLY;
+            case 4:
+                return RepeatType.YEARLY;
+            case 5:
+                return RepeatType.CUSTOM;
+            default:
+                return RepeatType.NEVER;
+        }
     }
 }

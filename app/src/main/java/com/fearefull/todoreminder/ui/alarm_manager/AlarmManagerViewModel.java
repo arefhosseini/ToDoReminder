@@ -1,10 +1,14 @@
 package com.fearefull.todoreminder.ui.alarm_manager;
 
+import android.content.DialogInterface;
+
 import androidx.databinding.ObservableField;
 
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.other.Alarm;
+import com.fearefull.todoreminder.data.model.other.RepeatType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
+import com.fearefull.todoreminder.utils.AlarmUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
 public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> {
@@ -28,6 +32,10 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     public void onRepeatPickerClick() {
         getNavigator().openRepeatPickerFragment();
+    }
+
+    String[] getRepeats() {
+        return AlarmUtils.getRepeatTypes().toArray(new String[0]);
     }
 
     Alarm getAlarm() {
@@ -67,4 +75,16 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     public ObservableField<String> getRepeat() {
         return repeat;
     }
+
+    int getRepeatDialogDefaultIndex() {
+        return alarm.getRepeat().getType().getIndex();
+    }
+
+    DialogInterface.OnClickListener repeatPickerOnClickListener = (dialog, which) -> {
+        alarm.getRepeat().setType(AlarmUtils.indexToRepeatType(which));
+        if (alarm.getRepeat().getType() != RepeatType.CUSTOM) {
+            dialog.dismiss();
+            updateRepeat();
+        }
+    };
 }

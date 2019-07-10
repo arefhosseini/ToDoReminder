@@ -1,7 +1,6 @@
 package com.fearefull.todoreminder.data.model.other;
 
-import com.fearefull.todoreminder.utils.TimeUtils;
-import com.fearefull.todoreminder.utils.ViewUtils;
+import com.fearefull.todoreminder.utils.AlarmUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,7 +31,7 @@ public class MyTime implements Serializable {
     }
 
     public int getHourIndex() {
-        return TimeUtils.hourToIndex(hour);
+        return AlarmUtils.hourToIndex(hour);
     }
 
     public void setHour(int hour) {

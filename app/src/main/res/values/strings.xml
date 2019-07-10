@@ -21,4 +21,6 @@
     <string name="time">ساعت</string>
     <string name="date">تاریخ</string>
     <string name="repeat">تکرار</string>
+
+    <string name="repeat_dialog_title">نوع تکرار</string>
 </resources>

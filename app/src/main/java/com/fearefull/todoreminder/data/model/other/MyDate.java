@@ -1,6 +1,6 @@
 package com.fearefull.todoreminder.data.model.other;
 
-import com.fearefull.todoreminder.utils.TimeUtils;
+import com.fearefull.todoreminder.utils.AlarmUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,7 +34,7 @@ public class MyDate implements Serializable {
     }
 
     public int getYearIndex() {
-        return TimeUtils.yearToIndex(year);
+        return AlarmUtils.yearToIndex(year);
     }
 
     public void setYear(int year) {
@@ -60,7 +60,7 @@ public class MyDate implements Serializable {
     }
 
     public int getDayIndex() {
-        return TimeUtils.dayToIndex(day);
+        return AlarmUtils.dayToIndex(day);
     }
 
     public void setDay(int day) {
@@ -79,7 +79,7 @@ public class MyDate implements Serializable {
     public void change(Date date) {
         PersianDate persianDate = new PersianDate(date);
         year = persianDate.getShYear();
-        month = TimeUtils.getMonth(persianDate.getShMonth());
+        month = AlarmUtils.getMonth(persianDate.getShMonth());
         Timber.i("ShMonth %d", persianDate.getShMonth());
         day = persianDate.getShDay();
     }

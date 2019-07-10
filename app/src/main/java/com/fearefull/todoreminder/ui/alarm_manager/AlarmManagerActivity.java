@@ -1,5 +1,7 @@
 package com.fearefull.todoreminder.ui.alarm_manager;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -63,7 +65,7 @@ public class AlarmManagerActivity extends BaseActivity<ActivityAlarmManagerBindi
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
         viewModel.setNavigator(this);
-        //viewModel.setDefaultDate(TimeUtils.getTime(new MyTime("12", "59", TimeType.PM)));
+        //viewModel.setDefaultDate(AlarmUtils.getTime(new MyTime("12", "59", TimeType.PM)));
         viewModel.setAlarm(new Alarm());
         viewModel.updateAlarm();
     }
@@ -78,9 +80,17 @@ public class AlarmManagerActivity extends BaseActivity<ActivityAlarmManagerBindi
         DatePickerFragment.newInstance(viewModel.getAlarm()).show(getSupportFragmentManager(), DatePickerFragment.TAG);
     }
 
+    @SuppressLint("RtlHardcoded")
     @Override
     public void openRepeatPickerFragment() {
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
+        builder.setTitle(R.string.repeat_dialog_title);
+        builder.setSingleChoiceItems(
+                viewModel.getRepeats(),
+                viewModel.getRepeatDialogDefaultIndex(),
+                viewModel.repeatPickerOnClickListener);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
