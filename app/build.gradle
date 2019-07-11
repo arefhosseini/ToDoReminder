@@ -63,6 +63,10 @@ dependencies {
     // persian date
     implementation "com.github.samanzamani.persiandate:PersianDate:$rootProject.persianDateVersion"
 
+    // expansion panel
+    implementation "com.github.florent37:expansionpanel:$rootProject.expansionPanelVersion"
+
+
     // debug database
     debugImplementation "com.amitshekhar.android:debug-db:$rootProject.debugDBVersion"
 

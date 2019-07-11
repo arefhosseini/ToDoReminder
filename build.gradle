@@ -61,6 +61,9 @@ ext {
     // persian date
     persianDateVersion = '0.7'
 
+    // expansion panel
+    expansionPanelVersion = '1.2.2'
+
     // debug database
     debugDBVersion = '1.0.6'
 
