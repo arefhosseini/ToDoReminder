@@ -7,7 +7,7 @@ public class MyRepeat {
     private CustomRepeat customRepeat;
 
     MyRepeat() {
-        this.type = RepeatType.NEVER;
+        this.type = RepeatType.ONCE;
         customRepeat = new CustomRepeat();
     }
 

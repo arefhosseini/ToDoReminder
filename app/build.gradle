@@ -66,6 +66,8 @@ dependencies {
     // expansion panel
     implementation "com.github.florent37:expansionpanel:$rootProject.expansionPanelVersion"
 
+    // shape of view
+    implementation "com.github.florent37:shapeofview:$rootProject.shapeOfViewVersion"
 
     // debug database
     debugImplementation "com.amitshekhar.android:debug-db:$rootProject.debugDBVersion"

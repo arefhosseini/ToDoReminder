@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="RtlHardcoded">
+
+        <com.github.florent37.shapeofview.shapes.ArcView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            app:shape_arc_height="24dp"
+            app:shape_arc_position="bottom">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                    android:contentInsetLeft="0dp"
+                    android:contentInsetStart="0dp"
+                    app:contentInsetLeft="0dp"
+                    app:contentInsetStart="0dp"
+                    android:contentInsetRight="0dp"
+                    android:contentInsetEnd="0dp"
+                    app:contentInsetRight="0dp"
+                    app:contentInsetEnd="0dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top">
+
+                        <TextView
+                            style="@style/Toolbar.TitleText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/add_reminder" />
+
+                        <ImageButton
+                            android:id="@+id/backImageButton"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:padding="12dp"
+                            android:onClick="@{() -> viewModel.onNavigationBackClick()}"
+                            android:background="?actionBarItemBackground"
+                            android:src="@drawable/ic_arrow_forward_black_24dp"
+                            android:tint="@color/whiteColor"/>
+
+                        <ImageButton
+                            android:id="@+id/confirmImageButton"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:padding="12dp"
+                            android:background="?actionBarItemBackground"
+                            android:src="@drawable/ic_check_black_24dp"
+                            android:tint="@color/whiteColor"/>
+                    </RelativeLayout>
+
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
+        </com.github.florent37.shapeofview.shapes.ArcView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColorLightTheme"
+            android:layout_marginTop="-24dp"
+            android:orientation="vertical">
+
+            <com.github.florent37.expansionpanel.viewgroup.ExpansionsViewGroupLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:expansion_openOnlyOne="true"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:id="@+id/timeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.github.florent37.expansionpanel.ExpansionHeader
+                        android:layout_height="100dp"
+                        android:layout_width="match_parent"
+                        android:id="@+id/timeHeader"
+                        app:expansion_headerIndicator="@id/timeHeaderIndicator"
+                        app:expansion_layout="@id/timeExpansionLayout"
+                        android:translationZ="8dp"
+                        app:expansion_toggleOnClick="true">
+
+                        <com.github.florent37.shapeofview.shapes.ArcView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:elevation="4dp"
+                            app:shape_arc_height="-24dp"
+                            app:shape_arc_position="top">
+
+
+                            <com.github.florent37.shapeofview.shapes.ArcView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:shape_arc_height="24dp"
+                                app:shape_arc_position="bottom">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/secondaryColorLightTheme"/>
+
+                                <RelativeLayout
+                                    android:layout_gravity="center"
+                                    android:paddingLeft="@dimen/default_layout_padding"
+                                    android:paddingRight="@dimen/default_layout_padding"
+                                    android:paddingBottom="@dimen/default_half_layout_padding"
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent">
+
+                                    <ImageView
+                                        android:id="@+id/timeHeaderIcon"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:src="@drawable/ic_access_time_black_24dp"
+                                        android:tint="@color/primaryTextColorDarkTheme"/>
+
+                                    <TextView
+                                        style="@style/TextStyle.Title"
+                                        android:id="@+id/timeHeaderText"
+                                        android:layout_height="wrap_content"
+                                        android:layout_width="wrap_content"
+                                        android:layout_toLeftOf="@id/timeHeaderIcon"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginRight="8dp"
+                                        android:textColor="@color/primaryTextColorDarkTheme"
+                                        android:text="@string/time" />
+
+                                    <TextView
+                                        style="@style/TextStyle.Title.Sub"
+                                        android:id="@+id/timeHeaderDetail"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_alignParentBottom="true"
+                                        android:layout_marginRight="24dp"
+                                        android:layout_width="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@{viewModel.time}"
+                                        android:textColor="@color/secondaryTextColorDarkTheme" />
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:adjustViewBounds="true"
+                                        android:id="@+id/timeHeaderIndicator"
+                                        android:layout_alignParentLeft="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_height="wrap_content"
+                                        android:layout_width="wrap_content"
+                                        android:tint="@color/primaryTextColorDarkTheme"
+                                        app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+
+                                </RelativeLayout>
+                            </com.github.florent37.shapeofview.shapes.ArcView>
+
+                        </com.github.florent37.shapeofview.shapes.ArcView>
+
+                    </com.github.florent37.expansionpanel.ExpansionHeader>
+
+                    <com.github.florent37.expansionpanel.ExpansionLayout
+                        android:id="@+id/timeExpansionLayout"
+                        app:expansion_expanded="true"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:background="@color/secondaryLightColorLightTheme">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingTop="100dp"
+                            android:paddingBottom="16dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp">
+
+                            <NumberPicker
+                                android:id="@+id/hoursPicker"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="5"
+                                android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onHoursPickerValueChange(oldVal, newVal)}"
+                                android:layout_gravity="center_horizontal" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:text=":"
+                                android:textSize="24sp"
+                                android:gravity="center"
+                                android:textColor="@color/secondaryTextColorLightTheme"/>
+
+                            <NumberPicker
+                                android:id="@+id/minutesPicker"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="5"
+                                android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onMinutesPickerValueChange(oldVal, newVal)}"
+                                android:layout_gravity="center_horizontal" />
+
+                            <Space
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
+                            <NumberPicker
+                                android:id="@+id/typePicker"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="5"
+                                android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onTypesPickerValueChange(oldVal, newVal)}"
+                                android:layout_gravity="center_horizontal" />
+                        </LinearLayout>
+
+                    </com.github.florent37.expansionpanel.ExpansionLayout>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/noteLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-24dp">
+
+                    <com.github.florent37.expansionpanel.ExpansionHeader
+                        android:layout_height="100dp"
+                        android:layout_width="match_parent"
+                        android:id="@+id/noteHeader"
+                        app:expansion_headerIndicator="@id/noteHeaderIndicator"
+                        app:expansion_layout="@id/noteExpansionLayout"
+                        android:translationZ="8dp"
+                        app:expansion_toggleOnClick="true">
+
+                        <com.github.florent37.shapeofview.shapes.ArcView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:elevation="4dp"
+                            app:shape_arc_height="-24dp"
+                            app:shape_arc_position="top">
+
+                            <com.github.florent37.shapeofview.shapes.ArcView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:shape_arc_height="24dp"
+                                app:shape_arc_position="bottom">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/cyanDarkColor"/>
+
+                                <RelativeLayout
+                                    android:layout_gravity="center"
+                                    android:paddingLeft="@dimen/default_layout_padding"
+                                    android:paddingRight="@dimen/default_layout_padding"
+                                    android:paddingBottom="@dimen/default_half_layout_padding"
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent">
+
+                                    <ImageView
+                                        android:id="@+id/noteHeaderIcon"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:src="@drawable/ic_note_black_24dp"
+                                        android:tint="@color/primaryTextColorDarkTheme"/>
+
+                                    <TextView
+                                        style="@style/TextStyle.Title"
+                                        android:id="@+id/noteHeaderText"
+                                        android:layout_height="wrap_content"
+                                        android:layout_width="wrap_content"
+                                        android:layout_toLeftOf="@id/noteHeaderIcon"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginRight="8dp"
+                                        android:textColor="@color/primaryTextColorDarkTheme"
+                                        android:text="@string/note" />
+
+                                    <TextView
+                                        style="@style/TextStyle.Title.Sub"
+                                        android:id="@+id/noteHeaderDetail"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_alignParentBottom="true"
+                                        android:layout_marginRight="24dp"
+                                        android:layout_width="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@{viewModel.note}"
+                                        android:textColor="@color/secondaryTextColorDarkTheme" />
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:adjustViewBounds="true"
+                                        android:id="@+id/noteHeaderIndicator"
+                                        android:layout_alignParentLeft="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_height="wrap_content"
+                                        android:layout_width="wrap_content"
+                                        android:tint="@color/primaryTextColorDarkTheme"
+                                        app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+
+                                </RelativeLayout>
+                            </com.github.florent37.shapeofview.shapes.ArcView>
+
+                        </com.github.florent37.shapeofview.shapes.ArcView>
+
+                    </com.github.florent37.expansionpanel.ExpansionHeader>
+
+                    <com.github.florent37.expansionpanel.ExpansionLayout
+                        android:id="@+id/noteExpansionLayout"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="24dp"
+                        android:background="@color/cyanColor">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingTop="100dp"
+                            android:paddingBottom="16dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine"
+                                android:maxLines="3"
+                                android:background="@null"
+                                android:onTextChanged="@{(s, start, count, after) -> viewModel.onNoteTextChange(s)}"
+                                android:textDirection="rtl"
+                                android:paddingBottom="24dp"
+                                android:hint="@string/note_hint"/>
+
+                        </LinearLayout>
+
+                    </com.github.florent37.expansionpanel.ExpansionLayout>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/repeatLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-24dp">
+
+                    <com.github.florent37.expansionpanel.ExpansionHeader
+                        android:layout_height="100dp"
+                        android:layout_width="match_parent"
+                        android:id="@+id/repeatHeader"
+                        app:expansion_headerIndicator="@id/repeatHeaderIndicator"
+                        app:expansion_layout="@id/repeatExpansionLayout"
+                        android:translationZ="8dp"
+                        app:expansion_toggleOnClick="true">
+
+                        <com.github.florent37.shapeofview.shapes.ArcView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:elevation="4dp"
+                            app:shape_arc_height="-24dp"
+                            app:shape_arc_position="top">
+
+                            <com.github.florent37.shapeofview.shapes.ArcView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:shape_arc_height="24dp"
+                                app:shape_arc_position="bottom">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/greenDarkColor"/>
+
+                                <RelativeLayout
+                                    android:layout_gravity="center"
+                                    android:paddingLeft="@dimen/default_layout_padding"
+                                    android:paddingRight="@dimen/default_layout_padding"
+                                    android:paddingBottom="@dimen/default_half_layout_padding"
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent">
+
+                                    <ImageView
+                                        android:id="@+id/repeatHeaderIcon"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:src="@drawable/ic_autorenew_black_24dp"
+                                        android:tint="@color/primaryTextColorDarkTheme"/>
+
+                                    <TextView
+                                        style="@style/TextStyle.Title"
+                                        android:id="@+id/repeatHeaderText"
+                                        android:layout_height="wrap_content"
+                                        android:layout_width="wrap_content"
+                                        android:layout_toLeftOf="@id/repeatHeaderIcon"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginRight="8dp"
+                                        android:textColor="@color/primaryTextColorDarkTheme"
+                                        android:text="@string/repeat" />
+
+                                    <TextView
+                                        style="@style/TextStyle.Title.Sub"
+                                        android:id="@+id/repeatHeaderDetail"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_alignParentBottom="true"
+                                        android:layout_marginRight="24dp"
+                                        android:layout_width="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@{viewModel.repeat}"
+                                        android:textColor="@color/secondaryTextColorDarkTheme" />
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:adjustViewBounds="true"
+                                        android:id="@+id/repeatHeaderIndicator"
+                                        android:layout_alignParentLeft="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_height="wrap_content"
+                                        android:layout_width="wrap_content"
+                                        android:tint="@color/primaryTextColorDarkTheme"
+                                        app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+
+                                </RelativeLayout>
+                            </com.github.florent37.shapeofview.shapes.ArcView>
+
+                        </com.github.florent37.shapeofview.shapes.ArcView>
+
+                    </com.github.florent37.expansionpanel.ExpansionHeader>
+
+                    <com.github.florent37.expansionpanel.ExpansionLayout
+                        android:id="@+id/repeatExpansionLayout"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="24dp"
+                        android:background="@color/greenColor">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingTop="100dp"
+                            android:paddingBottom="16dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp">
+
+                        </LinearLayout>
+
+                    </com.github.florent37.expansionpanel.ExpansionLayout>
+                </FrameLayout>
+            </com.github.florent37.expansionpanel.viewgroup.ExpansionsViewGroupLinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

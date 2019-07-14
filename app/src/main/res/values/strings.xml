@@ -23,4 +23,10 @@
     <string name="repeat">تکرار</string>
 
     <string name="repeat_dialog_title">نوع تکرار</string>
+    <string name="custom_repeat_dialog_title">شخصی سازی</string>
+    <string name="every">هر</string>
+    <string name="on">در زمان های</string>
+    <string name="note">یادداشت</string>
+    <string name="note_hint">یادداشت خود را وارد کنید...</string>
+    <string name="add_reminder">افزودن یادآور</string>
 </resources>

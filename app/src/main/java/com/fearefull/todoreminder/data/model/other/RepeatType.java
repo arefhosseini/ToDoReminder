@@ -1,7 +1,7 @@
 package com.fearefull.todoreminder.data.model.other;
 
 public enum RepeatType {
-    NEVER(0, "هرگز"),
+    ONCE(0, "فقط یک بار"),
     DAILY(1, "هرروز"),
     WEEKLY(2, "هرهفته"),
     MONTHLY(3, "هرماه"),

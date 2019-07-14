@@ -1,8 +1,10 @@
 package com.fearefull.todoreminder.utils;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -53,5 +55,18 @@ public final class CommonUtils {
 
     public static String getAppVersionString(Context context) {
         return context.getString(R.string.version) + " " + BuildConfig.VERSION_NAME;
+    }
+
+    public static AlertDialog showSingleChoiceItemDialog(Context context, int titleId,
+                                                         String[] items, int defaultIndex,
+                                                         DialogInterface.OnClickListener listener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogCustom);
+        builder.setTitle(titleId);
+        builder.setSingleChoiceItems(items, defaultIndex, listener);
+        return builder.create();
+    }
+
+    public static void showCustomListDialog(Context context) {
+
     }
 }

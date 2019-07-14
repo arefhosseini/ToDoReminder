@@ -231,7 +231,7 @@ public final class AlarmUtils {
 
     public static ArrayList<String> getRepeatTypes() {
         ArrayList<String> types = new ArrayList<>();
-        types.add(RepeatType.NEVER.getText());
+        types.add(RepeatType.ONCE.getText());
         types.add(RepeatType.DAILY.getText());
         types.add(RepeatType.WEEKLY.getText());
         types.add(RepeatType.MONTHLY.getText());
@@ -243,7 +243,7 @@ public final class AlarmUtils {
     public static RepeatType indexToRepeatType(int index) {
         switch (index) {
             case 0:
-               return RepeatType.NEVER;
+               return RepeatType.ONCE;
             case 1:
                 return RepeatType.DAILY;
             case 2:
@@ -255,7 +255,7 @@ public final class AlarmUtils {
             case 5:
                 return RepeatType.CUSTOM;
             default:
-                return RepeatType.NEVER;
+                return RepeatType.ONCE;
         }
     }
 }

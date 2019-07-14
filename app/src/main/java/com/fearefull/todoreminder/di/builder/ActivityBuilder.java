@@ -2,6 +2,8 @@ package com.fearefull.todoreminder.di.builder;
 
 import com.fearefull.todoreminder.ui.about.AboutFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerActivity;
+import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.date_picker.DatePickerFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.time_picker.TimePickerFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.time_picker.TimePickerFragmentProvider;
@@ -20,6 +22,7 @@ public abstract class ActivityBuilder {
             modules = {
                     HomeFragmentProvider.class,
                     AboutFragmentProvider.class,
+                    AlarmManagerFragmentProvider.class,
             })
     abstract MainActivity bindMainActivity();
 

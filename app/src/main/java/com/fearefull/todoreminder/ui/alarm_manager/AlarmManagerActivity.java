@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -17,6 +19,7 @@ import com.fearefull.todoreminder.databinding.ActivityAlarmManagerBinding;
 import com.fearefull.todoreminder.ui.alarm_manager.date_picker.DatePickerFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.time_picker.TimePickerFragment;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
+import com.fearefull.todoreminder.utils.CommonUtils;
 
 import javax.inject.Inject;
 
@@ -71,8 +74,8 @@ public class AlarmManagerActivity extends BaseActivity<ActivityAlarmManagerBindi
     }
 
     @Override
-    public void openTimePickerFragment() {
-        TimePickerFragment.newInstance(viewModel.getAlarm()).show(getSupportFragmentManager(), TimePickerFragment.TAG);
+    public void goBack() {
+
     }
 
     @Override
@@ -80,7 +83,6 @@ public class AlarmManagerActivity extends BaseActivity<ActivityAlarmManagerBindi
         DatePickerFragment.newInstance(viewModel.getAlarm()).show(getSupportFragmentManager(), DatePickerFragment.TAG);
     }
 
-    @SuppressLint("RtlHardcoded")
     @Override
     public void openRepeatPickerFragment() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
@@ -89,8 +91,34 @@ public class AlarmManagerActivity extends BaseActivity<ActivityAlarmManagerBindi
                 viewModel.getRepeats(),
                 viewModel.getRepeatDialogDefaultIndex(),
                 viewModel.repeatPickerOnClickListener);
+        AlertDialog dialog = CommonUtils.showSingleChoiceItemDialog(this, R.string.repeat_dialog_title,
+                viewModel.getRepeats(), viewModel.getRepeatDialogDefaultIndex(),
+                viewModel.repeatPickerOnClickListener);
+        dialog.show();
+    }
+
+    @Override
+    public void openCustomRepeatPickerFragment() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
+        builder.setTitle(R.string.custom_repeat_dialog_title);
+        @SuppressLint("InflateParams") View customAlarmItem = getLayoutInflater().inflate(R.layout.custom_repeat_alarm, null);
+        TextView everyRepeat = customAlarmItem.findViewById(R.id.every_repeat);
+        TextView onRepeat = customAlarmItem.findViewById(R.id.on_repeat);
+        everyRepeat.setText(viewModel.getEveryCustomRepeat());
+        onRepeat.setText(viewModel.getOnCustomRepeat());
+        builder.setView(customAlarmItem);
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    @Override
+    public void openEveryCustomRepeatPickerFragment() {
+
+    }
+
+    @Override
+    public void openOnCustomRepeatPickerFragment() {
+
     }
 
     @Override

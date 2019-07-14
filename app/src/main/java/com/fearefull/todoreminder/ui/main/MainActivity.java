@@ -19,10 +19,12 @@ import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.BuildConfig;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
+import com.fearefull.todoreminder.data.model.other.Alarm;
 import com.fearefull.todoreminder.databinding.ActivityMainBinding;
 import com.fearefull.todoreminder.databinding.NavigationHeaderMainBinding;
 import com.fearefull.todoreminder.ui.about.AboutFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerActivity;
+import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerFragment;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
 import com.fearefull.todoreminder.ui.home.HomeFragment;
 import com.fearefull.todoreminder.ui.login.LoginActivity;
@@ -103,7 +105,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public void openAlarmManagerActivity() {
-        startActivity(AlarmManagerActivity.newIntent(this));
+        //startActivity(AlarmManagerActivity.newIntent(this));
+        lockDrawer();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                .add(R.id.mainRootView, AlarmManagerFragment.newInstance(new Alarm()), AlarmManagerFragment.TAG)
+                .commit();
     }
 
     @SuppressLint("RtlHardcoded")

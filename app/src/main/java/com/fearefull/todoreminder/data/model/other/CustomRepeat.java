@@ -3,7 +3,7 @@ package com.fearefull.todoreminder.data.model.other;
 import java.util.Collections;
 import java.util.List;
 
-class CustomRepeat {
+public class CustomRepeat {
     private CustomRepeatType type;
     private int count;
     private List<WeekType> onWeekList;
@@ -83,5 +83,48 @@ class CustomRepeat {
 
     public void removeFromOnMonthList(MonthType monthType) {
         onMonthList.remove(monthType);
+    }
+
+    public String getOnString() {
+        switch (type) {
+            case MINUTE:
+                return count + " " + type.getText();
+            case HOUR:
+                return count + " " + type.getText();
+            case DAY:
+                return count + " " + type.getText();
+            case WEEK:
+                return getOnWeekString();
+            case MONTH:
+                return getOnMonthDayString();
+            case YEAR:
+                return getOnMonthString();
+            default:
+                return "";
+        }
+    }
+
+    private String getOnWeekString() {
+        StringBuilder result = new StringBuilder();
+        for (WeekType weekType: onWeekList) {
+            result.append(weekType.getText());
+        }
+        return result.toString();
+    }
+
+    private String getOnMonthDayString() {
+        StringBuilder result = new StringBuilder();
+        for (MonthDayType monthDayType: onDayMonthList) {
+            result.append(monthDayType.getText());
+        }
+        return result.toString();
+    }
+
+    private String getOnMonthString() {
+        StringBuilder result = new StringBuilder();
+        for (MonthType monthType: onMonthList) {
+            result.append(monthType.getText());
+        }
+        return result.toString();
     }
 }

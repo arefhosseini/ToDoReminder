@@ -50,8 +50,6 @@ public class TimePickerViewModel extends BaseViewModel<TimePickerNavigator> {
         alarm.getTime().setTimeType(AlarmUtils.indexToTimeType(newVal));
     }
 
-
-
     Alarm getAlarm() {
         return alarm;
     }

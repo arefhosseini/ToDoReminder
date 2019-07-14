@@ -66,7 +66,8 @@
     <color name="cyanDarkColor">#70BDC6</color>
     <color name="navyBlueColor">#214258</color>
     <color name="navyBlueDarkColor">#1C3A4E</color>
-    <color name="lightGreenColor">#78DC96</color>
+    <color name="greenDarkColor">#1C9B45</color>
+    <color name="greenColor">#78DC96</color>
     <color name="lightBlueColor">#55C8F0</color>
     <color name="blueBlackDarkColor">#13171d</color>
     <color name="blueBlackLightColor">#516179</color>

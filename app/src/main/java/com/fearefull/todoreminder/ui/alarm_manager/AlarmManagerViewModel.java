@@ -11,27 +11,56 @@ import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
+import timber.log.Timber;
+
 public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> {
 
     private Alarm alarm;
     private final ObservableField<String> time = new ObservableField<>();
     private final ObservableField<String> date = new ObservableField<>();
     private final ObservableField<String> repeat = new ObservableField<>();
+    private final ObservableField<String> note = new ObservableField<>();
 
     public AlarmManagerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 
-    public void onTimePickerClick() {
-        getNavigator().openTimePickerFragment();
+    String[] getHours() {
+        return AlarmUtils.get12Hours().toArray(new String[0]);
     }
 
-    public void onDatePickerClick() {
-        getNavigator().openDatePickerFragment();
+    String[] getMinutes() {
+        return AlarmUtils.getMinutes().toArray(new String[0]);
     }
 
-    public void onRepeatPickerClick() {
-        getNavigator().openRepeatPickerFragment();
+    String[] getTimeTypes() {
+        return AlarmUtils.getTimeTypes().toArray(new String[0]);
+    }
+
+    public void onNavigationBackClick() {
+        getNavigator().goBack();
+    }
+
+    public void onHoursPickerValueChange(int oldVal, int newVal) {
+        Timber.i("hour index %d", newVal);
+        alarm.getTime().setHour(AlarmUtils.indexToHour(newVal));
+        updateTime();
+    }
+
+    public void onMinutesPickerValueChange(int oldVal, int newVal) {
+        Timber.i("minute index %d", newVal);
+        alarm.getTime().setMinute(AlarmUtils.indexToMinute(newVal));
+        updateTime();
+    }
+
+    public void onTypesPickerValueChange(int oldVal, int newVal) {
+        Timber.i("type index %d", newVal);
+        alarm.getTime().setTimeType(AlarmUtils.indexToTimeType(newVal));
+        updateTime();
+    }
+
+    public void onNoteTextChange(CharSequence s) {
+        note.set(s.toString());
     }
 
     String[] getRepeats() {
@@ -50,6 +79,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         updateTime();
         updateDate();
         updateRepeat();
+        updateNote();
     }
 
     void updateTime() {
@@ -64,6 +94,10 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         repeat.set(alarm.getRepeat().toString());
     }
 
+    void updateNote() {
+        note.set(alarm.getNote());
+    }
+
     public ObservableField<String> getTime() {
         return time;
     }
@@ -76,15 +110,32 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         return repeat;
     }
 
+    public ObservableField<String> getNote() {
+        return note;
+    }
+
     int getRepeatDialogDefaultIndex() {
         return alarm.getRepeat().getType().getIndex();
     }
 
     DialogInterface.OnClickListener repeatPickerOnClickListener = (dialog, which) -> {
-        alarm.getRepeat().setType(AlarmUtils.indexToRepeatType(which));
-        if (alarm.getRepeat().getType() != RepeatType.CUSTOM) {
+        if (AlarmUtils.indexToRepeatType(which) != RepeatType.CUSTOM) {
+            alarm.getRepeat().setType(AlarmUtils.indexToRepeatType(which));
             dialog.dismiss();
             updateRepeat();
         }
+        else {
+            getNavigator().openCustomRepeatPickerFragment();
+        }
     };
+
+    String getEveryCustomRepeat() {
+        Timber.i(alarm.getRepeat().getCustomRepeat().getType().getText());
+        return alarm.getRepeat().getCustomRepeat().getType().getText();
+    }
+
+    String getOnCustomRepeat() {
+        Timber.i(alarm.getRepeat().getCustomRepeat().getOnString());
+        return alarm.getRepeat().getCustomRepeat().getOnString();
+    }
 }
