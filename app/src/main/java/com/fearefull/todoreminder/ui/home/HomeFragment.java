@@ -20,7 +20,7 @@ import com.fearefull.todoreminder.ui.base.BaseFragment;
 import javax.inject.Inject;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel>
-        implements HomeNavigator, AlarmAdapter.AlarmAdapterListener {
+        implements HomeNavigator, AlarmAdapter.AlarmAdapterListener, HomeCallBack{
 
     public static final String TAG = HomeFragment.class.getSimpleName();
     @Inject

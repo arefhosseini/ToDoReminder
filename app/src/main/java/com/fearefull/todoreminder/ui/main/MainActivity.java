@@ -25,6 +25,7 @@ import com.fearefull.todoreminder.databinding.NavigationHeaderMainBinding;
 import com.fearefull.todoreminder.ui.about.AboutFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerFragment;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
+import com.fearefull.todoreminder.ui.home.HomeCallBack;
 import com.fearefull.todoreminder.ui.home.HomeFragment;
 import com.fearefull.todoreminder.ui.login.LoginActivity;
 import com.fearefull.todoreminder.utils.CommonUtils;
@@ -49,7 +50,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private ActivityMainBinding binding;
     private DrawerLayout drawer;
     private NavigationView navigationView;
-    private HomeFragment homeFragment;
+    private HomeCallBack homeCallBack;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, MainActivity.class);
@@ -241,7 +242,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     private void showHomeFragment() {
         lockDrawer();
-        homeFragment = HomeFragment.newInstance();
+        HomeFragment homeFragment = HomeFragment.newInstance();
+        homeCallBack = homeFragment;
         getSupportFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
@@ -251,7 +253,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public boolean onReloadAlarms() {
-        homeFragment.reloadAlarmData();
-        return true;
+        return homeCallBack.reloadAlarmData();
     }
 }
