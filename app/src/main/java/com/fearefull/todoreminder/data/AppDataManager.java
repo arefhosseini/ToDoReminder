@@ -92,6 +92,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Observable<Boolean> removeAllAlarms() {
+        return dbHelper.removeAllAlarms();
+    }
+
+    @Override
     public void setUserAsLoggedOut() {
         updateUserInfo(
                 LoggedInMode.LOGGED_OUT,

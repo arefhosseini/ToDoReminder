@@ -1,5 +1,12 @@
 package com.fearefull.todoreminder.ui.main;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
@@ -9,22 +16,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.View;
-
 import com.fearefull.todoreminder.BR;
-import com.fearefull.todoreminder.BuildConfig;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
 import com.fearefull.todoreminder.data.model.other.Alarm;
 import com.fearefull.todoreminder.databinding.ActivityMainBinding;
 import com.fearefull.todoreminder.databinding.NavigationHeaderMainBinding;
 import com.fearefull.todoreminder.ui.about.AboutFragment;
-import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerActivity;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerFragment;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
 import com.fearefull.todoreminder.ui.home.HomeFragment;
@@ -223,7 +221,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                             showAboutFragment();
                             return true;
                         case R.id.navigationItemLogout:
-                            viewModel.logout();
+                            viewModel.removeAlarms();
                             return true;
                         default:
                             return false;
@@ -240,7 +238,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 .add(R.id.mainRootView, AboutFragment.newInstance(), AboutFragment.TAG)
                 .commit();
     }
-
 
     private void showHomeFragment() {
         lockDrawer();

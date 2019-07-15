@@ -13,4 +13,5 @@ public interface DbHelper {
     Observable<Boolean> insertUser(final User user);
     Observable<Boolean> insertAlarm(final AlarmModel alarmModel);
     Observable<List<Alarm>> getAllAlarms();
+    Observable<Boolean> removeAllAlarms();
 }

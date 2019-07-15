@@ -51,4 +51,12 @@ public class AppDbHelper implements DbHelper{
             return alarmList;
         });
     }
+
+    @Override
+    public Observable<Boolean> removeAllAlarms() {
+        return Observable.fromCallable(() -> {
+           appDatabase.alarmDao().resetTable();
+           return true;
+        });
+    }
 }

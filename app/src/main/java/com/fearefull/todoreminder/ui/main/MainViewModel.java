@@ -37,6 +37,19 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
         appVersion.set(version);
     }
 
+    void removeAlarms() {
+        getCompositeDisposable().add(getDataManager()
+                .removeAllAlarms()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(result -> {
+                    logout();
+                }, throwable -> {
+
+                })
+        );
+    }
+
     void logout() {
         setIsLoading(true);
         getDataManager().setUserAsLoggedOut();
