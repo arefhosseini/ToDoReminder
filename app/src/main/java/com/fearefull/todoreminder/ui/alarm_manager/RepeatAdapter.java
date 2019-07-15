@@ -82,7 +82,7 @@ public class RepeatAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         private final ItemRepeatBinding binding;
         private RepeatItemViewModel repeatItemViewModel;
 
-        public  RepeatViewHolder(ItemRepeatBinding binding) {
+        public RepeatViewHolder(ItemRepeatBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
@@ -113,10 +113,6 @@ public class RepeatAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
                 listener.onRepeatItemClick(repeatType);
             }
-        }
-
-        public ItemRepeatBinding getBinding() {
-            return binding;
         }
     }
 }

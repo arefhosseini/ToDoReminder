@@ -6,6 +6,6 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class HomeFragmentProvider {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = HomeFragmentModule.class)
     abstract HomeFragment provideHomeFragmentFactory();
 }

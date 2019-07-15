@@ -67,6 +67,9 @@ ext {
     // shape of view
     shapeOfViewVersion = '1.4.7'
 
+    // ringtone picker
+    ringtonePickerVersion = '1.2'
+
     // debug database
     debugDBVersion = '1.0.6'
 

@@ -8,11 +8,17 @@ import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.provider.Settings;
 import android.util.Patterns;
+import android.widget.FrameLayout;
+
+import androidx.fragment.app.Fragment;
 
 import com.fearefull.todoreminder.BuildConfig;
 import com.fearefull.todoreminder.R;
+import com.kevalpatel.ringtonepicker.RingtonePickerDialog;
+import com.kevalpatel.ringtonepicker.RingtonePickerListener;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public final class CommonUtils {
 
@@ -68,5 +75,44 @@ public final class CommonUtils {
 
     public static void showCustomListDialog(Context context) {
 
+    }
+
+    public static void showRingtonePicker(Fragment fragment, Uri defaultRingtone, RingtonePickerListener ringtonePickerListener) {
+        RingtonePickerDialog.Builder ringtonePickerBuilder = new RingtonePickerDialog
+                .Builder(Objects.requireNonNull(fragment.getContext()), fragment.getChildFragmentManager())
+
+                //Set title of the dialog.
+                //If set null, no title will be displayed.
+                .setTitle(fragment.getString(R.string.choose_ringtone))
+
+                //set the currently selected uri, to mark that ringtone as checked by default.
+                //If no ringtone is currently selected, pass null.
+                .setCurrentRingtoneUri(defaultRingtone)
+
+                //Set true to allow allow user to select default ringtone set in phone settings.
+                .displayDefaultRingtone(true)
+
+                //Set true to allow user to select silent (i.e. No ringtone.).
+                .displaySilentRingtone(true)
+
+                //set the text to display of the positive (ok) button.
+                //If not set OK will be the default text.
+                .setPositiveButtonText(fragment.getString(R.string.confirm))
+
+                //set text to display as negative button.
+                //If set null, negative button will not be displayed.
+                .setCancelButtonText(fragment.getString(R.string.cancel))
+
+                //Set flag true if you want to play the sample of the clicked tone.
+                .setPlaySampleWhileSelection(true)
+
+                //Set the callback listener.
+                .setListener(ringtonePickerListener);
+
+        //Add the desirable ringtone types.
+        ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_ALARM);
+
+        //Display the dialog.
+        ringtonePickerBuilder.show();
     }
 }

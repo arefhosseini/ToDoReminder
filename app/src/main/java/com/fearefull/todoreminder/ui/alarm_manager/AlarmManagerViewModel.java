@@ -1,17 +1,22 @@
 package com.fearefull.todoreminder.ui.alarm_manager;
 
 import android.content.DialogInterface;
+import android.net.Uri;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 
 import com.fearefull.todoreminder.data.DataManager;
+import com.fearefull.todoreminder.data.model.db.AlarmModel;
 import com.fearefull.todoreminder.data.model.other.Alarm;
 import com.fearefull.todoreminder.data.model.other.RepeatType;
 import com.fearefull.todoreminder.data.model.other.RepeatTypeItem;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
+import com.kevalpatel.ringtonepicker.RingtonePickerListener;
 
 import java.util.List;
 
@@ -56,6 +61,20 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     public void onNavigationBackClick() {
         getNavigator().goBack();
+    }
+
+    public void onSaveClick() {
+        getCompositeDisposable().add(getDataManager()
+                .insertAlarm(new AlarmModel(0L, 0))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(result -> {
+                    if (result)
+                        getNavigator().save();
+                }, throwable -> {
+
+                })
+        );
     }
 
     public void onHoursPickerValueChange(int oldVal, int newVal) {
@@ -122,7 +141,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     void updateRingtone() {
-        ringtone.set("پیشفرض");
+        ringtone.set(alarm.getRingtone().getName());
     }
 
     public ObservableField<String> getTime() {
@@ -160,6 +179,14 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         }
     };
 
+    RingtonePickerListener ringtonePickerListener = (ringtoneName, ringtoneUri) -> {
+        if (ringtoneUri != null) {
+            alarm.getRingtone().setName(ringtoneName);
+            //alarm.getRingtone().setUri(ringtoneUri);
+            updateRingtone();
+        }
+    };
+
     String getEveryCustomRepeat() {
         Timber.i(alarm.getRepeat().getCustomRepeat().getType().getText());
         return alarm.getRepeat().getCustomRepeat().getType().getText();
@@ -172,5 +199,9 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     public void onRingtoneClick() {
         getNavigator().closeAllExpansions();
+    }
+
+    Uri getDefaultRingtone() {
+        return alarm.getRingtone().getUri();
     }
 }

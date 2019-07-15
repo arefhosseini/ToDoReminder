@@ -1,5 +1,6 @@
 package com.fearefull.todoreminder.ui.main;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
@@ -40,7 +41,7 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel>
-        implements MainNavigator, HasSupportFragmentInjector {
+        implements MainNavigator, HasSupportFragmentInjector, AlarmManagerFragment.AlarmManagerCallBack {
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
@@ -50,6 +51,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private ActivityMainBinding binding;
     private DrawerLayout drawer;
     private NavigationView navigationView;
+    private HomeFragment homeFragment;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, MainActivity.class);
@@ -85,6 +87,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
+
         viewModel.setNavigator(this);
         setUp();
     }
@@ -107,11 +110,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     public void openAlarmManagerActivity() {
         //startActivity(AlarmManagerActivity.newIntent(this));
         lockDrawer();
+        AlarmManagerFragment fragment = AlarmManagerFragment.newInstance(new Alarm());
+        fragment.setCallBack(this);
         getSupportFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
                 .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.mainRootView, AlarmManagerFragment.newInstance(new Alarm()), AlarmManagerFragment.TAG)
+                .add(R.id.mainRootView, fragment, AlarmManagerFragment.TAG)
                 .commit();
     }
 
@@ -127,6 +132,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         }
         else
             onFragmentDetached(AboutFragment.TAG);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void onFragmentDetached(String tag) {
@@ -234,10 +244,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     private void showHomeFragment() {
         lockDrawer();
+        homeFragment = HomeFragment.newInstance();
         getSupportFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
-                .add(R.id.mainSubRootView, HomeFragment.newInstance(), HomeFragment.TAG)
+                .add(R.id.mainSubRootView, homeFragment, HomeFragment.TAG)
                 .commit();
+    }
+
+    @Override
+    public boolean onReloadAlarms() {
+        homeFragment.reloadAlarmData();
+        return true;
     }
 }

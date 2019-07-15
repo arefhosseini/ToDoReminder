@@ -30,4 +30,7 @@
     <string name="note_hint">یادداشت خود را وارد کنید...</string>
     <string name="add_reminder">افزودن یادآور</string>
     <string name="ringtone">آهنگ زنگ</string>
+    <string name="choose_ringtone">انتخاب زنگ</string>
+    <string name="confirm">تایید</string>
+    <string name="cancel">لغو</string>
 </resources>

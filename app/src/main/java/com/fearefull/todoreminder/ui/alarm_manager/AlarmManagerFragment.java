@@ -6,7 +6,6 @@ import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,9 +18,8 @@ import com.fearefull.todoreminder.data.model.other.Alarm;
 import com.fearefull.todoreminder.data.model.other.RepeatTypeItem;
 import com.fearefull.todoreminder.databinding.FragmentAlarmManagerBinding;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
+import com.fearefull.todoreminder.utils.CommonUtils;
 import com.fearefull.todoreminder.utils.ViewUtils;
-
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -35,11 +33,11 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     @Inject
     LinearLayoutManager layoutManager;
     public static final String TAG = AlarmManagerFragment.class.getSimpleName();
-
     @Inject
     ViewModelProviderFactory factory;
     private AlarmManagerViewModel viewModel;
     private FragmentAlarmManagerBinding binding;
+    private AlarmManagerCallBack callBack;
 
     public static AlarmManagerFragment newInstance(Alarm alarm) {
         Bundle args = new Bundle();
@@ -108,6 +106,13 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     }
 
     @Override
+    public void save() {
+        if(callBack.onReloadAlarms()) {
+            goBack();
+        }
+    }
+
+    @Override
     public void openDatePickerFragment() {
 
     }
@@ -150,5 +155,15 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
             binding.noteExpansionLayout.collapse(true);
         else if (binding.repeatExpansionLayout.isExpanded())
             binding.repeatExpansionLayout.collapse(true);
+
+        CommonUtils.showRingtonePicker(this, viewModel.getDefaultRingtone(), viewModel.ringtonePickerListener);
+    }
+
+    public void setCallBack(AlarmManagerCallBack callBack) {
+        this.callBack = callBack;
+    }
+
+    public interface AlarmManagerCallBack {
+        boolean onReloadAlarms();
     }
 }

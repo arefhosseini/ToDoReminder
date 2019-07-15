@@ -7,10 +7,14 @@ import com.fearefull.todoreminder.data.local.db.DbHelper;
 import com.fearefull.todoreminder.data.local.prefs.PreferencesHelper;
 import com.fearefull.todoreminder.data.model.api.LoginRequest;
 import com.fearefull.todoreminder.data.model.api.LoginResponse;
+import com.fearefull.todoreminder.data.model.db.AlarmModel;
 import com.fearefull.todoreminder.data.model.db.LoggedInMode;
 import com.fearefull.todoreminder.data.model.db.User;
+import com.fearefull.todoreminder.data.model.other.Alarm;
 import com.fearefull.todoreminder.data.remote.ApiHelper;
 import com.google.gson.Gson;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -75,6 +79,16 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<Boolean> insertUser(User user) {
         return dbHelper.insertUser(user);
+    }
+
+    @Override
+    public Observable<Boolean> insertAlarm(AlarmModel alarmModel) {
+        return dbHelper.insertAlarm(alarmModel);
+    }
+
+    @Override
+    public Observable<List<Alarm>> getAllAlarms() {
+        return dbHelper.getAllAlarms();
     }
 
     @Override

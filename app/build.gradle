@@ -69,6 +69,9 @@ dependencies {
     // shape of view
     implementation "com.github.florent37:shapeofview:$rootProject.shapeOfViewVersion"
 
+    // ringtone picker
+    implementation "com.kevalpatel2106:ringtonepicker:$rootProject.ringtonePickerVersion"
+
     // debug database
     debugImplementation "com.amitshekhar.android:debug-db:$rootProject.debugDBVersion"
 

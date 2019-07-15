@@ -10,12 +10,14 @@ public class Alarm implements Serializable {
     private MyDate date;
     private MyRepeat repeat;
     private String note;
+    private Ringtone ringtone;
 
     public Alarm() {
         time = new MyTime();
         date = new MyDate();
         repeat = new MyRepeat();
         note = AppConstants.DEFAULT_NOTE;
+        ringtone = new Ringtone();
     }
 
     public MyTime getTime() {
@@ -48,5 +50,13 @@ public class Alarm implements Serializable {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Ringtone getRingtone() {
+        return ringtone;
+    }
+
+    public void setRingtone(Ringtone ringtone) {
+        this.ringtone = ringtone;
     }
 }

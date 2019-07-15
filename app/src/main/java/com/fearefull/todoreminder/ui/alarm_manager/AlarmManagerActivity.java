@@ -79,6 +79,11 @@ public class AlarmManagerActivity extends BaseActivity<ActivityAlarmManagerBindi
     }
 
     @Override
+    public void save() {
+
+    }
+
+    @Override
     public void openDatePickerFragment() {
         DatePickerFragment.newInstance(viewModel.getAlarm()).show(getSupportFragmentManager(), DatePickerFragment.TAG);
     }
