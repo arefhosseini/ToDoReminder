@@ -29,4 +29,5 @@
     <string name="note">یادداشت</string>
     <string name="note_hint">یادداشت خود را وارد کنید...</string>
     <string name="add_reminder">افزودن یادآور</string>
+    <string name="ringtone">آهنگ زنگ</string>
 </resources>

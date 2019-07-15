@@ -64,6 +64,8 @@
     <color name="cyanLightColor">#c9ebee</color>
     <color name="cyanColor">#b5e3e7</color>
     <color name="cyanDarkColor">#70BDC6</color>
+    <color name="pinkColor">#E7B5DF</color>
+    <color name="pinkDarkColor">#C670BD</color>
     <color name="navyBlueColor">#214258</color>
     <color name="navyBlueDarkColor">#1C3A4E</color>
     <color name="greenDarkColor">#1C9B45</color>

@@ -6,6 +6,6 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class AlarmManagerFragmentProvider {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = AlarmManagerFragmentModule.class)
     abstract AlarmManagerFragment provideAlarmManagerFragmentFactory();
 }

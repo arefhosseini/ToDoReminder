@@ -3,12 +3,15 @@ package com.fearefull.todoreminder.utils;
 import com.fearefull.todoreminder.data.model.other.MonthType;
 import com.fearefull.todoreminder.data.model.other.MyTime;
 import com.fearefull.todoreminder.data.model.other.RepeatType;
+import com.fearefull.todoreminder.data.model.other.RepeatTypeItem;
 import com.fearefull.todoreminder.data.model.other.TimeType;
+import com.fearefull.todoreminder.ui.alarm_manager.RepeatItemViewModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public final class AlarmUtils {
@@ -257,5 +260,16 @@ public final class AlarmUtils {
             default:
                 return RepeatType.ONCE;
         }
+    }
+
+    public static List<RepeatTypeItem> getRepeatTypeItems() {
+        List<RepeatTypeItem> list = new ArrayList<>();
+        list.add(new RepeatTypeItem(RepeatType.ONCE, true));
+        list.add(new RepeatTypeItem(RepeatType.DAILY, false));
+        list.add(new RepeatTypeItem(RepeatType.WEEKLY, false));
+        list.add(new RepeatTypeItem(RepeatType.MONTHLY, false));
+        list.add(new RepeatTypeItem(RepeatType.YEARLY, false));
+        list.add(new RepeatTypeItem(RepeatType.CUSTOM, false));
+        return list;
     }
 }

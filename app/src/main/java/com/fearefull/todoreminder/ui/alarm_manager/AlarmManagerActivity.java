@@ -122,6 +122,11 @@ public class AlarmManagerActivity extends BaseActivity<ActivityAlarmManagerBindi
     }
 
     @Override
+    public void closeAllExpansions() {
+
+    }
+
+    @Override
     public void onFragmentDetached(String tag) {
         super.onFragmentDetached(tag);
     }

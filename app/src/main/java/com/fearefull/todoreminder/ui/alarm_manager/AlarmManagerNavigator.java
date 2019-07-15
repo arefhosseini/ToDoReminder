@@ -7,4 +7,5 @@ interface AlarmManagerNavigator extends AlarmManagerCallBack{
     void openCustomRepeatPickerFragment();
     void openEveryCustomRepeatPickerFragment();
     void openOnCustomRepeatPickerFragment();
+    void closeAllExpansions();
 }

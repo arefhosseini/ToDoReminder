@@ -467,14 +467,104 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="horizontal"
+                            android:gravity="center"
                             android:paddingTop="100dp"
-                            android:paddingBottom="16dp"
-                            android:paddingLeft="16dp"
-                            android:paddingRight="16dp">
+                            android:paddingBottom="32dp">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/repeatRecyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layoutDirection="rtl"
+                                app:adapter="@{viewModel.getRepeatItemsLiveData}"
+                                tools:listitem="@layout/item_repeat" />
 
                         </LinearLayout>
 
                     </com.github.florent37.expansionpanel.ExpansionLayout>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/ringtoneLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-24dp">
+
+                    <FrameLayout
+                        android:layout_height="100dp"
+                        android:layout_width="match_parent"
+                        android:id="@+id/ringtoneHeader"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:onClick="@{() -> viewModel.onRingtoneClick()}"
+                        android:translationZ="8dp">
+
+                        <com.github.florent37.shapeofview.shapes.ArcView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:elevation="4dp"
+                            app:shape_arc_height="-24dp"
+                            app:shape_arc_position="top">
+
+                            <com.github.florent37.shapeofview.shapes.ArcView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:shape_arc_height="24dp"
+                                app:shape_arc_position="bottom">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/pinkDarkColor"/>
+
+                                <RelativeLayout
+                                    android:layout_gravity="center"
+                                    android:paddingLeft="@dimen/default_layout_padding"
+                                    android:paddingRight="@dimen/default_layout_padding"
+                                    android:paddingBottom="@dimen/default_half_layout_padding"
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent">
+
+                                    <ImageView
+                                        android:id="@+id/ringtoneHeaderIcon"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:src="@drawable/ic_music_note_black_24dp"
+                                        android:tint="@color/primaryTextColorDarkTheme"/>
+
+                                    <TextView
+                                        style="@style/TextStyle.Title"
+                                        android:id="@+id/ringtoneHeaderText"
+                                        android:layout_height="wrap_content"
+                                        android:layout_width="wrap_content"
+                                        android:layout_toLeftOf="@id/ringtoneHeaderIcon"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginRight="8dp"
+                                        android:textColor="@color/primaryTextColorDarkTheme"
+                                        android:text="@string/ringtone" />
+
+                                    <TextView
+                                        style="@style/TextStyle.Title.Sub"
+                                        android:id="@+id/ringtoneHeaderDetail"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_alignParentBottom="true"
+                                        android:layout_marginRight="24dp"
+                                        android:layout_width="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@{viewModel.ringtone}"
+                                        android:textColor="@color/secondaryTextColorDarkTheme" />
+
+                                </RelativeLayout>
+                            </com.github.florent37.shapeofview.shapes.ArcView>
+
+                        </com.github.florent37.shapeofview.shapes.ArcView>
+
+                    </FrameLayout>
+
                 </FrameLayout>
             </com.github.florent37.expansionpanel.viewgroup.ExpansionsViewGroupLinearLayout>
         </LinearLayout>

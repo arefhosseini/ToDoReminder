@@ -3,13 +3,17 @@ package com.fearefull.todoreminder.ui.alarm_manager;
 import android.content.DialogInterface;
 
 import androidx.databinding.ObservableField;
+import androidx.lifecycle.MutableLiveData;
 
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.other.Alarm;
 import com.fearefull.todoreminder.data.model.other.RepeatType;
+import com.fearefull.todoreminder.data.model.other.RepeatTypeItem;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
+
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -20,9 +24,22 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     private final ObservableField<String> date = new ObservableField<>();
     private final ObservableField<String> repeat = new ObservableField<>();
     private final ObservableField<String> note = new ObservableField<>();
+    private final MutableLiveData<List<RepeatTypeItem>> repeatItemsLiveData;
+    private final ObservableField<String> ringtone = new ObservableField<>();
 
     public AlarmManagerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
+        repeatItemsLiveData = new MutableLiveData<>();
+        fetchRepeatData();
+    }
+
+    private void fetchRepeatData() {
+        setIsLoading(true);
+        repeatItemsLiveData.setValue(AlarmUtils.getRepeatTypeItems());
+    }
+
+    public MutableLiveData<List<RepeatTypeItem>> getRepeatItemsLiveData() {
+        return repeatItemsLiveData;
     }
 
     String[] getHours() {
@@ -80,6 +97,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         updateDate();
         updateRepeat();
         updateNote();
+        updateRingtone();
     }
 
     void updateTime() {
@@ -90,12 +108,21 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         date.set(alarm.getDate().toString());
     }
 
+    void updateRepeatType(RepeatType repeatType) {
+        alarm.getRepeat().setType(repeatType);
+        updateRepeat();
+    }
+
     void updateRepeat() {
         repeat.set(alarm.getRepeat().toString());
     }
 
     void updateNote() {
         note.set(alarm.getNote());
+    }
+
+    void updateRingtone() {
+        ringtone.set("پیشفرض");
     }
 
     public ObservableField<String> getTime() {
@@ -112,6 +139,10 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     public ObservableField<String> getNote() {
         return note;
+    }
+
+    public ObservableField<String> getRingtone() {
+        return ringtone;
     }
 
     int getRepeatDialogDefaultIndex() {
@@ -137,5 +168,9 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     String getOnCustomRepeat() {
         Timber.i(alarm.getRepeat().getCustomRepeat().getOnString());
         return alarm.getRepeat().getCustomRepeat().getOnString();
+    }
+
+    public void onRingtoneClick() {
+        getNavigator().closeAllExpansions();
     }
 }

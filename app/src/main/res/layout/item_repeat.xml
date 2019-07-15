@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fearefull.todoreminder.ui.alarm_manager.RepeatItemViewModel" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> viewModel.onItemClick()}"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextStyle.Title.Sub"
+            android:background="@drawable/item_repeat_unselected_bg"
+            android:text="@{viewModel.title}"
+            android:paddingLeft="@dimen/default_half_layout_padding"
+            android:paddingRight="@dimen/default_half_layout_padding"
+            android:paddingBottom="@dimen/default_half_half_layout_padding"
+            android:paddingTop="@dimen/default_half_half_layout_padding"
+            android:textColor="@color/primaryColorLightTheme"/>
+    </RelativeLayout>
+</layout>

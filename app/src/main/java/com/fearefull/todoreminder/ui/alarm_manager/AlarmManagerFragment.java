@@ -8,11 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
 import com.fearefull.todoreminder.data.model.other.Alarm;
+import com.fearefull.todoreminder.data.model.other.RepeatTypeItem;
 import com.fearefull.todoreminder.databinding.FragmentAlarmManagerBinding;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.utils.ViewUtils;
@@ -24,8 +28,12 @@ import javax.inject.Inject;
 import static com.fearefull.todoreminder.utils.AppConstants.ALARM_KEY;
 
 public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBinding, AlarmManagerViewModel>
-        implements AlarmManagerNavigator {
+        implements AlarmManagerNavigator, RepeatAdapter.RepeatAdapterListener {
 
+    @Inject
+    RepeatAdapter repeatAdapter;
+    @Inject
+    LinearLayoutManager layoutManager;
     public static final String TAG = AlarmManagerFragment.class.getSimpleName();
 
     @Inject
@@ -69,12 +77,17 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         binding = getViewDataBinding();
+        repeatAdapter.setListener(this);
         setUp();
     }
 
     private void setUp() {
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        binding.repeatRecyclerView.setLayoutManager(layoutManager);
+        binding.repeatRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        binding.repeatRecyclerView.setAdapter(repeatAdapter);
+
         setUpNumberPicker(binding.hoursPicker, viewModel.getHours(), viewModel.getAlarm().getTime().getHourIndex());
         setUpNumberPicker(binding.minutesPicker, viewModel.getMinutes(), viewModel.getAlarm().getTime().getMinuteIndex());
         setUpNumberPicker(binding.typePicker, viewModel.getTimeTypes(), viewModel.getAlarm().getTime().getTimeTypeIndex());
@@ -122,5 +135,20 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     @Override
     public void onUpdateAlarm(Alarm alarm, String fragmentTag) {
 
+    }
+
+    @Override
+    public void onRepeatItemClick(RepeatTypeItem repeatTypeItem) {
+        viewModel.updateRepeatType(repeatTypeItem.getRepeatType());
+    }
+
+    @Override
+    public void closeAllExpansions() {
+        if (binding.timeExpansionLayout.isExpanded())
+            binding.timeExpansionLayout.collapse(true);
+        else if (binding.noteExpansionLayout.isExpanded())
+            binding.noteExpansionLayout.collapse(true);
+        else if (binding.repeatExpansionLayout.isExpanded())
+            binding.repeatExpansionLayout.collapse(true);
     }
 }
