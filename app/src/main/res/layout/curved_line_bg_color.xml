@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="24dp"
+    android:layout_gravity="bottom"
+    android:translationZ="16dp"
+    android:layout_marginTop="-24dp">
+
+    <com.github.florent37.shapeofview.shapes.ArcView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="4dp"
+        app:shape_arc_height="-24dp"
+        app:shape_arc_position="top">
+
+        <com.github.florent37.shapeofview.shapes.ArcView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:shape_arc_height="24dp"
+            app:shape_arc_position="bottom">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/backgroundColorLightTheme"/>
+
+        </com.github.florent37.shapeofview.shapes.ArcView>
+    </com.github.florent37.shapeofview.shapes.ArcView>
+</FrameLayout>

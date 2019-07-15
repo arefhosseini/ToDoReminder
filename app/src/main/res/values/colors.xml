@@ -6,6 +6,12 @@
     <color name="primaryGlassColorLightTheme">#E8E3EE</color>
     <color name="primaryDarkColorLightTheme">#140078</color>
 
+    <!--primary colors gradient-->
+    <color name="primaryColorGradient1">#452692</color>
+    <color name="primaryColorGradient2">#3A207A</color>
+    <color name="primaryColorGradient3">#301A68</color>
+    <color name="primaryColorGradient4">#22104B</color>
+
     <!--secondary colors for light theme-->
     <color name="secondaryColorLightTheme">#ffb74d</color>
     <color name="secondaryLightColorLightTheme">#ffe97d</color>

@@ -32,7 +32,7 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="72dp"
+                    android:layout_height="74dp"
                     app:popupTheme="@style/AppTheme.PopupOverlay"
                     android:contentInsetLeft="0dp"
                     android:contentInsetStart="0dp"
@@ -97,6 +97,8 @@
                 app:expansion_openOnlyOne="true"
                 android:orientation="vertical">
 
+                <include layout="@layout/curved_line_bg_color" />
+
                 <FrameLayout
                     android:id="@+id/timeLayout"
                     android:layout_width="match_parent"
@@ -128,7 +130,7 @@
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@color/secondaryColorLightTheme"/>
+                                    android:background="@color/primaryColorGradient1"/>
 
                                 <RelativeLayout
                                     android:layout_gravity="center"
@@ -184,6 +186,7 @@
                             </com.github.florent37.shapeofview.shapes.ArcView>
 
                         </com.github.florent37.shapeofview.shapes.ArcView>
+                        <include layout="@layout/curved_line_bg_color" />
 
                     </com.github.florent37.expansionpanel.ExpansionHeader>
 
@@ -192,7 +195,7 @@
                         app:expansion_expanded="true"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
-                        android:background="@color/secondaryLightColorLightTheme">
+                        android:background="@color/primaryLightColorLightTheme">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -245,6 +248,8 @@
                     </com.github.florent37.expansionpanel.ExpansionLayout>
                 </FrameLayout>
 
+                <include layout="@layout/curved_line_bg_color" />
+
                 <FrameLayout
                     android:id="@+id/noteLayout"
                     android:layout_width="match_parent"
@@ -276,7 +281,7 @@
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@color/cyanDarkColor"/>
+                                    android:background="@color/primaryColorGradient2"/>
 
                                 <RelativeLayout
                                     android:layout_gravity="center"
@@ -333,6 +338,7 @@
 
                         </com.github.florent37.shapeofview.shapes.ArcView>
 
+                        <include layout="@layout/curved_line_bg_color" />
                     </com.github.florent37.expansionpanel.ExpansionHeader>
 
                     <com.github.florent37.expansionpanel.ExpansionLayout
@@ -340,7 +346,7 @@
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:layout_marginTop="24dp"
-                        android:background="@color/cyanColor">
+                        android:background="@color/primaryLightColorLightTheme">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -366,6 +372,8 @@
 
                     </com.github.florent37.expansionpanel.ExpansionLayout>
                 </FrameLayout>
+
+                <include layout="@layout/curved_line_bg_color" />
 
                 <FrameLayout
                     android:id="@+id/repeatLayout"
@@ -398,7 +406,7 @@
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@color/greenDarkColor"/>
+                                    android:background="@color/primaryColorGradient3"/>
 
                                 <RelativeLayout
                                     android:layout_gravity="center"
@@ -454,6 +462,7 @@
                             </com.github.florent37.shapeofview.shapes.ArcView>
 
                         </com.github.florent37.shapeofview.shapes.ArcView>
+                        <include layout="@layout/curved_line_bg_color" />
 
                     </com.github.florent37.expansionpanel.ExpansionHeader>
 
@@ -462,7 +471,7 @@
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:layout_marginTop="24dp"
-                        android:background="@color/greenColor">
+                        android:background="@color/primaryLightColorLightTheme">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -485,6 +494,8 @@
 
                     </com.github.florent37.expansionpanel.ExpansionLayout>
                 </FrameLayout>
+
+                <include layout="@layout/curved_line_bg_color" />
 
                 <FrameLayout
                     android:id="@+id/ringtoneLayout"
@@ -517,7 +528,7 @@
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@color/pinkDarkColor"/>
+                                    android:background="@color/primaryColorGradient4"/>
 
                                 <RelativeLayout
                                     android:layout_gravity="center"
@@ -561,11 +572,8 @@
 
                                 </RelativeLayout>
                             </com.github.florent37.shapeofview.shapes.ArcView>
-
                         </com.github.florent37.shapeofview.shapes.ArcView>
-
                     </FrameLayout>
-
                 </FrameLayout>
             </com.github.florent37.expansionpanel.viewgroup.ExpansionsViewGroupLinearLayout>
         </LinearLayout>
