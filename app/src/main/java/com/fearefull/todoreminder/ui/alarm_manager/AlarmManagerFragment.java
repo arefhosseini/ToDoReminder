@@ -20,6 +20,7 @@ import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.data.model.other.RepeatItem;
 import com.fearefull.todoreminder.databinding.FragmentAlarmManagerBinding;
+import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleFragment;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.utils.CommonUtils;
@@ -129,14 +130,14 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
 
     @Override
     public void openOnceRepeatFragment() {
-        SimpleFragment simpleFragment = SimpleFragment.newInstance(viewModel.getAlarm());
-        simpleFragment.setCallBack(this);
+        OnceRepeatFragment onceRepeatFragment = OnceRepeatFragment.newInstance(viewModel.getAlarm());
+        onceRepeatFragment.setCallBack(this);
+        CHILD_TAG = SimpleFragment.TAG;
         getChildFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
-                .add(R.id.repeatSubRootView, simpleFragment, SimpleFragment.TAG)
+                .add(R.id.repeatSubRootView, onceRepeatFragment, CHILD_TAG)
                 .commit();
-        CHILD_TAG = SimpleFragment.TAG;
     }
 
     @Override

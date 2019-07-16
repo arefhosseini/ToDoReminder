@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.splash.SplashActivity"
+    tools:ignore="RtlHardcoded">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatViewModel" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <TextView
+            style="@style/TextStyle.Title.Sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingRight="15dp"
+            android:textColor="@color/primaryTextColorDarkTheme"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/quarter_bottom_left_circle_secondary_bg"
+            android:text="@string/add"
+            tools:ignore="RtlSymmetry" />
+
+        <FrameLayout
+            android:id="@+id/timeLayout"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/quarter_top_right_circle_unselected_bg">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:padding="6dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/ic_access_time_black_24dp"
+                android:tint="@color/primaryColorLightTheme"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/dateLayout"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/quarter_bottom_right_circle_unselected_bg">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:padding="6dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/ic_today_black_24dp"
+                android:tint="@color/primaryColorLightTheme"/>
+        </FrameLayout>
+    </RelativeLayout>
+</layout>

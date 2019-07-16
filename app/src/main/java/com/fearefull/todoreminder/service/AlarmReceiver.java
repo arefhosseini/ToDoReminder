@@ -37,7 +37,7 @@ public class AlarmReceiver extends BroadcastReceiver
 
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         @SuppressLint("InvalidWakeLockTag") PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
-        wl.acquire(1000 * 60);
+        wl.acquire();
 
         context.startActivity(AlarmNotificationActivity.newIntent(context));
         compositeDisposable.add(dataManager.getAllAlarms()

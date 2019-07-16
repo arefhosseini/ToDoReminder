@@ -7,6 +7,7 @@ import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.ui.about.AboutViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.date_picker.DatePickerViewModel;
+import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.time_picker.TimePickerViewModel;
 import com.fearefull.todoreminder.ui.alarm_notification.AlarmNotificationViewModel;
@@ -76,6 +77,10 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         if (modelClass.isAssignableFrom(SimpleViewModel.class)) {
             //noinspection unchecked
             return (T) new SimpleViewModel(dataManager, schedulerProvider);
+        }
+        if (modelClass.isAssignableFrom(OnceRepeatViewModel.class)) {
+            //noinspection unchecked
+            return (T) new OnceRepeatViewModel(dataManager, schedulerProvider);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

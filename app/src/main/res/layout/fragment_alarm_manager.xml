@@ -192,7 +192,6 @@
 
                     <com.github.florent37.expansionpanel.ExpansionLayout
                         android:id="@+id/timeExpansionLayout"
-                        app:expansion_expanded="true"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:background="@color/primaryLightColorLightTheme">
@@ -471,6 +470,7 @@
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:layout_marginTop="24dp"
+                        app:expansion_expanded="true"
                         android:background="@color/primaryLightColorLightTheme">
 
                         <LinearLayout
@@ -478,8 +478,7 @@
                             android:layout_height="match_parent"
                             android:orientation="vertical"
                             android:gravity="center"
-                            android:paddingTop="100dp"
-                            android:paddingBottom="32dp">
+                            android:paddingTop="100dp">
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/repeatRecyclerView"
@@ -487,18 +486,36 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 android:layoutDirection="rtl"
-                                android:paddingBottom="24dp"
+                                android:paddingBottom="8dp"
                                 app:adapter="@{viewModel.getRepeatItemsLiveData}"
                                 tools:listitem="@layout/item_repeat" />
 
-                            <RelativeLayout
+                            <com.github.florent37.shapeofview.shapes.ArcView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/repeatSubRootView">
-                            </RelativeLayout>
+                                android:elevation="4dp"
+                                app:shape_arc_height="-24dp"
+                                app:shape_arc_position="top">
+
+                                <com.github.florent37.shapeofview.shapes.ArcView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:shape_arc_height="24dp"
+                                    app:shape_arc_position="bottom">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/primaryLightColorGradient1"/>
+
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/repeatSubRootView" />
+                                </com.github.florent37.shapeofview.shapes.ArcView>
+                            </com.github.florent37.shapeofview.shapes.ArcView>
 
                         </LinearLayout>
-
                     </com.github.florent37.expansionpanel.ExpansionLayout>
                 </FrameLayout>
 
