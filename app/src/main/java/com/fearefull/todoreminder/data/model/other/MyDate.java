@@ -80,7 +80,6 @@ public class MyDate implements Serializable {
         PersianDate persianDate = new PersianDate(date);
         year = persianDate.getShYear();
         month = AlarmUtils.getMonth(persianDate.getShMonth());
-        Timber.i("ShMonth %d", persianDate.getShMonth());
         day = persianDate.getShDay();
     }
 

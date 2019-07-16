@@ -13,7 +13,6 @@ import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
 import com.fearefull.todoreminder.data.model.other.Alarm;
 import com.fearefull.todoreminder.databinding.FragmentTimePickerBinding;
-import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerActivity;
 import com.fearefull.todoreminder.ui.base.BaseBottomSheetFragment;
 import com.fearefull.todoreminder.utils.ViewUtils;
 
@@ -85,8 +84,8 @@ public class TimePickerFragment extends BaseBottomSheetFragment<FragmentTimePick
 
     @Override
     public void onDestroy() {
-        AlarmManagerActivity activity = (AlarmManagerActivity) getBaseActivity();
-        activity.onUpdateAlarm(viewModel.getAlarm(), TAG);
+        //AlarmManagerActivity activity = (AlarmManagerActivity) getBaseActivity();
+        //activity.onUpdateAlarm(viewModel.getAlarm(), TAG);
         super.onDestroy();
     }
 }

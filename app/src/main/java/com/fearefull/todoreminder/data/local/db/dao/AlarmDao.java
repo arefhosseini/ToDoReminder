@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.AlarmModel;
 
 import java.util.List;
@@ -13,19 +14,19 @@ import java.util.List;
 @Dao
 public interface AlarmDao {
     @Insert
-    public void insert(AlarmModel... alarmModels);
+    public void insert(Alarm... alarms);
 
     @Update
-    public void update(AlarmModel... alarmModels);
+    public void update(Alarm... alarms);
 
     @Delete
-    public void delete(AlarmModel alarmModels);
+    public void delete(Alarm alarm);
 
     @Query("SELECT * FROM alarms")
-    public List<AlarmModel> getAllAlarms();
+    public List<Alarm> getAllAlarms();
 
     @Query("SELECT * FROM alarms WHERE id = :id")
-    public AlarmModel getAlarmById(Long id);
+    public Alarm getAlarmById(Long id);
 
     @Query("DELETE FROM alarms")
     public void resetTable();

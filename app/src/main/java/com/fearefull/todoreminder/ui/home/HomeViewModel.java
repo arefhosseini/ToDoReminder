@@ -3,7 +3,7 @@ package com.fearefull.todoreminder.ui.home;
 import androidx.lifecycle.MutableLiveData;
 
 import com.fearefull.todoreminder.data.DataManager;
-import com.fearefull.todoreminder.data.model.other.Alarm;
+import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 

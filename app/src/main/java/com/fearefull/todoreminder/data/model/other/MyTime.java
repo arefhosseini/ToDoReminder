@@ -11,13 +11,13 @@ import java.util.Date;
 public class MyTime implements Serializable {
     private int hour;
     private int minute;
-    private TimeType timeType;
+    private HalfHourType halfHourType;
     private boolean isChanged;
 
-    public MyTime(int hour, int minute, TimeType timeType) {
+    public MyTime(int hour, int minute, HalfHourType halfHourType) {
         this.hour = hour;
         this.minute = minute;
-        this.timeType = timeType;
+        this.halfHourType = halfHourType;
         isChanged = false;
     }
 
@@ -52,16 +52,16 @@ public class MyTime implements Serializable {
         isChanged = true;
     }
 
-    public TimeType getTimeType() {
-        return timeType;
+    public HalfHourType getHalfHourType() {
+        return halfHourType;
     }
 
     public int getTimeTypeIndex() {
-        return timeType.getIndex();
+        return halfHourType.getIndex();
     }
 
-    public void setTimeType(TimeType timeType) {
-        this.timeType = timeType;
+    public void setHalfHourType(HalfHourType halfHourType) {
+        this.halfHourType = halfHourType;
         isChanged = true;
     }
 
@@ -78,13 +78,13 @@ public class MyTime implements Serializable {
         calendar.setTime(date);
         hour = calendar.get(Calendar.HOUR);
         minute = calendar.get(Calendar.MINUTE);
-        timeType = calendar.get(Calendar.AM_PM) == Calendar.AM ? TimeType.AM : TimeType.PM;
+        halfHourType = calendar.get(Calendar.AM_PM) == Calendar.AM ? HalfHourType.AM : HalfHourType.PM;
     }
 
     @NotNull
     public String toString() {
         if (minute < 10)
-            return hour + ":" + "0" + minute + " " + timeType.getPersianText();
-        return hour + ":" + minute + " " + timeType.getPersianText();
+            return hour + ":" + "0" + minute + " " + halfHourType.getPersianText();
+        return hour + ":" + minute + " " + halfHourType.getPersianText();
     }
 }

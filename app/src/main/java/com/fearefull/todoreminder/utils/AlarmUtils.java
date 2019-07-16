@@ -1,11 +1,10 @@
 package com.fearefull.todoreminder.utils;
 
+import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.data.model.other.MonthType;
 import com.fearefull.todoreminder.data.model.other.MyTime;
-import com.fearefull.todoreminder.data.model.other.RepeatType;
-import com.fearefull.todoreminder.data.model.other.RepeatTypeItem;
-import com.fearefull.todoreminder.data.model.other.TimeType;
-import com.fearefull.todoreminder.ui.alarm_manager.RepeatItemViewModel;
+import com.fearefull.todoreminder.data.model.other.RepeatItem;
+import com.fearefull.todoreminder.data.model.other.HalfHourType;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,15 +50,15 @@ public final class AlarmUtils {
         return getNumbersWithZero(0, 59);
     }
 
-    public static ArrayList<String> getTimeTypes() {
+    public static ArrayList<String> getHalfHourTypes() {
         ArrayList<String> stringTypes = new ArrayList<>();
-        stringTypes.add(TimeType.AM.getPersianText());
-        stringTypes.add(TimeType.PM.getPersianText());
+        stringTypes.add(HalfHourType.AM.getPersianText());
+        stringTypes.add(HalfHourType.PM.getPersianText());
         return stringTypes;
     }
 
     public static Date getTime(MyTime myTime) {
-        String time = myTime.getHour() + ":" + myTime.getMinute() + " " + myTime.getTimeType().getEnglishText();
+        String time = myTime.getHour() + ":" + myTime.getMinute() + " " + myTime.getHalfHourType().getEnglishText();
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
         try {
             return dateFormat.parse(time);
@@ -133,10 +132,10 @@ public final class AlarmUtils {
         return hour - 1;
     }
 
-    public static TimeType indexToTimeType(int index) {
+    public static HalfHourType indexToTimeType(int index) {
         if (index == 0)
-            return TimeType.AM;
-        return TimeType.PM;
+            return HalfHourType.AM;
+        return HalfHourType.PM;
     }
 
     public static int indexToMinute(int index) {
@@ -232,44 +231,50 @@ public final class AlarmUtils {
         return month.getDays();
     }
 
-    public static ArrayList<String> getRepeatTypes() {
-        ArrayList<String> types = new ArrayList<>();
-        types.add(RepeatType.ONCE.getText());
-        types.add(RepeatType.DAILY.getText());
-        types.add(RepeatType.WEEKLY.getText());
-        types.add(RepeatType.MONTHLY.getText());
-        types.add(RepeatType.YEARLY.getText());
-        types.add(RepeatType.CUSTOM.getText());
-        return types;
-    }
-
-    public static RepeatType indexToRepeatType(int index) {
-        switch (index) {
-            case 0:
-               return RepeatType.ONCE;
-            case 1:
-                return RepeatType.DAILY;
-            case 2:
-                return RepeatType.WEEKLY;
-            case 3:
-                return RepeatType.MONTHLY;
-            case 4:
-                return RepeatType.YEARLY;
-            case 5:
-                return RepeatType.CUSTOM;
-            default:
-                return RepeatType.ONCE;
+    public static List<RepeatItem> getRepeatItems(Repeat defaultRepeat) {
+        List<RepeatItem> list = new ArrayList<>();
+        boolean isFind = false;
+        if (defaultRepeat == Repeat.ONCE) {
+            list.add(new RepeatItem(Repeat.ONCE, true));
+            isFind = true;
         }
-    }
-
-    public static List<RepeatTypeItem> getRepeatTypeItems() {
-        List<RepeatTypeItem> list = new ArrayList<>();
-        list.add(new RepeatTypeItem(RepeatType.ONCE, true));
-        list.add(new RepeatTypeItem(RepeatType.DAILY, false));
-        list.add(new RepeatTypeItem(RepeatType.WEEKLY, false));
-        list.add(new RepeatTypeItem(RepeatType.MONTHLY, false));
-        list.add(new RepeatTypeItem(RepeatType.YEARLY, false));
-        list.add(new RepeatTypeItem(RepeatType.CUSTOM, false));
+        else
+            list.add(new RepeatItem(Repeat.ONCE, false));
+        if (!isFind && defaultRepeat == Repeat.HOURLY) {
+            list.add(new RepeatItem(Repeat.HOURLY, true));
+            isFind = true;
+        }
+        else
+            list.add(new RepeatItem(Repeat.HOURLY, false));
+        if (!isFind && defaultRepeat == Repeat.DAILY) {
+            list.add(new RepeatItem(Repeat.DAILY, true));
+            isFind = true;
+        }
+        else
+            list.add(new RepeatItem(Repeat.DAILY, false));
+        if (!isFind && defaultRepeat == Repeat.WEEKLY) {
+            list.add(new RepeatItem(Repeat.WEEKLY, true));
+            isFind = true;
+        }
+        else
+            list.add(new RepeatItem(Repeat.WEEKLY, false));
+        if (!isFind && defaultRepeat == Repeat.MONTHLY) {
+            list.add(new RepeatItem(Repeat.MONTHLY, true));
+            isFind = true;
+        }
+        else
+            list.add(new RepeatItem(Repeat.MONTHLY, false));
+        if (!isFind && defaultRepeat == Repeat.YEARLY) {
+            list.add(new RepeatItem(Repeat.YEARLY, true));
+            isFind = true;
+        }
+        else
+            list.add(new RepeatItem(Repeat.YEARLY, false));
+        if (!isFind && defaultRepeat == Repeat.CUSTOM) {
+            list.add(new RepeatItem(Repeat.CUSTOM, true));
+        }
+        else
+            list.add(new RepeatItem(Repeat.CUSTOM, false));
         return list;
     }
 }

@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fearefull.todoreminder.data.model.other.Alarm;
+import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.databinding.ItemAlarmBinding;
 import com.fearefull.todoreminder.ui.base.BaseViewHolder;
 

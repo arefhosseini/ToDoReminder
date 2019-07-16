@@ -19,10 +19,9 @@ import androidx.lifecycle.ViewModelProviders;
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
-import com.fearefull.todoreminder.data.model.other.Alarm;
+import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.databinding.ActivityMainBinding;
 import com.fearefull.todoreminder.databinding.NavigationHeaderMainBinding;
-import com.fearefull.todoreminder.service.MyService;
 import com.fearefull.todoreminder.ui.about.AboutFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerFragment;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
@@ -109,7 +108,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     public void openAlarmManagerActivity() {
         //startActivity(AlarmManagerActivity.newIntent(this));
         lockDrawer();
-        AlarmManagerFragment fragment = AlarmManagerFragment.newInstance(new Alarm());
+        AlarmManagerFragment fragment = AlarmManagerFragment.newInstance(new Alarm("Alarm"));
         fragment.setCallBack(this);
         getSupportFragmentManager()
                 .beginTransaction()

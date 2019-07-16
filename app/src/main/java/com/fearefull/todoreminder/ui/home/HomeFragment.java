@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
-import com.fearefull.todoreminder.data.model.other.Alarm;
+import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.databinding.FragmentHomeBinding;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 

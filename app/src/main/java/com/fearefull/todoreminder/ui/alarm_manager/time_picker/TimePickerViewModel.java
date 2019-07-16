@@ -26,7 +26,7 @@ public class TimePickerViewModel extends BaseViewModel<TimePickerNavigator> {
     }
 
     String[] getTimeTypes() {
-        return AlarmUtils.getTimeTypes().toArray(new String[0]);
+        return AlarmUtils.getHalfHourTypes().toArray(new String[0]);
     }
 
     void setAlarm(Alarm alarm) {
@@ -47,7 +47,7 @@ public class TimePickerViewModel extends BaseViewModel<TimePickerNavigator> {
 
     public void onTypesPickerValueChange(int oldVal, int newVal) {
         Timber.i("type index %d", newVal);
-        alarm.getTime().setTimeType(AlarmUtils.indexToTimeType(newVal));
+        alarm.getTime().setHalfHourType(AlarmUtils.indexToTimeType(newVal));
     }
 
     Alarm getAlarm() {

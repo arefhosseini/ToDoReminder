@@ -1,13 +1,13 @@
 package com.fearefull.todoreminder.data.model.other;
 
-public enum TimeType {
+public enum HalfHourType {
     AM(0, "قبل از ظهر", "am"),
     PM(1, "بعد از ظهر", "pm");
 
     private int index;
     private String persianText, englishText;
 
-    TimeType(int index, String persianText, String englishText) {
+    HalfHourType(int index, String persianText, String englishText) {
         this.index = index;
         this.persianText = persianText;
         this.englishText = englishText;

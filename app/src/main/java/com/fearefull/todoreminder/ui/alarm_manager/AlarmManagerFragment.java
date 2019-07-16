@@ -6,6 +6,8 @@ import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,20 +16,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
-import com.fearefull.todoreminder.data.model.other.Alarm;
-import com.fearefull.todoreminder.data.model.other.RepeatTypeItem;
+import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.data.model.db.Repeat;
+import com.fearefull.todoreminder.data.model.other.RepeatItem;
 import com.fearefull.todoreminder.databinding.FragmentAlarmManagerBinding;
+import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleFragment;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.utils.CommonUtils;
 import com.fearefull.todoreminder.utils.ViewUtils;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+
 import static com.fearefull.todoreminder.utils.AppConstants.ALARM_KEY;
 
 public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBinding, AlarmManagerViewModel>
-        implements AlarmManagerNavigator, RepeatAdapter.RepeatAdapterListener {
+        implements AlarmManagerNavigator, HasSupportFragmentInjector, RepeatAdapter.RepeatAdapterListener, RepeatCallBack {
 
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
     @Inject
     RepeatAdapter repeatAdapter;
     @Inject
@@ -35,6 +45,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     public static final String TAG = AlarmManagerFragment.class.getSimpleName();
     @Inject
     ViewModelProviderFactory factory;
+    private String CHILD_TAG;
     private AlarmManagerViewModel viewModel;
     private FragmentAlarmManagerBinding binding;
     private AlarmManagerCallBack callBack;
@@ -64,12 +75,17 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     }
 
     @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel.setNavigator(this);
         assert getArguments() != null;
         viewModel.setAlarm((Alarm) getArguments().getSerializable(ALARM_KEY));
-        viewModel.updateAlarm();
+        viewModel.initAlarm();
     }
 
     @Override
@@ -86,10 +102,9 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         binding.repeatRecyclerView.setItemAnimator(new DefaultItemAnimator());
         binding.repeatRecyclerView.setAdapter(repeatAdapter);
 
-        setUpNumberPicker(binding.hoursPicker, viewModel.getHours(), viewModel.getAlarm().getTime().getHourIndex());
-        setUpNumberPicker(binding.minutesPicker, viewModel.getMinutes(), viewModel.getAlarm().getTime().getMinuteIndex());
-        setUpNumberPicker(binding.typePicker, viewModel.getTimeTypes(), viewModel.getAlarm().getTime().getTimeTypeIndex());
-
+        setUpNumberPicker(binding.hoursPicker, viewModel.getHours(), viewModel.getIndexHour());
+        setUpNumberPicker(binding.minutesPicker, viewModel.getMinutes(), viewModel.getIndexMinute());
+        setUpNumberPicker(binding.halfHourTypePicker, viewModel.getHalfHourTypes(), viewModel.getIndexHalfHourIndex());
     }
 
     private void setUpNumberPicker(NumberPicker picker, String[] data, int defaultIndex) {
@@ -110,6 +125,18 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         if(callBack.onReloadAlarms()) {
             goBack();
         }
+    }
+
+    @Override
+    public void openOnceRepeatFragment() {
+        SimpleFragment simpleFragment = SimpleFragment.newInstance(viewModel.getAlarm());
+        simpleFragment.setCallBack(this);
+        getChildFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .add(R.id.repeatSubRootView, simpleFragment, SimpleFragment.TAG)
+                .commit();
+        CHILD_TAG = SimpleFragment.TAG;
     }
 
     @Override
@@ -143,8 +170,22 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     }
 
     @Override
-    public void onRepeatItemClick(RepeatTypeItem repeatTypeItem) {
-        viewModel.updateRepeatType(repeatTypeItem.getRepeatType());
+    public void onRepeatItemClick(RepeatItem repeatItem) {
+        viewModel.updateRepeatString(repeatItem.getRepeat());
+        FragmentManager fragmentManager = getChildFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentByTag(CHILD_TAG);
+        if (fragment != null) {
+            fragmentManager
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .remove(fragment)
+                    .commitNow();
+            /*if (repeatItem.getRepeat() == Repeat.ONCE)
+                openOnceRepeatFragment();*/
+        }
+        if (repeatItem.getRepeat() == Repeat.ONCE)
+            openOnceRepeatFragment();
     }
 
     @Override
@@ -161,6 +202,12 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
 
     public void setCallBack(AlarmManagerCallBack callBack) {
         this.callBack = callBack;
+    }
+
+    @Override
+    public void onAlarmChange(Alarm alarm) {
+        viewModel.setAlarm(alarm);
+        viewModel.updateAlarm();
     }
 
     public interface AlarmManagerCallBack {

@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.R;
-import com.fearefull.todoreminder.data.model.other.RepeatTypeItem;
+import com.fearefull.todoreminder.data.model.other.RepeatItem;
 import com.fearefull.todoreminder.databinding.ItemRepeatBinding;
 import com.fearefull.todoreminder.ui.base.BaseViewHolder;
 
@@ -19,19 +19,19 @@ import java.util.Map;
 
 public class RepeatAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private final List<RepeatTypeItem> repeatTypeItemList;
-    private final Map<RepeatTypeItem, ItemRepeatBinding> repeatBindingMap;
+    private final List<RepeatItem> repeatItemList;
+    private final Map<RepeatItem, ItemRepeatBinding> repeatBindingMap;
     private RepeatAdapterListener listener;
 
 
     public RepeatAdapter() {
-        this.repeatTypeItemList = new ArrayList<>();
+        this.repeatItemList = new ArrayList<>();
         repeatBindingMap = new HashMap<>();
     }
 
     @Override
     public int getItemCount() {
-        return repeatTypeItemList.size();
+        return repeatItemList.size();
     }
 
     @Override
@@ -47,26 +47,26 @@ public class RepeatAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return new RepeatViewHolder(itemRepeatBinding);
     }
 
-    public void addItems(List<RepeatTypeItem> repeatTypeItemList) {
-        this.repeatTypeItemList.addAll(repeatTypeItemList);
+    public void addItems(List<RepeatItem> repeatItemList) {
+        this.repeatItemList.addAll(repeatItemList);
         notifyDataSetChanged();
     }
 
     public void clearItems() {
-        repeatTypeItemList.clear();
+        repeatItemList.clear();
     }
 
     private void unselectOtherRepeatTypeItem() {
-        RepeatTypeItem selectedRepeatTypeItem = null;
-        for (RepeatTypeItem repeatTypeItem: repeatTypeItemList) {
-            if (repeatTypeItem.isSelected())
-                selectedRepeatTypeItem = repeatTypeItem;
+        RepeatItem selectedRepeatItem = null;
+        for (RepeatItem repeatItem : repeatItemList) {
+            if (repeatItem.isSelected())
+                selectedRepeatItem = repeatItem;
         }
-        if (selectedRepeatTypeItem != null && repeatBindingMap.get(selectedRepeatTypeItem) != null) {
-            ItemRepeatBinding binding = repeatBindingMap.get(selectedRepeatTypeItem);
+        if (selectedRepeatItem != null && repeatBindingMap.get(selectedRepeatItem) != null) {
+            ItemRepeatBinding binding = repeatBindingMap.get(selectedRepeatItem);
             binding.title.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.item_repeat_unselected_bg));
             binding.title.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.primaryColorLightTheme));
-            selectedRepeatTypeItem.setSelected(false);
+            selectedRepeatItem.setSelected(false);
         }
     }
 
@@ -75,7 +75,7 @@ public class RepeatAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public interface RepeatAdapterListener {
-        void onRepeatItemClick(RepeatTypeItem repeatTypeItem);
+        void onRepeatItemClick(RepeatItem repeatItem);
     }
 
     public class RepeatViewHolder extends BaseViewHolder implements RepeatItemViewModel.RepeatItemViewModelListener {
@@ -89,21 +89,21 @@ public class RepeatAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-            final RepeatTypeItem repeatTypeItem = repeatTypeItemList.get(position);
-            repeatItemViewModel = new RepeatItemViewModel(repeatTypeItem, this);
+            final RepeatItem repeatItem = repeatItemList.get(position);
+            repeatItemViewModel = new RepeatItemViewModel(repeatItem, this);
             binding.setViewModel(repeatItemViewModel);
             binding.executePendingBindings();
 
-            if (repeatTypeItem.isSelected()) {
+            if (repeatItem.isSelected()) {
                 binding.title.setBackground(itemView.getContext().getDrawable(R.drawable.item_repeat_selected_bg));
                 binding.title.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.primaryTextColorDarkTheme));
             }
 
-            repeatBindingMap.put(repeatTypeItem, binding);
+            repeatBindingMap.put(repeatItem, binding);
         }
 
         @Override
-        public void onItemClick(RepeatTypeItem repeatType) {
+        public void onItemClick(RepeatItem repeatType) {
             if (!repeatType.isSelected()) {
                 unselectOtherRepeatTypeItem();
 

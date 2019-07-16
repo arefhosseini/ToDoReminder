@@ -1,6 +1,7 @@
 package com.fearefull.todoreminder.ui.home;
 
-import com.fearefull.todoreminder.data.model.other.Alarm;
+
+import com.fearefull.todoreminder.data.model.db.Alarm;
 
 public class AlarmItemViewModel {
     private final Alarm alarm;

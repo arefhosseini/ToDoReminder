@@ -1,11 +1,13 @@
 package com.fearefull.todoreminder.data.model.other;
 
-public class RepeatTypeItem {
-    private final RepeatType repeatType;
+import com.fearefull.todoreminder.data.model.db.Repeat;
+
+public class RepeatItem {
+    private final Repeat repeat;
     private boolean isSelected;
 
-    public RepeatTypeItem(RepeatType repeatType, boolean isSelected) {
-        this.repeatType = repeatType;
+    public RepeatItem(Repeat repeat, boolean isSelected) {
+        this.repeat = repeat ;
         this.isSelected = isSelected;
     }
 
@@ -17,7 +19,7 @@ public class RepeatTypeItem {
         isSelected = selected;
     }
 
-    public RepeatType getRepeatType() {
-        return repeatType;
+    public Repeat getRepeat() {
+        return repeat;
     }
 }

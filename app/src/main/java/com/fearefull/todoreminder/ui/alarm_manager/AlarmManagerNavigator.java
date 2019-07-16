@@ -3,6 +3,7 @@ package com.fearefull.todoreminder.ui.alarm_manager;
 interface AlarmManagerNavigator extends AlarmManagerCallBack{
     void goBack();
     void save();
+    void openOnceRepeatFragment();
     void openDatePickerFragment();
     void openRepeatPickerFragment();
     void openCustomRepeatPickerFragment();

@@ -12,9 +12,7 @@ import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
 import com.fearefull.todoreminder.data.model.other.Alarm;
-import com.fearefull.todoreminder.data.model.other.MyDate;
 import com.fearefull.todoreminder.databinding.FragmentDatePickerBinding;
-import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerActivity;
 import com.fearefull.todoreminder.ui.base.BaseBottomSheetFragment;
 import com.fearefull.todoreminder.utils.ViewUtils;
 
@@ -86,8 +84,8 @@ public class DatePickerFragment extends BaseBottomSheetFragment<FragmentDatePick
 
     @Override
     public void onDestroy() {
-        AlarmManagerActivity activity = (AlarmManagerActivity) getBaseActivity();
-        activity.onUpdateAlarm(viewModel.getAlarm(), TAG);
+        //AlarmManagerActivity activity = (AlarmManagerActivity) getBaseActivity();
+        //activity.onUpdateAlarm(viewModel.getAlarm(), TAG);
         super.onDestroy();
     }
 

@@ -1,21 +1,23 @@
 package com.fearefull.todoreminder.data.model.other;
 
+import com.fearefull.todoreminder.data.model.db.Repeat;
+
 import org.jetbrains.annotations.NotNull;
 
 public class MyRepeat {
-    private RepeatType type;
+    private Repeat type;
     private CustomRepeat customRepeat;
 
     MyRepeat() {
-        this.type = RepeatType.ONCE;
+        this.type = Repeat.ONCE;
         customRepeat = new CustomRepeat();
     }
 
-    public RepeatType getType() {
+    public Repeat getType() {
         return type;
     }
 
-    public void setType(RepeatType type) {
+    public void setType(Repeat type) {
         this.type = type;
     }
 
@@ -30,7 +32,7 @@ public class MyRepeat {
 
     @NotNull
     public String toString() {
-        if (type != RepeatType.CUSTOM)
+        if (type != Repeat.CUSTOM)
             return type.getText();
         else
             return "Custom";

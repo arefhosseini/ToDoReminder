@@ -169,7 +169,7 @@
                                         android:layout_marginRight="24dp"
                                         android:layout_width="wrap_content"
                                         android:gravity="center"
-                                        android:text="@{viewModel.time}"
+                                        android:text="@{viewModel.timeString}"
                                         android:textColor="@color/secondaryTextColorDarkTheme" />
 
                                     <androidx.appcompat.widget.AppCompatImageView
@@ -237,11 +237,11 @@
                                 android:layout_weight="1"/>
 
                             <NumberPicker
-                                android:id="@+id/typePicker"
+                                android:id="@+id/halfHourTypePicker"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="5"
-                                android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onTypesPickerValueChange(oldVal, newVal)}"
+                                android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onHalfHourTypesPickerValueChange(oldVal, newVal)}"
                                 android:layout_gravity="center_horizontal" />
                         </LinearLayout>
 
@@ -320,7 +320,7 @@
                                         android:layout_marginRight="24dp"
                                         android:layout_width="wrap_content"
                                         android:gravity="center"
-                                        android:text="@{viewModel.note}"
+                                        android:text="@{viewModel.noteString}"
                                         android:textColor="@color/secondaryTextColorDarkTheme" />
 
                                     <androidx.appcompat.widget.AppCompatImageView
@@ -445,7 +445,7 @@
                                         android:layout_marginRight="24dp"
                                         android:layout_width="wrap_content"
                                         android:gravity="center"
-                                        android:text="@{viewModel.repeat}"
+                                        android:text="@{viewModel.repeatString}"
                                         android:textColor="@color/secondaryTextColorDarkTheme" />
 
                                     <androidx.appcompat.widget.AppCompatImageView
@@ -476,7 +476,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal"
+                            android:orientation="vertical"
                             android:gravity="center"
                             android:paddingTop="100dp"
                             android:paddingBottom="32dp">
@@ -487,8 +487,15 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 android:layoutDirection="rtl"
+                                android:paddingBottom="24dp"
                                 app:adapter="@{viewModel.getRepeatItemsLiveData}"
                                 tools:listitem="@layout/item_repeat" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/repeatSubRootView">
+                            </RelativeLayout>
 
                         </LinearLayout>
 
@@ -567,7 +574,7 @@
                                         android:layout_marginRight="24dp"
                                         android:layout_width="wrap_content"
                                         android:gravity="center"
-                                        android:text="@{viewModel.ringtone}"
+                                        android:text="@{viewModel.ringtoneString}"
                                         android:textColor="@color/secondaryTextColorDarkTheme" />
 
                                 </RelativeLayout>

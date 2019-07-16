@@ -33,9 +33,6 @@
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".ui.alarm_manager.AlarmManagerActivity"
-            android:launchMode="standard" />
-        <activity
             android:name=".ui.alarm_notification.AlarmNotificationActivity"
             android:launchMode="standard" />
 

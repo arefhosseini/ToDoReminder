@@ -2,16 +2,16 @@ package com.fearefull.todoreminder.ui.alarm_manager;
 
 import androidx.databinding.ObservableField;
 
-import com.fearefull.todoreminder.data.model.other.RepeatTypeItem;
+import com.fearefull.todoreminder.data.model.other.RepeatItem;
 
 public class RepeatItemViewModel {
-    private final RepeatTypeItem repeatType;
+    private final RepeatItem repeatType;
     private final ObservableField<String> title = new ObservableField<>();
     private final RepeatItemViewModelListener listener;
 
-    public RepeatItemViewModel(RepeatTypeItem repeatType, RepeatItemViewModelListener listener) {
+    public RepeatItemViewModel(RepeatItem repeatType, RepeatItemViewModelListener listener) {
         this.repeatType = repeatType;
-        this.title.set(repeatType.getRepeatType().getText());
+        this.title.set(repeatType.getRepeat().getText());
         this.listener = listener;
     }
 
@@ -19,7 +19,7 @@ public class RepeatItemViewModel {
         return title;
     }
 
-    public RepeatTypeItem getRepeatType() {
+    public RepeatItem getRepeatType() {
         return repeatType;
     }
 
@@ -28,6 +28,6 @@ public class RepeatItemViewModel {
     }
 
     public interface RepeatItemViewModelListener {
-        void onItemClick(RepeatTypeItem repeatType);
+        void onItemClick(RepeatItem repeatType);
     }
 }

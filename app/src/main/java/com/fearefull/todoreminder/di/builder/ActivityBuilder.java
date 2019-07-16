@@ -1,12 +1,8 @@
 package com.fearefull.todoreminder.di.builder;
 
-import com.fearefull.todoreminder.service.AlarmReceiver;
 import com.fearefull.todoreminder.ui.about.AboutFragmentProvider;
-import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerActivity;
-import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.date_picker.DatePickerFragmentProvider;
-import com.fearefull.todoreminder.ui.alarm_manager.time_picker.TimePickerFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.time_picker.TimePickerFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_notification.AlarmNotificationActivity;
 import com.fearefull.todoreminder.ui.home.HomeFragmentProvider;
@@ -20,12 +16,13 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class ActivityBuilder {
 
-    @ContributesAndroidInjector(
-            modules = {
-                    HomeFragmentProvider.class,
-                    AboutFragmentProvider.class,
-                    AlarmManagerFragmentProvider.class,
-            })
+    @ContributesAndroidInjector(modules = {
+            HomeFragmentProvider.class,
+            AboutFragmentProvider.class,
+            AlarmManagerFragmentProvider.class,
+            TimePickerFragmentProvider.class,
+            DatePickerFragmentProvider.class,
+    })
     abstract MainActivity contributesMainActivity();
 
     @ContributesAndroidInjector
@@ -33,13 +30,6 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract LoginActivity contributesLoginActivity();
-
-    @ContributesAndroidInjector(
-            modules = {
-                    TimePickerFragmentProvider.class,
-                    DatePickerFragmentProvider.class,
-            })
-    abstract AlarmManagerActivity contributesAlarmManagerActivity();
 
     @ContributesAndroidInjector
     abstract AlarmNotificationActivity contributesAlarmNotification();
