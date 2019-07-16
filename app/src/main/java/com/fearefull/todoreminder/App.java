@@ -2,10 +2,12 @@ package com.fearefull.todoreminder;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.interceptors.HttpLoggingInterceptor;
 import com.fearefull.todoreminder.di.component.DaggerAppComponent;
+import com.fearefull.todoreminder.service.MyService;
 
 
 import javax.inject.Inject;
@@ -44,5 +46,7 @@ public class App extends Application implements HasActivityInjector {
         }
 
         CalligraphyConfig.initDefault(calligraphyConfig);
+
+        startService(new Intent(this, MyService.class));
     }
 }
