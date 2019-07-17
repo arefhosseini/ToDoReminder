@@ -9,6 +9,7 @@ import androidx.room.TypeConverters;
 
 import com.fearefull.todoreminder.data.model.other.DataConverter;
 import com.fearefull.todoreminder.data.model.other.HalfHourType;
+import com.fearefull.todoreminder.data.model.other.OnceRepeatModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -613,5 +614,18 @@ public class Alarm implements Serializable {
         addDayMonthByValue(dayMonth);
         addMonthByValue(month);
         addYearByValue(year);
+    }
+
+    @Ignore
+    public int getRepeatCount() {
+        return minutes.size();
+    }
+
+    @Ignore
+    public void addOnceRepeatModel(OnceRepeatModel model) {
+        addMinuteByValue(model.getMinute());
+        add24HourByValue(model.getHour());
+        addDayMonthByValue(model.getDay());
+        addMonthByValue(model.getMonth());
     }
 }

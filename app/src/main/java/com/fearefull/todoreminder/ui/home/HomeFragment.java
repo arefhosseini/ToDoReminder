@@ -16,11 +16,12 @@ import com.fearefull.todoreminder.ViewModelProviderFactory;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.databinding.FragmentHomeBinding;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
+import com.fearefull.todoreminder.ui.main.MainCaller;
 
 import javax.inject.Inject;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel>
-        implements HomeNavigator, AlarmAdapter.AlarmAdapterListener, HomeCallBack{
+        implements HomeNavigator, AlarmAdapter.AlarmAdapterListener, MainCaller {
 
     public static final String TAG = HomeFragment.class.getSimpleName();
     @Inject

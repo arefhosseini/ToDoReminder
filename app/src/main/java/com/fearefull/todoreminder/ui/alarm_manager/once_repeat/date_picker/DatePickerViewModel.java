@@ -37,7 +37,6 @@ public class DatePickerViewModel extends BaseViewModel<DatePickerNavigator> {
     public void onDayPickerValueChange(int oldVal, int newVal) {
         Timber.i("day index %d", newVal);
         day = Alarm.indexToDayMonth(newVal);
-        getNavigator().onDayChanged();
     }
 
     int getMonth() {

@@ -2,7 +2,6 @@ package com.fearefull.todoreminder.ui.alarm_manager.once_repeat.date_picker;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,15 +10,15 @@ import androidx.lifecycle.ViewModelProviders;
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
-import com.fearefull.todoreminder.data.model.other.HalfHourType;
 import com.fearefull.todoreminder.databinding.FragmentDatePickerBinding;
+import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatCaller;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.utils.ViewUtils;
 
 import javax.inject.Inject;
 
 public class DatePickerFragment extends BaseFragment<FragmentDatePickerBinding, DatePickerViewModel>
-        implements DatePickerNavigator {
+        implements DatePickerNavigator, OnceRepeatCaller {
 
     public static final String TAG = DatePickerFragment.class.getSimpleName();
     private static final String DAY_KEY = "day_key";
@@ -89,20 +88,18 @@ public class DatePickerFragment extends BaseFragment<FragmentDatePickerBinding, 
             binding.dayPicker.setValue(viewModel.getDayIndex());
             binding.dayPicker.setDisplayedValues(viewModel.getDays());
         }
-        callBack.onMonthChanged(viewModel.getMonth());
-    }
-
-    @Override
-    public void onDayChanged() {
-        callBack.onDayChanged(viewModel.getDay());
     }
 
     public void setCallBack(DatePickerCallBack callBack) {
         this.callBack = callBack;
     }
-    
+
+    @Override
+    public void call() {
+        callBack.getDatePickerResult(viewModel.getDay(), viewModel.getMonth());
+    }
+
     public interface DatePickerCallBack {
-        void onDayChanged(int day);
-        void onMonthChanged(int month);
+        void getDatePickerResult(int day, int month);
     }
 }

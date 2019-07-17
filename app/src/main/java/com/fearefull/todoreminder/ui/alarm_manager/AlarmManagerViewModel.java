@@ -24,6 +24,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     private final ObservableField<String> noteString = new ObservableField<>();
     private final MutableLiveData<List<RepeatItem>> repeatItemsLiveData;
     private final ObservableField<String> ringtoneString = new ObservableField<>();
+    private final ObservableField<String> repeatCounter = new ObservableField<>();
 
     public AlarmManagerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -81,6 +82,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         updateRepeatString();
         updateNoteString();
         updateRingtoneString();
+        updateAddCounter(alarm.getRepeatCount());
     }
 
     void updateRepeatString(Repeat repeat) {
@@ -105,6 +107,10 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         ringtoneString.set(alarm.getRingtone());
     }
 
+    void updateAddCounter(int counter) {
+        repeatCounter.set(String.valueOf(counter));
+    }
+
     public ObservableField<String> getRepeatString() {
         return repeatString;
     }
@@ -115,6 +121,10 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     public ObservableField<String> getRingtoneString() {
         return ringtoneString;
+    }
+
+    public ObservableField<String> getRepeatCounter() {
+        return repeatCounter;
     }
 
     DialogInterface.OnClickListener repeatPickerOnClickListener = (dialog, which) -> {

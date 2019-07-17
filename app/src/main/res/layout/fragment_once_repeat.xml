@@ -29,6 +29,7 @@
             android:focusable="true"
             android:background="@drawable/quarter_bottom_left_circle_secondary_bg"
             android:text="@string/add"
+            android:onClick="@{() -> viewModel.onAddClick()}"
             android:translationZ="12dp"
             tools:ignore="RtlSymmetry" />
 

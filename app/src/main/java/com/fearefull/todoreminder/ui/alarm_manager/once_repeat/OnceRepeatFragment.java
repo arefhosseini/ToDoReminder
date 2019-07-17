@@ -14,12 +14,10 @@ import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
 import com.fearefull.todoreminder.data.model.db.Alarm;
-import com.fearefull.todoreminder.data.model.other.HalfHourType;
 import com.fearefull.todoreminder.databinding.FragmentOnceRepeatBinding;
 import com.fearefull.todoreminder.ui.alarm_manager.RepeatCallBack;
 import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.date_picker.DatePickerFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.half_hour_time_picker.HalfHourTimePickerFragment;
-import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleFragment;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.base.BaseViewPagerAdapter;
 
@@ -46,6 +44,7 @@ public class OnceRepeatFragment extends BaseFragment<FragmentOnceRepeatBinding, 
     private OnceRepeatViewModel viewModel;
     private FragmentOnceRepeatBinding binding;
     private RepeatCallBack callBack;
+    private OnceRepeatCaller callerHalfHourTimePicker, callerDatePicker;
 
     public static OnceRepeatFragment newInstance(Alarm alarm) {
         Bundle args = new Bundle();
@@ -99,11 +98,13 @@ public class OnceRepeatFragment extends BaseFragment<FragmentOnceRepeatBinding, 
                 halfHourTimePickerFragment = HalfHourTimePickerFragment.newInstance(
                         viewModel.getAlarm().getMinute(0), viewModel.getAlarm().getHour(0), viewModel.getAlarm().getHalfHourType());
         halfHourTimePickerFragment.setCallBack(this);
+        callerHalfHourTimePicker = halfHourTimePickerFragment;
 
         DatePickerFragment datePickerFragment =
                 DatePickerFragment.newInstance(viewModel.getAlarm().getDayMonth(0),
                         viewModel.getAlarm().getMonth(0));
         datePickerFragment.setCallBack(this);
+        callerDatePicker = datePickerFragment;
 
         pagerAdapter.addFragment(halfHourTimePickerFragment, "halfHourTimePicker");
         pagerAdapter.addFragment(datePickerFragment, "datePicker");
@@ -114,26 +115,6 @@ public class OnceRepeatFragment extends BaseFragment<FragmentOnceRepeatBinding, 
 
     public void setCallBack(RepeatCallBack callBack) {
         this.callBack = callBack;
-    }
-
-    @Override
-    public void onHourChanged(int hour) {
-        viewModel.getAlarm().edit24HourByValue(hour, 0);
-    }
-
-    @Override
-    public void onMinuteChanged(int minute) {
-        viewModel.getAlarm().editMinuteByValue(minute, 0);
-    }
-
-    @Override
-    public void onDayChanged(int day) {
-        viewModel.getAlarm().editDayMonthByValue(day, 0);
-    }
-
-    @Override
-    public void onMonthChanged(int month) {
-        viewModel.getAlarm().editMonthByValue(month, 0);
     }
 
     @Override
@@ -156,5 +137,30 @@ public class OnceRepeatFragment extends BaseFragment<FragmentOnceRepeatBinding, 
         ImageViewCompat.setImageTintList(binding.timeImageView, ColorStateList.valueOf(getResources().getColor(R.color.primaryColorLightTheme)));
 
         binding.viewPager.setCurrentItem(1);
+    }
+
+    @Override
+    public void onAddRepeat() {
+        callerHalfHourTimePicker.call();
+        callerDatePicker.call();
+    }
+
+    @Override
+    public void getHalfHourTimePickerResult(int minute, int hour) {
+        viewModel.getModel().setMinute(minute);
+        viewModel.getModel().setHour(hour);
+        viewModel.checkForSend();
+    }
+
+    @Override
+    public void getDatePickerResult(int day, int month) {
+        viewModel.getModel().setDay(day);
+        viewModel.getModel().setMonth(month);
+        viewModel.checkForSend();
+    }
+
+    @Override
+    public void send() {
+        callBack.onAlarmChanged(viewModel.getAlarm());
     }
 }
