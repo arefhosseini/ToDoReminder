@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.other.RepeatItem;
+import com.fearefull.todoreminder.data.model.other.RepeatManagerItem;
 import com.fearefull.todoreminder.ui.alarm_manager.RepeatAdapter;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerAdapter;
 import com.fearefull.todoreminder.ui.home.AlarmAdapter;
 
 import java.util.List;
@@ -35,6 +37,15 @@ public final class BindingUtils {
         if (adapter != null) {
             adapter.clearItems();
             adapter.addItems(alarms);
+        }
+    }
+
+    @BindingAdapter({"adapter"})
+    public static void addRepeatManagerITem(RecyclerView recyclerView, List<RepeatManagerItem> items) {
+        RepeatManagerAdapter adapter = (RepeatManagerAdapter) recyclerView.getAdapter();
+        if (adapter != null) {
+            adapter.clearItems();
+            adapter.addItems(items);
         }
     }
 

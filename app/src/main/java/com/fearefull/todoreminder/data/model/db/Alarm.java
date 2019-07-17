@@ -8,8 +8,11 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.fearefull.todoreminder.data.model.other.DataConverter;
+import com.fearefull.todoreminder.data.model.other.DayMonthType;
 import com.fearefull.todoreminder.data.model.other.HalfHourType;
+import com.fearefull.todoreminder.data.model.other.MonthType;
 import com.fearefull.todoreminder.data.model.other.OnceRepeatModel;
+import com.fearefull.todoreminder.data.model.other.RepeatManagerItem;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.Observable;
 import saman.zamani.persiandate.PersianDate;
 
 @Entity(tableName = "alarms")
@@ -542,12 +546,12 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
-    public String getTime12String(int index, HalfHourType halfHourType) {
+    public String getTime12String(int index) {
         int minute = minutes.get(index);
-        int hour = hours.get(index);
+        int hour = hourToHalfHour(hours.get(index));
         if (minute < 10)
-            return hour + ":" + "0" + minute + " " + halfHourType.getPersianText();
-        return hour + ":" + minute + " " + halfHourType.getPersianText();
+            return hour + ":" + "0" + minute + " " + getHalfHourType().getPersianShortText();
+        return hour + ":" + minute + " " + getHalfHourType().getPersianShortText();
     }
 
     @Ignore
@@ -557,6 +561,16 @@ public class Alarm implements Serializable {
         if (minute < 10)
             return hour + ":" + "0" + minute;
         return hour + ":" + minute;
+    }
+
+    @Ignore
+    public String getDateByDayMonthAndMonth(int index) {
+        return DayMonthType.getDayMonthType(daysMonth.get(index)).getTextNormal() + " " + MonthType.getMonthType(months.get(index)).getText();
+    }
+
+    @Ignore
+    public String getRepeatManagerStringByOnce(int index) {
+        return getTime12String(index) + " " + getDateByDayMonthAndMonth(index);
     }
 
     @Ignore
@@ -627,5 +641,37 @@ public class Alarm implements Serializable {
         add24HourByValue(model.getHour());
         addDayMonthByValue(model.getDay());
         addMonthByValue(model.getMonth());
+    }
+
+    public String getRepeatManagerString(int index) {
+        if (repeat == Repeat.ONCE)
+            return getRepeatManagerStringByOnce(index);
+        return "";
+    }
+
+    @Ignore
+    public Observable<List<RepeatManagerItem>> getRepeatManagerItemList() {
+        return Observable.fromCallable(() -> {
+            checkRepeat();
+            List<RepeatManagerItem> list = new ArrayList<>();
+            for (int index = 0; index < getRepeatCount(); index++) {
+                list.add(new RepeatManagerItem(getRepeatManagerString(index)));
+            }
+            return list;
+        });
+    }
+
+    @Ignore
+    public void removeRepeatManagerDataByOnce(int index) {
+        minutes.remove(index);
+        hours.remove(index);
+        daysMonth.remove(index);
+        months.remove(index);
+    }
+
+    @Ignore
+    public void removeRepeatManagerData(int index) {
+        if (repeat == Repeat.ONCE)
+            removeRepeatManagerDataByOnce(index);
     }
 }

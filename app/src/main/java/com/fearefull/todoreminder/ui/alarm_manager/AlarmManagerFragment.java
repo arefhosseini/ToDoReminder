@@ -20,11 +20,13 @@ import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.data.model.other.RepeatItem;
 import com.fearefull.todoreminder.databinding.FragmentAlarmManagerBinding;
 import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerDialogFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleFragment;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.utils.CommonUtils;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -33,13 +35,15 @@ import dagger.android.support.HasSupportFragmentInjector;
 import static com.fearefull.todoreminder.utils.AppConstants.ALARM_KEY;
 
 public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBinding, AlarmManagerViewModel>
-        implements AlarmManagerNavigator, HasSupportFragmentInjector, RepeatAdapter.RepeatAdapterListener, RepeatCallBack {
+        implements AlarmManagerNavigator, HasSupportFragmentInjector, RepeatAdapter.RepeatAdapterListener,
+        RepeatCallBack, RepeatManagerDialogFragment.RepeatManagerCallBack {
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
     @Inject
     RepeatAdapter repeatAdapter;
     @Inject
+    @Named("AlarmManager")
     LinearLayoutManager layoutManager;
     public static final String TAG = AlarmManagerFragment.class.getSimpleName();
     @Inject
@@ -118,10 +122,9 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     public void openOnceRepeatFragment() {
         OnceRepeatFragment onceRepeatFragment = OnceRepeatFragment.newInstance(viewModel.getAlarm());
         onceRepeatFragment.setCallBack(this);
-        CHILD_TAG = SimpleFragment.TAG;
+        CHILD_TAG = OnceRepeatFragment.TAG;
         getChildFragmentManager()
                 .beginTransaction()
-                .disallowAddToBackStack()
                 .add(R.id.repeatSubRootView, onceRepeatFragment, CHILD_TAG)
                 .commit();
         viewModel.setIsLoading(false);
@@ -192,6 +195,19 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
 
     @Override
     public void onAlarmChanged(Alarm alarm) {
+        viewModel.setAlarm(alarm);
+        viewModel.updateAlarm();
+    }
+
+    @Override
+    public void onShowRepeatManagerDialog() {
+        RepeatManagerDialogFragment dialogFragment = RepeatManagerDialogFragment.newInstance(viewModel.getAlarm());
+        dialogFragment.setCallBack(this);
+        dialogFragment.show(getChildFragmentManager(), RepeatManagerDialogFragment.TAG);
+    }
+
+    @Override
+    public void onAlarmChangedByRepeatManager(Alarm alarm) {
         viewModel.setAlarm(alarm);
         viewModel.updateAlarm();
     }

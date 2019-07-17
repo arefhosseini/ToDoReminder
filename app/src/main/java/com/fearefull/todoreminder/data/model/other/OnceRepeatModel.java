@@ -51,7 +51,7 @@ public class OnceRepeatModel {
         month = -1;
     }
 
-    public boolean isGetAll() {
+    public boolean isValid() {
         return minute != -1 && hour != -1 && day != -1 && month != -1;
     }
 }

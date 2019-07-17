@@ -7,14 +7,14 @@ public class CustomRepeat {
     private CustomRepeatType type;
     private int count;
     private List<WeekType> onWeekList;
-    private List<MonthDayType> onDayMonthList;
+    private List<DayMonthType> onDayMonthList;
     private List<MonthType> onMonthList;
 
     CustomRepeat() {
         this.type = CustomRepeatType.WEEK;
         this.count = 1;
         onWeekList = Collections.singletonList(WeekType.DAY_1);
-        onDayMonthList = Collections.singletonList(MonthDayType.DAY_1);
+        onDayMonthList = Collections.singletonList(DayMonthType.DAY_1);
         onMonthList = Collections.singletonList(MonthType.FARVARDIN);
     }
 
@@ -51,21 +51,21 @@ public class CustomRepeat {
         onWeekList.remove(weekType);
     }
 
-    public List<MonthDayType> getOnDayMonthList() {
+    public List<DayMonthType> getOnDayMonthList() {
         return onDayMonthList;
     }
 
-    public void setOnDayMonthList(List<MonthDayType> onDayMonthList) {
+    public void setOnDayMonthList(List<DayMonthType> onDayMonthList) {
         this.onDayMonthList = onDayMonthList;
     }
 
-    public void addToOnDayMonthList(MonthDayType monthDayType) {
-        if (!onDayMonthList.contains(monthDayType))
-            onDayMonthList.add(monthDayType);
+    public void addToOnDayMonthList(DayMonthType dayMonthType) {
+        if (!onDayMonthList.contains(dayMonthType))
+            onDayMonthList.add(dayMonthType);
     }
 
-    public void removeFromOnDayMonthList(MonthDayType monthDayType) {
-        onDayMonthList.remove(monthDayType);
+    public void removeFromOnDayMonthList(DayMonthType dayMonthType) {
+        onDayMonthList.remove(dayMonthType);
     }
 
     public List<MonthType> getOnMonthList() {
@@ -114,8 +114,8 @@ public class CustomRepeat {
 
     private String getOnMonthDayString() {
         StringBuilder result = new StringBuilder();
-        for (MonthDayType monthDayType: onDayMonthList) {
-            result.append(monthDayType.getText());
+        for (DayMonthType dayMonthType : onDayMonthList) {
+            result.append(dayMonthType.getTextNormal());
         }
         return result.toString();
     }

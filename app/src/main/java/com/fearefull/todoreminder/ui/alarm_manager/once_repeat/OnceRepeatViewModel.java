@@ -44,7 +44,7 @@ public class OnceRepeatViewModel extends BaseViewModel<OnceRepeatNavigator> {
     }
 
     void checkForSend() {
-           if (model.isGetAll()) {
+           if (model.isValid()) {
                alarm.addOnceRepeatModel(model);
                model.reset();
                getNavigator().send();

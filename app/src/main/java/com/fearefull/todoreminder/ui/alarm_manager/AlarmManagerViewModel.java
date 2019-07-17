@@ -150,6 +150,10 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         getNavigator().closeAllExpansions();
     }
 
+    public void onRepeatManagerClick() {
+        getNavigator().onShowRepeatManagerDialog();
+    }
+
     Uri getDefaultRingtone() {
         return null;
     }

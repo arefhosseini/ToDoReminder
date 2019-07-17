@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.splash.SplashActivity">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerViewModel" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_half_layout_padding">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:orientation="vertical"
+            android:padding="@dimen/recycler_view_padding"
+            app:adapter="@{viewModel.getRepeatManagerItemsLiveData}"
+            tools:listitem="@layout/item_repeat_manager" />
+    </RelativeLayout>
+</layout>

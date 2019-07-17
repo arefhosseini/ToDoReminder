@@ -35,4 +35,13 @@ public enum  MonthType {
     public int getDays() {
         return days;
     }
+
+    public static MonthType getMonthType(Integer index){
+        for(MonthType type : values()){
+            if(type.index == index){
+                return type;
+            }
+        }
+        return MonthType.TIR;
+    }
 }

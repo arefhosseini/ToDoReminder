@@ -1,15 +1,16 @@
 package com.fearefull.todoreminder.data.model.other;
 
 public enum HalfHourType {
-    AM(0, "قبل از ظهر", "am"),
-    PM(1, "بعد از ظهر", "pm");
+    AM(0, "قبل از ظهر", "ب.ظ", "am"),
+    PM(1, "بعد از ظهر", "ق.ظ", "pm");
 
     private int index;
-    private String persianText, englishText;
+    private String persianText, persianShortText, englishText;
 
-    HalfHourType(int index, String persianText, String englishText) {
+    HalfHourType(int index, String persianText, String persianShortText, String englishText) {
         this.index = index;
         this.persianText = persianText;
+        this.persianShortText = persianShortText;
         this.englishText = englishText;
     }
 
@@ -19,6 +20,10 @@ public enum HalfHourType {
 
     public String getPersianText() {
         return persianText;
+    }
+
+    public String getPersianShortText() {
+        return persianShortText;
     }
 
     public String getEnglishText() {

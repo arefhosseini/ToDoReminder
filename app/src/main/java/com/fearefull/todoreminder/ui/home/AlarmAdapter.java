@@ -34,9 +34,9 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemAlarmBinding itemAlarmBinding = ItemAlarmBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemAlarmBinding binding = ItemAlarmBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
-        return new AlarmViewHolder(itemAlarmBinding);
+        return new AlarmViewHolder(binding);
     }
 
     public void addItems(List<Alarm> alarmList) {

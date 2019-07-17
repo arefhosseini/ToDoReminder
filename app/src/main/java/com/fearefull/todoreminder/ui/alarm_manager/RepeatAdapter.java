@@ -42,9 +42,9 @@ public class RepeatAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemRepeatBinding itemRepeatBinding = ItemRepeatBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemRepeatBinding binding = ItemRepeatBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
-        return new RepeatViewHolder(itemRepeatBinding);
+        return new RepeatViewHolder(binding);
     }
 
     public void addItems(List<RepeatItem> repeatItemList) {
