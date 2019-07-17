@@ -19,4 +19,12 @@ public class OnceRepeatViewModel extends BaseViewModel<OnceRepeatNavigator> {
     public void setAlarm(Alarm alarm) {
         this.alarm = alarm;
     }
+
+    public void onTimePickerClick() {
+        getNavigator().showTimePickerFragment();
+    }
+
+    public void onDatePickerClick() {
+        getNavigator().showDatePickerFragment();
+    }
 }

@@ -2,7 +2,6 @@ package com.fearefull.todoreminder.ui.alarm_manager;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +23,6 @@ import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatFragmen
 import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleFragment;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.utils.CommonUtils;
-import com.fearefull.todoreminder.utils.ViewUtils;
 
 import javax.inject.Inject;
 
@@ -102,18 +100,6 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         binding.repeatRecyclerView.setLayoutManager(layoutManager);
         binding.repeatRecyclerView.setItemAnimator(new DefaultItemAnimator());
         binding.repeatRecyclerView.setAdapter(repeatAdapter);
-
-        setUpNumberPicker(binding.hoursPicker, viewModel.getHours(), viewModel.getIndexHour());
-        setUpNumberPicker(binding.minutesPicker, viewModel.getMinutes(), viewModel.getIndexMinute());
-        setUpNumberPicker(binding.halfHourTypePicker, viewModel.getHalfHourTypes(), viewModel.getIndexHalfHourIndex());
-    }
-
-    private void setUpNumberPicker(NumberPicker picker, String[] data, int defaultIndex) {
-        ViewUtils.setDividerColor(picker, getResources().getColor(R.color.secondaryColorLightTheme));
-        picker.setMaxValue(data.length - 1);
-        picker.setValue(defaultIndex);
-        picker.setDisplayedValues(data);
-        picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
     }
 
     @Override
@@ -138,6 +124,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
                 .disallowAddToBackStack()
                 .add(R.id.repeatSubRootView, onceRepeatFragment, CHILD_TAG)
                 .commit();
+        viewModel.setIsLoading(false);
     }
 
     @Override
@@ -191,9 +178,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
 
     @Override
     public void closeAllExpansions() {
-        if (binding.timeExpansionLayout.isExpanded())
-            binding.timeExpansionLayout.collapse(true);
-        else if (binding.noteExpansionLayout.isExpanded())
+        if (binding.noteExpansionLayout.isExpanded())
             binding.noteExpansionLayout.collapse(true);
         else if (binding.repeatExpansionLayout.isExpanded())
             binding.repeatExpansionLayout.collapse(true);
@@ -206,7 +191,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     }
 
     @Override
-    public void onAlarmChange(Alarm alarm) {
+    public void onAlarmChanged(Alarm alarm) {
         viewModel.setAlarm(alarm);
         viewModel.updateAlarm();
     }

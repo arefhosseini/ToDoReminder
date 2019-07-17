@@ -55,4 +55,12 @@ public final class ViewUtils {
             }
         }
     }
+
+    public static void setUpNumberPicker(NumberPicker picker, String[] data, int defaultIndex) {
+        ViewUtils.setDividerColor(picker, picker.getContext().getResources().getColor(R.color.secondaryColorLightTheme));
+        picker.setMaxValue(data.length - 1);
+        picker.setValue(defaultIndex);
+        picker.setDisplayedValues(data);
+        picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+    }
 }

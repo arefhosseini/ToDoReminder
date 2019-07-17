@@ -6,6 +6,8 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class OnceRepeatFragmentProvider {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = {
+            OnceRepeatFragmentModule.class,
+    })
     abstract OnceRepeatFragment provideOnceRepeatFragmentFactory();
 }

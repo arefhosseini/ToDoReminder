@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.ui.about.AboutViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerViewModel;
-import com.fearefull.todoreminder.ui.alarm_manager.date_picker.DatePickerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatViewModel;
+import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.date_picker.DatePickerViewModel;
+import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.half_hour_time_picker.HalfHourTimePickerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleViewModel;
-import com.fearefull.todoreminder.ui.alarm_manager.time_picker.TimePickerViewModel;
 import com.fearefull.todoreminder.ui.alarm_notification.AlarmNotificationViewModel;
 import com.fearefull.todoreminder.ui.home.HomeViewModel;
 import com.fearefull.todoreminder.ui.login.LoginViewModel;
@@ -62,14 +62,6 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
             //noinspection unchecked
             return (T) new AlarmManagerViewModel(dataManager, schedulerProvider);
         }
-        if (modelClass.isAssignableFrom(TimePickerViewModel.class)) {
-            //noinspection unchecked
-            return (T) new TimePickerViewModel(dataManager, schedulerProvider);
-        }
-        if (modelClass.isAssignableFrom(DatePickerViewModel.class)) {
-            //noinspection unchecked
-            return (T) new DatePickerViewModel(dataManager, schedulerProvider);
-        }
         if (modelClass.isAssignableFrom(AlarmNotificationViewModel.class)) {
             //noinspection unchecked
             return (T) new AlarmNotificationViewModel(dataManager, schedulerProvider);
@@ -81,6 +73,14 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         if (modelClass.isAssignableFrom(OnceRepeatViewModel.class)) {
             //noinspection unchecked
             return (T) new OnceRepeatViewModel(dataManager, schedulerProvider);
+        }
+        if (modelClass.isAssignableFrom(HalfHourTimePickerViewModel.class)) {
+            //noinspection unchecked
+            return (T) new HalfHourTimePickerViewModel(dataManager, schedulerProvider);
+        }
+        if (modelClass.isAssignableFrom(DatePickerViewModel.class)) {
+            //noinspection unchecked
+            return (T) new DatePickerViewModel(dataManager, schedulerProvider);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

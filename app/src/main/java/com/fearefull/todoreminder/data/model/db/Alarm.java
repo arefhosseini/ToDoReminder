@@ -136,6 +136,10 @@ public class Alarm implements Serializable {
         return minutes;
     }
 
+    public int getMinute(int index) {
+        return minutes.get(index);
+    }
+
     public void setMinutes( List<Integer> minutes) {
         this.minutes = minutes;
     }
@@ -168,6 +172,10 @@ public class Alarm implements Serializable {
      */
     public List<Integer> getHours() {
         return hours;
+    }
+
+    public int getHour(int index) {
+        return hours.get(index);
     }
 
     public void setHours( List<Integer> hours) {
@@ -203,19 +211,9 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
-    public void add12HourByValue(int hour, HalfHourType halfHourType) {
-        if (halfHourType == HalfHourType.AM) {
-            if (hour == 12)
-                hours.add(0);
-            else
-                hours.add(hour);
-        }
-        else if (halfHourType == HalfHourType.PM) {
-            if (hour == 12)
-                hours.add(12);
-            else
-                hours.add(hour + 12);
-        }
+    public void add12HourByValue(int halfHour, HalfHourType halfHourType) {
+        int hour = halfHourToHour(halfHour, halfHourType);
+        hours.add(hour);
     }
 
     @Ignore
@@ -248,6 +246,10 @@ public class Alarm implements Serializable {
         return daysWeek;
     }
 
+    public int getDayWeek(int index) {
+        return daysWeek.get(index);
+    }
+
     public void setDaysWeek( List<Integer> daysWeek) {
         this.daysWeek = daysWeek;
     }
@@ -258,6 +260,10 @@ public class Alarm implements Serializable {
      */
     public List<Integer> getDaysMonth() {
         return daysMonth;
+    }
+
+    public int getDayMonth(int index) {
+        return daysMonth.get(index);
     }
 
     public void setDaysMonth( List<Integer> daysMonth) {
@@ -294,6 +300,10 @@ public class Alarm implements Serializable {
         return weeksMonth;
     }
 
+    public int getWeekMonth(int index) {
+        return weeksMonth.get(index);
+    }
+
     public void setWeeksMonth( List<Integer> weeksMonth) {
         this.weeksMonth = weeksMonth;
     }
@@ -306,6 +316,10 @@ public class Alarm implements Serializable {
         return weeksYear;
     }
 
+    public int getWeekYear(int index) {
+        return weeksYear.get(index);
+    }
+
     public void setWeeksYear( List<Integer> weeksYear) {
         this.weeksYear = weeksYear;
     }
@@ -316,6 +330,10 @@ public class Alarm implements Serializable {
      */
     public List<Integer> getMonths() {
         return months;
+    }
+
+    public int getMonth(int index) {
+        return months.get(index);
     }
 
     public void setMonths(List<Integer> months) {
@@ -350,6 +368,10 @@ public class Alarm implements Serializable {
      */
     public List<Integer> getYears() {
         return years;
+    }
+
+    public int getYear(int index) {
+        return years.get(index);
     }
 
     public void setYears( List<Integer> years) {
@@ -427,8 +449,18 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
+    public static int halfHourTypeToIndex(HalfHourType halfHourType) {
+        return halfHourType.getIndex();
+    }
+
+    @Ignore
     public static Repeat indexToRepeat(int index) {
         return Repeat.getRepeat(index);
+    }
+
+    @Ignore
+    public static int repeatToIndex(Repeat repeat) {
+        return repeat.getValue();
     }
 
     @Ignore
@@ -437,8 +469,45 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
+    public static int minuteToIndex(int minute) {
+        return minute;
+    }
+
+    @Ignore
     public static int indexTo12Hour(int index) {
         return index + 1;
+    }
+
+    @Ignore
+    public static int halfHourToIndex(int halfHour) {
+        return halfHour - 1;
+    }
+
+    @Ignore
+    public static int halfHourToHour(int halfHour, HalfHourType halfHourType) {
+        if (halfHourType == HalfHourType.AM) {
+            if (halfHour == 12)
+                return 0;
+            else
+                return halfHour;
+        }
+        else if (halfHourType == HalfHourType.PM) {
+            if (halfHour == 12)
+                return halfHour;
+            else
+                return halfHour + 12;
+        }
+        return 0;
+    }
+
+    @Ignore
+    public static int hourToHalfHour(int hour) {
+        if (hour == 0 || hour == 12)
+            return 12;
+        if (hour < 12)
+            return hour;
+        else
+            return hour - 12;
     }
 
     @Ignore
@@ -447,13 +516,28 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
+    public static int hourToIndex(int hour) {
+        return hour;
+    }
+
+    @Ignore
     public static int indexToDayMonth(int index) {
         return index;
     }
 
     @Ignore
+    public static int dayMonthToIndex(int dayMonth) {
+        return dayMonth;
+    }
+
+    @Ignore
     public static int indexToMonth(int index) {
         return index + 1;
+    }
+
+    @Ignore
+    public static int monthToIndex(int month) {
+        return month - 1;
     }
 
     @Ignore

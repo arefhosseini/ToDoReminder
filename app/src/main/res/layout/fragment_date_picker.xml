@@ -3,22 +3,26 @@
     <data>
         <variable
             name="viewModel"
-            type="com.fearefull.todoreminder.ui.alarm_manager.date_picker.DatePickerViewModel" />
+            type="com.fearefull.todoreminder.ui.alarm_manager.once_repeat.date_picker.DatePickerViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/default_layout_padding"
-        android:background="@color/backgroundColorLightTheme">
+        android:padding="@dimen/default_layout_padding">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
 
         <NumberPicker
-            android:id="@+id/yearsPicker"
+            android:id="@+id/monthPicker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onYearsPickerValueChange(oldVal, newVal)}"
+            android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onMonthPickerValueChange(oldVal, newVal)}"
             android:layout_gravity="center_horizontal" />
 
         <Space
@@ -27,25 +31,16 @@
             android:layout_weight="1"/>
 
         <NumberPicker
-            android:id="@+id/monthsPicker"
+            android:id="@+id/dayPicker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onMonthsPickerValueChange(oldVal, newVal)}"
+            android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onDayPickerValueChange(oldVal, newVal)}"
             android:layout_gravity="center_horizontal" />
-
         <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
-        <NumberPicker
-            android:id="@+id/daysPicker"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onDaysPickerValueChange(oldVal, newVal)}"
-            android:layout_gravity="center_horizontal" />
+            android:layout_weight="2"/>
     </LinearLayout>
 
 </layout>

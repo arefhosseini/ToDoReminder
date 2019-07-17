@@ -9,7 +9,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
-import com.fearefull.todoreminder.data.model.other.HalfHourType;
 import com.fearefull.todoreminder.data.model.other.RepeatItem;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
@@ -18,13 +17,9 @@ import com.kevalpatel.ringtonepicker.RingtonePickerListener;
 
 import java.util.List;
 
-import timber.log.Timber;
-
 public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> {
 
     private Alarm alarm;
-    private HalfHourType halfHourType;
-    private final ObservableField<String> timeString = new ObservableField<>();
     private final ObservableField<String> repeatString = new ObservableField<>();
     private final ObservableField<String> noteString = new ObservableField<>();
     private final MutableLiveData<List<RepeatItem>> repeatItemsLiveData;
@@ -42,18 +37,6 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     public MutableLiveData<List<RepeatItem>> getRepeatItemsLiveData() {
         return repeatItemsLiveData;
-    }
-
-    String[] getHours() {
-        return AlarmUtils.get12Hours().toArray(new String[0]);
-    }
-
-    String[] getMinutes() {
-        return AlarmUtils.getMinutes().toArray(new String[0]);
-    }
-
-    String[] getHalfHourTypes() {
-        return AlarmUtils.getHalfHourTypes().toArray(new String[0]);
     }
 
     public void onNavigationBackClick() {
@@ -74,30 +57,6 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         );
     }
 
-    public void onHoursPickerValueChange(int oldVal, int newVal) {
-        Timber.i("hour index %d", newVal);
-        if (alarm.getHours().isEmpty())
-            alarm.add12HourByIndex(newVal, halfHourType);
-        else
-            alarm.edit12HourByIndex(newVal, halfHourType, 0);
-        updateTimeString();
-    }
-
-    public void onMinutesPickerValueChange(int oldVal, int newVal) {
-        Timber.i("minute index %d", newVal);
-        if (alarm.getMinutes().isEmpty())
-            alarm.addMinuteByIndex(newVal);
-        else
-            alarm.editMinuteByIndex(newVal, 0);
-        updateTimeString();
-    }
-
-    public void onHalfHourTypesPickerValueChange(int oldVal, int newVal) {
-        Timber.i("type index %d", newVal);
-        halfHourType = Alarm.indexToHalfHourType(newVal);
-        updateTimeString();
-    }
-
     public void onNoteTextChange(CharSequence s) {
         alarm.setNote(s.toString());
         updateNoteString();
@@ -112,21 +71,16 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     void initAlarm() {
-        halfHourType = alarm.getHalfHourType();
+        setIsLoading(true);
         fetchRepeatData();
         updateAlarm();
         openDefaultRepeatFragment();
     }
 
     void updateAlarm() {
-        updateTimeString();
         updateRepeatString();
         updateNoteString();
         updateRingtoneString();
-    }
-
-    void updateTimeString() {
-        timeString.set(alarm.getTime12String(0, halfHourType));
     }
 
     void updateRepeatString(Repeat repeat) {
@@ -149,10 +103,6 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     void updateRingtoneString() {
         ringtoneString.set(alarm.getRingtone());
-    }
-
-    public ObservableField<String> getTimeString() {
-        return timeString;
     }
 
     public ObservableField<String> getRepeatString() {
@@ -192,17 +142,5 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     Uri getDefaultRingtone() {
         return null;
-    }
-
-    int getIndexHour() {
-        return alarm.getIndexHour12Hour(0);
-    }
-
-    int getIndexMinute() {
-        return alarm.getIndexMinute(0);
-    }
-
-    int getIndexHalfHourIndex() {
-        return alarm.getIndexHalfHourType(0);
     }
 }
