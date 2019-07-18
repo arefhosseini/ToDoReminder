@@ -115,10 +115,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(AboutFragment.TAG);
         if (fragment == null) {
-            if (drawer.isDrawerOpen(Gravity.RIGHT))
-                lockDrawer();
+            fragment = getSupportFragmentManager().findFragmentByTag(AlarmManagerFragment.TAG);
+            if (fragment == null) {
+                if (drawer.isDrawerOpen(Gravity.RIGHT))
+                    lockDrawer();
+                else
+                    super.onBackPressed();
+            }
             else
-                super.onBackPressed();
+                onFragmentDetached(AlarmManagerFragment.TAG);
         }
         else
             onFragmentDetached(AboutFragment.TAG);

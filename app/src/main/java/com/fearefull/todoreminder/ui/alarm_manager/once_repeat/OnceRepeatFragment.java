@@ -168,8 +168,8 @@ public class OnceRepeatFragment extends BaseFragment<FragmentOnceRepeatBinding, 
     @Override
     public void showError() {
         Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake_animation);
-        binding.timeIcon.setAnimation(shake);
-        binding.dateIcon.setAnimation(shake);
+        binding.timeIcon.startAnimation(shake);
+        binding.dateIcon.startAnimation(shake);
         shake.start();
         Toast.makeText(getContext(), R.string.not_updated_time_error, Toast.LENGTH_SHORT).show();
     }

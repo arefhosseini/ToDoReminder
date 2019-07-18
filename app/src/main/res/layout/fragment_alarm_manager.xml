@@ -378,13 +378,12 @@
 
                                                 <ImageView
                                                     android:id="@+id/repeatManagerIcon"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
+                                                    android:layout_width="28dp"
+                                                    android:layout_height="28dp"
                                                     android:scaleType="fitCenter"
-                                                    android:padding="6dp"
                                                     android:translationZ="18dp"
-                                                    android:layout_marginBottom="4dp"
-                                                    android:layout_marginRight="12dp"
+                                                    android:layout_gravity="center"
+                                                    android:layout_marginRight="6dp"
                                                     android:src="@drawable/unselected_bell" />
 
                                                 <TextView
@@ -394,7 +393,7 @@
                                                     android:gravity="center"
                                                     style="@style/TextStyle.Title.Mini"
                                                     android:layout_marginRight="6dp"
-                                                    android:layout_marginLeft="8dp"
+                                                    android:layout_marginLeft="6dp"
                                                     android:layout_marginTop="6dp"
                                                     android:textAlignment="center"
                                                     android:textColor="@color/primaryColorLightTheme"

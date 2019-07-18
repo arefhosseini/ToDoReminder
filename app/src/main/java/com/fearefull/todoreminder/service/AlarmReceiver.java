@@ -37,7 +37,7 @@ public class AlarmReceiver extends BroadcastReceiver
 
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         @SuppressLint("InvalidWakeLockTag") PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
-        wl.acquire();
+        wl.acquire(10*60*1000L /*10 minutes*/);
 
         context.startActivity(AlarmNotificationActivity.newIntent(context));
         compositeDisposable.add(dataManager.getAllAlarms()
@@ -59,7 +59,7 @@ public class AlarmReceiver extends BroadcastReceiver
         AlarmManager am =(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(context, AlarmReceiver.class);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * 5, pi);
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * 60, pi);
     }
 
     public void cancelAlarm(Context context)

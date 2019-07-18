@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase;
 import com.fearefull.todoreminder.data.local.db.dao.AlarmDao;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 
-@Database(entities = {Alarm.class}, version = 4)
+@Database(entities = {Alarm.class}, version = 5)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract AlarmDao alarmDao();
 }

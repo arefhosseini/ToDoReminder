@@ -18,6 +18,8 @@ import com.kevalpatel.ringtonepicker.RingtonePickerListener;
 import java.util.List;
 import java.util.Objects;
 
+import timber.log.Timber;
+
 public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> {
 
     private Alarm alarm;
@@ -58,9 +60,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
                 .subscribe(result -> {
                     if (result)
                         getNavigator().save();
-                }, throwable -> {
-
-                })
+                }, Timber::e)
         );
     }
 
