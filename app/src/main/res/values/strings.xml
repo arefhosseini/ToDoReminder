@@ -34,4 +34,5 @@
     <string name="confirm">تایید</string>
     <string name="cancel">لغو</string>
     <string name="add">افزودن</string>
+    <string name="not_updated_time_error">زمان وارد شده مربوط به گذشته است، تغییرش دهید.</string>
 </resources>

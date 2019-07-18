@@ -1,8 +1,8 @@
 package com.fearefull.todoreminder.data.model.other;
 
 public enum HalfHourType {
-    AM(0, "قبل از ظهر", "ب.ظ", "am"),
-    PM(1, "بعد از ظهر", "ق.ظ", "pm");
+    AM(0, "قبل از ظهر", "ق.ظ", "am"),
+    PM(1, "بعد از ظهر", "ب.ظ", "pm");
 
     private int index;
     private String persianText, persianShortText, englishText;

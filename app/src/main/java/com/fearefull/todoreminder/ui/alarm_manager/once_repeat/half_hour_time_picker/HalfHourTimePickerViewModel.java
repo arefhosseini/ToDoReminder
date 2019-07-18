@@ -1,11 +1,15 @@
 package com.fearefull.todoreminder.ui.alarm_manager.once_repeat.half_hour_time_picker;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.other.HalfHourType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
+
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -15,71 +19,159 @@ public class HalfHourTimePickerViewModel extends BaseViewModel<HalfHourTimePicke
     private int hour;
     private HalfHourType halfHourType;
 
+    private MutableLiveData<List<String>> minutePickerValues;
+    private MutableLiveData<Integer> minutePickerMaxIndex;
+    private MutableLiveData<Integer> minutePickerDefaultIndex;
+
+    private MutableLiveData<List<String>> hourPickerValues;
+    private MutableLiveData<Integer> hourPickerMaxIndex;
+    private MutableLiveData<Integer> hourPickerDefaultIndex;
+
+    private MutableLiveData<List<String>> halfHourTypePickerValues;
+    private MutableLiveData<Integer> halfHourTypePickerMaxIndex;
+    private MutableLiveData<Integer> halfHourTypePickerDefaultIndex;
+
     public HalfHourTimePickerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
+
+        minutePickerValues = new MutableLiveData<>();
+        minutePickerMaxIndex = new MutableLiveData<>();
+        minutePickerDefaultIndex = new MutableLiveData<>();
+
+        hourPickerValues = new MutableLiveData<>();
+        hourPickerMaxIndex = new MutableLiveData<>();
+        hourPickerDefaultIndex = new MutableLiveData<>();
+
+        halfHourTypePickerValues = new MutableLiveData<>();
+        halfHourTypePickerMaxIndex = new MutableLiveData<>();
+        halfHourTypePickerDefaultIndex = new MutableLiveData<>();
     }
 
-    String[] getHours() {
-        return AlarmUtils.get12Hours().toArray(new String[0]);
-    }
+    void init(int minute, int hour) {
+        this.minute = minute;
+        this.hour = hour;
+        this.halfHourType = Alarm.hourToHalfHourType(hour);
 
-    String[] getMinutes() {
-        return AlarmUtils.getMinutes().toArray(new String[0]);
-    }
+        minutePickerValues.setValue(AlarmUtils.getMinutes());
+        minutePickerMaxIndex.setValue(59);
+        minutePickerDefaultIndex.setValue(Alarm.minuteToIndex(minute));
 
-    String[] getHalfHourTypes() {
-        return AlarmUtils.getHalfHourTypes().toArray(new String[0]);
+        hourPickerValues.setValue(AlarmUtils.get12Hours());
+        hourPickerMaxIndex.setValue(11);
+        hourPickerDefaultIndex.setValue(Alarm.halfHourToIndex(Alarm.hourToHalfHour(hour)));
+
+        halfHourTypePickerValues.setValue(AlarmUtils.getHalfHourTypes());
+        halfHourTypePickerMaxIndex.setValue(1);
+        halfHourTypePickerDefaultIndex.setValue(Alarm.halfHourTypeToIndex(halfHourType));
     }
 
     public void onHourPickerValueChange(int oldVal, int newVal) {
         Timber.i("hour index %d", newVal);
+        if ((Alarm.indexTo12Hour(newVal) == 12 && Alarm.indexTo12Hour(oldVal) == 11) ||
+                (Alarm.indexTo12Hour(newVal) == 11 && Alarm.indexTo12Hour(oldVal) == 12))
+            changeHalfHourType();
         hour = Alarm.halfHourToHour(Alarm.indexTo12Hour(newVal), halfHourType);
+        hourPickerDefaultIndex.setValue(newVal);
     }
 
     public void onMinutePickerValueChange(int oldVal, int newVal) {
         Timber.i("minute index %d", newVal);
         minute = Alarm.indexToMinute(newVal);
+        checkChangeHour(Alarm.indexToMinute(oldVal), minute);
+        minutePickerDefaultIndex.setValue(newVal);
     }
 
     public void onHalfHourTypePickerValueChange(int oldVal, int newVal) {
         Timber.i("type index %d", newVal);
         halfHourType = Alarm.indexToHalfHourType(newVal);
         hour = Alarm.halfHourToHour(Alarm.hourToHalfHour(hour), halfHourType);
+        halfHourTypePickerDefaultIndex.setValue(newVal);
+    }
+
+    private void checkChangeHour(int oldMinute, int newMinute) {
+        if (oldMinute == 59 && newMinute == 0)
+            forwardHour();
+        else if (oldMinute == 0 && newMinute == 59)
+            backwardHour();
+    }
+
+    private void forwardHour() {
+        int value = Alarm.indexTo12Hour(hourPickerDefaultIndex.getValue());
+        if (value == 11) {
+            changeHalfHourType();
+            value ++;
+        }
+        else if (value == 12)
+            value = 1;
+        else
+            value ++;
+        hourPickerDefaultIndex.setValue(Alarm.halfHourToIndex(value));
+        hour = Alarm.halfHourToHour((value), halfHourType);
+    }
+
+    private void backwardHour() {
+        int value = Alarm.indexTo12Hour(hourPickerDefaultIndex.getValue());
+        if (value == 12) {
+            changeHalfHourType();
+            value --;
+        }
+        else if (value == 1)
+            value = 12;
+        else
+            value --;
+        hourPickerDefaultIndex.setValue(Alarm.halfHourToIndex(value));
+        hour = Alarm.halfHourToHour((value), halfHourType);
+    }
+
+    private void changeHalfHourType() {
+        if (halfHourType == HalfHourType.AM)
+            halfHourType = HalfHourType.PM;
+        else
+            halfHourType = HalfHourType.AM;
+        halfHourTypePickerDefaultIndex.setValue(Alarm.halfHourTypeToIndex(halfHourType));
     }
 
     int getMinute() {
         return minute;
     }
 
-    void setMinute(int minute) {
-        this.minute = minute;
-    }
-
     int getHour() {
         return hour;
     }
 
-    void setHour(int hour) {
-        this.hour = hour;
+    public MutableLiveData<List<String>> getMinutePickerValues() {
+        return minutePickerValues;
     }
 
-    HalfHourType getHalfHourType() {
-        return halfHourType;
+    public MutableLiveData<Integer> getMinutePickerMaxIndex() {
+        return minutePickerMaxIndex;
     }
 
-    void setHalfHourType(HalfHourType halfHourType) {
-        this.halfHourType = halfHourType;
+    public MutableLiveData<Integer> getMinutePickerDefaultIndex() {
+        return minutePickerDefaultIndex;
     }
 
-    int getMinuteIndex() {
-        return Alarm.minuteToIndex(minute);
+    public MutableLiveData<List<String>> getHourPickerValues() {
+        return hourPickerValues;
     }
 
-    int getHourIndex() {
-        return Alarm.halfHourToIndex(Alarm.hourToHalfHour(hour));
+    public MutableLiveData<Integer> getHourPickerMaxIndex() {
+        return hourPickerMaxIndex;
     }
 
-    int getHalfHourTypeIndex() {
-        return Alarm.halfHourTypeToIndex(halfHourType);
+    public MutableLiveData<Integer> getHourPickerDefaultIndex() {
+        return hourPickerDefaultIndex;
+    }
+
+    public MutableLiveData<List<String>> getHalfHourTypePickerValues() {
+        return halfHourTypePickerValues;
+    }
+
+    public MutableLiveData<Integer> getHalfHourTypePickerMaxIndex() {
+        return halfHourTypePickerMaxIndex;
+    }
+
+    public MutableLiveData<Integer> getHalfHourTypePickerDefaultIndex() {
+        return halfHourTypePickerDefaultIndex;
     }
 }

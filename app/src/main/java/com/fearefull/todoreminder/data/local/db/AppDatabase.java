@@ -8,7 +8,7 @@ import com.fearefull.todoreminder.data.local.db.dao.UserDao;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.User;
 
-@Database(entities = {User.class, Alarm.class}, version = 3)
+@Database(entities = {User.class, Alarm.class}, version = 4)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract AlarmDao alarmDao();

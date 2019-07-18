@@ -43,4 +43,8 @@ public enum Repeat {
             return repeat.value;
         return  null;
     }
+
+    public static int getCount() {
+        return values().length;
+    }
 }

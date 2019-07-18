@@ -3,6 +3,9 @@ package com.fearefull.todoreminder.ui.alarm_manager.once_repeat;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,13 +18,13 @@ import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.databinding.FragmentOnceRepeatBinding;
-import com.fearefull.todoreminder.ui.alarm_manager.RepeatCallBack;
 import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.date_picker.DatePickerFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.half_hour_time_picker.HalfHourTimePickerFragment;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.base.BaseViewPagerAdapter;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -40,10 +43,11 @@ public class OnceRepeatFragment extends BaseFragment<FragmentOnceRepeatBinding, 
     @Inject
     ViewModelProviderFactory factory;
     @Inject
+    @Named("OnceRepeat")
     BaseViewPagerAdapter pagerAdapter;
     private OnceRepeatViewModel viewModel;
     private FragmentOnceRepeatBinding binding;
-    private RepeatCallBack callBack;
+    private OnceRepeatCallBack callBack;
     private OnceRepeatCaller callerHalfHourTimePicker, callerDatePicker;
 
     public static OnceRepeatFragment newInstance(Alarm alarm) {
@@ -96,13 +100,13 @@ public class OnceRepeatFragment extends BaseFragment<FragmentOnceRepeatBinding, 
 
         HalfHourTimePickerFragment
                 halfHourTimePickerFragment = HalfHourTimePickerFragment.newInstance(
-                        viewModel.getAlarm().getMinute(0), viewModel.getAlarm().getHour(0), viewModel.getAlarm().getHalfHourType());
+                        viewModel.getAlarm().getDefaultMinute(), viewModel.getAlarm().getDefaultHour());
         halfHourTimePickerFragment.setCallBack(this);
         callerHalfHourTimePicker = halfHourTimePickerFragment;
 
         DatePickerFragment datePickerFragment =
-                DatePickerFragment.newInstance(viewModel.getAlarm().getDayMonth(0),
-                        viewModel.getAlarm().getMonth(0));
+                DatePickerFragment.newInstance(viewModel.getAlarm().getDefaultDayMonth(),
+                        viewModel.getAlarm().getDefaultMonth());
         datePickerFragment.setCallBack(this);
         callerDatePicker = datePickerFragment;
 
@@ -110,33 +114,30 @@ public class OnceRepeatFragment extends BaseFragment<FragmentOnceRepeatBinding, 
         pagerAdapter.addFragment(datePickerFragment, "datePicker");
         binding.viewPager.setAdapter(pagerAdapter);
 
-        showTimePickerFragment();
+        timePickerClick();
+        viewModel.getCurrentTabPager().setValue(0);
     }
 
-    public void setCallBack(RepeatCallBack callBack) {
+    public void setCallBack(OnceRepeatCallBack callBack) {
         this.callBack = callBack;
     }
 
     @Override
-    public void showTimePickerFragment() {
+    public void timePickerClick() {
         binding.timeLayout.setBackground(getContext().getDrawable(R.drawable.quarter_top_right_circle_selected_bg));
-        ImageViewCompat.setImageTintList(binding.timeImageView, ColorStateList.valueOf(getResources().getColor(R.color.whiteColor)));
+        ImageViewCompat.setImageTintList(binding.timeIcon, ColorStateList.valueOf(getResources().getColor(R.color.whiteColor)));
 
         binding.dateLayout.setBackground(getContext().getDrawable(R.drawable.quarter_bottom_right_circle_unselected_bg));
-        ImageViewCompat.setImageTintList(binding.dateImageView, ColorStateList.valueOf(getResources().getColor(R.color.primaryColorLightTheme)));
-
-        binding.viewPager.setCurrentItem(0);
+        ImageViewCompat.setImageTintList(binding.dateIcon, ColorStateList.valueOf(getResources().getColor(R.color.primaryColorLightTheme)));
     }
 
     @Override
-    public void showDatePickerFragment() {
+    public void datePickerClick() {
         binding.dateLayout.setBackground(getContext().getDrawable(R.drawable.quarter_bottom_right_circle_selected_bg));
-        ImageViewCompat.setImageTintList(binding.dateImageView, ColorStateList.valueOf(getResources().getColor(R.color.whiteColor)));
+        ImageViewCompat.setImageTintList(binding.dateIcon, ColorStateList.valueOf(getResources().getColor(R.color.whiteColor)));
 
         binding.timeLayout.setBackground(getContext().getDrawable(R.drawable.quarter_top_right_circle_unselected_bg));
-        ImageViewCompat.setImageTintList(binding.timeImageView, ColorStateList.valueOf(getResources().getColor(R.color.primaryColorLightTheme)));
-
-        binding.viewPager.setCurrentItem(1);
+        ImageViewCompat.setImageTintList(binding.timeIcon, ColorStateList.valueOf(getResources().getColor(R.color.primaryColorLightTheme)));
     }
 
     @Override
@@ -147,20 +148,33 @@ public class OnceRepeatFragment extends BaseFragment<FragmentOnceRepeatBinding, 
 
     @Override
     public void getHalfHourTimePickerResult(int minute, int hour) {
-        viewModel.getModel().setMinute(minute);
-        viewModel.getModel().setHour(hour);
+        viewModel.getRepeatModel().setMinute(minute);
+        viewModel.getRepeatModel().setHour(hour);
         viewModel.checkForSend();
     }
 
     @Override
     public void getDatePickerResult(int day, int month) {
-        viewModel.getModel().setDay(day);
-        viewModel.getModel().setMonth(month);
+        viewModel.getRepeatModel().setDayMonth(day);
+        viewModel.getRepeatModel().setMonth(month);
         viewModel.checkForSend();
     }
 
     @Override
     public void send() {
-        callBack.onAlarmChanged(viewModel.getAlarm());
+        callBack.onAlarmChangedByOnceRepeat(viewModel.getAlarm());
+    }
+
+    @Override
+    public void showError() {
+        Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake_animation);
+        binding.timeIcon.setAnimation(shake);
+        binding.dateIcon.setAnimation(shake);
+        shake.start();
+        Toast.makeText(getContext(), R.string.not_updated_time_error, Toast.LENGTH_SHORT).show();
+    }
+
+    public interface OnceRepeatCallBack {
+        void onAlarmChangedByOnceRepeat(Alarm alarm);
     }
 }

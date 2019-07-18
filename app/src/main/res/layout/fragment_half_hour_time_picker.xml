@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="viewModel"
@@ -13,11 +14,34 @@
         android:padding="@dimen/default_layout_padding">
 
         <NumberPicker
+            android:id="@+id/halfHourTypePicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            app:values="@{viewModel.halfHourTypePickerValues}"
+            app:maxIndex="@{viewModel.halfHourTypePickerMaxIndex}"
+            app:defaultIndex="@{viewModel.halfHourTypePickerDefaultIndex}"
+            android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onHalfHourTypePickerValueChange(oldVal, newVal)}"
+            app:dividedColor="@{@color/secondaryColorLightTheme}"
+            android:descendantFocusability="blocksDescendants"
+            android:layout_gravity="center_horizontal" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <NumberPicker
             android:id="@+id/hourPicker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
+            app:values="@{viewModel.hourPickerValues}"
+            app:maxIndex="@{viewModel.hourPickerMaxIndex}"
+            app:defaultIndex="@{viewModel.hourPickerDefaultIndex}"
             android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onHourPickerValueChange(oldVal, newVal)}"
+            app:dividedColor="@{@color/secondaryColorLightTheme}"
+            android:descendantFocusability="blocksDescendants"
             android:layout_gravity="center_horizontal" />
 
         <TextView
@@ -34,21 +58,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
+            app:values="@{viewModel.minutePickerValues}"
+            app:maxIndex="@{viewModel.minutePickerMaxIndex}"
+            app:defaultIndex="@{viewModel.minutePickerDefaultIndex}"
             android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onMinutePickerValueChange(oldVal, newVal)}"
+            app:dividedColor="@{@color/secondaryColorLightTheme}"
+            android:descendantFocusability="blocksDescendants"
             android:layout_gravity="center_horizontal" />
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
-        <NumberPicker
-            android:id="@+id/halfHourTypePicker"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onHalfHourTypePickerValueChange(oldVal, newVal)}"
-            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
 </layout>

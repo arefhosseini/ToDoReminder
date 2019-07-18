@@ -6,6 +6,8 @@ import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.half_hour_time_pi
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerDialogFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleFragmentProvider;
 
+import javax.inject.Scope;
+
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 

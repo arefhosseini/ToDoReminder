@@ -2,11 +2,12 @@ package com.fearefull.todoreminder.ui.alarm_manager;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,13 +17,13 @@ import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ViewModelProviderFactory;
 import com.fearefull.todoreminder.data.model.db.Alarm;
-import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.data.model.other.RepeatItem;
 import com.fearefull.todoreminder.databinding.FragmentAlarmManagerBinding;
 import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerDialogFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleFragment;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
+import com.fearefull.todoreminder.ui.base.BaseViewPagerAdapter;
 import com.fearefull.todoreminder.utils.CommonUtils;
 
 import javax.inject.Inject;
@@ -36,7 +37,7 @@ import static com.fearefull.todoreminder.utils.AppConstants.ALARM_KEY;
 
 public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBinding, AlarmManagerViewModel>
         implements AlarmManagerNavigator, HasSupportFragmentInjector, RepeatAdapter.RepeatAdapterListener,
-        RepeatCallBack, RepeatManagerDialogFragment.RepeatManagerCallBack {
+        OnceRepeatFragment.OnceRepeatCallBack, RepeatManagerDialogFragment.RepeatManagerCallBack {
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
@@ -48,7 +49,9 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     public static final String TAG = AlarmManagerFragment.class.getSimpleName();
     @Inject
     ViewModelProviderFactory factory;
-    private String CHILD_TAG;
+    @Inject
+    @Named("AlarmManager")
+    BaseViewPagerAdapter pagerAdapter;
     private AlarmManagerViewModel viewModel;
     private FragmentAlarmManagerBinding binding;
     private AlarmManagerCallBack callBack;
@@ -88,7 +91,6 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         viewModel.setNavigator(this);
         assert getArguments() != null;
         viewModel.setAlarm((Alarm) getArguments().getSerializable(ALARM_KEY));
-        viewModel.initAlarm();
     }
 
     @Override
@@ -100,10 +102,33 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     }
 
     private void setUp() {
+        binding.viewPager.setEnableSwipe(false);
+
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         binding.repeatRecyclerView.setLayoutManager(layoutManager);
         binding.repeatRecyclerView.setItemAnimator(new DefaultItemAnimator());
         binding.repeatRecyclerView.setAdapter(repeatAdapter);
+
+        OnceRepeatFragment onceRepeatFragment = OnceRepeatFragment.newInstance(viewModel.getAlarm());
+        onceRepeatFragment.setCallBack(this);
+
+        SimpleFragment simpleFragment = SimpleFragment.newInstance(viewModel.getAlarm());
+        SimpleFragment simpleFragment2 = SimpleFragment.newInstance(viewModel.getAlarm());
+        SimpleFragment simpleFragment3 = SimpleFragment.newInstance(viewModel.getAlarm());
+        SimpleFragment simpleFragment4 = SimpleFragment.newInstance(viewModel.getAlarm());
+        SimpleFragment simpleFragment5 = SimpleFragment.newInstance(viewModel.getAlarm());
+        SimpleFragment simpleFragment6 = SimpleFragment.newInstance(viewModel.getAlarm());
+
+        pagerAdapter.addFragment(onceRepeatFragment, "once");
+        pagerAdapter.addFragment(simpleFragment, "simple");
+        pagerAdapter.addFragment(simpleFragment2, "simple2");
+        pagerAdapter.addFragment(simpleFragment3, "simple3");
+        pagerAdapter.addFragment(simpleFragment4, "simple4");
+        pagerAdapter.addFragment(simpleFragment5, "simple5");
+        pagerAdapter.addFragment(simpleFragment6, "simple6");
+        binding.viewPager.setAdapter(pagerAdapter);
+
+        viewModel.initAlarm();
     }
 
     @Override
@@ -119,64 +144,14 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     }
 
     @Override
-    public void openOnceRepeatFragment() {
-        OnceRepeatFragment onceRepeatFragment = OnceRepeatFragment.newInstance(viewModel.getAlarm());
-        onceRepeatFragment.setCallBack(this);
-        CHILD_TAG = OnceRepeatFragment.TAG;
-        getChildFragmentManager()
-                .beginTransaction()
-                .add(R.id.repeatSubRootView, onceRepeatFragment, CHILD_TAG)
-                .commit();
-        viewModel.setIsLoading(false);
-    }
-
-    @Override
-    public void openDatePickerFragment() {
-
-    }
-
-    @Override
-    public void openRepeatPickerFragment() {
-
-    }
-
-    @Override
     public void openCustomRepeatPickerFragment() {
-
-    }
-
-    @Override
-    public void openEveryCustomRepeatPickerFragment() {
-
-    }
-
-    @Override
-    public void openOnCustomRepeatPickerFragment() {
-
-    }
-
-    @Override
-    public void onUpdateAlarm(Alarm alarm, String fragmentTag) {
 
     }
 
     @Override
     public void onRepeatItemClick(RepeatItem repeatItem) {
         viewModel.updateRepeatString(repeatItem.getRepeat());
-        FragmentManager fragmentManager = getChildFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentByTag(CHILD_TAG);
-        if (fragment != null) {
-            fragmentManager
-                    .beginTransaction()
-                    .disallowAddToBackStack()
-                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                    .remove(fragment)
-                    .commitNow();
-            /*if (repeatItem.getRepeat() == Repeat.ONCE)
-                openOnceRepeatFragment();*/
-        }
-        if (repeatItem.getRepeat() == Repeat.ONCE)
-            openOnceRepeatFragment();
+        viewModel.getCurrentTabPager().setValue(repeatItem.getRepeat().getValue());
     }
 
     @Override
@@ -194,7 +169,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     }
 
     @Override
-    public void onAlarmChanged(Alarm alarm) {
+    public void onAlarmChangedByOnceRepeat(Alarm alarm) {
         viewModel.setAlarm(alarm);
         viewModel.updateAlarm();
     }
@@ -210,6 +185,24 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     public void onAlarmChangedByRepeatManager(Alarm alarm) {
         viewModel.setAlarm(alarm);
         viewModel.updateAlarm();
+    }
+
+    @Override
+    public void createWithShakeBell() {
+        Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake_animation);
+        binding.repeatManagerIcon.setImageResource(R.drawable.selected_bell);
+        binding.repeatManagerIcon.setAnimation(shake);
+    }
+
+    @Override
+    public void shakeBell() {
+        Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake_animation);
+        binding.repeatManagerIcon.setAnimation(shake);
+    }
+
+    @Override
+    public void clearBell() {
+        binding.repeatManagerIcon.setImageResource(R.drawable.unselected_bell);
     }
 
     public interface AlarmManagerCallBack {

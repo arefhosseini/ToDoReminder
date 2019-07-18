@@ -19,24 +19,24 @@ public final class AlarmUtils {
 
     }
 
-    public static ArrayList<String> get12Hours() {
+    public static List<String> get12Hours() {
         return getNumbers(1, 12);
     }
 
-    public static ArrayList<String> get24Hours() {
+    public static List<String> get24Hours() {
         return getNumbers(1, 24);
     }
 
-    private static ArrayList<String> getNumbers(int start, int end) {
-        ArrayList<String> list = new ArrayList<>();
+    private static List<String> getNumbers(int start, int end) {
+        List<String> list = new ArrayList<>();
         for (int i = start; i <= end; i++) {
             list.add(String.valueOf(i));
         }
         return list;
     }
 
-    private static ArrayList<String> getNumbersWithZero(int start, int end) {
-        ArrayList<String> list = new ArrayList<>();
+    private static List<String> getNumbersWithZero(int start, int end) {
+        List<String> list = new ArrayList<>();
         for (int i = start; i <= end; i++) {
             if (i < 10)
                 list.add("0" + i);
@@ -46,12 +46,12 @@ public final class AlarmUtils {
         return list;
     }
 
-    public static ArrayList<String> getMinutes() {
+    public static List<String> getMinutes() {
         return getNumbersWithZero(0, 59);
     }
 
-    public static ArrayList<String> getHalfHourTypes() {
-        ArrayList<String> stringTypes = new ArrayList<>();
+    public static List<String> getHalfHourTypes() {
+        List<String> stringTypes = new ArrayList<>();
         stringTypes.add(HalfHourType.AM.getPersianText());
         stringTypes.add(HalfHourType.PM.getPersianText());
         return stringTypes;
@@ -68,12 +68,8 @@ public final class AlarmUtils {
         return new Date();
     }
 
-    public static ArrayList<String> getYears() {
-        return getNumbers(AppConstants.START_YEAR, AppConstants.END_YEAR);
-    }
-
-    public static ArrayList<String> getMonths() {
-        ArrayList<String> stringTypes = new ArrayList<>();
+    public static List<String> getMonths() {
+        List<String> stringTypes = new ArrayList<>();
         stringTypes.add(MonthType.FARVARDIN.getText());
         stringTypes.add(MonthType.ORDIBEHESHT.getText());
         stringTypes.add(MonthType.KHORDAD.getText());
@@ -89,39 +85,8 @@ public final class AlarmUtils {
         return stringTypes;
     }
 
-    public static ArrayList<String> getDays(MonthType monthType) {
+    public static List<String> getDays(MonthType monthType) {
         return getNumbers(1, monthType.getDays());
-    }
-
-    public static MonthType getMonth(int month) {
-        switch (month) {
-            case 1:
-                return MonthType.FARVARDIN;
-            case 2:
-                return MonthType.ORDIBEHESHT;
-            case 3:
-                return MonthType.KHORDAD;
-            case 4:
-                return MonthType.TIR;
-            case 5:
-                return MonthType.MORDAD;
-            case 6:
-                return MonthType.SHAHRIVAR;
-            case 7:
-                return MonthType.MEHR;
-            case 8:
-                return MonthType.ABAN;
-            case 9:
-                return MonthType.AZAR;
-            case 10:
-                return MonthType.DEY;
-            case 11:
-                return MonthType.BAHMAN;
-            case 12:
-                return MonthType.ESFAND;
-            default:
-                return MonthType.TIR;
-        }
     }
 
     public static int indexToHour(int index) {

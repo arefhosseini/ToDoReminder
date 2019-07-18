@@ -58,6 +58,6 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
     }
 
     public void onOpenAlarmManager() {
-        getNavigator().openAlarmManagerActivity();
+        getNavigator().openAlarmManager();
     }
 }

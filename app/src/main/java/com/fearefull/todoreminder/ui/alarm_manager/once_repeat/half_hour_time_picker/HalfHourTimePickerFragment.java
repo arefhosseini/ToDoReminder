@@ -25,7 +25,6 @@ public class HalfHourTimePickerFragment extends BaseFragment<FragmentHalfHourTim
     public static final String TAG = HalfHourTimePickerFragment.class.getSimpleName();
     private static final String MINUTE_KEY = "minute_key";
     private static final String HOUR_KEY = "hour_key";
-    private static final String HALF_HOUR_KEY = "half_hour_key";
 
     @Inject
     ViewModelProviderFactory factory;
@@ -33,12 +32,11 @@ public class HalfHourTimePickerFragment extends BaseFragment<FragmentHalfHourTim
     private FragmentHalfHourTimePickerBinding binding;
     private HalfHourTimePickerCallBack callBack;
 
-    public static HalfHourTimePickerFragment newInstance(int minute, int hour, HalfHourType halfHourType) {
+    public static HalfHourTimePickerFragment newInstance(int minute, int hour) {
         Bundle args = new Bundle();
         HalfHourTimePickerFragment fragment = new HalfHourTimePickerFragment();
         args.putSerializable(MINUTE_KEY, minute);
         args.putSerializable(HOUR_KEY, hour);
-        args.putSerializable(HALF_HOUR_KEY, halfHourType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,22 +62,13 @@ public class HalfHourTimePickerFragment extends BaseFragment<FragmentHalfHourTim
         super.onCreate(savedInstanceState);
         viewModel.setNavigator(this);
         assert getArguments() != null;
-        viewModel.setMinute(getArguments().getInt(MINUTE_KEY));
-        viewModel.setHour(getArguments().getInt(HOUR_KEY));
-        viewModel.setHalfHourType((HalfHourType) getArguments().getSerializable(HALF_HOUR_KEY));
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = getViewDataBinding();
-        setUp();
-    }
-
-    private void setUp() {
-        ViewUtils.setUpNumberPicker(binding.minutePicker, viewModel.getMinutes(), viewModel.getMinuteIndex());
-        ViewUtils.setUpNumberPicker(binding.hourPicker, viewModel.getHours(), viewModel.getHourIndex());
-        ViewUtils.setUpNumberPicker(binding.halfHourTypePicker, viewModel.getHalfHourTypes(), viewModel.getHalfHourTypeIndex());
+        viewModel.init(getArguments().getInt(MINUTE_KEY), getArguments().getInt(HOUR_KEY));
     }
 
     public void setCallBack(HalfHourTimePickerCallBack callBack) {

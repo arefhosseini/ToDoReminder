@@ -60,9 +60,6 @@ dependencies {
     // parser
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
 
-    // persian date
-    implementation "com.github.samanzamani.persiandate:PersianDate:$rootProject.persianDateVersion"
-
     // expansion panel
     implementation "com.github.florent37:expansionpanel:$rootProject.expansionPanelVersion"
 

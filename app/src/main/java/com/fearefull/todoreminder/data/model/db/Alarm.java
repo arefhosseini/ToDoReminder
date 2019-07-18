@@ -11,18 +11,18 @@ import com.fearefull.todoreminder.data.model.other.DataConverter;
 import com.fearefull.todoreminder.data.model.other.DayMonthType;
 import com.fearefull.todoreminder.data.model.other.HalfHourType;
 import com.fearefull.todoreminder.data.model.other.MonthType;
-import com.fearefull.todoreminder.data.model.other.OnceRepeatModel;
+import com.fearefull.todoreminder.data.model.other.PersianDate;
+import com.fearefull.todoreminder.data.model.other.RepeatModel;
 import com.fearefull.todoreminder.data.model.other.RepeatManagerItem;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Observable;
-import saman.zamani.persiandate.PersianDate;
+import timber.log.Timber;
 
 @Entity(tableName = "alarms")
 @TypeConverters({DataConverter.class, Repeat.class})
@@ -37,15 +37,14 @@ public class Alarm implements Serializable {
     private String title;
 
     @NonNull
-    @ColumnInfo(name = "repeat")
-    private Repeat repeat;
-
-    @NonNull
     @ColumnInfo(name = "ringtone")
     private String ringtone;
 
     @ColumnInfo(name = "note")
     private String note;
+
+    @ColumnInfo(name = "repeats")
+    private List<Repeat> repeats;
 
     @ColumnInfo(name = "minutes")
     private List<Integer> minutes;
@@ -70,6 +69,33 @@ public class Alarm implements Serializable {
 
     @ColumnInfo(name = "years")
     private List<Integer> years;
+
+    @Ignore
+    private PersianDate defaultPersianDate;
+
+    @Ignore
+    private int defaultMinute;
+
+    @Ignore
+    private int defaultHour;
+
+    @Ignore
+    private int defaultDayWeek;
+
+    @Ignore
+    private int defaultDayMonth;
+
+    @Ignore
+    private int defaultWeekMonth;
+
+    @Ignore
+    private int defaultWeekYear;
+
+    @Ignore
+    private int defaultMonth;
+
+    @Ignore
+    private int defaultYear;
 
     /**
      * Control {@link #id}
@@ -97,17 +123,25 @@ public class Alarm implements Serializable {
 
 
     /**
-     * Control {@link #repeat}
+     * Control {@link #repeats}
      */
-    @NonNull
-    public Repeat getRepeat() {
-        return repeat;
+    public List<Repeat> getRepeats() {
+        return repeats;
     }
 
-    public void setRepeat(@NonNull Repeat repeat) {
-        this.repeat = repeat;
+    public void setRepeats(List<Repeat> repeats) {
+        this.repeats = repeats;
     }
 
+    public void addRepeat(Repeat repeat) {
+        repeats.add(repeat);
+    }
+
+    public Repeat getDefaultRepeat() {
+        if (!repeats.isEmpty())
+            return repeats.get(repeats.size() - 1);
+        return Repeat.ONCE;
+    }
 
     /**
      * Control {@link #ringtone}
@@ -394,11 +428,52 @@ public class Alarm implements Serializable {
     }
 
 
+    public PersianDate getDefaultPersianDate() {
+        return defaultPersianDate;
+    }
+
+    public void setDefaultPersianDate(PersianDate defaultPersianDate) {
+        this.defaultPersianDate = defaultPersianDate;
+    }
+
+    public int getDefaultMinute() {
+        return defaultMinute;
+    }
+
+    public int getDefaultHour() {
+        return defaultHour;
+    }
+
+    public int getDefaultDayWeek() {
+        return defaultDayWeek;
+    }
+
+    public int getDefaultDayMonth() {
+        return defaultDayMonth;
+    }
+
+    public int getDefaultWeekMonth() {
+        return defaultWeekMonth;
+    }
+
+    public int getDefaultWeekYear() {
+        return defaultWeekYear;
+    }
+
+    public int getDefaultMonth() {
+        return defaultMonth;
+    }
+
+    public int getDefaultYear() {
+        return defaultYear;
+    }
+
+
     public Alarm(@NotNull String title) {
         this.title = title;
-        this.repeat = Repeat.ONCE;
         this.ringtone = "DEFAULT";
         this.note = "";
+        repeats = new ArrayList<>();
         minutes = new ArrayList<>();
         hours = new ArrayList<>();
         daysWeek = new ArrayList<>();
@@ -407,10 +482,12 @@ public class Alarm implements Serializable {
         weeksYear = new ArrayList<>();
         months = new ArrayList<>();
         years = new ArrayList<>();
-        setRepeatOnceDefault();
+
+        setDefaultValues();
     }
 
-    @Ignore
+
+    /**
     private void checkRepeat() {
         int minutesSize = minutes.size();
         int hoursSize = hours.size();
@@ -444,6 +521,34 @@ public class Alarm implements Serializable {
                 weeksMonthSize == 0 && weeksYearSize == 0 && monthsYearSize == 1 && yearsSize == 0) {
             repeat = Repeat.YEARLY;
         }
+    }
+     */
+
+    @Ignore
+    public void setDefaultValues() {
+        boolean nextDay = false;
+        defaultPersianDate = new PersianDate();
+        int hour = defaultPersianDate.getHour();
+        if (hour == 23) {
+            hour = 0;
+            nextDay = true;
+        }
+        else
+            hour ++;
+        if (nextDay)
+            defaultPersianDate.addDay(1);
+
+        defaultMinute = 0;
+        defaultHour = hour;
+        defaultDayMonth = defaultPersianDate.getShDay();
+        defaultMonth = defaultPersianDate.getShMonth();
+        defaultYear = defaultPersianDate.getShYear();
+        defaultDayWeek = 0;
+        defaultWeekMonth = dayMonthToWeekMonth(defaultDayMonth);
+        defaultWeekYear = dayToWeekYear(defaultDayMonth, defaultMonth);
+
+        if (defaultMonth == 12 && defaultDayMonth == 30)
+            defaultDayMonth = 29;
     }
 
     @Ignore
@@ -527,12 +632,12 @@ public class Alarm implements Serializable {
 
     @Ignore
     public static int indexToDayMonth(int index) {
-        return index;
+        return index + 1;
     }
 
     @Ignore
     public static int dayMonthToIndex(int dayMonth) {
-        return dayMonth;
+        return dayMonth - 1;
     }
 
     @Ignore
@@ -546,31 +651,41 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
-    public String getTime12String(int index) {
-        int minute = minutes.get(index);
-        int hour = hourToHalfHour(hours.get(index));
+    public String getTime12String(int indexMinute, int indexHour) {
+        Timber.e("12TimeStringStarted");
+        int minute = minutes.get(indexMinute);
+        int halfHour = hourToHalfHour(hours.get(indexHour));
         if (minute < 10)
-            return hour + ":" + "0" + minute + " " + getHalfHourType().getPersianShortText();
-        return hour + ":" + minute + " " + getHalfHourType().getPersianShortText();
+            return halfHour + ":" + "0" + minute + " " + getHalfHourType(hours.get(indexHour)).getPersianShortText();
+        return halfHour + ":" + minute + " " + getHalfHourType(hours.get(indexHour)).getPersianShortText();
     }
 
     @Ignore
-    public String getTime24String(int index) {
-        int minute = minutes.get(index);
-        int hour = hours.get(index);
+    public String getTime24String(int indexMinute, int indexHour) {
+        int minute = minutes.get(indexMinute);
+        int hour = hours.get(indexHour);
         if (minute < 10)
             return hour + ":" + "0" + minute;
         return hour + ":" + minute;
     }
 
     @Ignore
-    public String getDateByDayMonthAndMonth(int index) {
-        return DayMonthType.getDayMonthType(daysMonth.get(index)).getTextNormal() + " " + MonthType.getMonthType(months.get(index)).getText();
+    public String getDateByDayMonthAndMonth(int indexDayMonth, int indexMonth, int indexYear) {
+        Timber.e("dateStringStarted");
+        String result = DayMonthType.getDayMonthTypeByValue(daysMonth.get(indexDayMonth)).getValue() + " " +
+                MonthType.getMonthType(months.get(indexMonth)).getText();
+        if (years.get(indexYear) == defaultYear)
+            return result;
+        result += " " + years.get(indexYear);
+        return result;
     }
 
     @Ignore
     public String getRepeatManagerStringByOnce(int index) {
-        return getTime12String(index) + " " + getDateByDayMonthAndMonth(index);
+        Timber.e("onceStringStarted %d", index);
+        return getTime12String(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + "-" +
+                getDateByDayMonthAndMonth(indexDayMonthByIndexRepeat(index), indexMonthByIndexRepeat(index), indexYearByIndexRepeat(index)) +
+                " (" + repeats.get(index).getText() + ")";
     }
 
     @Ignore
@@ -599,7 +714,13 @@ public class Alarm implements Serializable {
 
     @Ignore
     public HalfHourType getHalfHourType() {
-        int hour = hours.get(0);
+        if (defaultHour >= 0 && defaultHour < 12)
+            return HalfHourType.AM;
+        return HalfHourType.PM;
+    }
+
+    @Ignore
+    public HalfHourType getHalfHourType(int hour) {
         if (hour >= 0 && hour < 12)
             return HalfHourType.AM;
         return HalfHourType.PM;
@@ -611,40 +732,30 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
-    public void setRepeatOnceDefault() {
-        PersianDate persianDate = new PersianDate(new Date());
-        int minute = 0;
-        int hour = persianDate.getHour();
-        if (hour == 23)
-            hour = 0;
-        else
-            hour ++;
-        int dayMonth = persianDate.getShDay();
-        int month = persianDate.getShMonth();
-        int year = persianDate.getShYear();
-
-        addMinuteByValue(minute);
-        add24HourByValue(hour);
-        addDayMonthByValue(dayMonth);
-        addMonthByValue(month);
-        addYearByValue(year);
-    }
-
-    @Ignore
     public int getRepeatCount() {
-        return minutes.size();
+        Timber.e("ajab %d", repeats.size());
+        return repeats.size();
     }
 
     @Ignore
-    public void addOnceRepeatModel(OnceRepeatModel model) {
+    public void addRepeatModel(RepeatModel model) {
+        addRepeat(model.getRepeat());
+        if (model.getRepeat() == Repeat.ONCE)
+            addRepeatModelByOnce(model);
+    }
+
+    @Ignore
+    public void addRepeatModelByOnce(RepeatModel model) {
         addMinuteByValue(model.getMinute());
         add24HourByValue(model.getHour());
-        addDayMonthByValue(model.getDay());
+        addDayMonthByValue(model.getDayMonth());
         addMonthByValue(model.getMonth());
+        addYearByValue(model.getYear());
     }
 
     public String getRepeatManagerString(int index) {
-        if (repeat == Repeat.ONCE)
+        Timber.e("repeatManagerString started");
+        if (repeats.get(index) == Repeat.ONCE)
             return getRepeatManagerStringByOnce(index);
         return "";
     }
@@ -652,9 +763,9 @@ public class Alarm implements Serializable {
     @Ignore
     public Observable<List<RepeatManagerItem>> getRepeatManagerItemList() {
         return Observable.fromCallable(() -> {
-            checkRepeat();
             List<RepeatManagerItem> list = new ArrayList<>();
             for (int index = 0; index < getRepeatCount(); index++) {
+                Timber.e("ajab2 %d", index);
                 list.add(new RepeatManagerItem(getRepeatManagerString(index)));
             }
             return list;
@@ -663,15 +774,153 @@ public class Alarm implements Serializable {
 
     @Ignore
     public void removeRepeatManagerDataByOnce(int index) {
-        minutes.remove(index);
-        hours.remove(index);
-        daysMonth.remove(index);
-        months.remove(index);
+        minutes.remove(indexMinuteByIndexRepeat(index));
+        hours.remove(indexHourByIndexRepeat(index));
+        daysMonth.remove(indexDayMonthByIndexRepeat(index));
+        months.remove(indexMonthByIndexRepeat(index));
+        years.remove(indexYearByIndexRepeat(index));
     }
 
     @Ignore
     public void removeRepeatManagerData(int index) {
-        if (repeat == Repeat.ONCE)
+        if (repeats.get(index) == Repeat.ONCE)
             removeRepeatManagerDataByOnce(index);
+
+        // remove it last
+        repeats.remove(index);
+    }
+
+    @Ignore
+    public static int dayMonthToWeekMonth(int dayMonth) {
+        if (dayMonth >= 1 && dayMonth < 8)
+            return 1;
+        else if (dayMonth >= 8 && dayMonth < 15)
+            return 2;
+        else if (dayMonth >= 15 && dayMonth < 22)
+            return 3;
+        return 4;
+    }
+
+    @Ignore
+    public static int allDaysUntilMonth(int month) {
+        if (month == 0)
+            return 0;
+        else {
+            int sum = 0;
+            for (int value = 1; value <= month; value++) {
+                sum += MonthType.getMonthType(value).getDays();
+            }
+            return sum;
+        }
+    }
+
+    @Ignore
+    public static int dayToWeekYear(int dayMonth, int month) {
+        int days = allDaysUntilMonth(month - 1) + dayMonth;
+        int weekYear = (days / 7) + 1;
+        if (weekYear > 52)
+            return 52;
+        return weekYear;
+    }
+
+    @Ignore
+    public int indexMinuteByIndexRepeat(int indexRepeat) {
+        Timber.e("minuteIndex %d", indexRepeat);
+        return indexRepeat;
+    }
+
+    @Ignore
+    public int indexHourByIndexRepeat(int indexRepeat) {
+        int index = -1;
+        Repeat repeat;
+        for (int counter = 0; counter <= indexRepeat; counter++) {
+            repeat = repeats.get(counter);
+            if (repeat != Repeat.HOURLY)
+                index ++;
+        }
+        Timber.e("hourIndex %d", index);
+        return index;
+    }
+
+    @Ignore
+    public int indexDayWeekByIndexRepeat(int indexRepeat) {
+        int index = -1;
+        Repeat repeat;
+        for (int counter = 0; counter <= indexRepeat; counter++) {
+            repeat = repeats.get(counter);
+            if (repeat == Repeat.WEEKLY)
+                index ++;
+        }
+        return index;
+    }
+
+    @Ignore
+    public int indexDayMonthByIndexRepeat(int indexRepeat) {
+        int index = -1;
+        Repeat repeat;
+        for (int counter = 0; counter <= indexRepeat; counter++) {
+            repeat = repeats.get(counter);
+            if (repeat == Repeat.ONCE || repeat == Repeat.MONTHLY || repeat == Repeat.YEARLY)
+                index ++;
+        }
+        Timber.e("dayMonthIndex %d", index);
+        return index;
+    }
+
+    @Ignore
+    public int indexWeekMonthByIndexRepeat(int indexRepeat) {
+        int index = -1;
+        Repeat repeat;
+        for (int counter = 0; counter <= indexRepeat; counter++) {
+            repeat = repeats.get(counter);
+            if (repeat == Repeat.MONTHLY)
+                index ++;
+        }
+        return index;
+    }
+
+    @Ignore
+    public int indexWeekYearByIndexRepeat(int indexRepeat) {
+        int index = -1;
+        Repeat repeat;
+        for (int counter = 0; counter <= indexRepeat; counter++) {
+            repeat = repeats.get(counter);
+            if (repeat == Repeat.MONTHLY)
+                index ++;
+        }
+        return index;
+    }
+
+    @Ignore
+    public int indexMonthByIndexRepeat(int indexRepeat) {
+        int index = -1;
+        Repeat repeat;
+        for (int counter = 0; counter <= indexRepeat; counter++) {
+            repeat = repeats.get(counter);
+            if (repeat == Repeat.ONCE || repeat == Repeat.YEARLY)
+                index ++;
+        }
+        Timber.e("monthIndex %d", index);
+        return index;
+    }
+
+    @Ignore
+    public int indexYearByIndexRepeat(int indexRepeat) {
+        int index = -1;
+        Repeat repeat;
+        for (int counter = 0; counter <= indexRepeat; counter++) {
+            repeat = repeats.get(counter);
+            if (repeat == Repeat.ONCE)
+                index ++;
+        }
+        Timber.e("yearIndex %d", index);
+        return index;
+    }
+
+    @Ignore
+    public static HalfHourType hourToHalfHourType(int hour) {
+        if (hour >= 0 && hour < 12)
+            return HalfHourType.AM;
+        return HalfHourType.PM;
     }
 }

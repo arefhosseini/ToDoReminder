@@ -376,22 +376,39 @@
                                                 android:layout_marginBottom="12dp"
                                                 android:background="@drawable/quarter_top_left_circle_primary_bg">
 
+                                                <ImageView
+                                                    android:id="@+id/repeatManagerIcon"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:scaleType="fitCenter"
+                                                    android:padding="6dp"
+                                                    android:translationZ="18dp"
+                                                    android:layout_marginBottom="4dp"
+                                                    android:layout_marginRight="12dp"
+                                                    android:src="@drawable/unselected_bell" />
+
                                                 <TextView
-                                                    android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content"
+                                                    android:layout_width="12dp"
+                                                    android:layout_height="12dp"
                                                     android:translationZ="36dp"
                                                     android:gravity="center"
-                                                    style="@style/TextStyle.Title"
+                                                    style="@style/TextStyle.Title.Mini"
                                                     android:layout_marginRight="6dp"
-                                                    android:textColor="@color/primaryTextColorDarkTheme"
-                                                    android:layout_gravity="center"
+                                                    android:layout_marginLeft="8dp"
+                                                    android:layout_marginTop="6dp"
+                                                    android:textAlignment="center"
+                                                    android:textColor="@color/primaryColorLightTheme"
+                                                    android:background="@drawable/circle_white_bg"
+                                                    android:layout_gravity="center_horizontal"
                                                     android:text="@{viewModel.repeatCounter}" />
                                             </FrameLayout>
 
-                                            <RelativeLayout
+                                            <com.fearefull.todoreminder.ui.base.BaseViewPager
+                                                android:id="@+id/view_pager"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:id="@+id/repeatSubRootView" />
+                                                app:pageLimit="@{viewModel.pageLimitPager}"
+                                                app:currentTab="@{viewModel.currentTabPager}" />
                                         </FrameLayout>
                                     </com.github.florent37.shapeofview.shapes.ArcView>
                                 </com.github.florent37.shapeofview.shapes.ArcView>

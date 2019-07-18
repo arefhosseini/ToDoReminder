@@ -104,9 +104,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     @Override
-    public void openAlarmManagerActivity() {
-        //startActivity(AlarmManagerActivity.newIntent(this));
+    public void openAlarmManager() {
         lockDrawer();
+
         AlarmManagerFragment fragment = AlarmManagerFragment.newInstance(new Alarm("Alarm"));
         fragment.setCallBack(this);
         getSupportFragmentManager()

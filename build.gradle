@@ -58,9 +58,6 @@ ext {
     // parser
     gsonVersion = '2.8.5'
 
-    // persian date
-    persianDateVersion = '0.7'
-
     // expansion panel
     expansionPanelVersion = '1.2.2'
 

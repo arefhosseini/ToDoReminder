@@ -7,9 +7,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
-import saman.zamani.persiandate.PersianDate;
-import timber.log.Timber;
-
 public class MyDate implements Serializable {
     private int year;
     private MonthType month;
@@ -47,7 +44,7 @@ public class MyDate implements Serializable {
     }
 
     public int getMonthIndex() {
-        return month.getIndex();
+        return month.getValue();
     }
 
     public void setMonth(MonthType month) {
@@ -79,7 +76,7 @@ public class MyDate implements Serializable {
     public void change(Date date) {
         PersianDate persianDate = new PersianDate(date);
         year = persianDate.getShYear();
-        month = AlarmUtils.getMonth(persianDate.getShMonth());
+        month = MonthType.getMonthType(persianDate.getShMonth());
         day = persianDate.getShDay();
     }
 

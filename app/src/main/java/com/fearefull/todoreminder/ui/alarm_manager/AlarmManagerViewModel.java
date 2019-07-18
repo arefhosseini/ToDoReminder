@@ -16,6 +16,7 @@ import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 import com.kevalpatel.ringtonepicker.RingtonePickerListener;
 
 import java.util.List;
+import java.util.Objects;
 
 public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> {
 
@@ -25,15 +26,20 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     private final MutableLiveData<List<RepeatItem>> repeatItemsLiveData;
     private final ObservableField<String> ringtoneString = new ObservableField<>();
     private final ObservableField<String> repeatCounter = new ObservableField<>();
+    private final MutableLiveData<Integer> currentTabPager;
+    private final MutableLiveData<Integer> pageLimitPager;
 
     public AlarmManagerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
         repeatItemsLiveData = new MutableLiveData<>();
+        currentTabPager = new MutableLiveData<>();
+        pageLimitPager = new MutableLiveData<>();
+        pageLimitPager.setValue(Repeat.getCount());
+        repeatCounter.set("0");
     }
 
     private void fetchRepeatData() {
-        setIsLoading(true);
-        repeatItemsLiveData.setValue(AlarmUtils.getRepeatItems(alarm.getRepeat()));
+        repeatItemsLiveData.setValue(AlarmUtils.getRepeatItems(alarm.getDefaultRepeat()));
     }
 
     public MutableLiveData<List<RepeatItem>> getRepeatItemsLiveData() {
@@ -79,24 +85,19 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     void updateAlarm() {
-        updateRepeatString();
+        updateRepeatString(alarm.getDefaultRepeat());
         updateNoteString();
         updateRingtoneString();
         updateAddCounter(alarm.getRepeatCount());
     }
 
     void updateRepeatString(Repeat repeat) {
-        alarm.setRepeat(repeat);
-        updateRepeatString();
+        repeatString.set(repeat.getText());
     }
 
     void openDefaultRepeatFragment() {
-        if (alarm.getRepeat() == Repeat.ONCE)
-            getNavigator().openOnceRepeatFragment();
-    }
-
-    void updateRepeatString() {
-        repeatString.set(alarm.getRepeat().getText());
+        currentTabPager.setValue(alarm.getDefaultRepeat().getValue());
+        setIsLoading(false);
     }
 
     void updateNoteString() {
@@ -108,6 +109,12 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     void updateAddCounter(int counter) {
+        if (counter == 0)
+            getNavigator().clearBell();
+        else if (Integer.parseInt(Objects.requireNonNull(repeatCounter.get())) == 0)
+            getNavigator().createWithShakeBell();
+        else if (counter > Integer.parseInt(Objects.requireNonNull(repeatCounter.get())))
+            getNavigator().shakeBell();
         repeatCounter.set(String.valueOf(counter));
     }
 
@@ -127,7 +134,15 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         return repeatCounter;
     }
 
-    DialogInterface.OnClickListener repeatPickerOnClickListener = (dialog, which) -> {
+    public MutableLiveData<Integer> getCurrentTabPager() {
+        return currentTabPager;
+    }
+
+    public MutableLiveData<Integer> getPageLimitPager() {
+        return pageLimitPager;
+    }
+
+    /*DialogInterface.OnClickListener repeatPickerOnClickListener = (dialog, which) -> {
         if (Alarm.indexToRepeat(which) != Repeat.CUSTOM) {
             alarm.setRepeat(Alarm.indexToRepeat(which));
             dialog.dismiss();
@@ -136,7 +151,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         else {
             getNavigator().openCustomRepeatPickerFragment();
         }
-    };
+    };*/
 
     RingtonePickerListener ringtonePickerListener = (ringtoneName, ringtoneUri) -> {
         if (ringtoneUri != null) {

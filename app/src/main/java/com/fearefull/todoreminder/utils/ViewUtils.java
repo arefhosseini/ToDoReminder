@@ -34,30 +34,8 @@ public final class ViewUtils {
         return px / (densityDpi / 160f);
     }
 
-    public static void setDividerColor(NumberPicker picker, int color) {
-
-        java.lang.reflect.Field[] pickerFields = NumberPicker.class.getDeclaredFields();
-        for (java.lang.reflect.Field pf : pickerFields) {
-            if (pf.getName().equals("mSelectionDivider")) {
-                pf.setAccessible(true);
-                try {
-                    ColorDrawable colorDrawable = new ColorDrawable(color);
-                    pf.set(picker, colorDrawable);
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                } catch (Resources.NotFoundException e) {
-                    e.printStackTrace();
-                }
-                catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-                break;
-            }
-        }
-    }
-
     public static void setUpNumberPicker(NumberPicker picker, String[] data, int defaultIndex) {
-        ViewUtils.setDividerColor(picker, picker.getContext().getResources().getColor(R.color.secondaryColorLightTheme));
+
         picker.setMaxValue(data.length - 1);
         picker.setValue(defaultIndex);
         picker.setDisplayedValues(data);

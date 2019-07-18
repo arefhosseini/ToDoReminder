@@ -60,34 +60,13 @@ public class DatePickerFragment extends BaseFragment<FragmentDatePickerBinding, 
         super.onCreate(savedInstanceState);
         viewModel.setNavigator(this);
         assert getArguments() != null;
-        viewModel.setMonth(getArguments().getInt(MONTH_KEY));
-        viewModel.setDay(getArguments().getInt(DAY_KEY));
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = getViewDataBinding();
-        setUp();
-    }
-
-    private void setUp() {
-        ViewUtils.setUpNumberPicker(binding.monthPicker, viewModel.getMonths(), viewModel.getMonthIndex());
-        ViewUtils.setUpNumberPicker(binding.dayPicker, viewModel.getDays(), viewModel.getDayIndex());
-    }
-
-    @Override
-    public void onMonthChanged() {
-        if (binding.dayPicker.getMaxValue() < viewModel.getDay()) {
-            binding.dayPicker.setDisplayedValues(viewModel.getDays());
-            binding.dayPicker.setMaxValue(viewModel.getDays().length - 1);
-            binding.dayPicker.setValue(viewModel.getDayIndex());
-        }
-        else {
-            binding.dayPicker.setMaxValue(viewModel.getDays().length - 1);
-            binding.dayPicker.setValue(viewModel.getDayIndex());
-            binding.dayPicker.setDisplayedValues(viewModel.getDays());
-        }
+        viewModel.init(getArguments().getInt(DAY_KEY), getArguments().getInt(MONTH_KEY));
     }
 
     public void setCallBack(DatePickerCallBack callBack) {

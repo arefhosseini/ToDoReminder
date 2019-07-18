@@ -2,6 +2,7 @@ package com.fearefull.todoreminder.data.model.other;
 
 import androidx.room.TypeConverter;
 
+import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -31,5 +32,27 @@ public class DataConverter implements Serializable {
         Type type = new TypeToken<List<Integer>>() {
         }.getType();
         return gson.fromJson(integerListString, type);
+    }
+
+    @TypeConverter
+    public String fromRepeatList(List<Repeat> repeatList) {
+        if (repeatList == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Repeat>>() {
+        }.getType();
+        return gson.toJson(repeatList, type);
+    }
+
+    @TypeConverter
+    public List<Repeat> toRepeatList(String repeatListString) {
+        if (repeatListString == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Repeat>>() {
+        }.getType();
+        return gson.fromJson(repeatListString, type);
     }
 }

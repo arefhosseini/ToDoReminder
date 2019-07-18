@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="viewModel"
@@ -22,7 +23,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
+            app:values="@{viewModel.monthPickerValues}"
+            app:maxIndex="@{viewModel.monthPickerMaxIndex}"
+            app:defaultIndex="@{viewModel.monthPickerDefaultIndex}"
             android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onMonthPickerValueChange(oldVal, newVal)}"
+            app:dividedColor="@{@color/secondaryColorLightTheme}"
+            android:descendantFocusability="blocksDescendants"
             android:layout_gravity="center_horizontal" />
 
         <Space
@@ -35,7 +41,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
+            app:values="@{viewModel.dayPickerValues}"
+            app:maxIndex="@{viewModel.dayPickerMaxIndex}"
+            app:defaultIndex="@{viewModel.dayPickerDefaultIndex}"
             android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onDayPickerValueChange(oldVal, newVal)}"
+            app:dividedColor="@{@color/secondaryColorLightTheme}"
+            android:descendantFocusability="blocksDescendants"
             android:layout_gravity="center_horizontal" />
         <Space
             android:layout_width="0dp"
