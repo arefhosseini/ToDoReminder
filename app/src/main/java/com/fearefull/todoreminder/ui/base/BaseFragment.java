@@ -96,10 +96,6 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         }
     }
 
-    public boolean isNetworkConnected() {
-        return activity != null && activity.isNetworkConnected();
-    }
-
     private void performDependencyInjection() {
         AndroidSupportInjection.inject(this);
     }

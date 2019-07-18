@@ -1,18 +1,13 @@
 package com.fearefull.todoreminder.utils;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
-import android.widget.ImageView;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.other.RepeatItem;
 import com.fearefull.todoreminder.data.model.other.RepeatManagerItem;
@@ -20,8 +15,6 @@ import com.fearefull.todoreminder.ui.alarm_manager.RepeatAdapter;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerAdapter;
 import com.fearefull.todoreminder.ui.base.BaseViewPager;
 import com.fearefull.todoreminder.ui.home.AlarmAdapter;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -123,11 +116,5 @@ public final class BindingUtils {
                 break;
             }
         }
-    }
-
-    @BindingAdapter("imageUrl")
-    public static void setImageUrl(ImageView imageView, String url) {
-        Context context = imageView.getContext();
-        Glide.with(context).load(url).into(imageView);
     }
 }

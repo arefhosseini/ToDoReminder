@@ -7,7 +7,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.fearefull.todoreminder.data.model.db.Alarm;
-import com.fearefull.todoreminder.data.model.db.AlarmModel;
 
 import java.util.List;
 

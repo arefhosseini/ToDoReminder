@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.data.model.db;
+package com.fearefull.todoreminder.data.model.other.type;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

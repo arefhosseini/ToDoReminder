@@ -1,7 +1,6 @@
 package com.fearefull.todoreminder.data.local.db;
 
 import com.fearefull.todoreminder.data.model.db.Alarm;
-import com.fearefull.todoreminder.data.model.db.User;
 
 import java.util.List;
 
@@ -18,14 +17,6 @@ public class AppDbHelper implements DbHelper{
     @Inject
     public AppDbHelper(AppDatabase appDatabase) {
         this.appDatabase = appDatabase;
-    }
-
-    @Override
-    public Observable<Boolean> insertUser(User user) {
-        return Observable.fromCallable(() -> {
-            appDatabase.userDao().insert(user);
-            return true;
-        });
     }
 
     @Override

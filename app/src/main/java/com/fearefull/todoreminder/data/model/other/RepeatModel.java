@@ -1,6 +1,7 @@
 package com.fearefull.todoreminder.data.model.other;
 
 import com.fearefull.todoreminder.data.model.db.Repeat;
+import com.fearefull.todoreminder.data.model.other.type.RepeatResponseType;
 
 public class RepeatModel {
     private Repeat repeat;
@@ -101,9 +102,9 @@ public class RepeatModel {
         year = -1;
     }
 
-    public RepeatResponse isValid() {
+    public RepeatResponseType isValid() {
         if (repeat == null)
-            return RepeatResponse.NOT_READY;
+            return RepeatResponseType.NOT_READY;
         if (repeat == Repeat.ONCE)
             return isOnceRepeatValid();
         if (repeat == Repeat.HOURLY)
@@ -116,10 +117,10 @@ public class RepeatModel {
             return isMonthlyRepeatValid();
         if (repeat == Repeat.YEARLY)
             return isYearlyRepeatValid();
-        return RepeatResponse.NOT_READY;
+        return RepeatResponseType.NOT_READY;
     }
 
-    public RepeatResponse isOnceRepeatValid() {
+    public RepeatResponseType isOnceRepeatValid() {
         if (repeat == Repeat.ONCE && minute != -1 && hour != -1 && dayMonth != -1 && month != -1 && year != -1) {
             PersianDate currentDate = new PersianDate();
             PersianDate checkDate = new PersianDate();
@@ -130,7 +131,7 @@ public class RepeatModel {
             checkDate.setShYear(year);
 
             if (currentDate.after(checkDate))
-                return RepeatResponse.TRUE;
+                return RepeatResponseType.TRUE;
             checkDate.addDay(1);
             if (currentDate.after(checkDate)) {
                 minute = checkDate.getMinute();
@@ -138,7 +139,7 @@ public class RepeatModel {
                 dayMonth = checkDate.getShDay();
                 month = checkDate.getShMonth();
                 year = checkDate.getShYear();
-                return RepeatResponse.TRUE;
+                return RepeatResponseType.TRUE;
             }
             checkDate.addYear(1);
             if (currentDate.after(checkDate)) {
@@ -147,41 +148,41 @@ public class RepeatModel {
                 dayMonth = checkDate.getShDay();
                 month = checkDate.getShMonth();
                 year = checkDate.getShYear();
-                return RepeatResponse.TRUE;
+                return RepeatResponseType.TRUE;
             }
             reset();
-            return RepeatResponse.FALSE;
+            return RepeatResponseType.FALSE;
         }
-        return RepeatResponse.NOT_READY;
+        return RepeatResponseType.NOT_READY;
     }
 
-    public RepeatResponse isHourlyRepeatValid() {
+    public RepeatResponseType isHourlyRepeatValid() {
         if (repeat == Repeat.HOURLY && minute != -1)
-            return RepeatResponse.TRUE;
-        return RepeatResponse.NOT_READY;
+            return RepeatResponseType.TRUE;
+        return RepeatResponseType.NOT_READY;
     }
 
-    public RepeatResponse isDailyRepeatValid() {
+    public RepeatResponseType isDailyRepeatValid() {
         if (repeat == Repeat.DAILY && minute != -1 && hour != -1)
-            return RepeatResponse.TRUE;
-        return RepeatResponse.NOT_READY;
+            return RepeatResponseType.TRUE;
+        return RepeatResponseType.NOT_READY;
     }
 
-    public RepeatResponse isWeeklyRepeatValid() {
+    public RepeatResponseType isWeeklyRepeatValid() {
         if (repeat == Repeat.WEEKLY && minute != -1 && hour != -1 && dayWeek != -1)
-            return RepeatResponse.TRUE;
-        return RepeatResponse.NOT_READY;
+            return RepeatResponseType.TRUE;
+        return RepeatResponseType.NOT_READY;
     }
 
-    public RepeatResponse isMonthlyRepeatValid() {
+    public RepeatResponseType isMonthlyRepeatValid() {
         if (repeat == Repeat.MONTHLY && minute != -1 && hour != -1 && dayMonth != -1)
-            return RepeatResponse.TRUE;
-        return RepeatResponse.NOT_READY;
+            return RepeatResponseType.TRUE;
+        return RepeatResponseType.NOT_READY;
     }
 
-    public RepeatResponse isYearlyRepeatValid() {
+    public RepeatResponseType isYearlyRepeatValid() {
         if (repeat == Repeat.YEARLY && minute != -1 && hour != -1 && dayMonth != -1 && month != -1)
-            return RepeatResponse.TRUE;
-        return RepeatResponse.NOT_READY;
+            return RepeatResponseType.TRUE;
+        return RepeatResponseType.NOT_READY;
     }
 }

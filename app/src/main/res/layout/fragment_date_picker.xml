@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.fearefull.todoreminder.ui.alarm_manager.once_repeat.date_picker.DatePickerViewModel" />
+            type="com.fearefull.todoreminder.ui.alarm_manager.date_picker.DatePickerViewModel" />
     </data>
 
     <LinearLayout

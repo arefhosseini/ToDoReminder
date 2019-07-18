@@ -27,7 +27,6 @@ public enum Repeat {
         return text;
     }
 
-    @TypeConverter
     public static Repeat getRepeat(Integer value){
         for(Repeat repeat : values()){
             if(repeat.value.equals(value)){
@@ -37,7 +36,6 @@ public enum Repeat {
         return null;
     }
 
-    @TypeConverter
     public static Integer getRepeatInt(Repeat repeat){
         if(repeat != null)
             return repeat.value;

@@ -5,8 +5,6 @@ import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.interceptors.HttpLoggingInterceptor;
 import com.fearefull.todoreminder.di.component.DaggerAppComponent;
 import com.fearefull.todoreminder.service.MyService;
 
@@ -50,9 +48,7 @@ public class App extends Application implements HasActivityInjector, HasBroadcas
                 .build()
                 .inject(this);
 
-        AndroidNetworking.initialize(getApplicationContext());
         if (BuildConfig.DEBUG) {
-            AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.BODY);
             Timber.plant(new Timber.DebugTree());
         }
 

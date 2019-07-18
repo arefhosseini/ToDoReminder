@@ -1,10 +1,10 @@
-package com.fearefull.todoreminder.ui.alarm_manager.once_repeat.date_picker;
+package com.fearefull.todoreminder.ui.alarm_manager.date_picker;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
-import com.fearefull.todoreminder.data.model.other.MonthType;
+import com.fearefull.todoreminder.data.model.other.type.MonthType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;

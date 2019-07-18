@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.ui.alarm_manager.once_repeat.half_hour_time_picker;
+package com.fearefull.todoreminder.ui.alarm_manager.half_hour_time_picker;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

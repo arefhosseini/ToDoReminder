@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.data.model.other;
+package com.fearefull.todoreminder.data.model.other.type;
 
 public enum DayMonthType {
     DAY_1 (0, 1, "اولین", "یک"),

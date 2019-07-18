@@ -1,17 +1,16 @@
 package com.fearefull.todoreminder.ui.splash;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.lifecycle.ViewModelProviders;
+
 import com.fearefull.todoreminder.BR;
-import com.fearefull.todoreminder.databinding.ActivitySplashBinding;
-import com.fearefull.todoreminder.ui.login.LoginActivity;
-import com.fearefull.todoreminder.ui.main.MainActivity;
 import com.fearefull.todoreminder.R;
-import com.fearefull.todoreminder.ViewModelProviderFactory;
+import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
+import com.fearefull.todoreminder.databinding.ActivitySplashBinding;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
+import com.fearefull.todoreminder.ui.main.MainActivity;
 
 import javax.inject.Inject;
 
@@ -35,13 +34,6 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     public SplashViewModel getViewModel() {
         viewModel = ViewModelProviders.of(this, factory).get(SplashViewModel.class);
         return viewModel;
-    }
-
-    @Override
-    public void openLoginActivity() {
-        Intent intent = LoginActivity.newIntent(SplashActivity.this);
-        startActivity(intent);
-        finish();
     }
 
     @Override

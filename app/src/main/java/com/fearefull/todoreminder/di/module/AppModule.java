@@ -13,8 +13,6 @@ import com.fearefull.todoreminder.data.local.db.AppDbHelper;
 import com.fearefull.todoreminder.data.local.db.DbHelper;
 import com.fearefull.todoreminder.data.local.prefs.AppPreferencesHelper;
 import com.fearefull.todoreminder.data.local.prefs.PreferencesHelper;
-import com.fearefull.todoreminder.data.remote.ApiHelper;
-import com.fearefull.todoreminder.data.remote.AppApiHelper;
 import com.fearefull.todoreminder.di.DatabaseInfo;
 import com.fearefull.todoreminder.di.PreferenceInfo;
 import com.fearefull.todoreminder.utils.AppConstants;
@@ -31,11 +29,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 @Module
 public class AppModule {
-    @Provides
-    @Singleton
-    ApiHelper provideApiHelper(AppApiHelper appApiHelper) {
-        return appApiHelper;
-    }
 
     @Provides
     @Singleton

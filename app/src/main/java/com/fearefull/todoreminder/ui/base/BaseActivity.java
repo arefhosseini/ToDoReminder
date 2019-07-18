@@ -17,7 +17,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
 import com.fearefull.todoreminder.utils.CommonUtils;
-import com.fearefull.todoreminder.utils.NetworkUtils;
 
 import dagger.android.AndroidInjection;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -96,10 +95,6 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.cancel();
         }
-    }
-
-    public boolean isNetworkConnected() {
-        return NetworkUtils.isNetworkConnected(getApplicationContext());
     }
 
     public void performDependencyInjection() {

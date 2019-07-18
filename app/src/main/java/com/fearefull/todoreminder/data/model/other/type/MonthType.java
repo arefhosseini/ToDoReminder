@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.data.model.other;
+package com.fearefull.todoreminder.data.model.other.type;
 
 public enum  MonthType {
     FARVARDIN(1, "فروردین", 31),

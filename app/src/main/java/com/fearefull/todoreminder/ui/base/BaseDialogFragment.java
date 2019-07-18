@@ -97,10 +97,6 @@ public abstract class BaseDialogFragment<T extends ViewDataBinding, V extends Ba
         }
     }
 
-    public boolean isNetworkConnected() {
-        return activity != null && activity.isNetworkConnected();
-    }
-
     private void performDependencyInjection() {
         AndroidSupportInjection.inject(this);
     }

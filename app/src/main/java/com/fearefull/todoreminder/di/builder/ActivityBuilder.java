@@ -4,7 +4,6 @@ import com.fearefull.todoreminder.ui.about.AboutFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_notification.AlarmNotificationActivity;
 import com.fearefull.todoreminder.ui.home.HomeFragmentProvider;
-import com.fearefull.todoreminder.ui.login.LoginActivity;
 import com.fearefull.todoreminder.ui.main.MainActivity;
 import com.fearefull.todoreminder.ui.splash.SplashActivity;
 
@@ -23,9 +22,6 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract SplashActivity contributesSplashActivity();
-
-    @ContributesAndroidInjector
-    abstract LoginActivity contributesLoginActivity();
 
     @ContributesAndroidInjector
     abstract AlarmNotificationActivity contributesAlarmNotification();

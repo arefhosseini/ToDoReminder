@@ -15,11 +15,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
-import com.fearefull.todoreminder.ViewModelProviderFactory;
+import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.databinding.FragmentOnceRepeatBinding;
-import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.date_picker.DatePickerFragment;
-import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.half_hour_time_picker.HalfHourTimePickerFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.date_picker.DatePickerFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.half_hour_time_picker.HalfHourTimePickerFragment;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.base.BaseViewPagerAdapter;
 

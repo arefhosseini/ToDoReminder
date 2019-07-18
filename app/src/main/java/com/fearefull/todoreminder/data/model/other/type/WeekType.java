@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.data.model.other;
+package com.fearefull.todoreminder.data.model.other.type;
 
 public enum WeekType {
     DAY_1(0, "شنبه"),

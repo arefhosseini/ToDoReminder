@@ -1,10 +1,10 @@
-package com.fearefull.todoreminder.ui.alarm_manager.once_repeat.half_hour_time_picker;
+package com.fearefull.todoreminder.ui.alarm_manager.half_hour_time_picker;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
-import com.fearefull.todoreminder.data.model.other.HalfHourType;
+import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;

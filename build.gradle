@@ -46,14 +46,8 @@ ext {
     // database
     roomDatabaseVersion = '2.1.0'
 
-    // network
-    rx2FastAndroidNetworking = '1.0.2'
-
     // font
     calligraphyVersion = '2.3.0'
-
-    // image
-    glideVersion = '4.9.0'
 
     // parser
     gsonVersion = '2.8.5'

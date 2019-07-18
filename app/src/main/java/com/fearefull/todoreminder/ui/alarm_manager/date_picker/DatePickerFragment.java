@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.ui.alarm_manager.once_repeat.date_picker;
+package com.fearefull.todoreminder.ui.alarm_manager.date_picker;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,11 +9,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
-import com.fearefull.todoreminder.ViewModelProviderFactory;
+import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.databinding.FragmentDatePickerBinding;
 import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatCaller;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
-import com.fearefull.todoreminder.utils.ViewUtils;
 
 import javax.inject.Inject;
 

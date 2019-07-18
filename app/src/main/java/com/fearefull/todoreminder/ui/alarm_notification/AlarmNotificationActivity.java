@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
-import com.fearefull.todoreminder.ViewModelProviderFactory;
+import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.databinding.ActivityAlarmNotificationBinding;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
 

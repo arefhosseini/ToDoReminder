@@ -105,10 +105,6 @@ public abstract class BaseBottomSheetFragment<T extends ViewDataBinding, V exten
         }
     }
 
-    public boolean isNetworkConnected() {
-        return activity != null && activity.isNetworkConnected();
-    }
-
     private void performDependencyInjection() {
         AndroidSupportInjection.inject(this);
     }

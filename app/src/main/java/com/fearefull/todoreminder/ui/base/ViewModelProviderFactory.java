@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder;
+package com.fearefull.todoreminder.ui.base;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -7,13 +7,12 @@ import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.ui.about.AboutViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatViewModel;
-import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.date_picker.DatePickerViewModel;
-import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.half_hour_time_picker.HalfHourTimePickerViewModel;
+import com.fearefull.todoreminder.ui.alarm_manager.date_picker.DatePickerViewModel;
+import com.fearefull.todoreminder.ui.alarm_manager.half_hour_time_picker.HalfHourTimePickerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleViewModel;
 import com.fearefull.todoreminder.ui.alarm_notification.AlarmNotificationViewModel;
 import com.fearefull.todoreminder.ui.home.HomeViewModel;
-import com.fearefull.todoreminder.ui.login.LoginViewModel;
 import com.fearefull.todoreminder.ui.main.MainViewModel;
 import com.fearefull.todoreminder.ui.splash.SplashViewModel;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
@@ -30,7 +29,7 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
     private final SchedulerProvider schedulerProvider;
 
     @Inject
-    ViewModelProviderFactory(DataManager dataManager, SchedulerProvider schedulerProvider) {
+    public ViewModelProviderFactory(DataManager dataManager, SchedulerProvider schedulerProvider) {
         this.dataManager = dataManager;
         this.schedulerProvider = schedulerProvider;
     }
@@ -42,10 +41,6 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         if (modelClass.isAssignableFrom(SplashViewModel.class)) {
             //noinspection unchecked
             return (T) new SplashViewModel(dataManager, schedulerProvider);
-        }
-        if (modelClass.isAssignableFrom(LoginViewModel.class)) {
-            //noinspection unchecked
-            return (T) new LoginViewModel(dataManager, schedulerProvider);
         }
         if (modelClass.isAssignableFrom(MainViewModel.class)) {
             //noinspection unchecked

@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.data.model.other;
+package com.fearefull.todoreminder.data.model.other.type;
 
 public enum HalfHourType {
     AM(0, "قبل از ظهر", "ق.ظ", "am"),

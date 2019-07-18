@@ -1,8 +1,7 @@
-package com.fearefull.todoreminder.ui.alarm_manager.once_repeat.half_hour_time_picker;
+package com.fearefull.todoreminder.ui.alarm_manager.half_hour_time_picker;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,12 +9,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
-import com.fearefull.todoreminder.ViewModelProviderFactory;
-import com.fearefull.todoreminder.data.model.other.HalfHourType;
+import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.databinding.FragmentHalfHourTimePickerBinding;
 import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatCaller;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
-import com.fearefull.todoreminder.utils.ViewUtils;
 
 import javax.inject.Inject;
 

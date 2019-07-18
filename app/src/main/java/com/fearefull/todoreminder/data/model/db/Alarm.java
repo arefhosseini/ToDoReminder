@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.fearefull.todoreminder.data.model.other.DataConverter;
-import com.fearefull.todoreminder.data.model.other.DayMonthType;
-import com.fearefull.todoreminder.data.model.other.HalfHourType;
-import com.fearefull.todoreminder.data.model.other.MonthType;
+import com.fearefull.todoreminder.data.model.other.type.DayMonthType;
+import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
+import com.fearefull.todoreminder.data.model.other.type.MonthType;
 import com.fearefull.todoreminder.data.model.other.PersianDate;
 import com.fearefull.todoreminder.data.model.other.RepeatModel;
 import com.fearefull.todoreminder.data.model.other.RepeatManagerItem;
@@ -25,7 +25,7 @@ import io.reactivex.Observable;
 import timber.log.Timber;
 
 @Entity(tableName = "alarms")
-@TypeConverters({DataConverter.class, Repeat.class})
+@TypeConverters({DataConverter.class})
 public class Alarm implements Serializable {
 
     @PrimaryKey(autoGenerate = true)

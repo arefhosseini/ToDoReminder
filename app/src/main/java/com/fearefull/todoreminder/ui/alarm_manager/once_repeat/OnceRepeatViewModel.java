@@ -6,7 +6,7 @@ import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.data.model.other.RepeatModel;
-import com.fearefull.todoreminder.data.model.other.RepeatResponse;
+import com.fearefull.todoreminder.data.model.other.type.RepeatResponseType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
@@ -57,13 +57,13 @@ public class OnceRepeatViewModel extends BaseViewModel<OnceRepeatNavigator> {
     void checkForSend() {
         repeatModel.setRepeat(Repeat.ONCE);
         repeatModel.setYear(alarm.getDefaultYear());
-        RepeatResponse response = repeatModel.isValid();
-        if (response == RepeatResponse.TRUE) {
+        RepeatResponseType response = repeatModel.isValid();
+        if (response == RepeatResponseType.TRUE) {
             alarm.addRepeatModel(repeatModel);
             repeatModel.reset();
             getNavigator().send();
         }
-        else if (response == RepeatResponse.FALSE){
+        else if (response == RepeatResponseType.FALSE){
             getNavigator().showError();
         }
     }

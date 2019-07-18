@@ -1,17 +1,12 @@
 package com.fearefull.todoreminder.utils;
 
 import com.fearefull.todoreminder.data.model.db.Repeat;
-import com.fearefull.todoreminder.data.model.other.MonthType;
-import com.fearefull.todoreminder.data.model.other.MyTime;
+import com.fearefull.todoreminder.data.model.other.type.MonthType;
 import com.fearefull.todoreminder.data.model.other.RepeatItem;
-import com.fearefull.todoreminder.data.model.other.HalfHourType;
+import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public final class AlarmUtils {
 
@@ -55,17 +50,6 @@ public final class AlarmUtils {
         stringTypes.add(HalfHourType.AM.getPersianText());
         stringTypes.add(HalfHourType.PM.getPersianText());
         return stringTypes;
-    }
-
-    public static Date getTime(MyTime myTime) {
-        String time = myTime.getHour() + ":" + myTime.getMinute() + " " + myTime.getHalfHourType().getEnglishText();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
-        try {
-            return dateFormat.parse(time);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new Date();
     }
 
     public static List<String> getMonths() {

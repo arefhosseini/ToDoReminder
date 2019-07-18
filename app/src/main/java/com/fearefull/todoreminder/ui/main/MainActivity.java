@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
-import com.fearefull.todoreminder.ViewModelProviderFactory;
+import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.databinding.ActivityMainBinding;
 import com.fearefull.todoreminder.databinding.NavigationHeaderMainBinding;
@@ -26,7 +26,6 @@ import com.fearefull.todoreminder.ui.about.AboutFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerFragment;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
 import com.fearefull.todoreminder.ui.home.HomeFragment;
-import com.fearefull.todoreminder.ui.login.LoginActivity;
 import com.fearefull.todoreminder.utils.CommonUtils;
 import com.google.android.material.navigation.NavigationView;
 
@@ -95,12 +94,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         if (drawer != null) {
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
-    }
-
-    @Override
-    public void openLoginActivity() {
-        startActivity(LoginActivity.newIntent(this));
-        finish();
     }
 
     @Override
@@ -218,9 +211,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                             return true;
                         case R.id.navigationItemAbout:
                             showAboutFragment();
-                            return true;
-                        case R.id.navigationItemLogout:
-                            viewModel.removeAlarms();
                             return true;
                         default:
                             return false;
