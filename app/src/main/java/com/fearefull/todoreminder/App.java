@@ -3,11 +3,10 @@ package com.fearefull.todoreminder;
 import android.app.Activity;
 import android.app.Application;
 import android.content.BroadcastReceiver;
-import android.content.Intent;
 
+import com.evernote.android.job.JobManager;
 import com.fearefull.todoreminder.di.component.DaggerAppComponent;
-import com.fearefull.todoreminder.service.MyService;
-
+import com.fearefull.todoreminder.job.MyJobCreator;
 
 import javax.inject.Inject;
 
@@ -28,6 +27,12 @@ public class App extends Application implements HasActivityInjector, HasBroadcas
 
     @Inject
     CalligraphyConfig calligraphyConfig;
+
+    @Inject
+    JobManager jobManager;
+
+    @Inject
+    MyJobCreator myJobCreator;
 
     @Override
     public DispatchingAndroidInjector<Activity> activityInjector() {
@@ -54,6 +59,6 @@ public class App extends Application implements HasActivityInjector, HasBroadcas
 
         CalligraphyConfig.initDefault(calligraphyConfig);
 
-        startService(new Intent(this, MyService.class));
+        jobManager.addJobCreator(myJobCreator);
     }
 }

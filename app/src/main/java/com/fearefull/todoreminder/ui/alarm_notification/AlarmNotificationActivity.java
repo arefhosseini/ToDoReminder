@@ -15,6 +15,8 @@ import com.fearefull.todoreminder.ui.base.BaseActivity;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotificationBinding, AlarmNotificationViewModel>
         implements AlarmNotificationNavigator {
 
@@ -51,6 +53,7 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
         super.onCreate(savedInstanceState);
         viewModel.setNavigator(this);
         binding = getViewDataBinding();
+        Timber.e("triggerTime %d", System.currentTimeMillis());
         setUp();
     }
 

@@ -5,6 +5,8 @@ import android.content.Context;
 
 import androidx.room.Room;
 
+import com.evernote.android.job.JobCreator;
+import com.evernote.android.job.JobManager;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.data.AppDataManager;
 import com.fearefull.todoreminder.data.DataManager;
@@ -15,6 +17,7 @@ import com.fearefull.todoreminder.data.local.prefs.AppPreferencesHelper;
 import com.fearefull.todoreminder.data.local.prefs.PreferencesHelper;
 import com.fearefull.todoreminder.di.DatabaseInfo;
 import com.fearefull.todoreminder.di.PreferenceInfo;
+import com.fearefull.todoreminder.job.MyJobCreator;
 import com.fearefull.todoreminder.utils.AppConstants;
 import com.fearefull.todoreminder.utils.rx.AppSchedulerProvider;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
@@ -44,6 +47,18 @@ public class AppModule {
                 .setDefaultFontPath("fonts/iran_sans_web.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build();
+    }
+
+    @Provides
+    @Singleton
+    JobManager provideJobManager(Context context) {
+        return JobManager.create(context);
+    }
+
+    @Provides
+    @Singleton
+    MyJobCreator provideMyJobCreator() {
+        return new MyJobCreator();
     }
 
     @Provides

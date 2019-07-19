@@ -18,17 +18,20 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
-import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.databinding.ActivityMainBinding;
 import com.fearefull.todoreminder.databinding.NavigationHeaderMainBinding;
+import com.fearefull.todoreminder.job.DemoSyncJob;
 import com.fearefull.todoreminder.ui.about.AboutFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerFragment;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
+import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.ui.home.HomeFragment;
 import com.fearefull.todoreminder.utils.CommonUtils;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -36,6 +39,7 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
+import timber.log.Timber;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel>
         implements MainNavigator, HasSupportFragmentInjector, AlarmManagerFragment.AlarmManagerCallBack {
@@ -192,6 +196,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         viewModel.onNavigationMenuCreated();
 
         showHomeFragment();
+
+        startAlarm();
     }
 
     @SuppressLint("RtlHardcoded")
@@ -247,5 +253,18 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     public boolean onReloadAlarms() {
         return callerHome.reloadAlarmData();
+    }
+
+    private void startAlarm() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 21);
+        calendar.set(Calendar.MINUTE, 40);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        long triggerTime = calendar.getTimeInMillis() - System.currentTimeMillis();
+        Timber.i("triggerTime %d", triggerTime);
+
+        DemoSyncJob.scheduleJob(triggerTime);
     }
 }

@@ -34,22 +34,6 @@
             android:name=".ui.alarm_notification.AlarmNotificationActivity"
             android:launchMode="standard" />
 
-        <receiver
-            android:process=":remote"
-            android:name=".service.AlarmReceiver" />
-
-        <receiver android:name=".service.AutoStart">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name=".service.MyService"
-            android:enabled="true"
-            android:process=":my_service" >
-        </service>
-
     </application>
 
 </manifest>
