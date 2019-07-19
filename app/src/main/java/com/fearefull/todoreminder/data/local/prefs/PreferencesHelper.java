@@ -1,6 +1,6 @@
 package com.fearefull.todoreminder.data.local.prefs;
 
 public interface PreferencesHelper {
-    String getSample();
-    void setSample(String sample);
+    int getSchedule();
+    void setSchedule(int schedule);
 }

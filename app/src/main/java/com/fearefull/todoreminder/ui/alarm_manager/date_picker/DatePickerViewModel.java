@@ -48,13 +48,11 @@ public class DatePickerViewModel extends BaseViewModel<DatePickerNavigator> {
     }
 
     public void onMonthPickerValueChange(int oldVal, int newVal) {
-        Timber.i("month index %d", newVal);
         month = Alarm.indexToMonth(newVal);
         checkChangeDay(AlarmUtils.indexToMonth(oldVal), AlarmUtils.indexToMonth(newVal));
     }
 
     public void onDayPickerValueChange(int oldVal, int newVal) {
-        Timber.i("day index %d", newVal);
         day = Alarm.indexToDayMonth(newVal);
         if (checkForwardMonth(Alarm.indexToDayMonth(oldVal), day, MonthType.getMonthType(month)))
             forwardMonth();

@@ -2,7 +2,7 @@ package com.fearefull.todoreminder.ui.alarm_manager;
 
 import androidx.databinding.ObservableField;
 
-import com.fearefull.todoreminder.data.model.other.RepeatItem;
+import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 
 public class RepeatItemViewModel {
     private final RepeatItem repeatType;

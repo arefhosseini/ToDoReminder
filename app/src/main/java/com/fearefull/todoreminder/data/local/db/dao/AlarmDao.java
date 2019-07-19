@@ -24,6 +24,9 @@ public interface AlarmDao {
     @Query("SELECT * FROM alarms")
     public List<Alarm> getAllAlarms();
 
+    @Query("SELECT * FROM alarms WHERE is_enable = 1")
+    public List<Alarm> getAllEnabledAlarms();
+
     @Query("SELECT * FROM alarms WHERE id = :id")
     public Alarm getAlarmById(Long id);
 

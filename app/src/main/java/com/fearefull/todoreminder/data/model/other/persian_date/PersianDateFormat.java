@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.data.model.other;
+package com.fearefull.todoreminder.data.model.other.persian_date;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -11,12 +11,12 @@ public class PersianDateFormat implements Serializable {
     /**
      * Key for convert Date to String
      */
-    private String key[] = {"a","l", "j", "F", "Y", "H", "i", "s", "d", "g", "n", "m", "t", "w", "y", "z","A",
+    private String[] key = {"a", "l", "j", "F", "Y", "H", "i", "s", "d", "g", "n", "m", "t", "w", "y", "z", "A",
             "L"};
     private String pattern;
     /**
      * key_parse for convert String to PersianDate
-     *
+     * <p>
      * yyyy = Year (1396)
      * MM = month (02-12-...)
      * dd = day (13-02-15-...)
@@ -24,7 +24,7 @@ public class PersianDateFormat implements Serializable {
      * mm = minutes (13-02-15-...)
      * ss = second (13-02-15-...)
      */
-    private String key_parse[] = {"yyyy", "MM", "dd", "HH", "mm", "ss"};
+    private String[] key_parse = {"yyyy", "MM", "dd", "HH", "mm", "ss"};
 
     /**
      * Constracutor
@@ -42,7 +42,7 @@ public class PersianDateFormat implements Serializable {
 
     public static String format(PersianDate date, String pattern) {
         if(pattern == null) pattern="l j F Y H:i:s";
-        String key[] = {"a","l", "j", "F", "Y", "H", "i", "s", "d", "g", "n", "m", "t", "w", "y", "z","A" ,"L"};
+        String[] key = {"a", "l", "j", "F", "Y", "H", "i", "s", "d", "g", "n", "m", "t", "w", "y", "z", "A", "L"};
         String year2 = null;
         if (("" + date.getShYear()).length() == 2) {
             year2 = "" + date.getShYear();
@@ -51,7 +51,7 @@ public class PersianDateFormat implements Serializable {
         } else {
             year2 = ("" + date.getShYear()).substring(2, 4);
         }
-        String values[] = {date.getShortTimeOfTheDay(),date.dayName(), "" + date.getShDay(), date.monthName(),
+        String[] values = {date.getShortTimeOfTheDay(), date.dayName(), "" + date.getShDay(), date.monthName(),
                 "" + date.getShYear(),
                 textNumberFilterStatic("" + date.getHour()), textNumberFilterStatic("" + date.getMinute()),
                 textNumberFilterStatic("" + date.getSecond()),
@@ -66,7 +66,7 @@ public class PersianDateFormat implements Serializable {
     }
 
     public String format(PersianDate date) {
-        String year2 = null;
+        String year2;
         if (("" + date.getShYear()).length() == 2) {
             year2 = "" + date.getShYear();
         } else if (("" + date.getShYear()).length() == 3) {
@@ -74,7 +74,7 @@ public class PersianDateFormat implements Serializable {
         } else {
             year2 = ("" + date.getShYear()).substring(2, 4);
         }
-        String values[] = {date.isMidNight() ? "ق.ظ" : "ب.ظ" ,date.dayName(), "" + date.getShDay(), date.monthName(),
+        String[] values = {date.isMidNight() ? "ق.ظ" : "ب.ظ", date.dayName(), "" + date.getShDay(), date.monthName(),
                 "" + date.getShYear(),
                 this.textNumberFilter("" + date.getHour()), this.textNumberFilter("" + date.getMinute()),
                 this.textNumberFilter("" + date.getSecond()),

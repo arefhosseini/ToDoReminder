@@ -11,9 +11,9 @@ import com.fearefull.todoreminder.data.model.other.DataConverter;
 import com.fearefull.todoreminder.data.model.other.type.DayMonthType;
 import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
 import com.fearefull.todoreminder.data.model.other.type.MonthType;
-import com.fearefull.todoreminder.data.model.other.PersianDate;
+import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
 import com.fearefull.todoreminder.data.model.other.RepeatModel;
-import com.fearefull.todoreminder.data.model.other.RepeatManagerItem;
+import com.fearefull.todoreminder.data.model.other.item.RepeatManagerItem;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,6 +33,10 @@ public class Alarm implements Serializable {
     private Long id;
 
     @NonNull
+    @ColumnInfo(name = "is_enable")
+    private Boolean isEnable;
+
+    @NonNull
     @ColumnInfo(name = "title")
     private String title;
 
@@ -45,6 +49,9 @@ public class Alarm implements Serializable {
 
     @ColumnInfo(name = "repeats")
     private List<Repeat> repeats;
+
+    @ColumnInfo(name = "repeats_status")
+    private List<Boolean> repeatsStatus;
 
     @ColumnInfo(name = "minutes")
     private List<Integer> minutes;
@@ -108,6 +115,17 @@ public class Alarm implements Serializable {
         this.id = id;
     }
 
+    /**
+     * Control {@link #isEnable}
+     */
+    @NonNull
+    public Boolean getIsEnable() {
+        return isEnable;
+    }
+
+    public void setIsEnable(@NonNull Boolean isEnable) {
+        this.isEnable = isEnable;
+    }
 
     /**
      * Control {@link #title}
@@ -137,11 +155,31 @@ public class Alarm implements Serializable {
         repeats.add(repeat);
     }
 
+    public Repeat getRepeat(int index) {
+        return repeats.get(index);
+    }
+
     public Repeat getDefaultRepeat() {
         if (!repeats.isEmpty())
             return repeats.get(repeats.size() - 1);
         return Repeat.ONCE;
     }
+
+    /**
+     * Control {@link #repeatsStatus}
+     */
+    public List<Boolean> getRepeatsStatus() {
+        return repeatsStatus;
+    }
+
+    public void setRepeatsStatus(List<Boolean> repeatsStatus) {
+        this.repeatsStatus = repeatsStatus;
+    }
+
+    public void addRepeatStatus(Boolean repeatStatus) {
+        repeatsStatus.add(repeatStatus);
+    }
+
 
     /**
      * Control {@link #ringtone}
@@ -470,10 +508,12 @@ public class Alarm implements Serializable {
 
 
     public Alarm(@NotNull String title) {
+        this.isEnable = true;
         this.title = title;
         this.ringtone = "DEFAULT";
         this.note = "";
         repeats = new ArrayList<>();
+        repeatsStatus = new ArrayList<>();
         minutes = new ArrayList<>();
         hours = new ArrayList<>();
         daysWeek = new ArrayList<>();
@@ -652,7 +692,6 @@ public class Alarm implements Serializable {
 
     @Ignore
     public String getTime12String(int indexMinute, int indexHour) {
-        Timber.e("12TimeStringStarted");
         int minute = minutes.get(indexMinute);
         int halfHour = hourToHalfHour(hours.get(indexHour));
         if (minute < 10)
@@ -671,7 +710,6 @@ public class Alarm implements Serializable {
 
     @Ignore
     public String getDateByDayMonthAndMonth(int indexDayMonth, int indexMonth, int indexYear) {
-        Timber.e("dateStringStarted");
         String result = DayMonthType.getDayMonthTypeByValue(daysMonth.get(indexDayMonth)).getValue() + " " +
                 MonthType.getMonthType(months.get(indexMonth)).getText();
         if (years.get(indexYear) == defaultYear)
@@ -682,7 +720,6 @@ public class Alarm implements Serializable {
 
     @Ignore
     public String getRepeatManagerStringByOnce(int index) {
-        Timber.e("onceStringStarted %d", index);
         return getTime12String(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + "-" +
                 getDateByDayMonthAndMonth(indexDayMonthByIndexRepeat(index), indexMonthByIndexRepeat(index), indexYearByIndexRepeat(index)) +
                 " (" + repeats.get(index).getText() + ")";
@@ -733,13 +770,13 @@ public class Alarm implements Serializable {
 
     @Ignore
     public int getRepeatCount() {
-        Timber.e("ajab %d", repeats.size());
         return repeats.size();
     }
 
     @Ignore
     public void addRepeatModel(RepeatModel model) {
         addRepeat(model.getRepeat());
+        addRepeatStatus(true);
         if (model.getRepeat() == Repeat.ONCE)
             addRepeatModelByOnce(model);
     }
@@ -754,7 +791,6 @@ public class Alarm implements Serializable {
     }
 
     public String getRepeatManagerString(int index) {
-        Timber.e("repeatManagerString started");
         if (repeats.get(index) == Repeat.ONCE)
             return getRepeatManagerStringByOnce(index);
         return "";
@@ -765,7 +801,6 @@ public class Alarm implements Serializable {
         return Observable.fromCallable(() -> {
             List<RepeatManagerItem> list = new ArrayList<>();
             for (int index = 0; index < getRepeatCount(); index++) {
-                Timber.e("ajab2 %d", index);
                 list.add(new RepeatManagerItem(getRepeatManagerString(index)));
             }
             return list;
@@ -787,7 +822,28 @@ public class Alarm implements Serializable {
             removeRepeatManagerDataByOnce(index);
 
         // remove it last
+        repeatsStatus.remove(index);
         repeats.remove(index);
+    }
+
+    @Ignore
+    public RepeatModel getRepeatModel(int index) {
+        if (repeats.get(index) == Repeat.ONCE)
+            return getRepeatModelByOnce(index);
+        return new RepeatModel();
+    }
+
+    @Ignore
+    private RepeatModel getRepeatModelByOnce(int index) {
+        RepeatModel repeatModel = new RepeatModel();
+        repeatModel.setRepeat(Repeat.ONCE);
+        repeatModel.setMinute(minutes.get(indexMinuteByIndexRepeat(index)));
+        repeatModel.setHour(hours.get(indexHourByIndexRepeat(index)));
+        repeatModel.setDayMonth(daysMonth.get(indexDayMonthByIndexRepeat(index)));
+        repeatModel.setMonth(months.get(indexMonthByIndexRepeat(index)));
+        repeatModel.setYear(years.get(indexYearByIndexRepeat(index)));
+
+        return repeatModel;
     }
 
     @Ignore
@@ -825,7 +881,6 @@ public class Alarm implements Serializable {
 
     @Ignore
     public int indexMinuteByIndexRepeat(int indexRepeat) {
-        Timber.e("minuteIndex %d", indexRepeat);
         return indexRepeat;
     }
 
@@ -838,7 +893,6 @@ public class Alarm implements Serializable {
             if (repeat != Repeat.HOURLY)
                 index ++;
         }
-        Timber.e("hourIndex %d", index);
         return index;
     }
 
@@ -863,7 +917,6 @@ public class Alarm implements Serializable {
             if (repeat == Repeat.ONCE || repeat == Repeat.MONTHLY || repeat == Repeat.YEARLY)
                 index ++;
         }
-        Timber.e("dayMonthIndex %d", index);
         return index;
     }
 
@@ -900,7 +953,6 @@ public class Alarm implements Serializable {
             if (repeat == Repeat.ONCE || repeat == Repeat.YEARLY)
                 index ++;
         }
-        Timber.e("monthIndex %d", index);
         return index;
     }
 
@@ -913,7 +965,6 @@ public class Alarm implements Serializable {
             if (repeat == Repeat.ONCE)
                 index ++;
         }
-        Timber.e("yearIndex %d", index);
         return index;
     }
 

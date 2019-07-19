@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.data.model.other;
+package com.fearefull.todoreminder.data.model.other.item;
 
 import com.fearefull.todoreminder.data.model.db.Repeat;
 

@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.data.model.other;
+package com.fearefull.todoreminder.data.model.other.persian_date;
 
 import java.io.Serializable;
 
@@ -170,7 +170,7 @@ public class PersianDate implements Serializable{
      * @param year  Yera in Grg
      * @param month Month in Grg
      * @param day   Day in Grg
-     * @return
+
      */
     public PersianDate initGrgDate(int year, int month, int day) {
         return this.initGrgDate(year, month, day, 0, 0, 0);
@@ -185,7 +185,7 @@ public class PersianDate implements Serializable{
      * @param hour   hour
      * @param minute min
      * @param second secon
-     * @return
+
      */
     public PersianDate initGrgDate(int year, int month, int day, int hour, int minute, int second) {
         this.grgYear = year;
@@ -216,7 +216,7 @@ public class PersianDate implements Serializable{
      * @param year  Year in jallali date
      * @param month Month in Jallali date
      * @param day   daye in Jalalli date
-     * @return
+
      */
     public PersianDate initJalaliDate(int year, int month, int day) {
         return this.initJalaliDate(year, month, day, 0, 0, 0);
@@ -231,7 +231,7 @@ public class PersianDate implements Serializable{
      * @param hour   Hour
      * @param minute Minute
      * @param second Second
-     * @return
+
      */
     public PersianDate initJalaliDate(int year, int month, int day, int hour, int minute, int second) {
         this.setShYear(year)
@@ -253,7 +253,7 @@ public class PersianDate implements Serializable{
      * @param year
      * @param month
      * @param day
-     * @return
+
      */
     private PersianDate prepareDate2(int year, int month, int day) {
         int[] convert = this.toGregorian(year, month, day);
@@ -286,7 +286,7 @@ public class PersianDate implements Serializable{
     /**
      * return time in long value
      *
-     * @return Value of time in mile
+ Value of time in mile
      */
     public Long getTime() {
         return this.timeInMilliSecond;
@@ -296,7 +296,7 @@ public class PersianDate implements Serializable{
      * Check Grg year is leap
      *
      * @param Year
-     * @return
+
      */
     public boolean grgIsLeap(int Year) {
         return ((Year % 4) == 0 && ((Year % 100) != 0 || (Year % 400) == 0));
@@ -305,7 +305,7 @@ public class PersianDate implements Serializable{
     /**
      * Check year in Leap
      *
-     * @return true or false
+ true or false
      */
     public boolean isLeap() {
         return this.isLeap(this.shYear);
@@ -315,7 +315,7 @@ public class PersianDate implements Serializable{
      * Check custom year is leap
      *
      * @param year int year
-     * @return true or false
+ true or false
      */
     public boolean isLeap(int year) {
         double referenceYear = 1375;
@@ -347,7 +347,7 @@ public class PersianDate implements Serializable{
      * Check static is leap year for Jalali Date
      *
      * @param year Jalali year
-     * @return true if year is leap
+ true if year is leap
      */
     public static boolean isJalaliLeap(int year){
         return (new PersianDate().isLeap(year));
@@ -357,7 +357,7 @@ public class PersianDate implements Serializable{
      * Check static is leap year for Grg Date
      *
      * @param year
-     * @return
+
      */
     public static boolean isGrgLeap(int year){
         return (new PersianDate().grgIsLeap(year));
@@ -369,7 +369,7 @@ public class PersianDate implements Serializable{
      * @param year  year in Grg date
      * @param month month in Grg date
      * @param day   day in Grg date
-     * @return a int[year][month][day] in jalali date
+ a int[year][month][day] in jalali date
      */
     public int[] toJalali(int year, int month, int day) {
         int hshDay = 0;
@@ -399,8 +399,7 @@ public class PersianDate implements Serializable{
                 break;
             }
         }
-        int[] ret = {hshYear, hshMonth, hshDay};
-        return ret;
+        return new int[]{hshYear, hshMonth, hshDay};
     }
     /**
      * Convert Jalali date to Grg
@@ -408,7 +407,7 @@ public class PersianDate implements Serializable{
      * @param year  Year in jalali
      * @param month Month in Jalali
      * @param day   Day in Jalali
-     * @return int[year][month][day]
+ int[year][month][day]
      */
     public int[] toGregorian(int year, int month, int day) {
         int grgYear = year + 621;
@@ -444,7 +443,7 @@ public class PersianDate implements Serializable{
     /**
      * calc day of week
      *
-     * @return
+
      */
     public int dayOfWeek() {
         return this.dayOfWeek(this);
@@ -454,7 +453,7 @@ public class PersianDate implements Serializable{
      * Get day of week from PersianDate object
      *
      * @param date
-     * @return
+
      */
     public int dayOfWeek(PersianDate date) {
         return this.dayOfWeek(date.toDate());
@@ -464,7 +463,7 @@ public class PersianDate implements Serializable{
      * Get day of week from Date object
      *
      * @param date
-     * @return
+
      */
     public int dayOfWeek(Date date) {
         Calendar cal = Calendar.getInstance();
@@ -476,7 +475,7 @@ public class PersianDate implements Serializable{
     /**
      * return month name
      *
-     * @return
+
      */
     public String monthName() {
         return this.monthName(this.getShMonth());
@@ -486,7 +485,7 @@ public class PersianDate implements Serializable{
      * Return month name
      *
      * @param month Month
-     * @return
+
      */
     public String monthName(int month) {
         return this.monthNames[month - 1];
@@ -495,7 +494,7 @@ public class PersianDate implements Serializable{
     /**
      * get day name
      *
-     * @return
+
      */
     public String dayName() {
         return this.dayName(this);
@@ -505,7 +504,7 @@ public class PersianDate implements Serializable{
      * Get Day Name
      *
      * @param date
-     * @return
+
      */
     public String dayName(PersianDate date) {
         return this.dayNames[this.dayOfWeek(date)];
@@ -514,7 +513,7 @@ public class PersianDate implements Serializable{
     /**
      * Number days of month
      *
-     * @return return days
+ return days
      */
     public int getMonthDays() {
         return this.getMonthDays(this.getShYear(), this.getShMonth());
@@ -525,7 +524,6 @@ public class PersianDate implements Serializable{
      *
      * @param Year
      * @param month
-     * @return
      */
     public int getMonthDays(int Year, int month) {
         if(month == 12 && !this.isLeap(Year)){
@@ -541,7 +539,6 @@ public class PersianDate implements Serializable{
     /**
      * calcute day in year
      *
-     * @return
      */
     public int getDayInYear() {
         return this.getDayInYear(this.getShMonth(), getShDay());
@@ -552,7 +549,7 @@ public class PersianDate implements Serializable{
      *
      * @param month Month
      * @param day   Day
-     * @return
+
      */
     public int getDayInYear(int month, int day) {
         for(int i = 1; i < month; i++){
@@ -574,7 +571,7 @@ public class PersianDate implements Serializable{
      * @param hour Number of hour you want add
      * @param minute Number of minute you want add
      * @param second Number of second you want add
-     * @return new date
+ new date
      */
     public PersianDate addDate(long year ,long month,long day,long hour,long minute,long second){
         if(month >= 12){
@@ -609,7 +606,7 @@ public class PersianDate implements Serializable{
      * @param year Number of Year you want add
      * @param month Number of month you want add
      * @param day Number of day you want add
-     * @return
+
      */
     public PersianDate addDate(long year ,long month,long day){
         return this.addDate(year,month,day,0,0,0);
@@ -633,7 +630,7 @@ public class PersianDate implements Serializable{
      *
      * @param dateInput PersianDate type
      *
-     * @return
+
      */
     public Boolean after(PersianDate dateInput){
         return (this.timeInMilliSecond < dateInput.getTime());
@@ -642,7 +639,7 @@ public class PersianDate implements Serializable{
      * copare to data
      *
      * @param dateInput Input
-     * @return
+
      */
     public Boolean before(PersianDate dateInput){
         return (!this.after(dateInput));
@@ -651,24 +648,24 @@ public class PersianDate implements Serializable{
      * Check date equals
      *
      * @param dateInput
-     * @return
+
      */
     public Boolean equals(PersianDate dateInput){
-        return (this.timeInMilliSecond == dateInput.getTime());
+        return (this.timeInMilliSecond.equals(dateInput.getTime()));
     }
     /**
      * compare 2 data
      *
      * @param anotherDate
-     * @return  0 = equal,1=data1 > anotherDate,-1=data1 > anotherDate
+  0 = equal,1=data1 > anotherDate,-1=data1 > anotherDate
      */
     public int compareTo(PersianDate anotherDate) {
-        return (this.timeInMilliSecond <anotherDate.getTime() ? -1 : (this.timeInMilliSecond ==anotherDate.getTime() ? 0 : 1));
+        return (this.timeInMilliSecond <anotherDate.getTime() ? -1 : (this.timeInMilliSecond.equals(anotherDate.getTime()) ? 0 : 1));
     }
     /**
      * Return Day in difreent date
      *
-     * @return
+
      */
     public long getDayuntilToday(){
         return this.getDayUntilToday(new PersianDate());
@@ -677,7 +674,7 @@ public class PersianDate implements Serializable{
      * Return difreent just day in copare 2 date
      *
      * @param date date for compare
-     * @return
+
      */
     public long getDayUntilToday(PersianDate date){
         long[] ret =  this.untilToday(date);
@@ -686,7 +683,7 @@ public class PersianDate implements Serializable{
     /**
      * Calc difreent date until now
      *
-     * @return
+
      */
     public long[] untilToday(){
         return this.untilToday(new PersianDate());
@@ -695,7 +692,7 @@ public class PersianDate implements Serializable{
      * calcute diffrent between 2 date
      *
      * @param date Date 1
-     * @return
+
      */
     public long[] untilToday(PersianDate date){
         long secondsInMilli = 1000;
@@ -724,7 +721,7 @@ public class PersianDate implements Serializable{
     /**
      * convert PersianDate class to date
      *
-     * @return
+
      */
     public Date toDate() {
         return new Date(this.timeInMilliSecond);
@@ -734,7 +731,7 @@ public class PersianDate implements Serializable{
      * Helper function
      *
      * @param date
-     * @return
+
      */
     private String textNumberFilter(String date) {
         if(date.length() < 2){
@@ -755,7 +752,7 @@ public class PersianDate implements Serializable{
     /**
      * Return today
      *
-     * @return
+
      */
     public static PersianDate today(){
         PersianDate pdate = new PersianDate();
@@ -765,7 +762,7 @@ public class PersianDate implements Serializable{
     /**
      * Get tomorrow
      *
-     * @return
+
      */
     public static PersianDate tomorrow(){
         PersianDate pdate = new PersianDate();
@@ -778,7 +775,7 @@ public class PersianDate implements Serializable{
      * Get start of day
      *
      * @param persianDate
-     * @return
+
      */
     public PersianDate startOfDay(PersianDate persianDate){
         persianDate.setHour(0).setMinute(0).setSecond(0);
@@ -788,7 +785,7 @@ public class PersianDate implements Serializable{
     /**
      * Get Start of day
      *
-     * @return
+
      */
     public PersianDate startOfDay(){
         return this.startOfDay(this);
@@ -798,7 +795,7 @@ public class PersianDate implements Serializable{
      * Get end of day
      *
      * @param persianDate
-     * @return
+
      */
     public PersianDate endOfDay(PersianDate persianDate){
         persianDate.setHour(23).setMinute(59).setSecond(59);
@@ -808,7 +805,7 @@ public class PersianDate implements Serializable{
     /**
      * Get end of day
      *
-     * @return
+
      */
     public PersianDate endOfDay(){
         return this.endOfDay(this);
@@ -818,7 +815,7 @@ public class PersianDate implements Serializable{
      * Check midnight
      *
      * @param persianDate
-     * @return
+
      */
     public Boolean isMidNight(PersianDate persianDate){
         return persianDate.isMidNight();
@@ -827,7 +824,7 @@ public class PersianDate implements Serializable{
     /**
      * Check is midNight
      *
-     * @return
+
      */
     public Boolean isMidNight(){
         return (this.hour < 12);
@@ -836,7 +833,7 @@ public class PersianDate implements Serializable{
     /**
      * Get short name time of the day
      *
-     * @return
+
      */
     public String getShortTimeOfTheDay(){
         return (this.isMidNight()) ? AM_SHORT_NAME : PM_SHORT_NAME;
@@ -844,7 +841,7 @@ public class PersianDate implements Serializable{
     /**
      * Get short name time of the day
      *
-     * @return
+
      */
     public String getShortTimeOfTheDay(PersianDate persianDate){
         return (persianDate.isMidNight()) ? AM_SHORT_NAME : PM_SHORT_NAME;
@@ -852,7 +849,7 @@ public class PersianDate implements Serializable{
     /**
      * Get time of the day
      *
-     * @return
+
      */
     public String getTimeOfTheDay(){
         return (this.isMidNight()) ? AM_NAME : PM_NAME;
@@ -860,7 +857,7 @@ public class PersianDate implements Serializable{
     /**
      * Get time of the day
      *
-     * @return
+
      */
     public String getTimeOfTheDay(PersianDate persianDate){
         return (persianDate.isMidNight()) ? AM_NAME : PM_NAME;
@@ -871,7 +868,7 @@ public class PersianDate implements Serializable{
      *
      * @param year Jalali year
      * @param month Jalali month
-     * @return number of days in month
+ number of days in month
      */
     public Integer getMonthLength(Integer year,Integer month){
         if(month <= 6){
@@ -891,7 +888,7 @@ public class PersianDate implements Serializable{
      * Get number of days in month
      *
      * @param persianDate persianDate object
-     * @return number of days in month
+ number of days in month
      */
     public Integer getMonthLength(PersianDate persianDate){
         return this.getMonthLength(persianDate.getShYear(),persianDate.getShMonth());
@@ -900,7 +897,7 @@ public class PersianDate implements Serializable{
     /**
      * Get number of days in month
      *
-     * @return number of days in month
+ number of days in month
      */
     public Integer getMonthLength(){
         return this.getMonthLength(this);

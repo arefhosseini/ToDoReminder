@@ -66,7 +66,6 @@ public class HalfHourTimePickerViewModel extends BaseViewModel<HalfHourTimePicke
     }
 
     public void onHourPickerValueChange(int oldVal, int newVal) {
-        Timber.i("hour index %d", newVal);
         if ((Alarm.indexTo12Hour(newVal) == 12 && Alarm.indexTo12Hour(oldVal) == 11) ||
                 (Alarm.indexTo12Hour(newVal) == 11 && Alarm.indexTo12Hour(oldVal) == 12))
             changeHalfHourType();
@@ -75,14 +74,12 @@ public class HalfHourTimePickerViewModel extends BaseViewModel<HalfHourTimePicke
     }
 
     public void onMinutePickerValueChange(int oldVal, int newVal) {
-        Timber.i("minute index %d", newVal);
         minute = Alarm.indexToMinute(newVal);
         checkChangeHour(Alarm.indexToMinute(oldVal), minute);
         minutePickerDefaultIndex.setValue(newVal);
     }
 
     public void onHalfHourTypePickerValueChange(int oldVal, int newVal) {
-        Timber.i("type index %d", newVal);
         halfHourType = Alarm.indexToHalfHourType(newVal);
         hour = Alarm.halfHourToHour(Alarm.hourToHalfHour(hour), halfHourType);
         halfHourTypePickerDefaultIndex.setValue(newVal);

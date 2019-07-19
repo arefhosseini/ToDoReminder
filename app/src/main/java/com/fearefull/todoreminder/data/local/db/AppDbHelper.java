@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
+import timber.log.Timber;
 
 @Singleton
 public class AppDbHelper implements DbHelper{
@@ -30,6 +31,11 @@ public class AppDbHelper implements DbHelper{
     @Override
     public Observable<List<Alarm>> getAllAlarms() {
         return Observable.fromCallable(() -> appDatabase.alarmDao().getAllAlarms());
+    }
+
+    @Override
+    public Observable<List<Alarm>> getAllEnabledAlarms() {
+        return Observable.fromCallable(() -> appDatabase.alarmDao().getAllEnabledAlarms());
     }
 
     @Override

@@ -17,7 +17,7 @@ import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.data.model.db.Alarm;
-import com.fearefull.todoreminder.data.model.other.RepeatItem;
+import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 import com.fearefull.todoreminder.databinding.FragmentAlarmManagerBinding;
 import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerDialogFragment;

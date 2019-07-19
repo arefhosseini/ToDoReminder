@@ -2,7 +2,7 @@ package com.fearefull.todoreminder.utils;
 
 import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.data.model.other.type.MonthType;
-import com.fearefull.todoreminder.data.model.other.RepeatItem;
+import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
 
 import java.util.ArrayList;

@@ -9,8 +9,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.data.model.db.Alarm;
-import com.fearefull.todoreminder.data.model.other.RepeatItem;
-import com.fearefull.todoreminder.data.model.other.RepeatManagerItem;
+import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
+import com.fearefull.todoreminder.data.model.other.item.RepeatManagerItem;
 import com.fearefull.todoreminder.ui.alarm_manager.RepeatAdapter;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerAdapter;
 import com.fearefull.todoreminder.ui.base.BaseViewPager;

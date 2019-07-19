@@ -9,7 +9,7 @@ import javax.inject.Inject;
 
 public class AppPreferencesHelper implements PreferencesHelper {
 
-    private static final String PREF_KEY_SAMPLE = "PREF_KEY_SAMPLE";
+    private static final String PREF_KEY_SCHEDULE = "PREF_KEY_SCHEDULE";
     private final SharedPreferences prefs;
 
     @Inject
@@ -18,12 +18,12 @@ public class AppPreferencesHelper implements PreferencesHelper {
     }
 
     @Override
-    public String getSample() {
-        return prefs.getString(PREF_KEY_SAMPLE, null);
+    public int getSchedule() {
+        return prefs.getInt(PREF_KEY_SCHEDULE, -1);
     }
 
     @Override
-    public void setSample(String sample) {
-        prefs.edit().putString(PREF_KEY_SAMPLE, sample).apply();
+    public void setSchedule(int schedule) {
+        prefs.edit().putInt(PREF_KEY_SCHEDULE, schedule).apply();
     }
 }

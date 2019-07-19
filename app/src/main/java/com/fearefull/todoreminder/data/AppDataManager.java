@@ -33,13 +33,13 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public String getSample() {
-        return preferencesHelper.getSample();
+    public int getSchedule() {
+        return preferencesHelper.getSchedule();
     }
 
     @Override
-    public void setSample(String sample) {
-        preferencesHelper.setSample(sample);
+    public void setSchedule(int schedule) {
+        preferencesHelper.setSchedule(schedule);
     }
 
     @Override
@@ -50,6 +50,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<List<Alarm>> getAllAlarms() {
         return dbHelper.getAllAlarms();
+    }
+
+    @Override
+    public Observable<List<Alarm>> getAllEnabledAlarms() {
+        return dbHelper.getAllEnabledAlarms();
     }
 
     @Override

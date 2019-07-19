@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.data.model.other;
+package com.fearefull.todoreminder.data.model.other.item;
 
 public class RepeatManagerItem {
     private final String text;

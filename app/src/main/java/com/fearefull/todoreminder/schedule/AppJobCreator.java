@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.job;
+package com.fearefull.todoreminder.schedule;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,7 +6,7 @@ import androidx.annotation.Nullable;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobCreator;
 
-public class MyJobCreator implements JobCreator {
+public class AppJobCreator implements JobCreator {
 
     @Override
     @Nullable

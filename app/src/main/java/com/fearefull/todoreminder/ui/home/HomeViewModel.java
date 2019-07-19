@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.schedule.AlarmScheduler;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
@@ -11,10 +12,13 @@ import java.util.List;
 
 public class HomeViewModel extends BaseViewModel<HomeNavigator> {
 
+    private final AlarmScheduler alarmScheduler;
+
     private final MutableLiveData<List<Alarm>> alarmItemsLiveData;
 
-    public HomeViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+    public HomeViewModel(DataManager dataManager, SchedulerProvider schedulerProvider, AlarmScheduler alarmScheduler) {
         super(dataManager, schedulerProvider);
+        this.alarmScheduler = alarmScheduler;
         alarmItemsLiveData = new MutableLiveData<>();
         fetchAlarmData();
     }
@@ -36,5 +40,6 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
 
     void reloadAlarmData() {
         fetchAlarmData();
+        alarmScheduler.schedule();
     }
 }

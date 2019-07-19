@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fearefull.todoreminder.data.DataManager;
+import com.fearefull.todoreminder.schedule.AlarmScheduler;
+import com.fearefull.todoreminder.schedule.AppAlarmScheduler;
 import com.fearefull.todoreminder.ui.about.AboutViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatViewModel;
@@ -27,11 +29,14 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
 
     private final DataManager dataManager;
     private final SchedulerProvider schedulerProvider;
+    private final AlarmScheduler alarmScheduler;
 
     @Inject
-    public ViewModelProviderFactory(DataManager dataManager, SchedulerProvider schedulerProvider) {
+    public ViewModelProviderFactory(DataManager dataManager, SchedulerProvider schedulerProvider,
+                                    AppAlarmScheduler alarmScheduler) {
         this.dataManager = dataManager;
         this.schedulerProvider = schedulerProvider;
+        this.alarmScheduler = alarmScheduler;
     }
 
 
@@ -48,7 +53,7 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         }
         if (modelClass.isAssignableFrom(HomeViewModel.class)) {
             //noinspection unchecked
-            return (T) new HomeViewModel(dataManager, schedulerProvider);
+            return (T) new HomeViewModel(dataManager, schedulerProvider, alarmScheduler);
         }
         if (modelClass.isAssignableFrom(AboutViewModel.class)) {
             //noinspection unchecked
@@ -60,7 +65,7 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         }
         if (modelClass.isAssignableFrom(AlarmNotificationViewModel.class)) {
             //noinspection unchecked
-            return (T) new AlarmNotificationViewModel(dataManager, schedulerProvider);
+            return (T) new AlarmNotificationViewModel(dataManager, schedulerProvider, alarmScheduler);
         }
         if (modelClass.isAssignableFrom(SimpleViewModel.class)) {
             //noinspection unchecked

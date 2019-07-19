@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.R;
-import com.fearefull.todoreminder.data.model.other.RepeatItem;
+import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 import com.fearefull.todoreminder.databinding.ItemRepeatBinding;
 import com.fearefull.todoreminder.ui.base.BaseViewHolder;
 

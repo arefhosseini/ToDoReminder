@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fearefull.todoreminder.data.model.other.RepeatManagerItem;
+import com.fearefull.todoreminder.data.model.other.item.RepeatManagerItem;
 import com.fearefull.todoreminder.databinding.ItemRepeatManagerBinding;
 import com.fearefull.todoreminder.ui.base.BaseViewHolder;
 

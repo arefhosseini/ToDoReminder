@@ -1,6 +1,5 @@
 package com.fearefull.todoreminder.ui.alarm_manager;
 
-import android.content.DialogInterface;
 import android.net.Uri;
 
 import androidx.databinding.ObservableField;
@@ -9,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
-import com.fearefull.todoreminder.data.model.other.RepeatItem;
+import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;

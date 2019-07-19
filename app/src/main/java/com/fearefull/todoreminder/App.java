@@ -6,7 +6,8 @@ import android.content.BroadcastReceiver;
 
 import com.evernote.android.job.JobManager;
 import com.fearefull.todoreminder.di.component.DaggerAppComponent;
-import com.fearefull.todoreminder.job.MyJobCreator;
+import com.fearefull.todoreminder.schedule.AlarmScheduler;
+import com.fearefull.todoreminder.schedule.AppJobCreator;
 
 import javax.inject.Inject;
 
@@ -21,18 +22,16 @@ public class App extends Application implements HasActivityInjector, HasBroadcas
 
     @Inject
     DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
-
     @Inject
     DispatchingAndroidInjector<BroadcastReceiver> broadcastReceiverInjector;
-
     @Inject
     CalligraphyConfig calligraphyConfig;
-
     @Inject
     JobManager jobManager;
-
     @Inject
-    MyJobCreator myJobCreator;
+    AppJobCreator appJobCreator;
+    @Inject
+    AlarmScheduler alarmScheduler;
 
     @Override
     public DispatchingAndroidInjector<Activity> activityInjector() {
@@ -59,6 +58,8 @@ public class App extends Application implements HasActivityInjector, HasBroadcas
 
         CalligraphyConfig.initDefault(calligraphyConfig);
 
-        jobManager.addJobCreator(myJobCreator);
+        jobManager.addJobCreator(appJobCreator);
+
+        alarmScheduler.schedule();
     }
 }

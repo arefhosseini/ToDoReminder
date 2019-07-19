@@ -1,7 +1,5 @@
 package com.fearefull.todoreminder.data.model.db;
 
-import androidx.room.TypeConverter;
-
 public enum Repeat {
     ONCE(0, "فقط یک بار"),
     HOURLY(1, "ساعتی"),

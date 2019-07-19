@@ -5,7 +5,6 @@ import android.content.Context;
 
 import androidx.room.Room;
 
-import com.evernote.android.job.JobCreator;
 import com.evernote.android.job.JobManager;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.data.AppDataManager;
@@ -17,7 +16,9 @@ import com.fearefull.todoreminder.data.local.prefs.AppPreferencesHelper;
 import com.fearefull.todoreminder.data.local.prefs.PreferencesHelper;
 import com.fearefull.todoreminder.di.DatabaseInfo;
 import com.fearefull.todoreminder.di.PreferenceInfo;
-import com.fearefull.todoreminder.job.MyJobCreator;
+import com.fearefull.todoreminder.schedule.AlarmScheduler;
+import com.fearefull.todoreminder.schedule.AppAlarmScheduler;
+import com.fearefull.todoreminder.schedule.AppJobCreator;
 import com.fearefull.todoreminder.utils.AppConstants;
 import com.fearefull.todoreminder.utils.rx.AppSchedulerProvider;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
@@ -57,8 +58,14 @@ public class AppModule {
 
     @Provides
     @Singleton
-    MyJobCreator provideMyJobCreator() {
-        return new MyJobCreator();
+    AppJobCreator provideMyJobCreator() {
+        return new AppJobCreator();
+    }
+
+    @Provides
+    @Singleton
+    AlarmScheduler provideAlarmScheduler(AppAlarmScheduler appAlarmScheduler) {
+        return appAlarmScheduler;
     }
 
     @Provides
