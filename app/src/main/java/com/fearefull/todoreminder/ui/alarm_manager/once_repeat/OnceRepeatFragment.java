@@ -167,11 +167,21 @@ public class OnceRepeatFragment extends BaseFragment<FragmentOnceRepeatBinding, 
 
     @Override
     public void showError() {
-        Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake_animation);
-        binding.timeIcon.startAnimation(shake);
-        binding.dateIcon.startAnimation(shake);
-        shake.start();
+        shake();
         Toast.makeText(getContext(), R.string.not_updated_time_error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showDuplicate() {
+        shake();
+        Toast.makeText(getContext(), R.string.duplicate_time_error, Toast.LENGTH_SHORT).show();
+    }
+
+    private void shake() {
+        Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake_animation);
+        binding.timeIcon.setAnimation(shake);
+        binding.dateIcon.setAnimation(shake);
+        shake.start();
     }
 
     public interface OnceRepeatCallBack {

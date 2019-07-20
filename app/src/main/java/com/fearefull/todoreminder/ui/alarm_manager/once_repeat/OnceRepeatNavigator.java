@@ -6,4 +6,5 @@ public interface OnceRepeatNavigator {
     void onAddRepeat();
     void send();
     void showError();
+    void showDuplicate();
 }

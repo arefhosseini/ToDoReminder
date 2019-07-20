@@ -1,5 +1,6 @@
 package com.fearefull.todoreminder.data.model.other;
 
+import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
 import com.fearefull.todoreminder.data.model.other.type.RepeatResponseType;
@@ -103,9 +104,11 @@ public class RepeatModel {
         year = -1;
     }
 
-    public RepeatResponseType isValid() {
+    public RepeatResponseType isValid(Alarm alarm) {
         if (repeat == null)
             return RepeatResponseType.NOT_READY;
+        if (checkDuplicate(alarm))
+            return RepeatResponseType.DUPLICATE;
         if (repeat == Repeat.ONCE)
             return isOnceRepeatValid();
         if (repeat == Repeat.HOURLY)
@@ -121,7 +124,7 @@ public class RepeatModel {
         return RepeatResponseType.NOT_READY;
     }
 
-    public RepeatResponseType isOnceRepeatValid() {
+    private RepeatResponseType isOnceRepeatValid() {
         if (repeat == Repeat.ONCE && minute != -1 && hour != -1 && dayMonth != -1 && month != -1 && year != -1) {
             PersianDate currentDate = new PersianDate();
             PersianDate checkDate = new PersianDate();
@@ -157,33 +160,55 @@ public class RepeatModel {
         return RepeatResponseType.NOT_READY;
     }
 
-    public RepeatResponseType isHourlyRepeatValid() {
+    private RepeatResponseType isHourlyRepeatValid() {
         if (repeat == Repeat.HOURLY && minute != -1)
             return RepeatResponseType.TRUE;
         return RepeatResponseType.NOT_READY;
     }
 
-    public RepeatResponseType isDailyRepeatValid() {
+    private RepeatResponseType isDailyRepeatValid() {
         if (repeat == Repeat.DAILY && minute != -1 && hour != -1)
             return RepeatResponseType.TRUE;
         return RepeatResponseType.NOT_READY;
     }
 
-    public RepeatResponseType isWeeklyRepeatValid() {
+    private RepeatResponseType isWeeklyRepeatValid() {
         if (repeat == Repeat.WEEKLY && minute != -1 && hour != -1 && dayWeek != -1)
             return RepeatResponseType.TRUE;
         return RepeatResponseType.NOT_READY;
     }
 
-    public RepeatResponseType isMonthlyRepeatValid() {
+    private RepeatResponseType isMonthlyRepeatValid() {
         if (repeat == Repeat.MONTHLY && minute != -1 && hour != -1 && dayMonth != -1)
             return RepeatResponseType.TRUE;
         return RepeatResponseType.NOT_READY;
     }
 
-    public RepeatResponseType isYearlyRepeatValid() {
+    private RepeatResponseType isYearlyRepeatValid() {
         if (repeat == Repeat.YEARLY && minute != -1 && hour != -1 && dayMonth != -1 && month != -1)
             return RepeatResponseType.TRUE;
         return RepeatResponseType.NOT_READY;
+    }
+
+    private boolean checkDuplicate(Alarm alarm) {
+        for (int index = 0; index < alarm.getRepeatCount(); index++) {
+            if (isSame(alarm.getRepeatModel(index))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isSame(RepeatModel model) {
+        if (model.getRepeat() == Repeat.ONCE) {
+            return isSameByOnce(model);
+        }
+        return false;
+    }
+
+    private boolean isSameByOnce(RepeatModel model) {
+        return this.minute == model.getMinute() && this.hour == model.getHour() &&
+                this.dayMonth == model.dayMonth && this.month == model.getMonth() &&
+                this.year == model.getYear();
     }
 }

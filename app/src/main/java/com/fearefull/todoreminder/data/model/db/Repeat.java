@@ -1,6 +1,8 @@
 package com.fearefull.todoreminder.data.model.db;
 
-public enum Repeat {
+import java.io.Serializable;
+
+public enum Repeat implements Serializable {
     ONCE(0, "فقط یک بار"),
     HOURLY(1, "ساعتی"),
     DAILY(2, "روزانه"),

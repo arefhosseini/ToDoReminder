@@ -57,7 +57,7 @@ public class OnceRepeatViewModel extends BaseViewModel<OnceRepeatNavigator> {
     void checkForSend() {
         repeatModel.setRepeat(Repeat.ONCE);
         repeatModel.setYear(alarm.getDefaultYear());
-        RepeatResponseType response = repeatModel.isValid();
+        RepeatResponseType response = repeatModel.isValid(alarm);
         if (response == RepeatResponseType.TRUE) {
             alarm.addRepeatModel(repeatModel);
             repeatModel.reset();
@@ -66,6 +66,8 @@ public class OnceRepeatViewModel extends BaseViewModel<OnceRepeatNavigator> {
         else if (response == RepeatResponseType.FALSE){
             getNavigator().showError();
         }
+        else if (response == RepeatResponseType.DUPLICATE)
+            getNavigator().showDuplicate();
     }
 
     public MutableLiveData<Integer> getCurrentTabPager() {

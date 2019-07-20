@@ -1,6 +1,6 @@
 package com.fearefull.todoreminder.ui.alarm_manager;
 
-interface AlarmManagerNavigator extends AlarmManagerCallBack{
+interface AlarmManagerNavigator {
     void goBack();
     void save();
     void openCustomRepeatPickerFragment();
@@ -8,4 +8,5 @@ interface AlarmManagerNavigator extends AlarmManagerCallBack{
     void shakeBell();
     void createWithShakeBell();
     void clearBell();
+    void onShowRepeatManagerDialog();
 }

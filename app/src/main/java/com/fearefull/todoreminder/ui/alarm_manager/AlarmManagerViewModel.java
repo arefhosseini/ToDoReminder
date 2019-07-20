@@ -29,6 +29,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     private final ObservableField<String> repeatCounter = new ObservableField<>();
     private final MutableLiveData<Integer> currentTabPager;
     private final MutableLiveData<Integer> pageLimitPager;
+    private boolean shouldUpdateAlarm = false;
 
     public AlarmManagerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -52,15 +53,28 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     public void onSaveClick() {
-        getCompositeDisposable().add(getDataManager()
-                .insertAlarm(alarm)
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(result -> {
-                    if (result)
-                        getNavigator().save();
-                }, Timber::e)
-        );
+        if (shouldUpdateAlarm) {
+            getCompositeDisposable().add(getDataManager()
+                    .updateAlarm(alarm)
+                    .subscribeOn(getSchedulerProvider().io())
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(result -> {
+                        if (result)
+                            getNavigator().save();
+                    }, Timber::e)
+            );
+        }
+        else {
+            getCompositeDisposable().add(getDataManager()
+                    .insertAlarm(alarm)
+                    .subscribeOn(getSchedulerProvider().io())
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(result -> {
+                        if (result)
+                            getNavigator().save();
+                    }, Timber::e)
+            );
+        }
     }
 
     public void onNoteTextChange(CharSequence s) {
@@ -77,6 +91,8 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     void initAlarm() {
+        if (alarm.getRepeatCount() > 0)
+            shouldUpdateAlarm = true;
         setIsLoading(true);
         fetchRepeatData();
         updateAlarm();

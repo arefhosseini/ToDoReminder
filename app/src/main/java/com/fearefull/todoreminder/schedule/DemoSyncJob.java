@@ -1,5 +1,7 @@
 package com.fearefull.todoreminder.schedule;
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
 import com.evernote.android.job.Job;
@@ -19,8 +21,7 @@ public class DemoSyncJob extends Job {
     @NonNull
     protected Result onRunJob(@NotNull Params params) {
         Timber.i(params.getExtras().getString("key", "lol"));
-        getContext().startActivity(AlarmNotificationActivity.newIntent(getContext()));
-
+        getContext().getApplicationContext().startActivity(AlarmNotificationActivity.newIntent(getContext().getApplicationContext()));
         return Result.SUCCESS;
     }
 

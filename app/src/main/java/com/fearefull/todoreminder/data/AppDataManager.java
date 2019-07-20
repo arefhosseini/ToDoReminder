@@ -48,6 +48,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Observable<Boolean> updateAlarm(Alarm alarm) {
+        return dbHelper.updateAlarm(alarm);
+    }
+
+    @Override
     public Observable<List<Alarm>> getAllAlarms() {
         return dbHelper.getAllAlarms();
     }

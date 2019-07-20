@@ -32,6 +32,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     ViewModelProviderFactory factory;
     private FragmentHomeBinding binding;
     private HomeViewModel viewModel;
+    private HomeCallBack callBack;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -70,6 +71,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         setUp();
     }
 
+    public void setCallBack(HomeCallBack callBack) {
+        this.callBack = callBack;
+    }
+
     private void setUp() {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.alarmRecyclerView.setLayoutManager(layoutManager);
@@ -79,12 +84,16 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     @Override
     public void onAlarmClick(Alarm alarm) {
-
+        callBack.onOpenAlarmManager(alarm);
     }
 
     public boolean reloadAlarmData() {
         alarmAdapter.clearItems();
         viewModel.reloadAlarmData();
         return true;
+    }
+
+    public interface HomeCallBack {
+        void onOpenAlarmManager(Alarm alarm);
     }
 }

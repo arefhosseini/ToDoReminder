@@ -16,13 +16,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.evernote.android.job.util.support.PersistableBundleCompat;
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.databinding.ActivityMainBinding;
 import com.fearefull.todoreminder.databinding.NavigationHeaderMainBinding;
-import com.fearefull.todoreminder.schedule.DemoSyncJob;
+import com.fearefull.todoreminder.schedule.ScheduleService;
 import com.fearefull.todoreminder.ui.about.AboutFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerFragment;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
@@ -31,8 +30,6 @@ import com.fearefull.todoreminder.ui.home.HomeFragment;
 import com.fearefull.todoreminder.utils.CommonUtils;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -40,10 +37,10 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
-import timber.log.Timber;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel>
-        implements MainNavigator, HasSupportFragmentInjector, AlarmManagerFragment.AlarmManagerCallBack {
+        implements MainNavigator, HasSupportFragmentInjector, AlarmManagerFragment.AlarmManagerCallBack,
+        HomeFragment.HomeCallBack {
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
@@ -90,6 +87,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
         viewModel.setNavigator(this);
+        startService(new Intent(this, ScheduleService.class));
         setUp();
     }
 
@@ -102,10 +100,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     @Override
-    public void openAlarmManager() {
+    public void openAlarmManager(Alarm alarm) {
         lockDrawer();
 
-        AlarmManagerFragment fragment = AlarmManagerFragment.newInstance(new Alarm("Alarm"));
+        AlarmManagerFragment fragment = AlarmManagerFragment.newInstance(alarm);
         fragment.setCallBack(this);
         getSupportFragmentManager()
                 .beginTransaction()
@@ -125,7 +123,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 if (drawer.isDrawerOpen(Gravity.RIGHT))
                     lockDrawer();
                 else
-                    super.onBackPressed();
+                    finish();
             }
             else
                 onFragmentDetached(AlarmManagerFragment.TAG);
@@ -241,6 +239,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private void showHomeFragment() {
         lockDrawer();
         HomeFragment homeFragment = HomeFragment.newInstance();
+        homeFragment.setCallBack(this);
         callerHome = homeFragment;
         getSupportFragmentManager()
                 .beginTransaction()
@@ -252,5 +251,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     public boolean onReloadAlarms() {
         return callerHome.reloadAlarmData();
+    }
+
+    @Override
+    public void onOpenAlarmManager(Alarm alarm) {
+        openAlarmManager(alarm);
     }
 }

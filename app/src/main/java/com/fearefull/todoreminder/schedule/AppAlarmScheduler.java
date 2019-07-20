@@ -76,6 +76,7 @@ public class AppAlarmScheduler implements AlarmScheduler {
             extras.putString("key", "Hello world");
             int scheduleId = DemoSyncJob.scheduleJob(closestTime, extras);
             dataManager.setSchedule(scheduleId);
+            Timber.e("Starting time: %s", closestTime);
         }
     }
 

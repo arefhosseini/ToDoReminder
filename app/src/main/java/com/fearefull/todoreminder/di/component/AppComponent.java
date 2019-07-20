@@ -5,6 +5,7 @@ import android.app.Application;
 import com.fearefull.todoreminder.App;
 import com.fearefull.todoreminder.di.builder.ActivityBuilder;
 import com.fearefull.todoreminder.di.builder.ReceiverBuilder;
+import com.fearefull.todoreminder.di.builder.ServiceBuilder;
 import com.fearefull.todoreminder.di.module.AppModule;
 
 import javax.inject.Singleton;
@@ -18,7 +19,8 @@ import dagger.android.AndroidInjectionModule;
  */
 @Singleton
 @Component(modules = {
-        AndroidInjectionModule.class, AppModule.class, ActivityBuilder.class, ReceiverBuilder.class
+        AndroidInjectionModule.class, AppModule.class, ActivityBuilder.class,
+        ReceiverBuilder.class, ServiceBuilder.class
 })
 public interface AppComponent {
     void inject(App app);

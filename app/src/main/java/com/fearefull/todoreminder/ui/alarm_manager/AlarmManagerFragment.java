@@ -191,7 +191,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     public void createWithShakeBell() {
         Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake_animation);
         binding.repeatManagerIcon.setImageResource(R.drawable.selected_bell);
-        binding.repeatManagerIcon.setAnimation(shake);
+        binding.repeatManagerIcon.startAnimation(shake);
     }
 
     @Override

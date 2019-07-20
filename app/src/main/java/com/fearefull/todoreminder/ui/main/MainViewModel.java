@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import androidx.databinding.ObservableField;
 
 import com.fearefull.todoreminder.data.DataManager;
+import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
@@ -28,6 +29,6 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
     }
 
     public void onOpenAlarmManager() {
-        getNavigator().openAlarmManager();
+        getNavigator().openAlarmManager(new Alarm("Alarm"));
     }
 }

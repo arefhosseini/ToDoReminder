@@ -75,7 +75,7 @@ public class HalfHourTimePickerViewModel extends BaseViewModel<HalfHourTimePicke
 
     public void onMinutePickerValueChange(int oldVal, int newVal) {
         minute = Alarm.indexToMinute(newVal);
-        checkChangeHour(Alarm.indexToMinute(oldVal), minute);
+        //checkChangeHour(Alarm.indexToMinute(oldVal), minute);
         minutePickerDefaultIndex.setValue(newVal);
     }
 

@@ -9,6 +9,7 @@ import io.reactivex.Observable;
 
 public interface DbHelper {
     Observable<Boolean> insertAlarm(final Alarm alarm);
+    Observable<Boolean> updateAlarm(final Alarm alarm);
     Observable<List<Alarm>> getAllAlarms();
     Observable<List<Alarm>> getAllEnabledAlarms();
     Observable<Boolean> removeAllAlarms();

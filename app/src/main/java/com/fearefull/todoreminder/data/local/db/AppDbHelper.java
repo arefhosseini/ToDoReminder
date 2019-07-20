@@ -29,6 +29,14 @@ public class AppDbHelper implements DbHelper{
     }
 
     @Override
+    public Observable<Boolean> updateAlarm(Alarm alarm) {
+        return Observable.fromCallable(() -> {
+            appDatabase.alarmDao().update(alarm);
+            return true;
+        });
+    }
+
+    @Override
     public Observable<List<Alarm>> getAllAlarms() {
         return Observable.fromCallable(() -> appDatabase.alarmDao().getAllAlarms());
     }
