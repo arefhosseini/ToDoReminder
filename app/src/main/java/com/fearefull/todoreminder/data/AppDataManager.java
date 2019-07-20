@@ -6,6 +6,7 @@ import android.content.Context;
 import com.fearefull.todoreminder.data.local.db.DbHelper;
 import com.fearefull.todoreminder.data.local.prefs.PreferencesHelper;
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.data.model.db.Snooze;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -40,6 +41,16 @@ public class AppDataManager implements DataManager {
     @Override
     public void setSchedule(int schedule) {
         preferencesHelper.setSchedule(schedule);
+    }
+
+    @Override
+    public List<Snooze> getSnoozeList() {
+        return preferencesHelper.getSnoozeList();
+    }
+
+    @Override
+    public void setSnoozeList(List<Snooze> snoozes) {
+        preferencesHelper.setSnoozeList(snoozes);
     }
 
     @Override
