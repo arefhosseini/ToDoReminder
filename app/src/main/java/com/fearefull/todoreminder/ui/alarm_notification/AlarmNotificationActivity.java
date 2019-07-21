@@ -16,9 +16,13 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
+import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.data.model.db.Snooze;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.databinding.ActivityAlarmNotificationBinding;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
+import com.fearefull.todoreminder.utils.CommonUtils;
+import com.google.gson.Gson;
 
 import javax.inject.Inject;
 
@@ -29,14 +33,16 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
 
     @Inject
     ViewModelProviderFactory factory;
+    @Inject
+    Gson gson;
     private AlarmNotificationViewModel viewModel;
-    private ActivityAlarmNotificationBinding binding;
     private Ringtone ringtone;
 
-    public static Intent newIntent(Context context) {
+    public static Intent newIntent(Context context, String snoozeJson) {
         Intent intent = new Intent(context, AlarmNotificationActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_FROM_BACKGROUND);
+        intent.putExtra(Snooze.SNOOZE_KEY, snoozeJson);
         return intent;
     }
 
@@ -60,8 +66,7 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel.setNavigator(this);
-        binding = getViewDataBinding();
-        Timber.e("triggerTime %d", System.currentTimeMillis());
+        viewModel.init(Snooze.jsonToSnooze(getIntent().getStringExtra(Snooze.SNOOZE_KEY)));
         setUp();
     }
 
@@ -89,16 +94,23 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
             ringtone.setStreamType(AudioManager.STREAM_ALARM);
         }
         ringtone.play();
-
-        Handler handler = new Handler();
-        final Runnable runnable = this::finish;
-
-        handler.postDelayed(runnable, 1000 * 10);
     }
 
     @Override
     protected void onDestroy() {
-        ringtone.stop();
         super.onDestroy();
+    }
+
+    @Override
+    public void destroy() {
+        ringtone.stop();
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        viewModel.cancelCountdown();
+        viewModel.goOff();
+        super.onBackPressed();
     }
 }

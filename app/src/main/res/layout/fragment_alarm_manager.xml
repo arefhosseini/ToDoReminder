@@ -373,7 +373,6 @@
                                                 android:focusable="true"
                                                 android:onClick="@{() -> viewModel.onRepeatManagerClick()}"
                                                 android:translationZ="12dp"
-                                                android:layout_marginBottom="12dp"
                                                 android:background="@drawable/quarter_top_left_circle_primary_bg">
 
                                                 <ImageView

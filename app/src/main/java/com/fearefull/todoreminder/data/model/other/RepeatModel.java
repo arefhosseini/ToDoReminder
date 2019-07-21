@@ -5,6 +5,8 @@ import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
 import com.fearefull.todoreminder.data.model.other.type.RepeatResponseType;
 
+import timber.log.Timber;
+
 public class RepeatModel {
     private Repeat repeat;
     private int minute;

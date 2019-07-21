@@ -7,6 +7,8 @@ import java.util.List;
 public interface PreferencesHelper {
     int getSchedule();
     void setSchedule(int schedule);
-    List<Snooze> getSnoozeList();
-    void setSnoozeList(List<Snooze> snoozes);
+    List<Snooze> getAllSnoozes();
+    void addSnooze(Snooze snooze);
+    void removeSnooze(Snooze snooze);
+    Snooze getSnoozeByAlarmId(long alarmId);
 }

@@ -10,6 +10,9 @@ public final class AppConstants {
     public static final String ALARM_KEY = "alarm_key";
     public static final String DEFAULT_NOTE = "یادداشت شما";
     public static final int RINGTONE_PICKER_CODE = 101;
+    public static final long COUTNT_DOWN_ALARM_TIMER = 1000 * 20;
+    public static final long SNOOZE_TIMER = 1000 * 20;
+
 
     private AppConstants() {
         // This utility class is not publicly instantiable

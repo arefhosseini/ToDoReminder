@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,9 +22,9 @@ public class AppPreferencesHelper implements PreferencesHelper {
     private final Gson gson;
 
     @Inject
-    AppPreferencesHelper(Context context, @PreferenceInfo String prefFileName, Gson gson) {
+    AppPreferencesHelper(Context context, @PreferenceInfo String prefFileName) {
         prefs = context.getSharedPreferences(prefFileName, Context.MODE_PRIVATE);
-        this.gson = gson;
+        gson = new Gson();
     }
 
     @Override
@@ -37,14 +38,59 @@ public class AppPreferencesHelper implements PreferencesHelper {
     }
 
     @Override
-    public List<Snooze> getSnoozeList() {
+    public List<Snooze> getAllSnoozes() {
         Type type = new TypeToken<List<Snooze>>(){}.getType();
-        return gson.fromJson(prefs.getString(PREF_KEY_SNOOZE, ""), type);
+        List<Snooze> snoozes = gson.fromJson(prefs.getString(PREF_KEY_SNOOZE, null), type);
+        if (snoozes == null)
+            return new ArrayList<>();
+        return snoozes;
+    }
+
+    private void setSnoozeList(List<Snooze> snoozes) {
+        String json = gson.toJson(snoozes);
+        prefs.edit().putString(PREF_KEY_SNOOZE, json).apply();
     }
 
     @Override
-    public void setSnoozeList(List<Snooze> snoozes) {
-        String json = gson.toJson(snoozes);
-        prefs.edit().putString(PREF_KEY_SNOOZE, json).apply();
+    public void addSnooze(Snooze snooze) {
+        List<Snooze> snoozes = getAllSnoozes();
+        boolean isFound = false;
+        for (Snooze s: snoozes) {
+            if (snooze.isSame(s)) {
+                s.set(snooze);
+                isFound = true;
+                break;
+            }
+        }
+        if (!isFound) {
+            snoozes.add(snooze);
+        }
+        setSnoozeList(snoozes);
+    }
+
+    @Override
+    public void removeSnooze(Snooze snooze) {
+        List<Snooze> snoozes = getAllSnoozes();
+        snoozes.remove(snooze);
+        Snooze selectedSnooze = null;
+        for (Snooze s: snoozes) {
+            if (snooze.isSame(s)) {
+                s.set(snooze);
+                selectedSnooze = s;
+                break;
+            }
+        }
+        if (selectedSnooze != null)
+            snoozes.remove(selectedSnooze);
+        setSnoozeList(snoozes);
+    }
+
+    @Override
+    public Snooze getSnoozeByAlarmId(long alarmId) {
+        for (Snooze snooze: getAllSnoozes()) {
+            if (snooze.getAlarmId() == alarmId)
+                return snooze;
+        }
+        return new Snooze();
     }
 }

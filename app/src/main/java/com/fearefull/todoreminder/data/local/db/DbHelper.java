@@ -12,5 +12,6 @@ public interface DbHelper {
     Observable<Boolean> updateAlarm(final Alarm alarm);
     Observable<List<Alarm>> getAllAlarms();
     Observable<List<Alarm>> getAllEnabledAlarms();
+    Observable<Alarm> getAlarmById(long id);
     Observable<Boolean> removeAllAlarms();
 }

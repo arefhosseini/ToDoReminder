@@ -47,6 +47,11 @@ public class AppDbHelper implements DbHelper{
     }
 
     @Override
+    public Observable<Alarm> getAlarmById(long id) {
+        return Observable.fromCallable(() -> appDatabase.alarmDao().getAlarmById(id));
+    }
+
+    @Override
     public Observable<Boolean> removeAllAlarms() {
         return Observable.fromCallable(() -> {
            appDatabase.alarmDao().resetTable();

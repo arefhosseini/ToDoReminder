@@ -7,10 +7,13 @@ import com.evernote.android.job.util.support.PersistableBundleCompat;
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
+import com.fearefull.todoreminder.data.model.db.Snooze;
 import com.fearefull.todoreminder.data.model.other.RepeatModel;
 import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
 import com.fearefull.todoreminder.data.model.other.persian_date.PersianDateFormat;
+import com.fearefull.todoreminder.utils.AppConstants;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -28,7 +31,8 @@ public class AppAlarmScheduler implements AlarmScheduler {
     private final CompositeDisposable compositeDisposable;
 
     @Inject
-    public AppAlarmScheduler(Context context, DataManager dataManager, SchedulerProvider schedulerProvider) {
+    public AppAlarmScheduler(Context context, DataManager dataManager,
+                             SchedulerProvider schedulerProvider) {
         this.context = context;
         this.dataManager = dataManager;
         this.schedulerProvider = schedulerProvider;
@@ -43,19 +47,12 @@ public class AppAlarmScheduler implements AlarmScheduler {
                 .subscribeOn(schedulerProvider.io())
                 .subscribe(this::scheduleClosestAlarm, Timber::e)
         );
-
-        /*Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 22);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        long triggerTime = calendar.getTimeInMillis() - System.currentTimeMillis();
-        Timber.i("triggerTime %d", triggerTime);*/
     }
 
     private void scheduleClosestAlarm(List<Alarm> alarms) {
         Alarm closestAlarm = null;
+        RepeatModel closestRepeatModel;
+        Snooze snooze = new Snooze();
         long closestTime = Long.MAX_VALUE;
         long currentTime = System.currentTimeMillis();
         long checkTime = 0;
@@ -66,14 +63,33 @@ public class AppAlarmScheduler implements AlarmScheduler {
                     checkTime = scheduleOnceRepeat(alarm.getRepeatModel(index), currentTime);
                     if (checkTime > 1000 && checkTime < closestTime) {
                         closestTime = checkTime;
+                        closestRepeatModel = alarm.getRepeatModel(index);
                         closestAlarm = alarm;
+                        snooze.setAlarmId(closestAlarm.getId());
+                        snooze.setModel(closestRepeatModel);
                     }
             }
         }
 
-        if (closestAlarm != null) {
+        List<Snooze> snoozeList = dataManager.getAllSnoozes();
+        if (snoozeList.size() > 0) {
+            for (Snooze s: snoozeList) {
+                checkTime = AppConstants.SNOOZE_TIMER;
+                if (checkTime < closestTime) {
+                    closestTime = checkTime;
+                    snooze = s;
+                }
+            }
+        }
+        else {
+            if (closestAlarm != null)
+                dataManager.addSnooze(snooze);
+        }
+
+        if (!snooze.isNull()) {
             PersistableBundleCompat extras = new PersistableBundleCompat();
-            extras.putString("key", "Hello world");
+
+            extras.putString(Snooze.SNOOZE_KEY, Snooze.toJson(snooze));
             int scheduleId = DemoSyncJob.scheduleJob(closestTime, extras);
             dataManager.setSchedule(scheduleId);
             Timber.e("Starting time: %s", closestTime);
@@ -90,9 +106,7 @@ public class AppAlarmScheduler implements AlarmScheduler {
         checkDate.setSecond(0);
         PersianDateFormat format = new PersianDateFormat();
         Timber.i(format.format(checkDate));
-        long triggerTime = checkDate.getTime() - currentTime;
-        Timber.i("triggerTime %d", triggerTime);
-        return triggerTime;
+        return checkDate.getTime() - currentTime;
     }
 
     private void cancelSchedule() {

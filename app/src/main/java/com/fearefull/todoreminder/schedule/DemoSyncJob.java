@@ -1,12 +1,11 @@
 package com.fearefull.todoreminder.schedule;
 
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobRequest;
 import com.evernote.android.job.util.support.PersistableBundleCompat;
+import com.fearefull.todoreminder.data.model.db.Snooze;
 import com.fearefull.todoreminder.ui.alarm_notification.AlarmNotificationActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -20,8 +19,9 @@ public class DemoSyncJob extends Job {
     @Override
     @NonNull
     protected Result onRunJob(@NotNull Params params) {
-        Timber.i(params.getExtras().getString("key", "lol"));
-        getContext().getApplicationContext().startActivity(AlarmNotificationActivity.newIntent(getContext().getApplicationContext()));
+        Timber.e("SNOOZE_STRING %s", params.getExtras().getString(Snooze.SNOOZE_KEY, ""));
+        getContext().startActivity(AlarmNotificationActivity.newIntent(getContext(),
+                params.getExtras().getString(Snooze.SNOOZE_KEY, "")));
         return Result.SUCCESS;
     }
 

@@ -44,13 +44,18 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public List<Snooze> getSnoozeList() {
-        return preferencesHelper.getSnoozeList();
+    public List<Snooze> getAllSnoozes() {
+        return preferencesHelper.getAllSnoozes();
     }
 
     @Override
-    public void setSnoozeList(List<Snooze> snoozes) {
-        preferencesHelper.setSnoozeList(snoozes);
+    public void addSnooze(Snooze snooze) {
+        preferencesHelper.addSnooze(snooze);
+    }
+
+    @Override
+    public void removeSnooze(Snooze snooze) {
+        preferencesHelper.removeSnooze(snooze);
     }
 
     @Override
@@ -74,7 +79,22 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Observable<Alarm> getAlarmById(long id) {
+        return dbHelper.getAlarmById(id);
+    }
+
+    @Override
     public Observable<Boolean> removeAllAlarms() {
         return dbHelper.removeAllAlarms();
+    }
+
+    @Override
+    public Snooze getSnoozeByAlarmId(long alarmId) {
+        return preferencesHelper.getSnoozeByAlarmId(alarmId);
+    }
+
+    @Override
+    public Snooze getSnoozeByAlarm(Alarm alarm) {
+        return getSnoozeByAlarmId(alarm.getId());
     }
 }
