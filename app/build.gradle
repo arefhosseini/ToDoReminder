@@ -74,6 +74,8 @@ dependencies {
     implementation "com.evernote:android-job:$rootProject.androidJobVersion"
     implementation "androidx.work:work-runtime:$rootProject.workManagerVersion"
 
+    implementation "com.robertlevonyan.view:CustomFloatingActionButton:$rootProject.costomFABVersion"
+
     // debug database
     debugImplementation "com.amitshekhar.android:debug-db:$rootProject.debugDBVersion"
 

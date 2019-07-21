@@ -65,6 +65,9 @@ ext {
     androidJobVersion = '1.3.0-rc1'
     workManagerVersion = '2.1.0'
 
+    // custom FAB
+    costomFABVersion = '2.1.0'
+
     // debug database
     debugDBVersion = '1.0.6'
 

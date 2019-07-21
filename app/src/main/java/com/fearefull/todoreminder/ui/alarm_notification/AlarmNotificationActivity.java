@@ -11,6 +11,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -33,8 +35,7 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
 
     @Inject
     ViewModelProviderFactory factory;
-    @Inject
-    Gson gson;
+    private ActivityAlarmNotificationBinding binding;
     private AlarmNotificationViewModel viewModel;
     private Ringtone ringtone;
 
@@ -66,6 +67,7 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel.setNavigator(this);
+        binding = getViewDataBinding();
         viewModel.init(Snooze.jsonToSnooze(getIntent().getStringExtra(Snooze.SNOOZE_KEY)));
         setUp();
     }
@@ -94,6 +96,9 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
             ringtone.setStreamType(AudioManager.STREAM_ALARM);
         }
         ringtone.play();
+
+        Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake_animation_infinite);
+        binding.bellIcon.startAnimation(shake);
     }
 
     @Override

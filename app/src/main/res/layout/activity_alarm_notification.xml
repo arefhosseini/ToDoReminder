@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.splash.SplashActivity">
 
@@ -11,19 +12,184 @@
 
     </data>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primaryColorLightTheme"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:background="@color/primaryColorLightTheme">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/verticalLine1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/verticalLine2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.35" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/verticalLine3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.65" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/verticalLine4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontalLine1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontalLine2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.35" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontalLine3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.65" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontalLine4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.925" />
 
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_centerInParent="true"
-            android:src="@mipmap/ic_launcher" />
-    </RelativeLayout>
+            android:id="@+id/bellIcon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintStart_toStartOf="@+id/verticalLine2"
+            app:layout_constraintEnd_toStartOf="@+id/verticalLine3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/selected_bell" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/horizontalLine2">
+
+            <TextView
+                style="@style/TextStyle.Title.Big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/default_half_layout_padding"
+                android:paddingRight="@dimen/default_half_layout_padding"
+                android:text="تیر"
+                android:textColor="@color/primaryTextColorDarkTheme" />
+            <TextView
+                style="@style/TextStyle.Title.Big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/default_half_layout_padding"
+                android:paddingRight="@dimen/default_half_layout_padding"
+                android:text="30"
+                android:textColor="@color/primaryTextColorDarkTheme" />
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="16dp" />
+            <TextView
+                style="@style/TextStyle.Title.Big2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/default_half_layout_padding"
+                android:paddingRight="@dimen/default_half_layout_padding"
+                android:text="20"
+                android:textColor="@color/primaryTextColorDarkTheme" />
+            <TextView
+                style="@style/TextStyle.Title.Big2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
+                android:textColor="@color/primaryTextColorDarkTheme" />
+            <TextView
+                style="@style/TextStyle.Title.Big2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/default_half_layout_padding"
+                android:paddingRight="@dimen/default_half_layout_padding"
+                android:text="51"
+                android:textColor="@color/primaryTextColorDarkTheme" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/TextStyle.Title.Big"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="title"
+            android:textColor="@color/primaryTextColorDarkTheme"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/horizontalLine3" />
+
+        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?actionBarItemBackground"
+            android:onClick="@{() -> viewModel.onConfirmClick()}"
+            app:fabColor="@color/greenDarkColor"
+            app:fabType="circle"
+            app:layout_constraintBottom_toTopOf="@+id/horizontalLine4"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintEnd_toStartOf="@+id/verticalLine2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/verticalLine1" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_check_black_24dp"
+                android:padding="8dp"
+                android:tint="@color/whiteColor"/>
+        </com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout>
+
+        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?actionBarItemBackground"
+            android:onClick="@{() -> viewModel.onDismissClick()}"
+            app:fabColor="@color/redDark2Color"
+            app:fabType="circle"
+            app:layout_constraintBottom_toTopOf="@+id/horizontalLine4"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintEnd_toStartOf="@+id/verticalLine4"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/verticalLine3" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_close_black_24dp"
+                android:padding="8dp"
+                android:tint="@color/whiteColor"/>
+        </com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

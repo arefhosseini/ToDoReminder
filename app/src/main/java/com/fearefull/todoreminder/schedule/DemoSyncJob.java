@@ -10,8 +10,6 @@ import com.fearefull.todoreminder.ui.alarm_notification.AlarmNotificationActivit
 
 import org.jetbrains.annotations.NotNull;
 
-import timber.log.Timber;
-
 public class DemoSyncJob extends Job {
 
     public static final String TAG = "job_tag";
@@ -19,7 +17,6 @@ public class DemoSyncJob extends Job {
     @Override
     @NonNull
     protected Result onRunJob(@NotNull Params params) {
-        Timber.e("SNOOZE_STRING %s", params.getExtras().getString(Snooze.SNOOZE_KEY, ""));
         getContext().startActivity(AlarmNotificationActivity.newIntent(getContext(),
                 params.getExtras().getString(Snooze.SNOOZE_KEY, "")));
         return Result.SUCCESS;

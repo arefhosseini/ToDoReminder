@@ -30,10 +30,6 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
         return alarm;
     }
 
-    public Snooze getSnooze() {
-        return snooze;
-    }
-
     void init(Snooze snooze) {
         this.snooze = snooze;
         getCompositeDisposable().add(getDataManager()
@@ -44,6 +40,7 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
                 alarm -> this.alarm = alarm,
                 throwable -> {})
         );
+
 
         setCountdown();
         snooze.log();
@@ -69,5 +66,15 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
         getNavigator().destroy();
     }
 
+    public void onDismissClick() {
+        cancelCountdown();
+        goOff();
+    }
 
+    public void onConfirmClick() {
+        cancelCountdown();
+        getDataManager().removeSnooze(snooze);
+        alarmScheduler.schedule();
+        getNavigator().destroy();
+    }
 }
