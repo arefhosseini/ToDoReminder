@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/default_half_layout_padding"
                 android:paddingRight="@dimen/default_half_layout_padding"
-                android:text="تیر"
+                android:text="@{viewModel.monthString}"
                 android:textColor="@color/primaryTextColorDarkTheme" />
             <TextView
                 style="@style/TextStyle.Title.Big"
@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/default_half_layout_padding"
                 android:paddingRight="@dimen/default_half_layout_padding"
-                android:text="30"
+                android:text="@{viewModel.dayString}"
                 android:textColor="@color/primaryTextColorDarkTheme" />
             <Space
                 android:layout_width="16dp"
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/default_half_layout_padding"
                 android:paddingRight="@dimen/default_half_layout_padding"
-                android:text="20"
+                android:text="@{viewModel.hourString}"
                 android:textColor="@color/primaryTextColorDarkTheme" />
             <TextView
                 style="@style/TextStyle.Title.Big2"
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/default_half_layout_padding"
                 android:paddingRight="@dimen/default_half_layout_padding"
-                android:text="51"
+                android:text="@{viewModel.minuteString}"
                 android:textColor="@color/primaryTextColorDarkTheme" />
         </LinearLayout>
 

@@ -105,6 +105,21 @@ public class Alarm implements Serializable {
     @Ignore
     private int defaultYear;
 
+    @Ignore
+    private int nowMinute;
+
+    @Ignore
+    private int nowHour;
+
+    @Ignore
+    private int nowDay;
+
+    @Ignore
+    private int nowMonth;
+
+    @Ignore
+    private int nowYear;
+
     /**
      * Control {@link #id}
      */
@@ -507,6 +522,25 @@ public class Alarm implements Serializable {
         return defaultYear;
     }
 
+    public int getNowMinute() {
+        return nowMinute;
+    }
+
+    public int getNowHour() {
+        return nowHour;
+    }
+
+    public int getNowDay() {
+        return nowDay;
+    }
+
+    public int getNowMonth() {
+        return nowMonth;
+    }
+
+    public int getNowYear() {
+        return nowYear;
+    }
 
     public Alarm(@NotNull String title) {
         this.isEnable = true;
@@ -525,6 +559,7 @@ public class Alarm implements Serializable {
         years = new ArrayList<>();
 
         setDefaultValues();
+        setNowTime();
     }
 
 
@@ -590,6 +625,16 @@ public class Alarm implements Serializable {
 
         if (defaultMonth == 12 && defaultDayMonth == 30)
             defaultDayMonth = 29;
+    }
+
+    @Ignore
+    public void setNowTime() {
+        PersianDate persianDate = new PersianDate();
+        nowMinute = persianDate.getMinute();
+        nowHour = persianDate.getHour();
+        nowDay = persianDate.getShDay();
+        nowMonth = persianDate.getShMonth();
+        nowYear = persianDate.getShYear();
     }
 
     @Ignore

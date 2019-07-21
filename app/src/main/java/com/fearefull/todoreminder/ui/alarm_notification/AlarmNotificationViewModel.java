@@ -2,9 +2,13 @@ package com.fearefull.todoreminder.ui.alarm_notification;
 
 import android.os.Handler;
 
+import androidx.databinding.ObservableField;
+
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Snooze;
+import com.fearefull.todoreminder.data.model.other.type.DayMonthType;
+import com.fearefull.todoreminder.data.model.other.type.MonthType;
 import com.fearefull.todoreminder.data.model.other.type.SnoozeType;
 import com.fearefull.todoreminder.schedule.AlarmScheduler;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
@@ -18,16 +22,20 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
     private final Runnable runnable;
     private final Handler handler;
 
+    private final ObservableField<String> minuteString;
+    private final ObservableField<String> hourString;
+    private final ObservableField<String> dayString;
+    private final ObservableField<String> monthString;
+
     public AlarmNotificationViewModel(DataManager dataManager, SchedulerProvider schedulerProvider, AlarmScheduler alarmScheduler) {
         super(dataManager, schedulerProvider);
         this.alarmScheduler = alarmScheduler;
         runnable = this::goOff;
         handler = new Handler();
-    }
-
-
-    Alarm getAlarm() {
-        return alarm;
+        minuteString = new ObservableField<>();
+        hourString = new ObservableField<>();
+        dayString = new ObservableField<>();
+        monthString = new ObservableField<>();
     }
 
     void init(Snooze snooze) {
@@ -37,10 +45,20 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
         .subscribeOn(getSchedulerProvider().io())
         .observeOn(getSchedulerProvider().ui())
         .subscribe(
-                alarm -> this.alarm = alarm,
+                alarm -> {
+                    this.alarm = alarm;
+                    setTime();
+                },
                 throwable -> {})
         );
+    }
 
+    private void setTime() {
+        this.alarm.setNowTime();
+        minuteString.set(String.valueOf(alarm.getNowMinute()));
+        hourString.set(String.valueOf(alarm.getNowHour()));
+        dayString.set(String.valueOf(DayMonthType.getDayMonthTypeByValue(alarm.getNowDay()).getValue()));
+        monthString.set(MonthType.getMonthType(alarm.getNowMonth()).getText());
 
         setCountdown();
         snooze.log();
@@ -76,5 +94,21 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
         getDataManager().removeSnooze(snooze);
         alarmScheduler.schedule();
         getNavigator().destroy();
+    }
+
+    public ObservableField<String> getMinuteString() {
+        return minuteString;
+    }
+
+    public ObservableField<String> getHourString() {
+        return hourString;
+    }
+
+    public ObservableField<String> getDayString() {
+        return dayString;
+    }
+
+    public ObservableField<String> getMonthString() {
+        return monthString;
     }
 }
