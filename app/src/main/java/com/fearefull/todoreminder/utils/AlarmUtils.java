@@ -189,12 +189,6 @@ public final class AlarmUtils {
         }
         else
             list.add(new RepeatItem(Repeat.ONCE, false));
-        if (!isFind && defaultRepeat == Repeat.HOURLY) {
-            list.add(new RepeatItem(Repeat.HOURLY, true));
-            isFind = true;
-        }
-        else
-            list.add(new RepeatItem(Repeat.HOURLY, false));
         if (!isFind && defaultRepeat == Repeat.DAILY) {
             list.add(new RepeatItem(Repeat.DAILY, true));
             isFind = true;

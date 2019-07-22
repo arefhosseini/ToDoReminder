@@ -932,14 +932,7 @@ public class Alarm implements Serializable {
 
     @Ignore
     public int indexHourByIndexRepeat(int indexRepeat) {
-        int index = -1;
-        Repeat repeat;
-        for (int counter = 0; counter <= indexRepeat; counter++) {
-            repeat = repeats.get(counter);
-            if (repeat != Repeat.HOURLY)
-                index ++;
-        }
-        return index;
+        return indexRepeat;
     }
 
     @Ignore

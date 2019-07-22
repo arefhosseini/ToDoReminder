@@ -113,8 +113,6 @@ public class RepeatModel {
             return RepeatResponseType.DUPLICATE;
         if (repeat == Repeat.ONCE)
             return isOnceRepeatValid();
-        if (repeat == Repeat.HOURLY)
-            return isHourlyRepeatValid();
         if (repeat == Repeat.DAILY)
             return isDailyRepeatValid();
         if (repeat == Repeat.WEEKLY)
@@ -159,12 +157,6 @@ public class RepeatModel {
             reset();
             return RepeatResponseType.FALSE;
         }
-        return RepeatResponseType.NOT_READY;
-    }
-
-    private RepeatResponseType isHourlyRepeatValid() {
-        if (repeat == Repeat.HOURLY && minute != -1)
-            return RepeatResponseType.TRUE;
         return RepeatResponseType.NOT_READY;
     }
 

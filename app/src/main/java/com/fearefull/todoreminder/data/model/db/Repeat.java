@@ -4,12 +4,11 @@ import java.io.Serializable;
 
 public enum Repeat implements Serializable {
     ONCE(0, "فقط یک بار"),
-    HOURLY(1, "ساعتی"),
-    DAILY(2, "روزانه"),
-    WEEKLY(3, "هفتگی"),
-    MONTHLY(4, "ماهانه"),
-    YEARLY(5, "سالانه"),
-    CUSTOM(6, "شخصی سازی");
+    DAILY(1, "روزانه"),
+    WEEKLY(2, "هفتگی"),
+    MONTHLY(3, "ماهانه"),
+    YEARLY(4, "سالانه"),
+    CUSTOM(5, "شخصی سازی");
 
     private final Integer value;
     private final String text;
