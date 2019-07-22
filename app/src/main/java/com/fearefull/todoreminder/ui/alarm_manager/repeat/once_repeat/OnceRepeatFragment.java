@@ -133,7 +133,6 @@ public class OnceRepeatFragment extends BaseRepeatFragment<FragmentOnceRepeatBin
 
     @Override
     public void getHalfHourTimePickerResult(int minute, int hour) {
-        Timber.e("get Time");
         viewModel.getRepeatModel().setMinute(minute);
         viewModel.getRepeatModel().setHour(hour);
         viewModel.checkForSend(Repeat.ONCE);
@@ -141,7 +140,6 @@ public class OnceRepeatFragment extends BaseRepeatFragment<FragmentOnceRepeatBin
 
     @Override
     public void getDatePickerResult(int day, int month) {
-        Timber.e("get Date");
         viewModel.getRepeatModel().setDayMonth(day);
         viewModel.getRepeatModel().setMonth(month);
         viewModel.checkForSend(Repeat.ONCE);

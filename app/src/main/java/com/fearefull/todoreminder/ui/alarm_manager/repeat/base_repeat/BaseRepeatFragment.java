@@ -50,7 +50,6 @@ public abstract class BaseRepeatFragment<T extends ViewDataBinding, V extends Ba
     }
 
     public void send() {
-        Timber.e("sending alarm");
         callBack.onAlarmChanged(getViewModel().getAlarm());
     }
 

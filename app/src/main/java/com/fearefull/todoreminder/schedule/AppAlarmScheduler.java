@@ -49,7 +49,7 @@ public class AppAlarmScheduler implements AlarmScheduler {
     }
 
     private void scheduleClosestAlarm(List<Alarm> alarms) {
-        Alarm closestAlarm = null;
+        Alarm closestAlarm;
         Alarm currentAlarm = new Alarm("");
         RepeatModel closestRepeatModel;
         Snooze snooze = new Snooze();
@@ -82,10 +82,6 @@ public class AppAlarmScheduler implements AlarmScheduler {
                     snooze = s;
                 }
             }
-        }
-        else {
-            if (closestAlarm != null)
-                dataManager.addSnooze(snooze);
         }
 
         if (!snooze.isNull()) {
@@ -129,6 +125,8 @@ public class AppAlarmScheduler implements AlarmScheduler {
                 isFindNearTime = true;
             else {
                 checkDate.addDay(1);
+                checkDate.setMinute(repeatModel.getMinute());
+                checkDate.setHour(repeatModel.getHour());
             }
         }
         Timber.i(format.format(checkDate));

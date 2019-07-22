@@ -51,12 +51,7 @@ public abstract class BaseRepeatViewModel<W extends BaseRepeatNavigator> extends
         if (repeat == Repeat.ONCE)
             getRepeatModel().setYear(getAlarm().getDefaultYear());
         RepeatResponseType response = getRepeatModel().isValid(getAlarm());
-        Timber.e("type: %s, min: %d, hour: %d, day: %d, month: %d", getRepeatModel().getRepeat().getText(),
-                getRepeatModel().getMinute(), getRepeatModel().getHour(), getRepeatModel().getDayMonth(),
-                getRepeatModel().getMonth());
-        Timber.e("checking send");
         if (response == RepeatResponseType.TRUE) {
-            Timber.e("checking send True");
             getAlarm().addRepeatModel(getRepeatModel());
             getRepeatModel().reset();
             getNavigator().send();
