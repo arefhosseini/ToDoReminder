@@ -15,13 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat.daily_repeat.DailyRepeatFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleFragment;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 import com.fearefull.todoreminder.databinding.FragmentAlarmManagerBinding;
-import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat.once_repeat.OnceRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerDialogFragment;
-import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleFragment;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.base.BaseViewPagerAdapter;
 import com.fearefull.todoreminder.utils.CommonUtils;
@@ -36,8 +38,9 @@ import dagger.android.support.HasSupportFragmentInjector;
 import static com.fearefull.todoreminder.utils.AppConstants.ALARM_KEY;
 
 public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBinding, AlarmManagerViewModel>
-        implements AlarmManagerNavigator, HasSupportFragmentInjector, RepeatAdapter.RepeatAdapterListener,
-        OnceRepeatFragment.OnceRepeatCallBack, RepeatManagerDialogFragment.RepeatManagerCallBack {
+        implements AlarmManagerNavigator, HasSupportFragmentInjector,
+        RepeatAdapter.RepeatAdapterListener, BaseRepeatFragment.RepeatCallBack,
+        RepeatManagerDialogFragment.RepeatManagerCallBack {
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
@@ -112,20 +115,22 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         OnceRepeatFragment onceRepeatFragment = OnceRepeatFragment.newInstance(viewModel.getAlarm());
         onceRepeatFragment.setCallBack(this);
 
+        DailyRepeatFragment dailyRepeatFragment = DailyRepeatFragment.newInstance(viewModel.getAlarm());
+        dailyRepeatFragment.setCallBack(this);
+
         SimpleFragment simpleFragment = SimpleFragment.newInstance(viewModel.getAlarm());
         SimpleFragment simpleFragment2 = SimpleFragment.newInstance(viewModel.getAlarm());
         SimpleFragment simpleFragment3 = SimpleFragment.newInstance(viewModel.getAlarm());
         SimpleFragment simpleFragment4 = SimpleFragment.newInstance(viewModel.getAlarm());
         SimpleFragment simpleFragment5 = SimpleFragment.newInstance(viewModel.getAlarm());
-        SimpleFragment simpleFragment6 = SimpleFragment.newInstance(viewModel.getAlarm());
 
         pagerAdapter.addFragment(onceRepeatFragment, "once");
+        pagerAdapter.addFragment(dailyRepeatFragment, "daily");
         pagerAdapter.addFragment(simpleFragment, "simple");
         pagerAdapter.addFragment(simpleFragment2, "simple2");
         pagerAdapter.addFragment(simpleFragment3, "simple3");
         pagerAdapter.addFragment(simpleFragment4, "simple4");
         pagerAdapter.addFragment(simpleFragment5, "simple5");
-        pagerAdapter.addFragment(simpleFragment6, "simple6");
         binding.viewPager.setAdapter(pagerAdapter);
 
         viewModel.initAlarm();
@@ -169,7 +174,8 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     }
 
     @Override
-    public void onAlarmChangedByOnceRepeat(Alarm alarm) {
+    public void onAlarmChanged(Alarm alarm) {
+
         viewModel.setAlarm(alarm);
         viewModel.updateAlarm();
     }

@@ -197,6 +197,18 @@ public class RepeatModel {
         if (model.getRepeat() == Repeat.ONCE) {
             return isSameByOnce(model);
         }
+        if (model.getRepeat() == Repeat.DAILY) {
+            return isSameByDaily(model);
+        }
+        if (model.getRepeat() == Repeat.WEEKLY) {
+            return isSameByWeekly(model);
+        }
+        if (model.getRepeat() == Repeat.MONTHLY) {
+            return isSameByMonthly(model);
+        }
+        if (model.getRepeat() == Repeat.YEARLY) {
+            return isSameByYearly(model);
+        }
         return false;
     }
 
@@ -204,5 +216,24 @@ public class RepeatModel {
         return this.minute == model.getMinute() && this.hour == model.getHour() &&
                 this.dayMonth == model.dayMonth && this.month == model.getMonth() &&
                 this.year == model.getYear();
+    }
+
+    private boolean isSameByDaily(RepeatModel model) {
+        return this.minute == model.getMinute() && this.hour == model.getHour();
+    }
+
+    private boolean isSameByWeekly(RepeatModel model) {
+        return this.minute == model.getMinute() && this.hour == model.getHour() &&
+                this.dayWeek == model.dayWeek;
+    }
+
+    private boolean isSameByMonthly(RepeatModel model) {
+        return this.minute == model.getMinute() && this.hour == model.getHour() &&
+                this.dayMonth == model.dayMonth;
+    }
+
+    private boolean isSameByYearly(RepeatModel model) {
+        return this.minute == model.getMinute() && this.hour == model.getHour() &&
+                this.dayMonth == model.dayMonth && this.month == model.getMonth();
     }
 }

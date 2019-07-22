@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.ui.alarm_manager.once_repeat;
+package com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -10,18 +10,20 @@ import com.fearefull.todoreminder.data.model.other.type.RepeatResponseType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
-public class OnceRepeatViewModel extends BaseViewModel<OnceRepeatNavigator> {
+import timber.log.Timber;
+
+public abstract class BaseRepeatViewModel<W extends BaseRepeatNavigator> extends BaseViewModel<W> {
     private Alarm alarm;
     private RepeatModel repeatModel;
     private final MutableLiveData<Integer> currentTabPager;
     private final MutableLiveData<Integer> pageLimitPager;
 
-    public OnceRepeatViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+    public BaseRepeatViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
         repeatModel = new RepeatModel();
         currentTabPager = new MutableLiveData<>();
         pageLimitPager = new MutableLiveData<>();
-        pageLimitPager.setValue(2);
+        setRepeatModel(new RepeatModel());
     }
 
     public Alarm getAlarm() {
@@ -32,31 +34,31 @@ public class OnceRepeatViewModel extends BaseViewModel<OnceRepeatNavigator> {
         this.alarm = alarm;
     }
 
-    public void onTimePickerClick() {
-        getNavigator().timePickerClick();
-        currentTabPager.setValue(0);
-    }
-
-    public void onDatePickerClick() {
-        getNavigator().datePickerClick();
-        currentTabPager.setValue(1);
-    }
-
     public void onAddClick() {
         getNavigator().onAddRepeat();
     }
 
-    RepeatModel getRepeatModel() {
+    public RepeatModel getRepeatModel() {
         return repeatModel;
     }
 
-    void checkForSend() {
-        repeatModel.setRepeat(Repeat.ONCE);
-        repeatModel.setYear(alarm.getDefaultYear());
-        RepeatResponseType response = repeatModel.isValid(alarm);
+    public void setRepeatModel(RepeatModel repeatModel) {
+        this.repeatModel = repeatModel;
+    }
+
+    public void checkForSend(Repeat repeat) {
+        getRepeatModel().setRepeat(repeat);
+        if (repeat == Repeat.ONCE)
+            getRepeatModel().setYear(getAlarm().getDefaultYear());
+        RepeatResponseType response = getRepeatModel().isValid(getAlarm());
+        Timber.e("type: %s, min: %d, hour: %d, day: %d, month: %d", getRepeatModel().getRepeat().getText(),
+                getRepeatModel().getMinute(), getRepeatModel().getHour(), getRepeatModel().getDayMonth(),
+                getRepeatModel().getMonth());
+        Timber.e("checking send");
         if (response == RepeatResponseType.TRUE) {
-            alarm.addRepeatModel(repeatModel);
-            repeatModel.reset();
+            Timber.e("checking send True");
+            getAlarm().addRepeatModel(getRepeatModel());
+            getRepeatModel().reset();
             getNavigator().send();
         }
         else if (response == RepeatResponseType.FALSE){

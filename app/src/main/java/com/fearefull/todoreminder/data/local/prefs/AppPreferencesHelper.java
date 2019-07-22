@@ -14,6 +14,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 public class AppPreferencesHelper implements PreferencesHelper {
 
     private static final String PREF_KEY_SCHEDULE = "PREF_KEY_SCHEDULE";
@@ -80,8 +82,10 @@ public class AppPreferencesHelper implements PreferencesHelper {
                 break;
             }
         }
-        if (selectedSnooze != null)
+        if (selectedSnooze != null) {
             snoozes.remove(selectedSnooze);
+            Timber.e("Removing");
+        }
         setSnoozeList(snoozes);
     }
 

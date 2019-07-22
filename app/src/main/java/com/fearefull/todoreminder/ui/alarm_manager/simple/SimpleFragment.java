@@ -9,10 +9,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatFragment;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.databinding.FragmentSimpleBinding;
-import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat.once_repeat.OnceRepeatFragment;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 
 import javax.inject.Inject;
@@ -27,7 +28,7 @@ public class SimpleFragment extends BaseFragment<FragmentSimpleBinding, SimpleVi
     ViewModelProviderFactory factory;
     private SimpleViewModel viewModel;
     private FragmentSimpleBinding binding;
-    private OnceRepeatFragment.OnceRepeatCallBack callBack;
+    private BaseRepeatFragment.RepeatCallBack callBack;
 
     public static SimpleFragment newInstance(Alarm alarm) {
         Bundle args = new Bundle();
@@ -73,7 +74,7 @@ public class SimpleFragment extends BaseFragment<FragmentSimpleBinding, SimpleVi
 
     }
 
-    public void setCallBack(OnceRepeatFragment.OnceRepeatCallBack callBack) {
+    public void setCallBack(BaseRepeatFragment.RepeatCallBack callBack) {
         this.callBack = callBack;
     }
 }

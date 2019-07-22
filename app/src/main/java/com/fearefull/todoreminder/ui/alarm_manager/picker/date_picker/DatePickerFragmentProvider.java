@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.ui.alarm_manager.date_picker;
+package com.fearefull.todoreminder.ui.alarm_manager.picker.date_picker;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

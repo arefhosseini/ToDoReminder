@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.ui.alarm_manager.date_picker;
+package com.fearefull.todoreminder.ui.alarm_manager.picker.date_picker;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,15 +9,16 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
-import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
+import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.databinding.FragmentDatePickerBinding;
-import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatCaller;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatCaller;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
+import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
 public class DatePickerFragment extends BaseFragment<FragmentDatePickerBinding, DatePickerViewModel>
-        implements DatePickerNavigator, OnceRepeatCaller {
+        implements DatePickerNavigator, BaseRepeatCaller {
 
     public static final String TAG = DatePickerFragment.class.getSimpleName();
     private static final String DAY_KEY = "day_key";
@@ -26,8 +27,7 @@ public class DatePickerFragment extends BaseFragment<FragmentDatePickerBinding, 
     @Inject
     ViewModelProviderFactory factory;
     private DatePickerViewModel viewModel;
-    private FragmentDatePickerBinding binding;
-    private DatePickerCallBack callBack;
+    private DatePickerCallBack callBackForOnce;
 
     public static DatePickerFragment newInstance(int day, int month) {
         Bundle args = new Bundle();
@@ -64,17 +64,18 @@ public class DatePickerFragment extends BaseFragment<FragmentDatePickerBinding, 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding = getViewDataBinding();
+        assert getArguments() != null;
         viewModel.init(getArguments().getInt(DAY_KEY), getArguments().getInt(MONTH_KEY));
     }
 
-    public void setCallBack(DatePickerCallBack callBack) {
-        this.callBack = callBack;
+    public void setCallBackForOnce(DatePickerCallBack callBackForOnce) {
+        this.callBackForOnce = callBackForOnce;
     }
 
     @Override
-    public void call() {
-        callBack.getDatePickerResult(viewModel.getDay(), viewModel.getMonth());
+    public void call(Repeat repeat) {
+        if (repeat == Repeat.ONCE)
+            callBackForOnce.getDatePickerResult(viewModel.getDay(), viewModel.getMonth());
     }
 
     public interface DatePickerCallBack {

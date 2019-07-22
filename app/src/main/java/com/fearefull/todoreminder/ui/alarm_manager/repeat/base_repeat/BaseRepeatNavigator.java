@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.ui.alarm_manager.base_repeat;
+package com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat;
 
 public interface BaseRepeatNavigator {
     void timePickerClick();

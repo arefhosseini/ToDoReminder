@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.ui.alarm_manager.half_hour_time_picker;
+package com.fearefull.todoreminder.ui.alarm_manager.picker.half_hour_time_picker;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -10,8 +10,6 @@ import com.fearefull.todoreminder.utils.AlarmUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
 import java.util.List;
-
-import timber.log.Timber;
 
 public class HalfHourTimePickerViewModel extends BaseViewModel<HalfHourTimePickerNavigator> {
 

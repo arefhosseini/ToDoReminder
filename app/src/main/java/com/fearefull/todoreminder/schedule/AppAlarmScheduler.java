@@ -13,7 +13,6 @@ import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
 import com.fearefull.todoreminder.data.model.other.persian_date.PersianDateFormat;
 import com.fearefull.todoreminder.utils.AppConstants;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
-import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -51,6 +50,7 @@ public class AppAlarmScheduler implements AlarmScheduler {
 
     private void scheduleClosestAlarm(List<Alarm> alarms) {
         Alarm closestAlarm = null;
+        Alarm currentAlarm = new Alarm("");
         RepeatModel closestRepeatModel;
         Snooze snooze = new Snooze();
         long closestTime = Long.MAX_VALUE;
@@ -61,13 +61,15 @@ public class AppAlarmScheduler implements AlarmScheduler {
             for (int index = 0; index < alarm.getRepeatCount(); index++) {
                 if (alarm.getRepeat(index) == Repeat.ONCE)
                     checkTime = scheduleOnceRepeat(alarm.getRepeatModel(index), currentTime);
-                    if (checkTime > 1000 && checkTime < closestTime) {
-                        closestTime = checkTime;
-                        closestRepeatModel = alarm.getRepeatModel(index);
-                        closestAlarm = alarm;
-                        snooze.setAlarmId(closestAlarm.getId());
-                        snooze.setModel(closestRepeatModel);
-                    }
+                else if (alarm.getRepeat(index) == Repeat.DAILY)
+                    checkTime = scheduleDailyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
+                if (checkTime > 1000 && checkTime < closestTime) {
+                    closestTime = checkTime;
+                    closestRepeatModel = alarm.getRepeatModel(index);
+                    closestAlarm = alarm;
+                    snooze.setAlarmId(closestAlarm.getId());
+                    snooze.setModel(closestRepeatModel);
+                }
             }
         }
 
@@ -98,15 +100,39 @@ public class AppAlarmScheduler implements AlarmScheduler {
 
     private long scheduleOnceRepeat(RepeatModel repeatModel, long currentTime) {
         PersianDate checkDate = new PersianDate();
+        checkDate.setSecond(0);
         checkDate.setMinute(repeatModel.getMinute());
         checkDate.setHour(repeatModel.getHour());
         checkDate.setShDay(repeatModel.getDayMonth());
         checkDate.setShMonth(repeatModel.getMonth());
         checkDate.setShYear(repeatModel.getYear());
-        checkDate.setSecond(0);
         PersianDateFormat format = new PersianDateFormat();
         Timber.i(format.format(checkDate));
         return checkDate.getTime() - currentTime;
+    }
+
+    private long scheduleDailyRepeat(RepeatModel repeatModel, long currentTime, Alarm currentAlarm) {
+        PersianDate checkDate = new PersianDate();
+        checkDate.setSecond(0);
+        checkDate.setMinute(repeatModel.getMinute());
+        checkDate.setHour(repeatModel.getHour());
+        checkDate.setShDay(currentAlarm.getNowDay());
+        checkDate.setShMonth(currentAlarm.getNowMonth());
+        checkDate.setShYear(currentAlarm.getNowYear());
+        PersianDateFormat format = new PersianDateFormat();
+
+        boolean isFindNearTime = false;
+        long checkTime = -1;
+        while (!isFindNearTime) {
+            checkTime = checkDate.getTime() - currentTime;
+            if (checkTime > 1000)
+                isFindNearTime = true;
+            else {
+                checkDate.addDay(1);
+            }
+        }
+        Timber.i(format.format(checkDate));
+        return checkTime;
     }
 
     private void cancelSchedule() {

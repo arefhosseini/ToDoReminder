@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.fearefull.todoreminder.ui.alarm_manager.daily_repeat.DailyRepeatViewModel" />
+            type="com.fearefull.todoreminder.ui.alarm_manager.repeat.daily_repeat.DailyRepeatViewModel" />
 
     </data>
 

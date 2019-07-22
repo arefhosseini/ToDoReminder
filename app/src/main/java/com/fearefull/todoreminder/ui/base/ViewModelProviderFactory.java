@@ -8,9 +8,10 @@ import com.fearefull.todoreminder.schedule.AlarmScheduler;
 import com.fearefull.todoreminder.schedule.AppAlarmScheduler;
 import com.fearefull.todoreminder.ui.about.AboutViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerViewModel;
-import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatViewModel;
-import com.fearefull.todoreminder.ui.alarm_manager.date_picker.DatePickerViewModel;
-import com.fearefull.todoreminder.ui.alarm_manager.half_hour_time_picker.HalfHourTimePickerViewModel;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat.daily_repeat.DailyRepeatViewModel;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat.once_repeat.OnceRepeatViewModel;
+import com.fearefull.todoreminder.ui.alarm_manager.picker.date_picker.DatePickerViewModel;
+import com.fearefull.todoreminder.ui.alarm_manager.picker.half_hour_time_picker.HalfHourTimePickerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleViewModel;
 import com.fearefull.todoreminder.ui.alarm_notification.AlarmNotificationViewModel;
@@ -86,6 +87,10 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         if (modelClass.isAssignableFrom(RepeatManagerViewModel.class)) {
             //noinspection unchecked
             return (T) new RepeatManagerViewModel(dataManager, schedulerProvider);
+        }
+        if (modelClass.isAssignableFrom(DailyRepeatViewModel.class)) {
+            //noinspection unchecked
+            return (T) new DailyRepeatViewModel(dataManager, schedulerProvider);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

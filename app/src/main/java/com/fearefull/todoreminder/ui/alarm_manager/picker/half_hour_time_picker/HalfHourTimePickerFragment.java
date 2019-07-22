@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.ui.alarm_manager.half_hour_time_picker;
+package com.fearefull.todoreminder.ui.alarm_manager.picker.half_hour_time_picker;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,16 +9,16 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
-import com.fearefull.todoreminder.ui.alarm_manager.daily_repeat.DailyRepeatCaller;
-import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
+import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.databinding.FragmentHalfHourTimePickerBinding;
-import com.fearefull.todoreminder.ui.alarm_manager.once_repeat.OnceRepeatCaller;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatCaller;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
+import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
 public class HalfHourTimePickerFragment extends BaseFragment<FragmentHalfHourTimePickerBinding, HalfHourTimePickerViewModel>
-        implements HalfHourTimePickerNavigator, OnceRepeatCaller, DailyRepeatCaller {
+        implements HalfHourTimePickerNavigator, BaseRepeatCaller {
 
     public static final String TAG = HalfHourTimePickerFragment.class.getSimpleName();
     private static final String MINUTE_KEY = "minute_key";
@@ -78,13 +78,11 @@ public class HalfHourTimePickerFragment extends BaseFragment<FragmentHalfHourTim
     }
 
     @Override
-    public void callByOnceRepeat() {
-        callBackForOnceRepeat.getHalfHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
-    }
-
-    @Override
-    public void callByDailyRepeat() {
-        callBackForDailyRepeat.getHalfHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
+    public void call(Repeat repeat) {
+        if (repeat == Repeat.ONCE)
+            callBackForOnceRepeat.getHalfHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
+        else if (repeat == Repeat.DAILY)
+            callBackForDailyRepeat.getHalfHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
     }
 
     public interface HalfHourTimePickerCallBack {

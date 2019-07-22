@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.ui.alarm_manager.once_repeat;
+package com.fearefull.todoreminder.ui.alarm_manager.repeat.once_repeat;
 
 import com.fearefull.todoreminder.ui.base.BaseViewPagerAdapter;
 
