@@ -13,11 +13,11 @@ public class OnceRepeatViewModel extends BaseRepeatViewModel<OnceRepeatNavigator
 
     public void onTimePickerClick() {
         getNavigator().timePickerClick();
-        getPageLimitPager().setValue(0);
+        getCurrentTabPager().setValue(0);
     }
 
     public void onDatePickerClick() {
         getNavigator().datePickerClick();
-        getPageLimitPager().setValue(1);
+        getCurrentTabPager().setValue(1);
     }
 }

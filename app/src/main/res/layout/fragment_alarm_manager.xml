@@ -104,16 +104,16 @@
                     <include layout="@layout/curved_line_bg_color" />
 
                     <FrameLayout
-                        android:id="@+id/noteLayout"
+                        android:id="@+id/titleLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <com.github.florent37.expansionpanel.ExpansionHeader
-                            android:layout_height="100dp"
+                            android:layout_height="80dp"
                             android:layout_width="match_parent"
-                            android:id="@+id/noteHeader"
-                            app:expansion_headerIndicator="@id/noteHeaderIndicator"
-                            app:expansion_layout="@id/noteExpansionLayout"
+                            android:id="@+id/titleHeader"
+                            app:expansion_headerIndicator="@id/titleHeaderIndicator"
+                            app:expansion_layout="@id/titleExpansionLayout"
                             android:translationZ="8dp"
                             app:expansion_toggleOnClick="true">
 
@@ -144,7 +144,7 @@
                                         android:layout_width="match_parent">
 
                                         <ImageView
-                                            android:id="@+id/noteHeaderIcon"
+                                            android:id="@+id/titleHeaderIcon"
                                             android:layout_width="24dp"
                                             android:layout_height="24dp"
                                             android:layout_alignParentRight="true"
@@ -154,30 +154,30 @@
 
                                         <TextView
                                             style="@style/TextStyle.Title"
-                                            android:id="@+id/noteHeaderText"
+                                            android:id="@+id/titleHeaderText"
                                             android:layout_height="wrap_content"
                                             android:layout_width="wrap_content"
-                                            android:layout_toLeftOf="@id/noteHeaderIcon"
+                                            android:layout_toLeftOf="@id/titleHeaderIcon"
                                             android:layout_centerVertical="true"
                                             android:layout_marginRight="8dp"
                                             android:textColor="@color/primaryTextColorDarkTheme"
-                                            android:text="@string/note" />
+                                            android:text="@string/title" />
 
                                         <TextView
                                             style="@style/TextStyle.Title.Sub"
-                                            android:id="@+id/noteHeaderDetail"
+                                            android:id="@+id/titleHeaderDetail"
                                             android:layout_height="wrap_content"
                                             android:layout_centerHorizontal="true"
                                             android:layout_alignParentBottom="true"
                                             android:layout_marginRight="24dp"
                                             android:layout_width="wrap_content"
                                             android:gravity="center"
-                                            android:text="@{viewModel.noteString}"
+                                            android:text="@{viewModel.titleString}"
                                             android:textColor="@color/secondaryTextColorDarkTheme" />
 
                                         <androidx.appcompat.widget.AppCompatImageView
                                             android:adjustViewBounds="true"
-                                            android:id="@+id/noteHeaderIndicator"
+                                            android:id="@+id/titleHeaderIndicator"
                                             android:layout_alignParentLeft="true"
                                             android:layout_centerVertical="true"
                                             android:layout_height="wrap_content"
@@ -194,7 +194,7 @@
                         </com.github.florent37.expansionpanel.ExpansionHeader>
 
                         <com.github.florent37.expansionpanel.ExpansionLayout
-                            android:id="@+id/noteExpansionLayout"
+                            android:id="@+id/titleExpansionLayout"
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:layout_marginTop="24dp"
@@ -204,7 +204,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="horizontal"
-                                android:paddingTop="100dp"
+                                android:paddingTop="80dp"
                                 android:paddingBottom="16dp"
                                 android:paddingLeft="16dp"
                                 android:paddingRight="16dp">
@@ -215,10 +215,10 @@
                                     android:inputType="textMultiLine"
                                     android:maxLines="3"
                                     android:background="@null"
-                                    android:onTextChanged="@{(s, start, count, after) -> viewModel.onNoteTextChange(s)}"
+                                    android:onTextChanged="@{(s, start, count, after) -> viewModel.onTitleTextChange(s)}"
                                     android:textDirection="rtl"
                                     android:paddingBottom="24dp"
-                                    android:hint="@string/note_hint"/>
+                                    android:hint="@string/title_hint"/>
 
                             </LinearLayout>
 
@@ -234,7 +234,7 @@
                         android:layout_marginTop="-24dp">
 
                         <com.github.florent37.expansionpanel.ExpansionHeader
-                            android:layout_height="100dp"
+                            android:layout_height="80dp"
                             android:layout_width="match_parent"
                             android:id="@+id/repeatHeader"
                             app:expansion_headerIndicator="@id/repeatHeaderIndicator"
@@ -288,18 +288,6 @@
                                             android:textColor="@color/primaryTextColorDarkTheme"
                                             android:text="@string/repeat" />
 
-                                        <TextView
-                                            style="@style/TextStyle.Title.Sub"
-                                            android:id="@+id/repeatHeaderDetail"
-                                            android:layout_height="wrap_content"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_alignParentBottom="true"
-                                            android:layout_marginRight="24dp"
-                                            android:layout_width="wrap_content"
-                                            android:gravity="center"
-                                            android:text="@{viewModel.repeatString}"
-                                            android:textColor="@color/secondaryTextColorDarkTheme" />
-
                                         <androidx.appcompat.widget.AppCompatImageView
                                             android:adjustViewBounds="true"
                                             android:id="@+id/repeatHeaderIndicator"
@@ -331,7 +319,7 @@
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:gravity="center"
-                                android:paddingTop="100dp">
+                                android:paddingTop="66dp">
 
                                 <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/repeatRecyclerView"
@@ -424,7 +412,7 @@
                         android:layout_marginTop="-24dp">
 
                         <FrameLayout
-                            android:layout_height="100dp"
+                            android:layout_height="80dp"
                             android:layout_width="match_parent"
                             android:id="@+id/ringtoneHeader"
                             android:focusable="true"
@@ -481,11 +469,10 @@
                                         <TextView
                                             style="@style/TextStyle.Title.Sub"
                                             android:id="@+id/ringtoneHeaderDetail"
-                                            android:layout_height="wrap_content"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_alignParentBottom="true"
-                                            android:layout_marginRight="24dp"
                                             android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignParentLeft="true"
+                                            android:layout_centerVertical="true"
                                             android:gravity="center"
                                             android:text="@{viewModel.ringtoneString}"
                                             android:textColor="@color/secondaryTextColorDarkTheme" />

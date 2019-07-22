@@ -27,7 +27,7 @@
     <string name="every">هر</string>
     <string name="on">در زمان های</string>
     <string name="note">یادداشت</string>
-    <string name="note_hint">یادداشت خود را وارد کنید...</string>
+    <string name="title_hint">یادداشت خود را وارد کنید...</string>
     <string name="add_reminder">افزودن یادآور</string>
     <string name="ringtone">آهنگ زنگ</string>
     <string name="choose_ringtone">انتخاب زنگ</string>
@@ -36,4 +36,5 @@
     <string name="add">افزودن</string>
     <string name="not_updated_time_error">زمان وارد شده مربوط به گذشته است، تغییرش دهید.</string>
     <string name="duplicate_time_error">زمان وارد شده تکراریست.</string>
+    <string name="title">عنوان</string>
 </resources>

@@ -22,8 +22,7 @@ import timber.log.Timber;
 public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> {
 
     private Alarm alarm;
-    private final ObservableField<String> repeatString = new ObservableField<>();
-    private final ObservableField<String> noteString = new ObservableField<>();
+    private final ObservableField<String> titleString = new ObservableField<>();
     private final MutableLiveData<List<RepeatItem>> repeatItemsLiveData;
     private final ObservableField<String> ringtoneString = new ObservableField<>();
     private final ObservableField<String> repeatCounter = new ObservableField<>();
@@ -77,9 +76,9 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         }
     }
 
-    public void onNoteTextChange(CharSequence s) {
-        alarm.setNote(s.toString());
-        updateNoteString();
+    public void onTitleTextChange(CharSequence s) {
+        alarm.setTitle(s.toString());
+        updateTitleString();
     }
 
     Alarm getAlarm() {
@@ -100,14 +99,9 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     void updateAlarm() {
-        updateRepeatString(alarm.getDefaultRepeat());
-        updateNoteString();
+        updateTitleString();
         updateRingtoneString();
         updateAddCounter(alarm.getRepeatCount());
-    }
-
-    void updateRepeatString(Repeat repeat) {
-        repeatString.set(repeat.getText());
     }
 
     void openDefaultRepeatFragment() {
@@ -115,8 +109,8 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         setIsLoading(false);
     }
 
-    void updateNoteString() {
-        noteString.set(alarm.getNote());
+    void updateTitleString() {
+        titleString.set(alarm.getTitle());
     }
 
     void updateRingtoneString() {
@@ -133,12 +127,8 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         repeatCounter.set(String.valueOf(counter));
     }
 
-    public ObservableField<String> getRepeatString() {
-        return repeatString;
-    }
-
-    public ObservableField<String> getNoteString() {
-        return noteString;
+    public ObservableField<String> getTitleString() {
+        return titleString;
     }
 
     public ObservableField<String> getRingtoneString() {

@@ -22,6 +22,7 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
     private final Runnable runnable;
     private final Handler handler;
 
+    private final ObservableField<String> titleString;
     private final ObservableField<String> minuteString;
     private final ObservableField<String> hourString;
     private final ObservableField<String> dayString;
@@ -32,6 +33,7 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
         this.alarmScheduler = alarmScheduler;
         runnable = this::goOff;
         handler = new Handler();
+        titleString = new ObservableField<>();
         minuteString = new ObservableField<>();
         hourString = new ObservableField<>();
         dayString = new ObservableField<>();
@@ -55,6 +57,7 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
 
     private void setTime() {
         this.alarm.setNowTime();
+        titleString.set(alarm.getTitle());
         minuteString.set(String.valueOf(alarm.getNowMinute()));
         hourString.set(String.valueOf(alarm.getNowHour()));
         dayString.set(String.valueOf(DayMonthType.getDayMonthTypeByValue(alarm.getNowDay()).getValue()));
@@ -94,6 +97,10 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
         getDataManager().removeSnooze(snooze);
         alarmScheduler.schedule();
         getNavigator().destroy();
+    }
+
+    public ObservableField<String> getTitleString() {
+        return titleString;
     }
 
     public ObservableField<String> getMinuteString() {

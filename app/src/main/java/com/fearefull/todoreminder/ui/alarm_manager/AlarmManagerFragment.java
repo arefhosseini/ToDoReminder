@@ -156,14 +156,13 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
 
     @Override
     public void onRepeatItemClick(RepeatItem repeatItem) {
-        viewModel.updateRepeatString(repeatItem.getRepeat());
         viewModel.getCurrentTabPager().setValue(repeatItem.getRepeat().getValue());
     }
 
     @Override
     public void closeAllExpansions() {
-        if (binding.noteExpansionLayout.isExpanded())
-            binding.noteExpansionLayout.collapse(true);
+        if (binding.titleExpansionLayout.isExpanded())
+            binding.titleExpansionLayout.collapse(true);
         else if (binding.repeatExpansionLayout.isExpanded())
             binding.repeatExpansionLayout.collapse(true);
 

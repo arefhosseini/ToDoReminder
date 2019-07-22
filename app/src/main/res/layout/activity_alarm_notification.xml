@@ -136,11 +136,10 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView"
             style="@style/TextStyle.Title.Big"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="title"
+            android:text="@{viewModel.titleString}"
             android:textColor="@color/primaryTextColorDarkTheme"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
