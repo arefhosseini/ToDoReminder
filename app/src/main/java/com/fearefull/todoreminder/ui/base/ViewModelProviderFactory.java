@@ -12,6 +12,7 @@ import com.fearefull.todoreminder.ui.alarm_manager.repeat.daily_repeat.DailyRepe
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.once_repeat.OnceRepeatViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.picker.date_picker.DatePickerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.picker.half_hour_time_picker.HalfHourTimePickerViewModel;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat.yearly_repeat.YearlyRepeatViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleViewModel;
 import com.fearefull.todoreminder.ui.alarm_notification.AlarmNotificationViewModel;
@@ -91,6 +92,10 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         if (modelClass.isAssignableFrom(DailyRepeatViewModel.class)) {
             //noinspection unchecked
             return (T) new DailyRepeatViewModel(dataManager, schedulerProvider);
+        }
+        if (modelClass.isAssignableFrom(YearlyRepeatViewModel.class)) {
+            //noinspection unchecked
+            return (T) new YearlyRepeatViewModel(dataManager, schedulerProvider);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

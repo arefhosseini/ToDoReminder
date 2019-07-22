@@ -1,12 +1,12 @@
-package com.fearefull.todoreminder.ui.alarm_manager.repeat.once_repeat;
+package com.fearefull.todoreminder.ui.alarm_manager.repeat.yearly_repeat;
 
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatViewModel;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
-public class OnceRepeatViewModel extends BaseRepeatViewModel<OnceRepeatNavigator> {
+public class YearlyRepeatViewModel extends BaseRepeatViewModel<YearlyRepeatNavigator> {
 
-    public OnceRepeatViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+    public YearlyRepeatViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
         getPageLimitPager().setValue(2);
     }
@@ -20,4 +20,5 @@ public class OnceRepeatViewModel extends BaseRepeatViewModel<OnceRepeatNavigator
         getNavigator().datePickerClick();
         getPageLimitPager().setValue(1);
     }
+
 }

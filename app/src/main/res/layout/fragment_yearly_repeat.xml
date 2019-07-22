@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.splash.SplashActivity"
+    tools:ignore="RtlHardcoded">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fearefull.todoreminder.ui.alarm_manager.repeat.yearly_repeat.YearlyRepeatViewModel" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/TextStyle.Title.Sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingRight="15dp"
+            android:textColor="@color/primaryTextColorDarkTheme"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/quarter_bottom_left_circle_secondary_bg"
+            android:text="@string/add"
+            android:onClick="@{() -> viewModel.onAddClick()}"
+            android:translationZ="12dp"
+            tools:ignore="RtlSymmetry" />
+
+        <FrameLayout
+            android:id="@+id/timeLayout"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:translationZ="12dp"
+            android:onClick="@{() -> viewModel.onTimePickerClick()}"
+            android:background="@drawable/quarter_top_right_circle_unselected_bg">
+
+            <ImageView
+                android:id="@+id/timeIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:padding="6dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/ic_access_time_black_24dp"
+                android:tint="@color/primaryColorLightTheme"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/dateLayout"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:translationZ="12dp"
+            android:layout_marginBottom="12dp"
+            android:onClick="@{() -> viewModel.onDatePickerClick()}"
+            android:background="@drawable/quarter_bottom_right_circle_unselected_bg">
+
+            <ImageView
+                android:id="@+id/dateIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:padding="6dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/ic_today_black_24dp"
+                android:tint="@color/primaryColorLightTheme"/>
+        </FrameLayout>
+
+        <com.fearefull.todoreminder.ui.base.BaseViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:pageLimit="@{viewModel.pageLimitPager}"
+            app:currentTab="@{viewModel.currentTabPager}"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
+    </RelativeLayout>
+</layout>

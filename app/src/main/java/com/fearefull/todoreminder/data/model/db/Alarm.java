@@ -755,7 +755,7 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
-    public String getDateByDayMonthAndMonth(int indexDayMonth, int indexMonth, int indexYear) {
+    public String getDateByDayMonthAndMonthAndYear(int indexDayMonth, int indexMonth, int indexYear) {
         String result = DayMonthType.getDayMonthTypeByValue(daysMonth.get(indexDayMonth)).getValue() + " " +
                 MonthType.getMonthType(months.get(indexMonth)).getText();
         if (years.get(indexYear) == defaultYear)
@@ -765,9 +765,15 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
+    public String getDateByDayMonthAndMonth(int indexDayMonth, int indexMonth, int indexYear) {
+        return DayMonthType.getDayMonthTypeByValue(daysMonth.get(indexDayMonth)).getValue() + " " +
+                MonthType.getMonthType(months.get(indexMonth)).getText();
+    }
+
+    @Ignore
     public String getRepeatManagerStringByOnce(int index) {
         return getTime12String(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + "-" +
-                getDateByDayMonthAndMonth(indexDayMonthByIndexRepeat(index), indexMonthByIndexRepeat(index), indexYearByIndexRepeat(index)) +
+                getDateByDayMonthAndMonthAndYear(indexDayMonthByIndexRepeat(index), indexMonthByIndexRepeat(index), indexYearByIndexRepeat(index)) +
                 " (" + repeats.get(index).getText() + ")";
     }
 
@@ -775,6 +781,13 @@ public class Alarm implements Serializable {
     public String getRepeatManagerStringByDaily(int index) {
         return getTime12String(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + " (" +
                 repeats.get(index).getText() + ")";
+    }
+
+    @Ignore
+    public String getRepeatManagerStringByYearly(int index) {
+        return getTime12String(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + "-" +
+                getDateByDayMonthAndMonth(indexDayMonthByIndexRepeat(index), indexMonthByIndexRepeat(index), indexYearByIndexRepeat(index)) +
+                " (" + repeats.get(index).getText() + ")";
     }
 
     @Ignore
@@ -831,8 +844,10 @@ public class Alarm implements Serializable {
         addRepeatStatus(true);
         if (model.getRepeat() == Repeat.ONCE)
             addRepeatModelByOnce(model);
-        if (model.getRepeat() == Repeat.DAILY)
+        else if (model.getRepeat() == Repeat.DAILY)
             addRepeatModelByDaily(model);
+        else if (model.getRepeat() == Repeat.YEARLY)
+            addRepeatModelByYearly(model);
     }
 
     @Ignore
@@ -850,11 +865,21 @@ public class Alarm implements Serializable {
         add24HourByValue(model.getHour());
     }
 
+    @Ignore
+    public void addRepeatModelByYearly(RepeatModel model) {
+        addMinuteByValue(model.getMinute());
+        add24HourByValue(model.getHour());
+        addDayMonthByValue(model.getDayMonth());
+        addMonthByValue(model.getMonth());
+    }
+
     public String getRepeatManagerString(int index) {
         if (repeats.get(index) == Repeat.ONCE)
             return getRepeatManagerStringByOnce(index);
         if (repeats.get(index) == Repeat.DAILY)
             return getRepeatManagerStringByDaily(index);
+        if (repeats.get(index) == Repeat.YEARLY)
+            return getRepeatManagerStringByYearly(index);
         return "";
     }
 
@@ -885,11 +910,22 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
+    public void removeRepeatManagerDataByYearly(int index) {
+        minutes.remove(indexMinuteByIndexRepeat(index));
+        hours.remove(indexHourByIndexRepeat(index));
+        daysMonth.remove(indexDayMonthByIndexRepeat(index));
+        months.remove(indexMonthByIndexRepeat(index));
+    }
+
+    @Ignore
     public void removeRepeatManagerData(int index) {
         if (repeats.get(index) == Repeat.ONCE)
             removeRepeatManagerDataByOnce(index);
         else if (repeats.get(index) == Repeat.DAILY)
             removeRepeatManagerDataByDaily(index);
+        else if (repeats.get(index) == Repeat.YEARLY)
+            removeRepeatManagerDataByYearly(index);
+
         // remove it last
         repeatsStatus.remove(index);
         repeats.remove(index);
@@ -901,6 +937,8 @@ public class Alarm implements Serializable {
             return getRepeatModelByOnce(index);
         if (repeats.get(index) == Repeat.DAILY)
             return getRepeatModelByDaily(index);
+        if (repeats.get(index) == Repeat.YEARLY)
+            return getRepeatModelByYearly(index);
         return new RepeatModel();
     }
 
@@ -923,6 +961,18 @@ public class Alarm implements Serializable {
         repeatModel.setRepeat(Repeat.DAILY);
         repeatModel.setMinute(minutes.get(indexMinuteByIndexRepeat(index)));
         repeatModel.setHour(hours.get(indexHourByIndexRepeat(index)));
+
+        return repeatModel;
+    }
+
+    @Ignore
+    private RepeatModel getRepeatModelByYearly(int index) {
+        RepeatModel repeatModel = new RepeatModel();
+        repeatModel.setRepeat(Repeat.YEARLY);
+        repeatModel.setMinute(minutes.get(indexMinuteByIndexRepeat(index)));
+        repeatModel.setHour(hours.get(indexHourByIndexRepeat(index)));
+        repeatModel.setDayMonth(daysMonth.get(indexDayMonthByIndexRepeat(index)));
+        repeatModel.setMonth(months.get(indexMonthByIndexRepeat(index)));
 
         return repeatModel;
     }

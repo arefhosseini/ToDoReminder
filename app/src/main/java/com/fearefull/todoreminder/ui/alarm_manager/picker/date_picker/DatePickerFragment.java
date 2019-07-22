@@ -27,7 +27,7 @@ public class DatePickerFragment extends BaseFragment<FragmentDatePickerBinding, 
     @Inject
     ViewModelProviderFactory factory;
     private DatePickerViewModel viewModel;
-    private DatePickerCallBack callBackForOnce;
+    private DatePickerCallBack callBackForOnceRepeat, callBackForYearlyRepeat;
 
     public static DatePickerFragment newInstance(int day, int month) {
         Bundle args = new Bundle();
@@ -68,14 +68,20 @@ public class DatePickerFragment extends BaseFragment<FragmentDatePickerBinding, 
         viewModel.init(getArguments().getInt(DAY_KEY), getArguments().getInt(MONTH_KEY));
     }
 
-    public void setCallBackForOnce(DatePickerCallBack callBackForOnce) {
-        this.callBackForOnce = callBackForOnce;
+    public void setCallBackForOnceRepeat(DatePickerCallBack callBackForOnceRepeat) {
+        this.callBackForOnceRepeat = callBackForOnceRepeat;
+    }
+
+    public void setCallBackForYearlyRepeat(DatePickerCallBack callBackForYearlyRepeat) {
+        this.callBackForYearlyRepeat = callBackForYearlyRepeat;
     }
 
     @Override
     public void call(Repeat repeat) {
         if (repeat == Repeat.ONCE)
-            callBackForOnce.getDatePickerResult(viewModel.getDay(), viewModel.getMonth());
+            callBackForOnceRepeat.getDatePickerResult(viewModel.getDay(), viewModel.getMonth());
+        else if (repeat == Repeat.YEARLY)
+            callBackForYearlyRepeat.getDatePickerResult(viewModel.getDay(), viewModel.getMonth());
     }
 
     public interface DatePickerCallBack {

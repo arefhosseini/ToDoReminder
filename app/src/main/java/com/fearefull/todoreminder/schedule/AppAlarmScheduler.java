@@ -63,6 +63,8 @@ public class AppAlarmScheduler implements AlarmScheduler {
                     checkTime = scheduleOnceRepeat(alarm.getRepeatModel(index), currentTime);
                 else if (alarm.getRepeat(index) == Repeat.DAILY)
                     checkTime = scheduleDailyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
+                else if (alarm.getRepeat(index) == Repeat.YEARLY)
+                    checkTime = scheduleYearlyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
                 if (checkTime > 1000 && checkTime < closestTime) {
                     closestTime = checkTime;
                     closestRepeatModel = alarm.getRepeatModel(index);
@@ -127,6 +129,34 @@ public class AppAlarmScheduler implements AlarmScheduler {
                 checkDate.addDay(1);
                 checkDate.setMinute(repeatModel.getMinute());
                 checkDate.setHour(repeatModel.getHour());
+            }
+        }
+        Timber.i(format.format(checkDate));
+        return checkTime;
+    }
+
+    private long scheduleYearlyRepeat(RepeatModel repeatModel, long currentTime, Alarm currentAlarm) {
+        PersianDate checkDate = new PersianDate();
+        checkDate.setSecond(0);
+        checkDate.setMinute(repeatModel.getMinute());
+        checkDate.setHour(repeatModel.getHour());
+        checkDate.setShDay(repeatModel.getDayMonth());
+        checkDate.setShMonth(repeatModel.getMonth());
+        checkDate.setShYear(currentAlarm.getNowYear());
+        PersianDateFormat format = new PersianDateFormat();
+
+        boolean isFindNearTime = false;
+        long checkTime = -1;
+        while (!isFindNearTime) {
+            checkTime = checkDate.getTime() - currentTime;
+            if (checkTime > 1000)
+                isFindNearTime = true;
+            else {
+                checkDate.addYear(1);
+                checkDate.setMinute(repeatModel.getMinute());
+                checkDate.setHour(repeatModel.getHour());
+                checkDate.setShDay(repeatModel.getDayMonth());
+                checkDate.setShMonth(repeatModel.getMonth());
             }
         }
         Timber.i(format.format(checkDate));
