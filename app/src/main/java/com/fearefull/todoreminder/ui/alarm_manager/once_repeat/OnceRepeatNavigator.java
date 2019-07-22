@@ -1,10 +1,7 @@
 package com.fearefull.todoreminder.ui.alarm_manager.once_repeat;
 
-public interface OnceRepeatNavigator {
-    void timePickerClick();
+import com.fearefull.todoreminder.ui.alarm_manager.base_repeat.BaseRepeatNavigator;
+
+public interface OnceRepeatNavigator extends BaseRepeatNavigator {
     void datePickerClick();
-    void onAddRepeat();
-    void send();
-    void showError();
-    void showDuplicate();
 }

@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.ui.alarm_manager.once_repeat;
+package com.fearefull.todoreminder.ui.alarm_manager.daily_repeat;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -10,18 +10,18 @@ import com.fearefull.todoreminder.data.model.other.type.RepeatResponseType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
-public class OnceRepeatViewModel extends BaseViewModel<OnceRepeatNavigator> {
+public class DailyRepeatViewModel extends BaseViewModel<DailyRepeatNavigator> {
     private Alarm alarm;
     private RepeatModel repeatModel;
     private final MutableLiveData<Integer> currentTabPager;
     private final MutableLiveData<Integer> pageLimitPager;
 
-    public OnceRepeatViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+    public DailyRepeatViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
         repeatModel = new RepeatModel();
         currentTabPager = new MutableLiveData<>();
         pageLimitPager = new MutableLiveData<>();
-        pageLimitPager.setValue(2);
+        pageLimitPager.setValue(1);
     }
 
     public Alarm getAlarm() {
@@ -30,16 +30,6 @@ public class OnceRepeatViewModel extends BaseViewModel<OnceRepeatNavigator> {
 
     public void setAlarm(Alarm alarm) {
         this.alarm = alarm;
-    }
-
-    public void onTimePickerClick() {
-        getNavigator().timePickerClick();
-        currentTabPager.setValue(0);
-    }
-
-    public void onDatePickerClick() {
-        getNavigator().datePickerClick();
-        currentTabPager.setValue(1);
     }
 
     public void onAddClick() {
