@@ -7,8 +7,8 @@ public enum Repeat implements Serializable {
     DAILY(1, "روزانه"),
     WEEKLY(2, "هفتگی"),
     MONTHLY(3, "ماهانه"),
-    YEARLY(4, "سالانه"),
-    CUSTOM(5, "شخصی سازی");
+    YEARLY(4, "سالانه");
+    //CUSTOM(5, "شخصی سازی");
 
     private final Integer value;
     private final String text;

@@ -17,6 +17,7 @@ import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.daily_repeat.DailyRepeatFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat.monthly_repeat.MonthlyRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.weekly_repeat.WeeklyRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.yearly_repeat.YearlyRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleFragment;
@@ -123,18 +124,20 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         WeeklyRepeatFragment weeklyRepeatFragment = WeeklyRepeatFragment.newInstance(viewModel.getAlarm());
         weeklyRepeatFragment.setCallBack(this);
 
+        MonthlyRepeatFragment monthlyRepeatFragment = MonthlyRepeatFragment.newInstance(viewModel.getAlarm());
+        monthlyRepeatFragment.setCallBack(this);
+
         YearlyRepeatFragment yearlyRepeatFragment = YearlyRepeatFragment.newInstance(viewModel.getAlarm());
         yearlyRepeatFragment.setCallBack(this);
 
-        SimpleFragment simpleFragment2 = SimpleFragment.newInstance(viewModel.getAlarm());
-        SimpleFragment simpleFragment3 = SimpleFragment.newInstance(viewModel.getAlarm());
+        //SimpleFragment simpleFragment3 = SimpleFragment.newInstance(viewModel.getAlarm());
 
         pagerAdapter.addFragment(onceRepeatFragment, "once");
         pagerAdapter.addFragment(dailyRepeatFragment, "daily");
         pagerAdapter.addFragment(weeklyRepeatFragment, "weekly");
-        pagerAdapter.addFragment(simpleFragment2, "monthly");
+        pagerAdapter.addFragment(monthlyRepeatFragment, "monthly");
         pagerAdapter.addFragment(yearlyRepeatFragment, "yearly");
-        pagerAdapter.addFragment(simpleFragment3, "custom");
+        //pagerAdapter.addFragment(simpleFragment3, "custom");
         binding.viewPager.setAdapter(pagerAdapter);
 
         viewModel.initAlarm();

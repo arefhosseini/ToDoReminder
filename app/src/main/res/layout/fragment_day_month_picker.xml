@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fearefull.todoreminder.ui.alarm_manager.picker.day_month_picker.DayMonthPickerViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/default_layout_padding">
+
+        <NumberPicker
+            android:id="@+id/monthPicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            app:values="@{viewModel.dayMonthPickerValues}"
+            app:maxIndex="@{viewModel.dayMonthPickerMaxIndex}"
+            app:defaultIndex="@{viewModel.dayMonthPickerDefaultIndex}"
+            android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onDayMonthPickerValueChange(oldVal, newVal)}"
+            app:dividedColor="@{@color/secondaryColorLightTheme}"
+            android:descendantFocusability="blocksDescendants"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+</layout>

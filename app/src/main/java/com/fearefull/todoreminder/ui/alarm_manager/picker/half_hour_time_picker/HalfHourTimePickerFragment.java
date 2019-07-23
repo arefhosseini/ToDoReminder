@@ -28,7 +28,7 @@ public class HalfHourTimePickerFragment extends BaseFragment<FragmentHalfHourTim
     ViewModelProviderFactory factory;
     private HalfHourTimePickerViewModel viewModel;
     private HalfHourTimePickerCallBack callBackForOnceRepeat, callBackForDailyRepeat, callBackForWeeklyRepeat,
-            callBackForYearlyRepeat;
+            callBackForMonthlyRepeat, callBackForYearlyRepeat;
 
     public static HalfHourTimePickerFragment newInstance(int minute, int hour) {
         Bundle args = new Bundle();
@@ -81,6 +81,10 @@ public class HalfHourTimePickerFragment extends BaseFragment<FragmentHalfHourTim
         this.callBackForWeeklyRepeat = callBackForWeeklyRepeat;
     }
 
+    public void setCallBackForMonthlyRepeat(HalfHourTimePickerCallBack callBackForMonthlyRepeat) {
+        this.callBackForMonthlyRepeat = callBackForMonthlyRepeat;
+    }
+
     public void setCallBackForYearlyRepeat(HalfHourTimePickerCallBack callBackForYearlyRepeat) {
         this.callBackForYearlyRepeat = callBackForYearlyRepeat;
     }
@@ -93,6 +97,8 @@ public class HalfHourTimePickerFragment extends BaseFragment<FragmentHalfHourTim
             callBackForDailyRepeat.getHalfHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
         else if (repeat == Repeat.WEEKLY)
             callBackForWeeklyRepeat.getHalfHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
+        else if (repeat == Repeat.MONTHLY)
+            callBackForMonthlyRepeat.getHalfHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
         else if (repeat == Repeat.YEARLY)
             callBackForYearlyRepeat.getHalfHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
     }

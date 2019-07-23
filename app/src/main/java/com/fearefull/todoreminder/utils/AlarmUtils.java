@@ -215,11 +215,11 @@ public final class AlarmUtils {
         }
         else
             list.add(new RepeatItem(Repeat.YEARLY, false));
-        if (!isFind && defaultRepeat == Repeat.CUSTOM) {
+        /*if (!isFind && defaultRepeat == Repeat.CUSTOM) {
             list.add(new RepeatItem(Repeat.CUSTOM, true));
         }
         else
-            list.add(new RepeatItem(Repeat.CUSTOM, false));
+            list.add(new RepeatItem(Repeat.CUSTOM, false));*/
         return list;
     }
 
