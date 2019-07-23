@@ -11,8 +11,8 @@ public class MonthlyRepeatViewModel extends BaseRepeatViewModel<MonthlyRepeatNav
     }
 
     int getDefaultDayMonth() {
-        if (getRepeatModel().getDayMonth() > 30)
+        if (getAlarm().getDefaultDayMonth() > 30)
             return 30;
-        return getRepeatModel().getDayMonth();
+        return getAlarm().getDefaultDayMonth();
     }
 }
