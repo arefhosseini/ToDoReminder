@@ -63,6 +63,8 @@ public class AppAlarmScheduler implements AlarmScheduler {
                     checkTime = scheduleOnceRepeat(alarm.getRepeatModel(index), currentTime);
                 else if (alarm.getRepeat(index) == Repeat.DAILY)
                     checkTime = scheduleDailyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
+                else if (alarm.getRepeat(index) == Repeat.WEEKLY)
+                    checkTime = scheduleWeeklyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
                 else if (alarm.getRepeat(index) == Repeat.YEARLY)
                     checkTime = scheduleYearlyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
                 if (checkTime > 1000 && checkTime < closestTime) {
@@ -133,6 +135,51 @@ public class AppAlarmScheduler implements AlarmScheduler {
         }
         Timber.i(format.format(checkDate));
         return checkTime;
+    }
+
+    private long scheduleWeeklyRepeat(RepeatModel repeatModel, long currentTime, Alarm currentAlarm) {
+        PersianDate nowDate;
+        PersianDate bestTime = null;
+        PersianDate checkDate = new PersianDate();
+        checkDate.setSecond(0);
+        checkDate.setMinute(repeatModel.getMinute());
+        checkDate.setHour(repeatModel.getHour());
+        checkDate.setShDay(currentAlarm.getNowDay());
+        checkDate.setShMonth(currentAlarm.getNowMonth());
+        checkDate.setShYear(currentAlarm.getNowYear());
+        PersianDateFormat format = new PersianDateFormat();
+
+        boolean isFindNearTime = false;
+        long minTime = -1;
+        long checkTime;
+        while (!isFindNearTime) {
+            minTime = Long.MAX_VALUE;
+            for (int dayWeek: repeatModel.getDaysWeek()) {
+                int dayWeekIndex = Alarm.dayWeekToIndex(dayWeek);
+                nowDate = new PersianDate(checkDate.getTime());
+                Timber.e("dayOfWeek: %d, dayWeek: %d", nowDate.dayOfWeek(), dayWeekIndex);
+                checkTime = nowDate.getTime() - currentTime;
+                if (nowDate.dayOfWeek() == dayWeekIndex && checkTime > 1000 && checkTime < minTime) {
+                    minTime = checkTime;
+                    bestTime = new PersianDate(checkDate.getTime());
+                }
+                else if (nowDate.dayOfWeek() < dayWeekIndex){
+                    nowDate.addDay(dayWeekIndex - nowDate.dayOfWeek());
+                    checkTime = nowDate.getTime() - currentTime;
+                    if (nowDate.dayOfWeek() == dayWeekIndex && checkTime > 1000 && checkTime < minTime) {
+                        minTime = checkTime;
+                        bestTime = new PersianDate(checkDate.getTime());
+                    }
+                }
+            }
+            if (minTime < Long.MAX_VALUE)
+                isFindNearTime = true;
+            else {
+                checkDate.addDay(7 - checkDate.dayOfWeek() + Alarm.indexToDayWeek(repeatModel.getDaysWeek().get(0)));
+            }
+        }
+        Timber.i(format.format(bestTime));
+        return minTime;
     }
 
     private long scheduleYearlyRepeat(RepeatModel repeatModel, long currentTime, Alarm currentAlarm) {

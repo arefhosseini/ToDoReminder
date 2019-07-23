@@ -1054,7 +1054,7 @@ public class Alarm implements Serializable {
         repeatModel.setRepeat(Repeat.WEEKLY);
         repeatModel.setMinute(minutes.get(indexMinuteByIndexRepeat(index)));
         repeatModel.setHour(hours.get(indexHourByIndexRepeat(index)));
-        repeatModel.setDaysWeek(daysWeeks.get(indexDayWeekByIndexRepeat(index)));
+        repeatModel.setDaysWeek(new ArrayList<>(daysWeeks.get(indexDayWeekByIndexRepeat(index))));
 
         return repeatModel;
     }

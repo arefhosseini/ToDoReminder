@@ -233,7 +233,7 @@ public class RepeatModel {
     }
 
     private boolean isSameByWeekly(RepeatModel model) {
-        return this.minute == model.getMinute() && this.hour == model.getHour() && model.daysWeek.containsAll(daysWeek);
+        return this.minute == model.getMinute() && this.hour == model.getHour() && model.daysWeek.equals(daysWeek);
     }
 
     private boolean isSameByMonthly(RepeatModel model) {
