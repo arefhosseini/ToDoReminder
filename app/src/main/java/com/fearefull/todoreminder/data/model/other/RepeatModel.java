@@ -5,13 +5,16 @@ import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
 import com.fearefull.todoreminder.data.model.other.type.RepeatResponseType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import timber.log.Timber;
 
 public class RepeatModel {
     private Repeat repeat;
     private int minute;
     private int hour;
-    private int dayWeek;
+    private List<Integer> daysWeek;
     private int dayMonth;
     private int weekMonth;
     private int weekYear;
@@ -46,12 +49,16 @@ public class RepeatModel {
         this.hour = hour;
     }
 
-    public int getDayWeek() {
-        return dayWeek;
+    public List<Integer> getDaysWeek() {
+        return daysWeek;
     }
 
-    public void setDayWeek(int dayWeek) {
-        this.dayWeek = dayWeek;
+    public void addToDaysWeek(int dayWeek) {
+        daysWeek.add(dayWeek);
+    }
+
+    public void setDaysWeek(List<Integer> daysWeek) {
+        this.daysWeek = daysWeek;
     }
 
     public int getDayMonth() {
@@ -98,7 +105,10 @@ public class RepeatModel {
         repeat = null;
         minute = -1;
         hour = -1;
-        dayWeek = -1;
+        if (daysWeek == null)
+            daysWeek = new ArrayList<>();
+        else
+            daysWeek.clear();
         dayMonth = -1;
         weekMonth = -1;
         weekYear = -1;
@@ -167,7 +177,7 @@ public class RepeatModel {
     }
 
     private RepeatResponseType isWeeklyRepeatValid() {
-        if (repeat == Repeat.WEEKLY && minute != -1 && hour != -1 && dayWeek != -1)
+        if (repeat == Repeat.WEEKLY && minute != -1 && hour != -1 && daysWeek.size() > 0)
             return RepeatResponseType.TRUE;
         return RepeatResponseType.NOT_READY;
     }
@@ -223,8 +233,7 @@ public class RepeatModel {
     }
 
     private boolean isSameByWeekly(RepeatModel model) {
-        return this.minute == model.getMinute() && this.hour == model.getHour() &&
-                this.dayWeek == model.dayWeek;
+        return this.minute == model.getMinute() && this.hour == model.getHour() && model.daysWeek.containsAll(daysWeek);
     }
 
     private boolean isSameByMonthly(RepeatModel model) {

@@ -17,6 +17,7 @@ import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.daily_repeat.DailyRepeatFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat.weekly_repeat.WeeklyRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.yearly_repeat.YearlyRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleFragment;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
@@ -106,12 +107,12 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     }
 
     private void setUp() {
-        binding.viewPager.setEnableSwipe(false);
-
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         binding.repeatRecyclerView.setLayoutManager(layoutManager);
         binding.repeatRecyclerView.setItemAnimator(new DefaultItemAnimator());
         binding.repeatRecyclerView.setAdapter(repeatAdapter);
+
+        binding.viewPager.setEnableSwipe(false);
 
         OnceRepeatFragment onceRepeatFragment = OnceRepeatFragment.newInstance(viewModel.getAlarm());
         onceRepeatFragment.setCallBack(this);
@@ -119,16 +120,18 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         DailyRepeatFragment dailyRepeatFragment = DailyRepeatFragment.newInstance(viewModel.getAlarm());
         dailyRepeatFragment.setCallBack(this);
 
+        WeeklyRepeatFragment weeklyRepeatFragment = WeeklyRepeatFragment.newInstance(viewModel.getAlarm());
+        weeklyRepeatFragment.setCallBack(this);
+
         YearlyRepeatFragment yearlyRepeatFragment = YearlyRepeatFragment.newInstance(viewModel.getAlarm());
         yearlyRepeatFragment.setCallBack(this);
 
-        SimpleFragment simpleFragment = SimpleFragment.newInstance(viewModel.getAlarm());
         SimpleFragment simpleFragment2 = SimpleFragment.newInstance(viewModel.getAlarm());
         SimpleFragment simpleFragment3 = SimpleFragment.newInstance(viewModel.getAlarm());
 
         pagerAdapter.addFragment(onceRepeatFragment, "once");
         pagerAdapter.addFragment(dailyRepeatFragment, "daily");
-        pagerAdapter.addFragment(simpleFragment, "weekly");
+        pagerAdapter.addFragment(weeklyRepeatFragment, "weekly");
         pagerAdapter.addFragment(simpleFragment2, "monthly");
         pagerAdapter.addFragment(yearlyRepeatFragment, "yearly");
         pagerAdapter.addFragment(simpleFragment3, "custom");

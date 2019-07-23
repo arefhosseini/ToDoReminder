@@ -9,9 +9,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.data.model.other.item.DayWeekItem;
 import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 import com.fearefull.todoreminder.data.model.other.item.RepeatManagerItem;
 import com.fearefull.todoreminder.ui.alarm_manager.RepeatAdapter;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat.weekly_repeat.DayWeekAdapter;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerAdapter;
 import com.fearefull.todoreminder.ui.base.BaseViewPager;
 import com.fearefull.todoreminder.ui.home.AlarmAdapter;
@@ -45,6 +47,15 @@ public final class BindingUtils {
     @BindingAdapter({"adapter"})
     public static void addRepeatManagerITem(RecyclerView recyclerView, List<RepeatManagerItem> items) {
         RepeatManagerAdapter adapter = (RepeatManagerAdapter) recyclerView.getAdapter();
+        if (adapter != null) {
+            adapter.clearItems();
+            adapter.addItems(items);
+        }
+    }
+
+    @BindingAdapter({"adapter"})
+    public static void addDayWeekItem(RecyclerView recyclerView, List<DayWeekItem> items) {
+        DayWeekAdapter adapter = (DayWeekAdapter) recyclerView.getAdapter();
         if (adapter != null) {
             adapter.clearItems();
             adapter.addItems(items);

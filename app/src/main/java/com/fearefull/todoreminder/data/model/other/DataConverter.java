@@ -35,6 +35,28 @@ public class DataConverter implements Serializable {
     }
 
     @TypeConverter
+    public String fromListIntegerList(List<List<Integer>> listIntegerList) {
+        if (listIntegerList == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<List<Integer>>>() {
+        }.getType();
+        return gson.toJson(listIntegerList, type);
+    }
+
+    @TypeConverter
+    public List<List<Integer>> toListIntegerList(String listIntegerListString) {
+        if (listIntegerListString == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<List<Integer>>>() {
+        }.getType();
+        return gson.fromJson(listIntegerListString, type);
+    }
+
+    @TypeConverter
     public String fromBooleanList(List<Boolean> booleanList) {
         if (booleanList == null) {
             return (null);

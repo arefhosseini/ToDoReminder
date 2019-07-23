@@ -4,6 +4,7 @@ import com.fearefull.todoreminder.ui.alarm_manager.repeat.daily_repeat.DailyRepe
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.once_repeat.OnceRepeatFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.picker.date_picker.DatePickerFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.picker.half_hour_time_picker.HalfHourTimePickerFragmentProvider;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat.weekly_repeat.WeeklyRepeatFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.yearly_repeat.YearlyRepeatFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerDialogFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleFragmentProvider;
@@ -19,6 +20,7 @@ public abstract class AlarmManagerFragmentProvider {
             SimpleFragmentProvider.class,
             OnceRepeatFragmentProvider.class,
             DailyRepeatFragmentProvider.class,
+            WeeklyRepeatFragmentProvider.class,
             YearlyRepeatFragmentProvider.class,
             HalfHourTimePickerFragmentProvider.class,
             DatePickerFragmentProvider.class,

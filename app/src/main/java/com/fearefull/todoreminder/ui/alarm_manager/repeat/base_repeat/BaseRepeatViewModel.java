@@ -58,10 +58,13 @@ public abstract class BaseRepeatViewModel<W extends BaseRepeatNavigator> extends
             getNavigator().send();
         }
         else if (response == RepeatResponseType.FALSE){
+            getRepeatModel().reset();
             getNavigator().showError();
         }
-        else if (response == RepeatResponseType.DUPLICATE)
+        else if (response == RepeatResponseType.DUPLICATE) {
+            getRepeatModel().reset();
             getNavigator().showDuplicate();
+        }
     }
 
     public MutableLiveData<Integer> getCurrentTabPager() {

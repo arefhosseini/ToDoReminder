@@ -9,12 +9,12 @@ import androidx.room.TypeConverters;
 
 import com.fearefull.todoreminder.data.model.other.DataConverter;
 import com.fearefull.todoreminder.data.model.other.type.DayMonthType;
+import com.fearefull.todoreminder.data.model.other.type.DayWeekType;
 import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
 import com.fearefull.todoreminder.data.model.other.type.MonthType;
 import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
 import com.fearefull.todoreminder.data.model.other.RepeatModel;
 import com.fearefull.todoreminder.data.model.other.item.RepeatManagerItem;
-import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -60,8 +60,8 @@ public class Alarm implements Serializable {
     @ColumnInfo(name = "hours")
     private List<Integer> hours;
 
-    @ColumnInfo(name = "days_week")
-    private List<Integer> daysWeek;
+    @ColumnInfo(name = "days_weeks")
+    private List<List<Integer>> daysWeeks;
 
     @ColumnInfo(name = "days_month")
     private List<Integer> daysMonth;
@@ -333,20 +333,29 @@ public class Alarm implements Serializable {
 
 
     /**
-     * Control {@link #daysWeek}
+     * Control {@link #daysWeeks}
      */
-    public List<Integer> getDaysWeek() {
-        return daysWeek;
+    public List<List<Integer>> getDaysWeeks() {
+        return daysWeeks;
     }
 
-    public int getDayWeek(int index) {
-        return daysWeek.get(index);
+    public List<Integer> getDaysWeek(int index) {
+        return daysWeeks.get(index);
     }
 
-    public void setDaysWeek( List<Integer> daysWeek) {
-        this.daysWeek = daysWeek;
+    public void setDaysWeeks( List<List<Integer>> daysWeeks) {
+        this.daysWeeks = daysWeeks;
     }
 
+    @Ignore
+    public void addDaysWeek(List<Integer> daysWeek) {
+        daysWeeks.add(daysWeek);
+    }
+
+    @Ignore
+    public void editDaysWeekBy(List<Integer> daysWeek, int indexList) {
+        daysWeeks.set(indexList, daysWeek);
+    }
 
     /**
      * Control {@link #daysMonth}
@@ -551,7 +560,7 @@ public class Alarm implements Serializable {
         repeatsStatus = new ArrayList<>();
         minutes = new ArrayList<>();
         hours = new ArrayList<>();
-        daysWeek = new ArrayList<>();
+        daysWeeks = new ArrayList<>();
         daysMonth = new ArrayList<>();
         weeksMonth = new ArrayList<>();
         weeksYear = new ArrayList<>();
@@ -722,6 +731,16 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
+    public static int dayWeekToIndex(int dayWeek) {
+        return dayWeek - 1;
+    }
+
+    @Ignore
+    public static int indexToDayWeek(int index) {
+        return index + 1;
+    }
+
+    @Ignore
     public static int dayMonthToIndex(int dayMonth) {
         return dayMonth - 1;
     }
@@ -755,6 +774,41 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
+    public String getDaysWeekString(int indexDaysWeek) {
+        StringBuilder weekString = new StringBuilder();
+        List<Integer> daysWeek = getDaysWeek(indexDaysWeek);
+
+        boolean isSequence = false;
+        int size = daysWeek.size();
+        int sequenceCounter = 0;
+
+        if (size > 2) {
+            for (int index = 1; index < size; index++) {
+                if (daysWeek.get(index) == daysWeek.get(index - 1) + 1)
+                    sequenceCounter ++;
+            }
+        }
+
+        if (sequenceCounter == size - 1 && sequenceCounter >= 2)
+            isSequence = true;
+
+        if (isSequence) {
+            weekString.append(DayWeekType.getDayWeekTypeByValue(daysWeek.get(0)).getText());
+            weekString.append(" تا ");
+            weekString.append(DayWeekType.getDayWeekTypeByValue(daysWeek.get(size - 1)).getText());
+        }
+        else {
+            for (int index = 0; index < size; index++) {
+                weekString.append(DayWeekType.getDayWeekTypeByValue(daysWeek.get(index)).getText());
+                weekString.append(" ");
+            }
+        }
+        Timber.e("daysWeek size: %d", size);
+        Timber.e(weekString.toString());
+        return weekString.toString();
+    }
+
+    @Ignore
     public String getDateByDayMonthAndMonthAndYear(int indexDayMonth, int indexMonth, int indexYear) {
         String result = DayMonthType.getDayMonthTypeByValue(daysMonth.get(indexDayMonth)).getValue() + " " +
                 MonthType.getMonthType(months.get(indexMonth)).getText();
@@ -781,6 +835,13 @@ public class Alarm implements Serializable {
     public String getRepeatManagerStringByDaily(int index) {
         return getTime12String(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + " (" +
                 repeats.get(index).getText() + ")";
+    }
+
+    @Ignore
+    public String getRepeatManagerStringByWeekly(int index) {
+        Timber.e("string weekly");
+        return getTime12String(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) +
+                " " + getDaysWeekString(indexDayWeekByIndexRepeat(index));
     }
 
     @Ignore
@@ -846,6 +907,8 @@ public class Alarm implements Serializable {
             addRepeatModelByOnce(model);
         else if (model.getRepeat() == Repeat.DAILY)
             addRepeatModelByDaily(model);
+        else if (model.getRepeat() == Repeat.WEEKLY)
+            addRepeatModelByWeekly(model);
         else if (model.getRepeat() == Repeat.YEARLY)
             addRepeatModelByYearly(model);
     }
@@ -866,6 +929,13 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
+    public void addRepeatModelByWeekly(RepeatModel model) {
+        addMinuteByValue(model.getMinute());
+        add24HourByValue(model.getHour());
+        addDaysWeek(new ArrayList<>(model.getDaysWeek()));
+    }
+
+    @Ignore
     public void addRepeatModelByYearly(RepeatModel model) {
         addMinuteByValue(model.getMinute());
         add24HourByValue(model.getHour());
@@ -878,6 +948,8 @@ public class Alarm implements Serializable {
             return getRepeatManagerStringByOnce(index);
         if (repeats.get(index) == Repeat.DAILY)
             return getRepeatManagerStringByDaily(index);
+        if (repeats.get(index) == Repeat.WEEKLY)
+            return getRepeatManagerStringByWeekly(index);
         if (repeats.get(index) == Repeat.YEARLY)
             return getRepeatManagerStringByYearly(index);
         return "";
@@ -910,6 +982,13 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
+    public void removeRepeatManagerDataByWeekly(int index) {
+        minutes.remove(indexMinuteByIndexRepeat(index));
+        hours.remove(indexHourByIndexRepeat(index));
+        daysWeeks.remove(indexDayWeekByIndexRepeat(index));
+    }
+
+    @Ignore
     public void removeRepeatManagerDataByYearly(int index) {
         minutes.remove(indexMinuteByIndexRepeat(index));
         hours.remove(indexHourByIndexRepeat(index));
@@ -923,6 +1002,8 @@ public class Alarm implements Serializable {
             removeRepeatManagerDataByOnce(index);
         else if (repeats.get(index) == Repeat.DAILY)
             removeRepeatManagerDataByDaily(index);
+        else if (repeats.get(index) == Repeat.WEEKLY)
+            removeRepeatManagerDataByWeekly(index);
         else if (repeats.get(index) == Repeat.YEARLY)
             removeRepeatManagerDataByYearly(index);
 
@@ -937,6 +1018,8 @@ public class Alarm implements Serializable {
             return getRepeatModelByOnce(index);
         if (repeats.get(index) == Repeat.DAILY)
             return getRepeatModelByDaily(index);
+        if (repeats.get(index) == Repeat.WEEKLY)
+            return getRepeatModelByWeekly(index);
         if (repeats.get(index) == Repeat.YEARLY)
             return getRepeatModelByYearly(index);
         return new RepeatModel();
@@ -961,6 +1044,17 @@ public class Alarm implements Serializable {
         repeatModel.setRepeat(Repeat.DAILY);
         repeatModel.setMinute(minutes.get(indexMinuteByIndexRepeat(index)));
         repeatModel.setHour(hours.get(indexHourByIndexRepeat(index)));
+
+        return repeatModel;
+    }
+
+    @Ignore
+    private RepeatModel getRepeatModelByWeekly(int index) {
+        RepeatModel repeatModel = new RepeatModel();
+        repeatModel.setRepeat(Repeat.WEEKLY);
+        repeatModel.setMinute(minutes.get(indexMinuteByIndexRepeat(index)));
+        repeatModel.setHour(hours.get(indexHourByIndexRepeat(index)));
+        repeatModel.setDaysWeek(daysWeeks.get(indexDayWeekByIndexRepeat(index)));
 
         return repeatModel;
     }

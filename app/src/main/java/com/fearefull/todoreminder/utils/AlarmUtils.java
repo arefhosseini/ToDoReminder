@@ -1,6 +1,8 @@
 package com.fearefull.todoreminder.utils;
 
 import com.fearefull.todoreminder.data.model.db.Repeat;
+import com.fearefull.todoreminder.data.model.other.item.DayWeekItem;
+import com.fearefull.todoreminder.data.model.other.type.DayWeekType;
 import com.fearefull.todoreminder.data.model.other.type.MonthType;
 import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
@@ -218,6 +220,20 @@ public final class AlarmUtils {
         }
         else
             list.add(new RepeatItem(Repeat.CUSTOM, false));
+        return list;
+    }
+
+    public static List<DayWeekItem> getDayWeekItems() {
+        List<DayWeekItem> list = new ArrayList<>();
+
+        list.add(new DayWeekItem(DayWeekType.DAY_1, true));
+        list.add(new DayWeekItem(DayWeekType.DAY_2, false));
+        list.add(new DayWeekItem(DayWeekType.DAY_3, false));
+        list.add(new DayWeekItem(DayWeekType.DAY_4, false));
+        list.add(new DayWeekItem(DayWeekType.DAY_5, false));
+        list.add(new DayWeekItem(DayWeekType.DAY_6, false));
+        list.add(new DayWeekItem(DayWeekType.DAY_7, false));
+
         return list;
     }
 }

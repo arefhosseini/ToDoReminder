@@ -5,13 +5,13 @@ import androidx.databinding.ObservableField;
 import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 
 public class RepeatItemViewModel {
-    private final RepeatItem repeatType;
+    private final RepeatItem repeatItem;
     private final ObservableField<String> title = new ObservableField<>();
     private final RepeatItemViewModelListener listener;
 
-    public RepeatItemViewModel(RepeatItem repeatType, RepeatItemViewModelListener listener) {
-        this.repeatType = repeatType;
-        this.title.set(repeatType.getRepeat().getText());
+    public RepeatItemViewModel(RepeatItem repeatItem, RepeatItemViewModelListener listener) {
+        this.repeatItem = repeatItem;
+        this.title.set(repeatItem.getRepeat().getText());
         this.listener = listener;
     }
 
@@ -19,12 +19,12 @@ public class RepeatItemViewModel {
         return title;
     }
 
-    public RepeatItem getRepeatType() {
-        return repeatType;
+    public RepeatItem getRepeatItem() {
+        return repeatItem;
     }
 
     public void onItemClick() {
-        listener.onItemClick(repeatType);
+        listener.onItemClick(repeatItem);
     }
 
     public interface RepeatItemViewModelListener {
