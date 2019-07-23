@@ -9,4 +9,10 @@ public class MonthlyRepeatViewModel extends BaseRepeatViewModel<MonthlyRepeatNav
     public MonthlyRepeatViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
+
+    int getDefaultDayMonth() {
+        if (getRepeatModel().getDayMonth() > 30)
+            return 30;
+        return getRepeatModel().getDayMonth();
+    }
 }

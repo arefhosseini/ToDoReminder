@@ -82,7 +82,8 @@ implements MonthlyRepeatNavigator, DayMonthPickerFragment.DayMonthPickerCallBack
                 .add(R.id.time_picker_root_view, halfHourTimePickerFragment, HalfHourTimePickerFragment.TAG)
                 .commit();
 
-        DayMonthPickerFragment dayMonthPickerFragment = DayMonthPickerFragment.newInstance(viewModel.getAlarm().getDefaultDayMonth());
+
+        DayMonthPickerFragment dayMonthPickerFragment = DayMonthPickerFragment.newInstance(viewModel.getDefaultDayMonth());
         dayMonthPickerFragment.setCallBackForMonthly(this);
         callerDayMonth = dayMonthPickerFragment;
         getChildFragmentManager()

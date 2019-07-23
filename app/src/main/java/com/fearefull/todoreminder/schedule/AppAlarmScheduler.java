@@ -65,6 +65,8 @@ public class AppAlarmScheduler implements AlarmScheduler {
                     checkTime = scheduleDailyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
                 else if (alarm.getRepeat(index) == Repeat.WEEKLY)
                     checkTime = scheduleWeeklyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
+                else if (alarm.getRepeat(index) == Repeat.MONTHLY)
+                    checkTime = scheduleMonthlyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
                 else if (alarm.getRepeat(index) == Repeat.YEARLY)
                     checkTime = scheduleYearlyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
                 if (checkTime > 1000 && checkTime < closestTime) {
@@ -180,6 +182,32 @@ public class AppAlarmScheduler implements AlarmScheduler {
         }
         Timber.i(format.format(bestTime));
         return minTime;
+    }
+
+    private long scheduleMonthlyRepeat(RepeatModel repeatModel, long currentTime, Alarm currentAlarm) {
+        PersianDate checkDate = new PersianDate();
+        checkDate.setSecond(0);
+        checkDate.setMinute(repeatModel.getMinute());
+        checkDate.setHour(repeatModel.getHour());
+        checkDate.setShDay(repeatModel.getDayMonth());
+        checkDate.setShMonth(currentAlarm.getNowMonth());
+        checkDate.setShYear(currentAlarm.getNowYear());
+        PersianDateFormat format = new PersianDateFormat();
+
+        boolean isFindNearTime = false;
+        long checkTime = -1;
+        while (!isFindNearTime) {
+            checkTime = checkDate.getTime() - currentTime;
+            if (checkTime > 1000)
+                isFindNearTime = true;
+            else {
+                checkDate.addMonth(1);
+                checkDate.setMinute(repeatModel.getMinute());
+                checkDate.setHour(repeatModel.getHour());
+            }
+        }
+        Timber.i(format.format(checkDate));
+        return checkTime;
     }
 
     private long scheduleYearlyRepeat(RepeatModel repeatModel, long currentTime, Alarm currentAlarm) {
