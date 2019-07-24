@@ -27,50 +27,64 @@
 
             <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/backgroundColorLightTheme">
 
-                <com.google.android.material.appbar.AppBarLayout
-                    android:id="@+id/appBar"
+                <com.github.florent37.shapeofview.shapes.ArcView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fitsSystemWindows="true"
-                    android:theme="@style/AppTheme.AppBarOverlay">
-                    <androidx.appcompat.widget.Toolbar
-                        android:id="@+id/toolbar"
+                    android:elevation="4dp"
+                    app:shape_arc_height="24dp"
+                    app:shape_arc_position="bottom">
+
+                    <com.google.android.material.appbar.AppBarLayout
+                        android:id="@+id/appBar"
                         android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        android:padding="0dp"
-                        app:layout_collapseMode="pin"
-                        app:popupTheme="@style/AppTheme.PopupOverlay" >
-                        <TextView
-                            android:id="@+id/toolbar_title"
-                            style="@style/Toolbar.TitleText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="@string/app_name" />
-                    </androidx.appcompat.widget.Toolbar>
-                </com.google.android.material.appbar.AppBarLayout>
+                        android:layout_height="wrap_content"
+                        android:fitsSystemWindows="true"
+                        android:theme="@style/AppTheme.AppBarOverlay">
+                        <androidx.appcompat.widget.Toolbar
+                            android:id="@+id/toolbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="74dp"
+                            android:padding="0dp"
+                            app:layout_collapseMode="pin"
+                            app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+                            <TextView
+                                android:id="@+id/toolbar_title"
+                                style="@style/Toolbar.TitleText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal|top"
+                                android:text="@string/app_name" />
+                        </androidx.appcompat.widget.Toolbar>
+                    </com.google.android.material.appbar.AppBarLayout>
+
+                </com.github.florent37.shapeofview.shapes.ArcView>
 
                 <RelativeLayout
                     android:id="@+id/mainSubRootView"
                     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/backgroundColorLightTheme"/>
+                    android:layout_marginTop="74dp" />
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-            <com.google.android.material.navigation.NavigationView
+            <com.rom4ek.arcnavigationview.ArcNavigationView
                 android:id="@+id/navigationView"
                 style="@style/Widget.Design.NavigationView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
+                android:fitsSystemWindows="true"
                 android:background="@color/backgroundColorLightTheme"
                 app:itemBackground="@drawable/drawer_background_item"
                 app:itemIconTint="@color/primaryColorLightTheme"
                 app:itemTextColor="@color/drawer_item"
-                app:menu="@menu/drawer">
+                app:menu="@menu/drawer"
+                app:arc_cropDirection="cropOutside"
+                app:arc_width="96dp">
 
                 <TextView
                     android:id="@+id/tvAppVersion"
@@ -81,8 +95,7 @@
                     android:padding="5dp"
                     android:textColor="@color/secondaryTextColorLightTheme"
                     android:text="@{viewModel.appVersion}" />
-            </com.google.android.material.navigation.NavigationView>
-
+            </com.rom4ek.arcnavigationview.ArcNavigationView>
         </androidx.drawerlayout.widget.DrawerLayout>
 
         <androidx.core.widget.ContentLoadingProgressBar

@@ -369,7 +369,6 @@
                                                     android:layout_width="28dp"
                                                     android:layout_height="28dp"
                                                     android:scaleType="fitCenter"
-                                                    android:translationZ="18dp"
                                                     android:layout_gravity="center"
                                                     android:layout_marginRight="6dp"
                                                     android:src="@drawable/unselected_bell" />
@@ -377,7 +376,7 @@
                                                 <TextView
                                                     android:layout_width="12dp"
                                                     android:layout_height="12dp"
-                                                    android:translationZ="36dp"
+                                                    android:translationZ="14dp"
                                                     android:gravity="center"
                                                     style="@style/TextStyle.Title.Mini"
                                                     android:layout_marginRight="6dp"

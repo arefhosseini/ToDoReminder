@@ -3,7 +3,7 @@ package com.fearefull.todoreminder.data.model.db;
 import java.io.Serializable;
 
 public enum Repeat implements Serializable {
-    ONCE(0, "فقط یک بار"),
+    ONCE(0, "یک مرتبه"),
     DAILY(1, "روزانه"),
     WEEKLY(2, "هفتگی"),
     MONTHLY(3, "ماهانه"),

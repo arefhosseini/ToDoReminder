@@ -68,6 +68,9 @@ ext {
     // custom FAB
     costomFABVersion = '2.1.0'
 
+    // arc navigation view
+    arcNavigationViewVersion = '1.0.3'
+
     // debug database
     debugDBVersion = '1.0.6'
 
