@@ -19,6 +19,7 @@ import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.main.MainCaller;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel>
         implements HomeNavigator, AlarmAdapter.AlarmAdapterListener, MainCaller {
@@ -27,6 +28,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Inject
     AlarmAdapter alarmAdapter;
     @Inject
+    @Named("Home")
     LinearLayoutManager layoutManager;
     @Inject
     ViewModelProviderFactory factory;
@@ -91,6 +93,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         alarmAdapter.clearItems();
         viewModel.reloadAlarmData();
         return true;
+    }
+
+    @Override
+    public void showAlarmManagerFragment(Alarm alarm) {
+        callBack.onOpenAlarmManager(alarm);
     }
 
     public interface HomeCallBack {

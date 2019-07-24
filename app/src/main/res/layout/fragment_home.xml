@@ -11,27 +11,49 @@
 
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="RtlHardcoded"
-        android:background="@color/backgroundColorLightTheme">
+        tools:ignore="RtlHardcoded">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            tools:ignore="RtlHardcoded"
+            android:background="@color/backgroundColorLightTheme">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/alarmRecyclerView"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layoutDirection="rtl"
-                android:padding="@dimen/recycler_view_padding"
-                app:adapter="@{viewModel.getAlarmItemsLiveData}"
-                tools:listitem="@layout/item_alarm" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/alarmRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layoutDirection="rtl"
+                    android:padding="@dimen/recycler_view_padding"
+                    app:adapter="@{viewModel.getAlarmItemsLiveData}"
+                    tools:listitem="@layout/item_alarm" />
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/fab_margin"
+            android:tint="@color/whiteColor"
+            app:rippleColor="@color/whiteColor"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> viewModel.onOpenAlarmManager()}"
+            android:src="@drawable/ic_add_black_24dp" />
+    </RelativeLayout>
 
 </layout>

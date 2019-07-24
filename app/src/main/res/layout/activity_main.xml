@@ -43,6 +43,7 @@
                         app:layout_collapseMode="pin"
                         app:popupTheme="@style/AppTheme.PopupOverlay" >
                         <TextView
+                            android:id="@+id/toolbar_title"
                             style="@style/Toolbar.TitleText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -57,19 +58,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/backgroundColorLightTheme"/>
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_margin="@dimen/fab_margin"
-                    android:tint="@color/whiteColor"
-                    app:rippleColor="@color/whiteColor"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="@{() -> viewModel.onOpenAlarmManager()}"
-                    android:src="@drawable/ic_add_black_24dp" />
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
             <com.google.android.material.navigation.NavigationView

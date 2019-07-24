@@ -10,6 +10,7 @@ import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 public class MainViewModel extends BaseViewModel<MainNavigator> {
 
     private final ObservableField<String> appVersion = new ObservableField<>();
+    private MainNavigationItem navigationItem;
 
     public MainViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -26,7 +27,11 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
         appVersion.set(version);
     }
 
-    public void onOpenAlarmManager() {
-        getNavigator().openAlarmManager(new Alarm("Alarm"));
+    public MainNavigationItem getNavigationItem() {
+        return navigationItem;
+    }
+
+    public void setNavigationItem(MainNavigationItem navigationItem) {
+        this.navigationItem = navigationItem;
     }
 }

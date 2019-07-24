@@ -4,5 +4,4 @@ import com.fearefull.todoreminder.data.model.db.Alarm;
 
 public interface MainNavigator {
     void handleError(Throwable throwable);
-    void openAlarmManager(Alarm alarm);
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -26,6 +27,7 @@ import com.fearefull.todoreminder.ui.about.AboutFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerFragment;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
+import com.fearefull.todoreminder.ui.history.HistoryFragment;
 import com.fearefull.todoreminder.ui.home.HomeFragment;
 import com.fearefull.todoreminder.utils.CommonUtils;
 import com.google.android.material.navigation.NavigationView;
@@ -99,20 +101,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         }
     }
 
-    @Override
-    public void openAlarmManager(Alarm alarm) {
-        lockDrawer();
-
-        AlarmManagerFragment fragment = AlarmManagerFragment.newInstance(alarm);
-        fragment.setCallBack(this);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.mainRootView, fragment, AlarmManagerFragment.TAG)
-                .commit();
-    }
-
     @SuppressLint("RtlHardcoded")
     @Override
     public void onBackPressed() {
@@ -120,13 +108,22 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         if (fragment == null) {
             fragment = getSupportFragmentManager().findFragmentByTag(AlarmManagerFragment.TAG);
             if (fragment == null) {
-                if (drawer.isDrawerOpen(Gravity.RIGHT))
-                    lockDrawer();
-                else
-                    finish();
+                fragment = getSupportFragmentManager().findFragmentByTag(HistoryFragment.TAG);
+                if (fragment == null) {
+                    if (drawer.isDrawerOpen(Gravity.RIGHT))
+                        lockDrawer();
+                    else
+                        finish();
+                }
+                else {
+                    showHomeFragment();
+                    navigationView.setCheckedItem(R.id.navigationItemHome);
+                    viewModel.setNavigationItem(MainNavigationItem.HOME);
+                }
             }
-            else
+            else {
                 onFragmentDetached(AlarmManagerFragment.TAG);
+            }
         }
         else
             onFragmentDetached(AboutFragment.TAG);
@@ -135,6 +132,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     public void onFragmentDetached(String tag) {
@@ -148,6 +150,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     .remove(fragment)
                     .commitNow();
             unlockDrawer();
+            if (tag.equals(AboutFragment.TAG)) {
+                navigationView.setCheckedItem(R.id.navigationItemHome);
+            }
         }
     }
 
@@ -194,6 +199,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         viewModel.updateAppVersion(CommonUtils.getAppVersionString(getApplicationContext()));
         viewModel.onNavigationMenuCreated();
 
+        viewModel.setNavigationItem(MainNavigationItem.HOME);
         showHomeFragment();
     }
 
@@ -210,9 +216,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     navigationView.setCheckedItem(item.getItemId());
                     switch (item.getItemId()) {
                         case R.id.navigationItemHome:
+
+                            if (viewModel.getNavigationItem() != MainNavigationItem.HOME) {
+                                showHomeFragment();
+                                viewModel.setNavigationItem(MainNavigationItem.HOME);
+                            }
                             return true;
                         case R.id.navigationItemHistory:
-                            //
+                            if (viewModel.getNavigationItem() != MainNavigationItem.HISTORY) {
+                                showHistoryFragment();
+                                viewModel.setNavigationItem(MainNavigationItem.HISTORY);
+                            }
                             return true;
                         case R.id.navigationItemSettings:
                             //
@@ -232,19 +246,45 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 .beginTransaction()
                 .disallowAddToBackStack()
                 .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.mainRootView, AboutFragment.newInstance(), AboutFragment.TAG)
+                .replace(R.id.mainRootView, AboutFragment.newInstance(), AboutFragment.TAG)
                 .commit();
     }
 
     private void showHomeFragment() {
-        lockDrawer();
-        HomeFragment homeFragment = HomeFragment.newInstance();
-        homeFragment.setCallBack(this);
-        callerHome = homeFragment;
+        HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(HomeFragment.TAG);
+        if (homeFragment == null) {
+            homeFragment = HomeFragment.newInstance();
+            homeFragment.setCallBack(this);
+            callerHome = homeFragment;
+        }
+        binding.toolbarTitle.setText(R.string.app_name);
         getSupportFragmentManager()
                 .beginTransaction()
-                .disallowAddToBackStack()
-                .add(R.id.mainSubRootView, homeFragment, HomeFragment.TAG)
+                .replace(R.id.mainSubRootView, homeFragment, HomeFragment.TAG)
+                .commit();
+    }
+
+    private void showHistoryFragment() {
+        HistoryFragment historyFragment = (HistoryFragment) getSupportFragmentManager().findFragmentByTag(HistoryFragment.TAG);
+        if (historyFragment == null) {
+            historyFragment = HistoryFragment.newInstance();
+        }
+        binding.toolbarTitle.setText(R.string.history);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.mainSubRootView, historyFragment, HistoryFragment.TAG)
+                .commit();
+    }
+
+    public void showAlarmManagerFragment(Alarm alarm) {
+        lockDrawer();
+
+        AlarmManagerFragment fragment = AlarmManagerFragment.newInstance(alarm);
+        fragment.setCallBack(this);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                .replace(R.id.mainRootView, fragment, AlarmManagerFragment.TAG)
                 .commit();
     }
 
@@ -255,6 +295,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public void onOpenAlarmManager(Alarm alarm) {
-        openAlarmManager(alarm);
+        showAlarmManagerFragment(alarm);
     }
 }

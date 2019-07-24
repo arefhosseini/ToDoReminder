@@ -10,6 +10,8 @@ import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
 import java.util.List;
 
+import timber.log.Timber;
+
 public class HomeViewModel extends BaseViewModel<HomeNavigator> {
 
     private final AlarmScheduler alarmScheduler;
@@ -27,9 +29,7 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                 .getAllAlarms()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(alarmItemsLiveData::setValue, throwable -> {
-
-                })
+                .subscribe(alarmItemsLiveData::setValue, Timber::e)
         );
     }
 
@@ -40,5 +40,9 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
     void reloadAlarmData() {
         fetchAlarmData();
         alarmScheduler.schedule();
+    }
+
+    public void onOpenAlarmManager() {
+        getNavigator().showAlarmManagerFragment(new Alarm("-"));
     }
 }

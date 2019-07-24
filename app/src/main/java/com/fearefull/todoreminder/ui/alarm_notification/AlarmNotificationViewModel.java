@@ -6,6 +6,7 @@ import androidx.databinding.ObservableField;
 
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.data.model.db.History;
 import com.fearefull.todoreminder.data.model.db.Snooze;
 import com.fearefull.todoreminder.data.model.other.type.DayMonthType;
 import com.fearefull.todoreminder.data.model.other.type.MonthType;
@@ -14,6 +15,8 @@ import com.fearefull.todoreminder.schedule.AlarmScheduler;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AppConstants;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
+
+import timber.log.Timber;
 
 public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationNavigator> {
     private final AlarmScheduler alarmScheduler;
@@ -71,20 +74,20 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
         handler.postDelayed(runnable, AppConstants.COUTNT_DOWN_ALARM_TIMER);
     }
 
-    void cancelCountdown() {
+    private void cancelCountdown() {
         handler.removeCallbacks(runnable);
     }
 
-    void goOff() {
+    private void goOff() {
         if (snooze.getType() != SnoozeType.THIRD) {
             snooze.setNextSnooze();
             getDataManager().addSnooze(snooze);
+            alarmScheduler.schedule();
+            getNavigator().destroy();
         }
         else {
-            getDataManager().removeSnooze(snooze);
+            insertHistory(createHistory(false));
         }
-        alarmScheduler.schedule();
-        getNavigator().destroy();
     }
 
     public void onDismissClick() {
@@ -94,9 +97,25 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
 
     public void onConfirmClick() {
         cancelCountdown();
-        getDataManager().removeSnooze(snooze);
-        alarmScheduler.schedule();
-        getNavigator().destroy();
+        insertHistory(createHistory(true));
+    }
+
+    private History createHistory(boolean isDone) {
+        return new History(isDone, alarm.getTitle(),
+                History.getTimeStampTime(alarm.getNowMinute(), alarm.getNowHour(),
+                        alarm.getNowDay(), alarm.getNowMonth(), alarm.getNowYear()));
+    }
+
+    private void insertHistory(History history) {
+        getCompositeDisposable().add(getDataManager().insertHistory(history)
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(result -> {
+                    getDataManager().removeSnooze(snooze);
+                    alarmScheduler.schedule();
+                    getNavigator().destroy();
+                }, Timber::e)
+        );
     }
 
     public ObservableField<String> getTitleString() {

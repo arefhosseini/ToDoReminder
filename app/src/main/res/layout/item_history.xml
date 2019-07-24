@@ -15,18 +15,49 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@color/whiteColor"
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:onLongClick="@{() -> viewModel.onItemLongClick()}"
+            android:onLongClick="@{() -> viewModel.onLongClick()}"
             android:orientation="vertical"
             app:cardCornerRadius="6dp"
             app:cardElevation="4dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyle.Title"
+                    android:text="@{viewModel.title}"
+                    android:textColor="@color/primaryTextColorLightTheme"
+                    android:padding="@dimen/default_half_layout_padding"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyle.Title.Sub"
+                    android:text="@{viewModel.time}"
+                    android:textColor="@color/secondaryTextColorLightTheme"
+                    android:padding="@dimen/default_half_layout_padding"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyle.Title.Sub"
+                    android:text="@{viewModel.isDone}"
+                    android:textColor="@color/secondaryTextColorLightTheme"
+                    android:padding="@dimen/default_half_layout_padding"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
 </layout>

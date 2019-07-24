@@ -11,27 +11,36 @@
 
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="RtlHardcoded"
-        android:background="@color/backgroundColorLightTheme">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@color/backgroundColorLightTheme"
+        app:refreshColor="@{true}"
+        app:refreshing="@{viewModel.isRefreshing}"
+        app:onRefreshListener="@{() -> viewModel.onRefresh()}">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            tools:ignore="RtlHardcoded">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/historyRecyclerView"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layoutDirection="rtl"
-                android:padding="@dimen/recycler_view_padding"
-                app:adapter="@{viewModel.getHistoryItemsLiveData}"
-                tools:listitem="@layout/item_history" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/historyRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layoutDirection="rtl"
+                    android:padding="@dimen/recycler_view_padding"
+                    app:adapter="@{viewModel.getHistoryItemsLiveData}"
+                    tools:listitem="@layout/item_history" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

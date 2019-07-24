@@ -4,7 +4,11 @@ package com.fearefull.todoreminder.data.model.db;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
+import com.fearefull.todoreminder.data.model.other.type.MonthType;
 
 import java.io.Serializable;
 
@@ -92,10 +96,30 @@ public class History implements Serializable {
         this.note = note;
     }
 
+
     public History(@NonNull Boolean isDone, @NonNull String title, @NonNull Long time) {
         this.isDone = isDone;
         this.title = title;
         this.time = time;
         note = "";
+    }
+
+    @Ignore
+    public static Long getTimeStampTime(int minute, int hour, int dayMonth, int month, int year) {
+        PersianDate persianDate = new PersianDate();
+        persianDate.setSecond(0);
+        persianDate.setMinute(minute);
+        persianDate.setHour(hour);
+        persianDate.setShDay(dayMonth);
+        persianDate.setShMonth(month);
+        persianDate.setShYear(year);
+        return persianDate.getTime();
+    }
+
+    @Ignore
+    public String timeToString() {
+        PersianDate persianDate = new PersianDate(time);
+        return persianDate.getMinute() + ":" + persianDate.getHour() + " " + persianDate.getShDay() +
+                " " + MonthType.getMonthType(persianDate.getShMonth()) + persianDate.getShYear();
     }
 }

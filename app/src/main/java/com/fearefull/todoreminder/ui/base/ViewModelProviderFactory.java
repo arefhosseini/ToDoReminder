@@ -19,6 +19,7 @@ import com.fearefull.todoreminder.ui.alarm_manager.repeat.yearly_repeat.YearlyRe
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleViewModel;
 import com.fearefull.todoreminder.ui.alarm_notification.AlarmNotificationViewModel;
+import com.fearefull.todoreminder.ui.history.HistoryViewModel;
 import com.fearefull.todoreminder.ui.home.HomeViewModel;
 import com.fearefull.todoreminder.ui.main.MainViewModel;
 import com.fearefull.todoreminder.ui.splash.SplashViewModel;
@@ -63,6 +64,10 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         if (modelClass.isAssignableFrom(HomeViewModel.class)) {
             //noinspection unchecked
             return (T) new HomeViewModel(dataManager, schedulerProvider, alarmScheduler);
+        }
+        if (modelClass.isAssignableFrom(HistoryViewModel.class)) {
+            //noinspection unchecked
+            return (T) new HistoryViewModel(dataManager, schedulerProvider);
         }
         if (modelClass.isAssignableFrom(AboutViewModel.class)) {
             //noinspection unchecked

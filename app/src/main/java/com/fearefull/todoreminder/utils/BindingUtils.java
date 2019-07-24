@@ -4,10 +4,13 @@ import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.widget.NumberPicker;
 
+import androidx.core.content.ContextCompat;
 import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.History;
 import com.fearefull.todoreminder.data.model.other.item.DayWeekItem;
@@ -47,11 +50,11 @@ public final class BindingUtils {
     }
 
     @BindingAdapter({"adapter"})
-    public static void addHistoryItems(RecyclerView recyclerView, List<History> historyList) {
+    public static void addHistoryItems(RecyclerView recyclerView, List<History> itemList) {
         HistoryAdapter adapter = (HistoryAdapter) recyclerView.getAdapter();
         if (adapter != null) {
             adapter.clearItems();
-            adapter.addItems(historyList);
+            adapter.addItems(itemList);
         }
     }
 
@@ -87,6 +90,14 @@ public final class BindingUtils {
         if (limit.getValue() != null) {
             if (viewPager.getOffscreenPageLimit() != limit.getValue())
                 viewPager.setOffscreenPageLimit(limit.getValue());
+        }
+    }
+
+    @BindingAdapter({"refreshColor"})
+    public static void setRefreshColors(SwipeRefreshLayout refreshLayout, Boolean isSet) {
+        if (isSet) {
+            refreshLayout.setColorSchemeColors(
+                    ContextCompat.getColor(refreshLayout.getContext(), R.color.secondaryColorLightTheme));
         }
     }
 

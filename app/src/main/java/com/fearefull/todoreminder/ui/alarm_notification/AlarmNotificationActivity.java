@@ -114,8 +114,6 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
 
     @Override
     public void onBackPressed() {
-        viewModel.cancelCountdown();
-        viewModel.goOff();
-        super.onBackPressed();
+        viewModel.onDismissClick();
     }
 }

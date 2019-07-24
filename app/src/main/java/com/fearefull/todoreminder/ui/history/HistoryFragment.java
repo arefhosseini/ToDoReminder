@@ -19,6 +19,7 @@ import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 public class HistoryFragment extends BaseFragment<FragmentHistoryBinding, HistoryViewModel>
         implements HistoryNavigator, HistoryAdapter.HistoryAdapterListener{
@@ -27,6 +28,7 @@ public class HistoryFragment extends BaseFragment<FragmentHistoryBinding, Histor
     @Inject
     HistoryAdapter historyAdapter;
     @Inject
+    @Named("History")
     LinearLayoutManager layoutManager;
     @Inject
     ViewModelProviderFactory factory;

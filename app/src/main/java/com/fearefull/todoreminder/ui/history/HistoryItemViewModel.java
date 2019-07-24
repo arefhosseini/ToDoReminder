@@ -9,7 +9,7 @@ public class HistoryItemViewModel {
     private final HistoryItemViewModelListener listener;
     private final ObservableField<String> title;
     private final ObservableField<String> time;
-    private final ObservableField<Boolean> isDone;
+    private final ObservableField<String> isDone;
 
     public HistoryItemViewModel(History history, HistoryItemViewModelListener listener) {
         this.history = history;
@@ -18,22 +18,36 @@ public class HistoryItemViewModel {
         title = new ObservableField<>();
         time = new ObservableField<>();
         isDone = new ObservableField<>();
+
+        title.set(history.getTitle());
+        time.set(history.timeToString());
+        if (history.getDone()) {
+            isDone.set("انجام شده");
+        }
+        else {
+            isDone.set("انجام نشده");
+        }
     }
 
     public ObservableField<String> getTitle() {
         return title;
     }
 
+    public ObservableField<String> getTime() {
+        return time;
+    }
+
     public History getHistory() {
         return history;
     }
 
-    public ObservableField<Boolean> getIsDone() {
+    public ObservableField<String> getIsDone() {
         return isDone;
     }
 
-    public void onLongClick() {
+    public boolean onLongClick() {
         listener.onLongClick(history);
+        return false;
     }
 
     public interface HistoryItemViewModelListener {
