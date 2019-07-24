@@ -119,7 +119,7 @@ public class History implements Serializable {
     @Ignore
     public String timeToString() {
         PersianDate persianDate = new PersianDate(time);
-        return persianDate.getMinute() + ":" + persianDate.getHour() + " " + persianDate.getShDay() +
-                " " + MonthType.getMonthType(persianDate.getShMonth()) + persianDate.getShYear();
+        return persianDate.getHour() + ":" + persianDate.getMinute() + " " + persianDate.getShDay() +
+                " " + MonthType.getMonthType(persianDate.getShMonth()).getText() + " " + persianDate.getShYear();
     }
 }

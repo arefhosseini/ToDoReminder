@@ -4,8 +4,10 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.data.model.db.History;
 import com.fearefull.todoreminder.databinding.ItemHistoryBinding;
 import com.fearefull.todoreminder.ui.base.BaseViewHolder;
@@ -70,6 +72,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             viewModel = new HistoryItemViewModel(item, this);
             binding.setViewModel(viewModel);
             binding.executePendingBindings();
+
+            if (item.getDone()) {
+                binding.isDoneLayout.setBackground(ContextCompat.getDrawable(binding.isDoneLayout.getContext(), R.color.greenDarkColor));
+            }
+            else {
+                binding.isDoneLayout.setBackground(ContextCompat.getDrawable(binding.isDoneLayout.getContext(), R.color.redDark2Color));
+            }
         }
 
         @Override

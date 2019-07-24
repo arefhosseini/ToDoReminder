@@ -11,6 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layoutDirection="ltr"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
@@ -18,46 +19,108 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@color/whiteColor"
-            android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             android:onLongClick="@{() -> viewModel.onLongClick()}"
             android:orientation="vertical"
             app:cardCornerRadius="6dp"
             app:cardElevation="4dp">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <TextView
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/verticalLine"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.35" />
+
+                <ImageView
+                    android:id="@+id/titleImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:scaleX="-1"
+                    app:layout_constraintBottom_toBottomOf="@id/titleTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/titleTextView"
+                    android:tint="@color/iconColorLightTheme"
+                    app:srcCompat="@drawable/ic_label_black_24dp" />
+
+                <TextView
+                    android:id="@+id/titleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="4dp"
                     style="@style/TextStyle.Title"
                     android:text="@{viewModel.title}"
+                    android:gravity="right"
                     android:textColor="@color/primaryTextColorLightTheme"
-                    android:padding="@dimen/default_half_layout_padding"
-                    android:layout_gravity="center_horizontal"/>
+                    app:layout_constraintEnd_toStartOf="@+id/titleImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/timeImageView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="@id/timeTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/timeTextView"
+                    android:tint="@color/iconColorLightTheme"
+                    app:srcCompat="@drawable/ic_access_time_black_24dp" />
 
                 <TextView
+                    android:id="@+id/timeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
                     style="@style/TextStyle.Title.Sub"
                     android:text="@{viewModel.time}"
+                    android:gravity="right"
                     android:textColor="@color/secondaryTextColorLightTheme"
-                    android:padding="@dimen/default_half_layout_padding"
-                    android:layout_gravity="center_horizontal"/>
+                    app:layout_constraintEnd_toStartOf="@+id/timeImageView"
+                    app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextStyle.Title.Sub"
-                    android:text="@{viewModel.isDone}"
-                    android:textColor="@color/secondaryTextColorLightTheme"
-                    android:padding="@dimen/default_half_layout_padding"
-                    android:layout_gravity="center_horizontal"/>
-            </LinearLayout>
+                <com.github.florent37.shapeofview.shapes.CutCornerView
+                    android:id="@+id/clipCorner"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="4dp"
+                    android:elevation="4dp"
+                    app:layout_constraintEnd_toStartOf="@id/verticalLine"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/timeTextView"
+                    app:shape_cutCorner_topRightSize="35dp">
+
+                    <View
+                        android:id="@+id/is_done_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/orangeColor" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="35dp"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:padding="@dimen/default_half_layout_padding"
+                            style="@style/TextStyle.Title.Sub"
+                            android:text="@{viewModel.isDone}"
+                            android:textColor="@color/primaryTextColorDarkTheme" />
+                    </RelativeLayout>
+                </com.github.florent37.shapeofview.shapes.CutCornerView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
 </layout>
