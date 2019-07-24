@@ -130,4 +130,10 @@ public class WeeklyRepeatFragment extends BaseRepeatFragment<FragmentWeeklyRepea
     public void onDayWeekItemClick(DayWeekItem dayWeekItem) {
         viewModel.changeDayWeekItem(dayWeekItem);
     }
+
+    @Override
+    public void call() {
+        onAddRepeat();
+    }
+
 }

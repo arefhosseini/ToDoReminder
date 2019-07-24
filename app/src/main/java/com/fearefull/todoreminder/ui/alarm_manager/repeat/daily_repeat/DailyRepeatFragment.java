@@ -120,4 +120,9 @@ public class DailyRepeatFragment extends BaseRepeatFragment<FragmentDailyRepeatB
         binding.timeIcon.setAnimation(shake);
         shake.start();
     }
+
+    @Override
+    public void call() {
+        onAddRepeat();
+    }
 }

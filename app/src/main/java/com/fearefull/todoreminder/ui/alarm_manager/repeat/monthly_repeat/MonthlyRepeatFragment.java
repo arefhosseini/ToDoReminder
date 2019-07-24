@@ -117,4 +117,9 @@ implements MonthlyRepeatNavigator, DayMonthPickerFragment.DayMonthPickerCallBack
 
     @Override
     public void shake() {}
+
+    @Override
+    public void call() {
+        onAddRepeat();
+    }
 }

@@ -13,7 +13,6 @@ import java.util.List;
 public class HomeViewModel extends BaseViewModel<HomeNavigator> {
 
     private final AlarmScheduler alarmScheduler;
-
     private final MutableLiveData<List<Alarm>> alarmItemsLiveData;
 
     public HomeViewModel(DataManager dataManager, SchedulerProvider schedulerProvider, AlarmScheduler alarmScheduler) {

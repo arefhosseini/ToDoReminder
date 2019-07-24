@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerCaller;
+import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerFragment;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 
@@ -18,7 +20,7 @@ import dagger.android.support.HasSupportFragmentInjector;
 import timber.log.Timber;
 
 public abstract class BaseRepeatFragment<T extends ViewDataBinding, V extends BaseRepeatViewModel>
-        extends BaseFragment<T, V> implements HasSupportFragmentInjector {
+        extends BaseFragment<T, V> implements HasSupportFragmentInjector, AlarmManagerCaller {
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
@@ -54,6 +56,11 @@ public abstract class BaseRepeatFragment<T extends ViewDataBinding, V extends Ba
     }
 
     public void shake() {
+    }
+
+    @Override
+    public void call() {
+
     }
 
     public void setCallBack(RepeatCallBack callBack) {

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fearefull.todoreminder.ui.history.HistoryViewModel" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="RtlHardcoded"
+        android:background="@color/backgroundColorLightTheme">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/historyRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layoutDirection="rtl"
+                android:padding="@dimen/recycler_view_padding"
+                app:adapter="@{viewModel.getHistoryItemsLiveData}"
+                tools:listitem="@layout/item_history" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

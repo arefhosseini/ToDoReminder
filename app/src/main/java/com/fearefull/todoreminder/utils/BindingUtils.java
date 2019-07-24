@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.data.model.db.History;
 import com.fearefull.todoreminder.data.model.other.item.DayWeekItem;
 import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 import com.fearefull.todoreminder.data.model.other.item.RepeatManagerItem;
@@ -16,6 +17,7 @@ import com.fearefull.todoreminder.ui.alarm_manager.RepeatAdapter;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.weekly_repeat.DayWeekAdapter;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerAdapter;
 import com.fearefull.todoreminder.ui.base.BaseViewPager;
+import com.fearefull.todoreminder.ui.history.HistoryAdapter;
 import com.fearefull.todoreminder.ui.home.AlarmAdapter;
 
 import java.util.List;
@@ -27,38 +29,47 @@ public final class BindingUtils {
     }
 
     @BindingAdapter({"adapter"})
-    public static void addRepeatTypeItems(RecyclerView recyclerView, List<RepeatItem> repeatItems) {
+    public static void addRepeatTypeItems(RecyclerView recyclerView, List<RepeatItem> repeatItemList) {
         RepeatAdapter adapter = (RepeatAdapter) recyclerView.getAdapter();
         if (adapter != null) {
             adapter.clearItems();
-            adapter.addItems(repeatItems);
+            adapter.addItems(repeatItemList);
         }
     }
 
     @BindingAdapter({"adapter"})
-    public static void addAlarmItems(RecyclerView recyclerView, List<Alarm> alarms) {
+    public static void addAlarmItems(RecyclerView recyclerView, List<Alarm> alarmList) {
         AlarmAdapter adapter = (AlarmAdapter) recyclerView.getAdapter();
         if (adapter != null) {
             adapter.clearItems();
-            adapter.addItems(alarms);
+            adapter.addItems(alarmList);
         }
     }
 
     @BindingAdapter({"adapter"})
-    public static void addRepeatManagerITem(RecyclerView recyclerView, List<RepeatManagerItem> items) {
+    public static void addHistoryItems(RecyclerView recyclerView, List<History> historyList) {
+        HistoryAdapter adapter = (HistoryAdapter) recyclerView.getAdapter();
+        if (adapter != null) {
+            adapter.clearItems();
+            adapter.addItems(historyList);
+        }
+    }
+
+    @BindingAdapter({"adapter"})
+    public static void addRepeatManagerITem(RecyclerView recyclerView, List<RepeatManagerItem> itemList) {
         RepeatManagerAdapter adapter = (RepeatManagerAdapter) recyclerView.getAdapter();
         if (adapter != null) {
             adapter.clearItems();
-            adapter.addItems(items);
+            adapter.addItems(itemList);
         }
     }
 
     @BindingAdapter({"adapter"})
-    public static void addDayWeekItem(RecyclerView recyclerView, List<DayWeekItem> items) {
+    public static void addDayWeekItem(RecyclerView recyclerView, List<DayWeekItem> itemList) {
         DayWeekAdapter adapter = (DayWeekAdapter) recyclerView.getAdapter();
         if (adapter != null) {
             adapter.clearItems();
-            adapter.addItems(items);
+            adapter.addItems(itemList);
         }
     }
 

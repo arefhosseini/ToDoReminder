@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
+import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.daily_repeat.DailyRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.monthly_repeat.MonthlyRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.weekly_repeat.WeeklyRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.yearly_repeat.YearlyRepeatFragment;
-import com.fearefull.todoreminder.ui.alarm_manager.simple.SimpleFragment;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
@@ -61,6 +61,8 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     private AlarmManagerViewModel viewModel;
     private FragmentAlarmManagerBinding binding;
     private AlarmManagerCallBack callBack;
+    private AlarmManagerCaller callerOnceRepeat, callerDailyRepeat, callerWeeklyRepeat, callerMonthlyRepeat,
+            callerYearlyRepeat;
 
     public static AlarmManagerFragment newInstance(Alarm alarm) {
         Bundle args = new Bundle();
@@ -117,18 +119,23 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
 
         OnceRepeatFragment onceRepeatFragment = OnceRepeatFragment.newInstance(viewModel.getAlarm());
         onceRepeatFragment.setCallBack(this);
+        callerOnceRepeat = onceRepeatFragment;
 
         DailyRepeatFragment dailyRepeatFragment = DailyRepeatFragment.newInstance(viewModel.getAlarm());
         dailyRepeatFragment.setCallBack(this);
+        callerDailyRepeat = dailyRepeatFragment;
 
         WeeklyRepeatFragment weeklyRepeatFragment = WeeklyRepeatFragment.newInstance(viewModel.getAlarm());
         weeklyRepeatFragment.setCallBack(this);
+        callerWeeklyRepeat = weeklyRepeatFragment;
 
         MonthlyRepeatFragment monthlyRepeatFragment = MonthlyRepeatFragment.newInstance(viewModel.getAlarm());
         monthlyRepeatFragment.setCallBack(this);
+        callerMonthlyRepeat = monthlyRepeatFragment;
 
         YearlyRepeatFragment yearlyRepeatFragment = YearlyRepeatFragment.newInstance(viewModel.getAlarm());
         yearlyRepeatFragment.setCallBack(this);
+        callerYearlyRepeat = yearlyRepeatFragment;
 
         //SimpleFragment simpleFragment3 = SimpleFragment.newInstance(viewModel.getAlarm());
 
@@ -162,6 +169,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
 
     @Override
     public void onRepeatItemClick(RepeatItem repeatItem) {
+        viewModel.setSelectedRepeat(repeatItem.getRepeat());
         viewModel.getCurrentTabPager().setValue(repeatItem.getRepeat().getValue());
     }
 
@@ -181,7 +189,6 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
 
     @Override
     public void onAlarmChanged(Alarm alarm) {
-
         viewModel.setAlarm(alarm);
         viewModel.updateAlarm();
     }
@@ -215,6 +222,20 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     @Override
     public void clearBell() {
         binding.repeatManagerIcon.setImageResource(R.drawable.unselected_bell);
+    }
+
+    @Override
+    public void getLastRepeat(Repeat repeat) {
+        if (repeat == Repeat.ONCE)
+            callerOnceRepeat.call();
+        else if (repeat == Repeat.DAILY)
+            callerDailyRepeat.call();
+        else if (repeat == Repeat.WEEKLY)
+            callerWeeklyRepeat.call();
+        else if (repeat == Repeat.MONTHLY)
+            callerMonthlyRepeat.call();
+        else if (repeat == Repeat.YEARLY)
+            callerYearlyRepeat.call();
     }
 
     public interface AlarmManagerCallBack {

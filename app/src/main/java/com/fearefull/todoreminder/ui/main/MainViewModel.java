@@ -1,7 +1,5 @@
 package com.fearefull.todoreminder.ui.main;
 
-import android.text.TextUtils;
-
 import androidx.databinding.ObservableField;
 
 import com.fearefull.todoreminder.data.DataManager;

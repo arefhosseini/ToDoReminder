@@ -152,4 +152,9 @@ public class OnceRepeatFragment extends BaseRepeatFragment<FragmentOnceRepeatBin
         binding.dateIcon.setAnimation(shake);
         shake.start();
     }
+
+    @Override
+    public void call() {
+        onAddRepeat();
+    }
 }

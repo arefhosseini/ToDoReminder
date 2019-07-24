@@ -22,6 +22,8 @@ import timber.log.Timber;
 public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> {
 
     private Alarm alarm;
+    private Repeat selectedRepeat;
+    private int defaultRepeatCount;
     private final ObservableField<String> titleString = new ObservableField<>();
     private final MutableLiveData<List<RepeatItem>> repeatItemsLiveData;
     private final ObservableField<String> ringtoneString = new ObservableField<>();
@@ -29,6 +31,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     private final MutableLiveData<Integer> currentTabPager;
     private final MutableLiveData<Integer> pageLimitPager;
     private boolean shouldUpdateAlarm = false;
+    private boolean shouldExit = false;
 
     public AlarmManagerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -41,6 +44,8 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     private void fetchRepeatData() {
         repeatItemsLiveData.setValue(AlarmUtils.getRepeatItems(alarm.getDefaultRepeat()));
+        setSelectedRepeat(alarm.getDefaultRepeat());
+        defaultRepeatCount = alarm.getRepeatCount();
     }
 
     public MutableLiveData<List<RepeatItem>> getRepeatItemsLiveData() {
@@ -52,27 +57,33 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     public void onSaveClick() {
-        if (shouldUpdateAlarm) {
-            getCompositeDisposable().add(getDataManager()
-                    .updateAlarm(alarm)
-                    .subscribeOn(getSchedulerProvider().io())
-                    .observeOn(getSchedulerProvider().ui())
-                    .subscribe(result -> {
-                        if (result)
-                            getNavigator().save();
-                    }, Timber::e)
-            );
+        if (alarm.getRepeatCount() > defaultRepeatCount) {
+            if (shouldUpdateAlarm) {
+                getCompositeDisposable().add(getDataManager()
+                        .updateAlarm(alarm)
+                        .subscribeOn(getSchedulerProvider().io())
+                        .observeOn(getSchedulerProvider().ui())
+                        .subscribe(result -> {
+                            if (result)
+                                getNavigator().save();
+                        }, Timber::e)
+                );
+            }
+            else {
+                getCompositeDisposable().add(getDataManager()
+                        .insertAlarm(alarm)
+                        .subscribeOn(getSchedulerProvider().io())
+                        .observeOn(getSchedulerProvider().ui())
+                        .subscribe(result -> {
+                            if (result)
+                                getNavigator().save();
+                        }, Timber::e)
+                );
+            }
         }
         else {
-            getCompositeDisposable().add(getDataManager()
-                    .insertAlarm(alarm)
-                    .subscribeOn(getSchedulerProvider().io())
-                    .observeOn(getSchedulerProvider().ui())
-                    .subscribe(result -> {
-                        if (result)
-                            getNavigator().save();
-                    }, Timber::e)
-            );
+            shouldExit = true;
+            getNavigator().getLastRepeat(selectedRepeat);
         }
     }
 
@@ -89,6 +100,14 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         this.alarm = alarm;
     }
 
+    public Repeat getSelectedRepeat() {
+        return selectedRepeat;
+    }
+
+    public void setSelectedRepeat(Repeat repeat) {
+        this.selectedRepeat = repeat;
+    }
+
     void initAlarm() {
         if (alarm.getRepeatCount() > 0)
             shouldUpdateAlarm = true;
@@ -102,6 +121,8 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         updateTitleString();
         updateRingtoneString();
         updateAddCounter(alarm.getRepeatCount());
+        if (shouldExit)
+            onSaveClick();
     }
 
     void openDefaultRepeatFragment() {

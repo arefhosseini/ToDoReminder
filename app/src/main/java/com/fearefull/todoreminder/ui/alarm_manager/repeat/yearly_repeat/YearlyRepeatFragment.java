@@ -150,4 +150,10 @@ public class YearlyRepeatFragment extends BaseRepeatFragment<FragmentYearlyRepea
         binding.dateIcon.setAnimation(shake);
         shake.start();
     }
+
+    @Override
+    public void call() {
+        onAddRepeat();
+    }
+
 }

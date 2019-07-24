@@ -58,7 +58,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class AlarmViewHolder extends BaseViewHolder implements AlarmItemViewModel.AlarmItemViewModelListener {
         private final ItemAlarmBinding binding;
-        private AlarmItemViewModel alarmItemViewModel;
+        private AlarmItemViewModel viewModel;
 
         public AlarmViewHolder(ItemAlarmBinding binding) {
             super(binding.getRoot());
@@ -68,8 +68,8 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             final Alarm alarm = alarmList.get(position);
-            alarmItemViewModel = new AlarmItemViewModel(alarm, this);
-            binding.setViewModel(alarmItemViewModel);
+            viewModel = new AlarmItemViewModel(alarm, this);
+            binding.setViewModel(viewModel);
             binding.executePendingBindings();
 
         }

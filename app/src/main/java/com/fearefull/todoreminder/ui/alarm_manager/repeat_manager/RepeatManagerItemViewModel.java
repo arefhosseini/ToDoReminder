@@ -24,11 +24,11 @@ public class RepeatManagerItemViewModel {
         listener.onRemoveClick(item);
     }
 
-    public interface RepeatManagerItemViewModelListener {
-        void onRemoveClick(RepeatManagerItem item);
-    }
-
     public ObservableField<String> getText() {
         return text;
+    }
+
+    public interface RepeatManagerItemViewModelListener {
+        void onRemoveClick(RepeatManagerItem item);
     }
 }
