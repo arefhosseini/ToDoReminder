@@ -1,6 +1,7 @@
 package com.fearefull.todoreminder.data.local.db;
 
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.data.model.db.History;
 
 import java.util.List;
 
@@ -37,6 +38,14 @@ public class AppDbHelper implements DbHelper{
     }
 
     @Override
+    public Observable<Boolean> deleteAlarm(Alarm alarm) {
+        return Observable.fromCallable(() -> {
+            appDatabase.alarmDao().delete(alarm);
+            return true;
+        });
+    }
+
+    @Override
     public Observable<List<Alarm>> getAllAlarms() {
         return Observable.fromCallable(() -> appDatabase.alarmDao().getAllAlarms());
     }
@@ -52,10 +61,52 @@ public class AppDbHelper implements DbHelper{
     }
 
     @Override
-    public Observable<Boolean> removeAllAlarms() {
+    public Observable<Boolean> deleteAllAlarms() {
         return Observable.fromCallable(() -> {
            appDatabase.alarmDao().resetTable();
            return true;
+        });
+    }
+
+    @Override
+    public Observable<Boolean> insertHistory(History history) {
+        return Observable.fromCallable(() -> {
+            appDatabase.historyDao().insert(history);
+            return true;
+        });
+    }
+
+    @Override
+    public Observable<Boolean> updateHistory(History history) {
+        return Observable.fromCallable(() -> {
+            appDatabase.historyDao().update(history);
+            return true;
+        });
+    }
+
+    @Override
+    public Observable<Boolean> deleteHistory(History history) {
+        return Observable.fromCallable(() -> {
+            appDatabase.historyDao().delete(history);
+            return true;
+        });
+    }
+
+    @Override
+    public Observable<List<History>> getAllHistories() {
+        return Observable.fromCallable(() -> appDatabase.historyDao().getAllHistories());
+    }
+
+    @Override
+    public Observable<History> getHistoryById(long id) {
+        return Observable.fromCallable(() -> appDatabase.historyDao().getHistoryById(id));
+    }
+
+    @Override
+    public Observable<Boolean> deleteAllHistories() {
+        return Observable.fromCallable(() -> {
+            appDatabase.historyDao().resetTable();
+            return true;
         });
     }
 }

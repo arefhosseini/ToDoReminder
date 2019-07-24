@@ -18,6 +18,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
             app:values="@{viewModel.halfHourTypePickerValues}"
             app:maxIndex="@{viewModel.halfHourTypePickerMaxIndex}"
             app:defaultIndex="@{viewModel.halfHourTypePickerDefaultIndex}"

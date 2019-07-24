@@ -6,6 +6,7 @@ import android.content.Context;
 import com.fearefull.todoreminder.data.local.db.DbHelper;
 import com.fearefull.todoreminder.data.local.prefs.PreferencesHelper;
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.data.model.db.History;
 import com.fearefull.todoreminder.data.model.db.Snooze;
 import com.google.gson.Gson;
 
@@ -69,6 +70,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Observable<Boolean> deleteAlarm(Alarm alarm) {
+        return dbHelper.deleteAlarm(alarm);
+    }
+
+    @Override
     public Observable<List<Alarm>> getAllAlarms() {
         return dbHelper.getAllAlarms();
     }
@@ -84,8 +90,38 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<Boolean> removeAllAlarms() {
-        return dbHelper.removeAllAlarms();
+    public Observable<Boolean> deleteAllAlarms() {
+        return dbHelper.deleteAllAlarms();
+    }
+
+    @Override
+    public Observable<Boolean> insertHistory(History history) {
+        return dbHelper.insertHistory(history);
+    }
+
+    @Override
+    public Observable<Boolean> updateHistory(History history) {
+        return dbHelper.updateHistory(history);
+    }
+
+    @Override
+    public Observable<Boolean> deleteHistory(History history) {
+        return dbHelper.deleteHistory(history);
+    }
+
+    @Override
+    public Observable<List<History>> getAllHistories() {
+        return dbHelper.getAllHistories();
+    }
+
+    @Override
+    public Observable<History> getHistoryById(long id) {
+        return dbHelper.getHistoryById(id);
+    }
+
+    @Override
+    public Observable<Boolean> deleteAllHistories() {
+        return dbHelper.deleteAllHistories();
     }
 
     @Override
