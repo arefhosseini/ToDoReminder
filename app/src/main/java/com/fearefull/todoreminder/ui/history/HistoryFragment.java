@@ -85,6 +85,19 @@ public class HistoryFragment extends BaseFragment<FragmentHistoryBinding, Histor
     @Override
     public void onHistoryLongClick(History history) {
         viewModel.setDeletingHistory(history);
-         CommonUtils.show2ButtonDialogNoTitle(getBaseActivity(), viewModel.deleteHistoryOnClickListener).show();
+         CommonUtils.show2ButtonDialogNoTitle(getBaseActivity(), R.string.history_delete_message,
+                 viewModel.getDeleteHistoryOnClickListener()).show();
+    }
+
+    @Override
+    public void onHistoryIsDoneClick(History history) {
+        viewModel.setIsDoneHistory(history);
+        CommonUtils.show2ButtonDialogNoTitle(getBaseActivity(), R.string.history_is_done_message,
+                viewModel.getIsDoneHistoryOnClickListener()).show();
+    }
+
+    @Override
+    public void setDoneHistory(History history) {
+        historyAdapter.setDoneHistory(history);
     }
 }

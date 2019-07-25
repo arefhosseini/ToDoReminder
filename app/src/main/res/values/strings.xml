@@ -39,4 +39,5 @@
     <string name="title">عنوان</string>
     <string name="ok">تایید</string>
     <string name="history_delete_message">آیا میخواهید این نوشته پاک شود؟</string>
+    <string name="history_is_done_message">آیا میخواهید این رکورد را به انجام شده تغییر دهید؟</string>
 </resources>

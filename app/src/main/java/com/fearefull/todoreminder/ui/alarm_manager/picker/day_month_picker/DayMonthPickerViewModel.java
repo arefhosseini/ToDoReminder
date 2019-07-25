@@ -27,7 +27,7 @@ public class DayMonthPickerViewModel extends BaseViewModel<DayMonthPickerNavigat
     void init(int day) {
         this.day = day;
 
-        dayMonthPickerValues.setValue(AlarmUtils.getDays(MonthType.AZAR));
+        dayMonthPickerValues.setValue(AlarmUtils.getDaysMonth(MonthType.AZAR));
         dayMonthPickerMaxIndex.setValue(MonthType.AZAR.getDays() - 1);
         dayMonthPickerDefaultIndex.setValue(Alarm.dayMonthToIndex(day));
     }

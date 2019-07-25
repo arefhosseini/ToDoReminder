@@ -49,12 +49,20 @@ public class HistoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         historyList.clear();
     }
 
+    public void setDoneHistory(History history) {
+        if (history.getDone()) {
+             history.getBinding().isDoneLayout.setBackground(
+                     ContextCompat.getDrawable(history.getBinding().isDoneLayout.getContext(), R.color.greenDarkColor));
+        }
+    }
+
     public void setListener(HistoryAdapterListener listener) {
         this.listener = listener;
     }
 
     public interface HistoryAdapterListener {
         void onHistoryLongClick(History history);
+        void onHistoryIsDoneClick(History history);
     }
 
     public class HistoryViewHolder extends BaseViewHolder implements HistoryItemViewModel.HistoryItemViewModelListener {
@@ -72,6 +80,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             viewModel = new HistoryItemViewModel(item, this);
             binding.setViewModel(viewModel);
             binding.executePendingBindings();
+            item.setBinding(binding);
 
             if (item.getDone()) {
                 binding.isDoneLayout.setBackground(ContextCompat.getDrawable(binding.isDoneLayout.getContext(), R.color.greenDarkColor));
@@ -84,6 +93,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onLongClick(History history) {
             listener.onHistoryLongClick(history);
+        }
+
+        @Override
+        public void onIsDoneClick(History history) {
+            listener.onHistoryIsDoneClick(history);
         }
     }
 }

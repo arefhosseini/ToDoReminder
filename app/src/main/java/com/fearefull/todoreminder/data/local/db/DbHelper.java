@@ -1,7 +1,5 @@
 package com.fearefull.todoreminder.data.local.db;
 
-import androidx.databinding.ObservableField;
-
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.History;
 

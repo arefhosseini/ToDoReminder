@@ -22,7 +22,7 @@ public interface HistoryDao {
     @Delete
     public void delete(History history);
 
-    @Query("SELECT * FROM histories")
+    @Query("SELECT * FROM histories ORDER BY time DESC")
     public List<History> getAllHistories();
 
     @Query("SELECT * FROM histories WHERE id = :id")

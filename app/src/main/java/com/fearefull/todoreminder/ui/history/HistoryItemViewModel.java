@@ -50,7 +50,13 @@ public class HistoryItemViewModel {
         return false;
     }
 
+    public void onIsDoneClick() {
+        if (!history.getDone())
+            listener.onIsDoneClick(history);
+    }
+
     public interface HistoryItemViewModelListener {
         void onLongClick(History history);
+        void onIsDoneClick(History history);
     }
 }

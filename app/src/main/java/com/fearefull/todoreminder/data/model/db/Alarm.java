@@ -839,15 +839,14 @@ public class Alarm implements Serializable {
 
     @Ignore
     public String getRepeatManagerStringByWeekly(int index) {
-        Timber.e("string weekly");
         return getTime12String(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) +
                 " " + getDaysWeekString(indexDayWeekByIndexRepeat(index));
     }
 
     @Ignore
     public String getRepeatManagerStringByMonthly(int index) {
-        Timber.e("string weekly");
-        return getTime12String(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) +
+        return getTime12String(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + " " +
+                DayMonthType.getDayMonthTypeByValue(daysMonth.get(indexDayMonthByIndexRepeat(index))).getTextTh() +
                 " هرماه";
     }
 

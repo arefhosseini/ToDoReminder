@@ -2,6 +2,7 @@ package com.fearefull.todoreminder.utils;
 
 import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.data.model.other.item.DayWeekItem;
+import com.fearefull.todoreminder.data.model.other.type.DayMonthType;
 import com.fearefull.todoreminder.data.model.other.type.DayWeekType;
 import com.fearefull.todoreminder.data.model.other.type.MonthType;
 import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
@@ -75,30 +76,8 @@ public final class AlarmUtils {
         return getNumbers(1, monthType.getDays());
     }
 
-    public static int indexToHour(int index) {
-        return index + 1;
-    }
-
-    public static int hourToIndex(int hour) {
-        return hour - 1;
-    }
-
-    public static HalfHourType indexToTimeType(int index) {
-        if (index == 0)
-            return HalfHourType.AM;
-        return HalfHourType.PM;
-    }
-
-    public static int indexToMinute(int index) {
-        return index;
-    }
-
-    public static int indexToYear(int index) {
-        return index + AppConstants.START_YEAR;
-    }
-
-    public static int yearToIndex(int year) {
-        return year - AppConstants.START_YEAR;
+    public static List<String> getDaysMonth(MonthType monthType) {
+        return DayMonthType.getDayMonthString(monthType.getDays());
     }
 
     public static MonthType indexToMonth(int index) {
@@ -130,14 +109,6 @@ public final class AlarmUtils {
             default:
                 return MonthType.TIR;
         }
-    }
-
-    public static int indexToDay(int index) {
-        return index + 1;
-    }
-
-    public static int dayToIndex(int day) {
-        return day - 1;
     }
 
     private static ArrayList<MonthType> get31DaysMonths() {

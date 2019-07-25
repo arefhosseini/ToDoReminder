@@ -88,7 +88,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
                 <com.github.florent37.shapeofview.shapes.CutCornerView
-                    android:id="@+id/clipCorner"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
                     android:layout_marginTop="4dp"
@@ -102,6 +101,9 @@
                         android:id="@+id/is_done_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="@{() -> viewModel.onIsDoneClick()}"
                         android:background="@color/orangeColor" />
 
                     <RelativeLayout

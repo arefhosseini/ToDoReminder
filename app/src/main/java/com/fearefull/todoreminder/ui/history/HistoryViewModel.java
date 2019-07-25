@@ -22,7 +22,19 @@ public class HistoryViewModel extends BaseViewModel<HistoryNavigator> {
 
     private final MutableLiveData<List<History>> historyItemsLiveData;
     private ObservableBoolean isRefreshing;
-    private History deletingHistory;
+    private History deletingHistory, isDoneHistory;
+
+    private DialogInterface.OnClickListener deleteHistoryOnClickListener = (dialog, which) -> {
+        if (which == AlertDialog.BUTTON_POSITIVE) {
+            deleteHistory();
+        }
+    };
+
+    private DialogInterface.OnClickListener isDoneHistoryOnClickListener = (dialog, which) -> {
+        if (which == AlertDialog.BUTTON_POSITIVE) {
+            setDoneHistory();
+        }
+    };
 
     public HistoryViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -62,14 +74,20 @@ public class HistoryViewModel extends BaseViewModel<HistoryNavigator> {
         this.isRefreshing = isRefreshing;
     }
 
-    DialogInterface.OnClickListener deleteHistoryOnClickListener = (dialog, which) -> {
-        if (which == AlertDialog.BUTTON_POSITIVE) {
-            deleteHistory();
-        }
-    };
+    public DialogInterface.OnClickListener getDeleteHistoryOnClickListener() {
+        return deleteHistoryOnClickListener;
+    }
+
+    public DialogInterface.OnClickListener getIsDoneHistoryOnClickListener() {
+        return isDoneHistoryOnClickListener;
+    }
 
     void setDeletingHistory(History deletingHistory) {
         this.deletingHistory = deletingHistory;
+    }
+
+    public void setIsDoneHistory(History isDoneHistory) {
+        this.isDoneHistory = isDoneHistory;
     }
 
     private void deleteHistory() {
@@ -77,12 +95,27 @@ public class HistoryViewModel extends BaseViewModel<HistoryNavigator> {
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(result -> {
-                    if (Objects.requireNonNull(historyItemsLiveData.getValue()).contains(deletingHistory)) {
+                    if (result && Objects.requireNonNull(historyItemsLiveData.getValue()).contains(deletingHistory)) {
                         historyItemsLiveData.getValue().remove(deletingHistory);
                         historyItemsLiveData.setValue(historyItemsLiveData.getValue());
                         deletingHistory = null;
                     }
 
+                }, Timber::e)
+        );
+    }
+
+    private void setDoneHistory() {
+        isDoneHistory.setDone(true);
+        getCompositeDisposable().add(getDataManager().updateHistory(isDoneHistory)
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(result -> {
+                    if (result) {
+                        historyItemsLiveData.setValue(historyItemsLiveData.getValue());
+                        getNavigator().setDoneHistory(isDoneHistory);
+                        isDoneHistory = null;
+                    }
                 }, Timber::e)
         );
     }

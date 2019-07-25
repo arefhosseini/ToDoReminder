@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey;
 
 import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
 import com.fearefull.todoreminder.data.model.other.type.MonthType;
+import com.fearefull.todoreminder.databinding.ItemHistoryBinding;
 
 import java.io.Serializable;
 
@@ -33,6 +34,9 @@ public class History implements Serializable {
 
     @ColumnInfo(name = "note")
     private String note;
+
+    @Ignore
+    private ItemHistoryBinding binding;
 
     /**
      * Control {@link #id}
@@ -94,6 +98,18 @@ public class History implements Serializable {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+
+    /**
+     * Control {@link #binding}
+     */
+    public ItemHistoryBinding getBinding() {
+        return binding;
+    }
+
+    public void setBinding(ItemHistoryBinding binding) {
+        this.binding = binding;
     }
 
 
