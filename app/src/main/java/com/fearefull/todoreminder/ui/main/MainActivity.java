@@ -196,7 +196,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         drawerToggle.syncState();
         setupNavigationMenu();
 
-        viewModel.updateAppVersion(CommonUtils.getAppVersionString(getApplicationContext()));
         viewModel.onNavigationMenuCreated();
 
         viewModel.setNavigationItem(MainNavigationItem.HOME);

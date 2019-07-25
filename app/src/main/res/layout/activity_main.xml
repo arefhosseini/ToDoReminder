@@ -86,15 +86,6 @@
                 app:arc_cropDirection="cropOutside"
                 app:arc_width="96dp">
 
-                <TextView
-                    android:id="@+id/tvAppVersion"
-                    style="@style/TextStyle.Title.Sub"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:padding="5dp"
-                    android:textColor="@color/secondaryTextColorLightTheme"
-                    android:text="@{viewModel.appVersion}" />
             </com.rom4ek.arcnavigationview.ArcNavigationView>
         </androidx.drawerlayout.widget.DrawerLayout>
 

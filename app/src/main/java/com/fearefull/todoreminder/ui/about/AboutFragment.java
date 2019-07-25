@@ -12,6 +12,7 @@ import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.databinding.FragmentAboutBinding;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
+import com.fearefull.todoreminder.utils.CommonUtils;
 
 import javax.inject.Inject;
 
@@ -49,6 +50,11 @@ public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewM
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel.setNavigator(this);
+        setUp();
+    }
+
+    private void setUp() {
+        viewModel.updateAppVersion(CommonUtils.getAppVersionString(getBaseActivity()));
     }
 
     @Override
