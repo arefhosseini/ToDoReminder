@@ -17,6 +17,7 @@ import com.fearefull.todoreminder.data.model.db.History;
 import com.fearefull.todoreminder.databinding.FragmentHistoryBinding;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
+import com.fearefull.todoreminder.utils.CommonUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -83,6 +84,7 @@ public class HistoryFragment extends BaseFragment<FragmentHistoryBinding, Histor
 
     @Override
     public void onHistoryLongClick(History history) {
-        Toast.makeText(getContext(), "LONG", Toast.LENGTH_LONG).show();
+        viewModel.setDeletingHistory(history);
+         CommonUtils.show2ButtonDialogNoTitle(getBaseActivity(), viewModel.deleteHistoryOnClickListener).show();
     }
 }

@@ -37,4 +37,6 @@
     <string name="not_updated_time_error">زمان وارد شده مربوط به گذشته است، تغییرش دهید.</string>
     <string name="duplicate_time_error">زمان وارد شده تکراریست.</string>
     <string name="title">عنوان</string>
+    <string name="ok">تایید</string>
+    <string name="history_delete_message">آیا میخواهید این نوشته پاک شود؟</string>
 </resources>

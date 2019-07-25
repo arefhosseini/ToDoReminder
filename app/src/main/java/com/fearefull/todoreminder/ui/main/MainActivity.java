@@ -29,7 +29,6 @@ import com.fearefull.todoreminder.ui.base.BaseActivity;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.ui.history.HistoryFragment;
 import com.fearefull.todoreminder.ui.home.HomeFragment;
-import com.fearefull.todoreminder.utils.CommonUtils;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;

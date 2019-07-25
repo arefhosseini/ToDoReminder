@@ -70,6 +70,24 @@ public final class CommonUtils {
         return builder.create();
     }
 
+    public static AlertDialog show2ButtonDialogNoTitle(Context context, DialogInterface.OnClickListener listener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogCustomNoTitle);
+        builder.setPositiveButton(context.getText(R.string.ok), listener);
+        builder.setNegativeButton(context.getText(R.string.cancel), listener);
+        builder.setMessage(R.string.history_delete_message);
+        return builder.create();
+    }
+
+    public static AlertDialog show2ButtonDialog(Context context, int titleId,
+                                                DialogInterface.OnClickListener listener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogCustom);
+        builder.setTitle(titleId);
+        builder.setPositiveButton(context.getText(R.string.ok), listener);
+        builder.setNegativeButton(context.getText(R.string.cancel), listener);
+        builder.setMessage(R.string.history_delete_message);
+        return builder.create();
+    }
+
     public static void showCustomListDialog(Context context) {
 
     }

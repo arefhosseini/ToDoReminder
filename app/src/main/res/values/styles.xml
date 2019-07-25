@@ -168,4 +168,9 @@
         <item name="android:layoutDirection">rtl</item>
     </style>
 
+    <style name="AlertDialogCustomNoTitle" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:layoutDirection">rtl</item>
+    </style>
+
 </resources>
