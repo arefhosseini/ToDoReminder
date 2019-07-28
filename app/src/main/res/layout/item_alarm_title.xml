@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.splash.SplashActivity"
+    tools:ignore="RtlHardcoded">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fearefull.todoreminder.ui.alarm_manager.AlarmTitleItemViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/title_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground"
+        android:onClick="@{() -> viewModel.onItemClick()}"
+        android:layout_margin="@dimen/default_half_half_layout_padding"
+        android:padding="@dimen/default_half_layout_padding">
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:src="@{viewModel.imageRes, default=@drawable/alarm_title_custom}"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextStyle.Title.Sub"
+            android:text="@{viewModel.title}"
+            android:gravity="center"
+            android:layout_toLeftOf="@id/image_view"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/default_half_half_layout_padding"
+            android:paddingRight="@dimen/default_half_half_layout_padding"
+            android:textColor="@color/secondaryTextColorLightTheme"/>
+    </RelativeLayout>
+</layout>

@@ -2,6 +2,7 @@ package com.fearefull.todoreminder.utils;
 
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 
 import androidx.core.content.ContextCompat;
@@ -14,9 +15,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.History;
+import com.fearefull.todoreminder.data.model.other.item.AlarmTitleItem;
 import com.fearefull.todoreminder.data.model.other.item.DayWeekItem;
 import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 import com.fearefull.todoreminder.data.model.other.item.RepeatManagerItem;
+import com.fearefull.todoreminder.ui.alarm_manager.AlarmTitleAdapter;
 import com.fearefull.todoreminder.ui.alarm_manager.RepeatAdapter;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.weekly_repeat.DayWeekAdapter;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerAdapter;
@@ -41,6 +44,15 @@ public final class BindingUtils {
         if (adapter != null) {
             adapter.clearItems();
             adapter.addItems(repeatItemList);
+        }
+    }
+
+    @BindingAdapter({"adapter"})
+    public static void addAlarmTitleItems(RecyclerView recyclerView, List<AlarmTitleItem> alarmTitleItemList) {
+        AlarmTitleAdapter adapter = (AlarmTitleAdapter) recyclerView.getAdapter();
+        if (adapter != null) {
+            adapter.clearItems();
+            adapter.addItems(alarmTitleItemList);
         }
     }
 
@@ -162,5 +174,10 @@ public final class BindingUtils {
             itemDecorator.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.divider)));
             recyclerView.addItemDecoration(itemDecorator);
         }
+    }
+
+    @BindingAdapter({"android:src"})
+    public static void setImageViewResource(ImageView imageView, int resource) {
+        imageView.setImageResource(resource);
     }
 }

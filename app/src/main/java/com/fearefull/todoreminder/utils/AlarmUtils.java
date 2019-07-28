@@ -1,7 +1,9 @@
 package com.fearefull.todoreminder.utils;
 
 import com.fearefull.todoreminder.data.model.db.Repeat;
+import com.fearefull.todoreminder.data.model.other.item.AlarmTitleItem;
 import com.fearefull.todoreminder.data.model.other.item.DayWeekItem;
+import com.fearefull.todoreminder.data.model.other.type.AlarmTitleType;
 import com.fearefull.todoreminder.data.model.other.type.DayMonthType;
 import com.fearefull.todoreminder.data.model.other.type.DayWeekType;
 import com.fearefull.todoreminder.data.model.other.type.MonthType;
@@ -10,6 +12,10 @@ import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 
 public final class AlarmUtils {
 
@@ -153,45 +159,148 @@ public final class AlarmUtils {
         return month.getDays();
     }
 
-    public static List<RepeatItem> getRepeatItems(Repeat defaultRepeat) {
-        List<RepeatItem> list = new ArrayList<>();
-        boolean isFind = false;
-        if (defaultRepeat == Repeat.ONCE) {
-            list.add(new RepeatItem(Repeat.ONCE, true));
-            isFind = true;
-        }
-        else
-            list.add(new RepeatItem(Repeat.ONCE, false));
-        if (!isFind && defaultRepeat == Repeat.DAILY) {
-            list.add(new RepeatItem(Repeat.DAILY, true));
-            isFind = true;
-        }
-        else
-            list.add(new RepeatItem(Repeat.DAILY, false));
-        if (!isFind && defaultRepeat == Repeat.WEEKLY) {
-            list.add(new RepeatItem(Repeat.WEEKLY, true));
-            isFind = true;
-        }
-        else
-            list.add(new RepeatItem(Repeat.WEEKLY, false));
-        if (!isFind && defaultRepeat == Repeat.MONTHLY) {
-            list.add(new RepeatItem(Repeat.MONTHLY, true));
-            isFind = true;
-        }
-        else
-            list.add(new RepeatItem(Repeat.MONTHLY, false));
-        if (!isFind && defaultRepeat == Repeat.YEARLY) {
-            list.add(new RepeatItem(Repeat.YEARLY, true));
-            isFind = true;
-        }
-        else
-            list.add(new RepeatItem(Repeat.YEARLY, false));
-        /*if (!isFind && defaultRepeat == Repeat.CUSTOM) {
-            list.add(new RepeatItem(Repeat.CUSTOM, true));
-        }
-        else
-            list.add(new RepeatItem(Repeat.CUSTOM, false));*/
-        return list;
+    public static Observable<List<RepeatItem>> getRepeatItems(Repeat defaultRepeat) {
+        return Observable.defer(
+                () -> {
+                    List<RepeatItem> list = new ArrayList<>();
+                    boolean isFind = false;
+                    if (defaultRepeat == Repeat.ONCE) {
+                        list.add(new RepeatItem(Repeat.ONCE, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new RepeatItem(Repeat.ONCE, false));
+                    if (!isFind && defaultRepeat == Repeat.DAILY) {
+                        list.add(new RepeatItem(Repeat.DAILY, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new RepeatItem(Repeat.DAILY, false));
+                    if (!isFind && defaultRepeat == Repeat.WEEKLY) {
+                        list.add(new RepeatItem(Repeat.WEEKLY, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new RepeatItem(Repeat.WEEKLY, false));
+                    if (!isFind && defaultRepeat == Repeat.MONTHLY) {
+                        list.add(new RepeatItem(Repeat.MONTHLY, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new RepeatItem(Repeat.MONTHLY, false));
+                    if (!isFind && defaultRepeat == Repeat.YEARLY) {
+                        list.add(new RepeatItem(Repeat.YEARLY, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new RepeatItem(Repeat.YEARLY, false));
+
+                    return Observable.just(list);
+                }
+        );
+    }
+
+    public static Observable<List<AlarmTitleItem>> getAlarmTitleItems(AlarmTitleType defaultTitleType) {
+        return Observable.defer(
+                () -> {
+                    List<AlarmTitleItem> list = new ArrayList<>();
+                    boolean isFind = false;
+
+                    if (defaultTitleType == AlarmTitleType.CUSTOM) {
+                        list.add(new AlarmTitleItem(AlarmTitleType.CUSTOM, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new AlarmTitleItem(AlarmTitleType.CUSTOM, false));
+
+                    if (!isFind && defaultTitleType == AlarmTitleType.TO_DO) {
+                        list.add(new AlarmTitleItem(AlarmTitleType.TO_DO, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new AlarmTitleItem(AlarmTitleType.TO_DO, false));
+                    if (!isFind && defaultTitleType == AlarmTitleType.BIRTHDAY) {
+                        list.add(new AlarmTitleItem(AlarmTitleType.BIRTHDAY, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new AlarmTitleItem(AlarmTitleType.BIRTHDAY, false));
+                    if (!isFind && defaultTitleType == AlarmTitleType.ANNIVERSARY) {
+                        list.add(new AlarmTitleItem(AlarmTitleType.ANNIVERSARY, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new AlarmTitleItem(AlarmTitleType.ANNIVERSARY, false));
+                    if (!isFind && defaultTitleType == AlarmTitleType.CALL) {
+                        list.add(new AlarmTitleItem(AlarmTitleType.CALL, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new AlarmTitleItem(AlarmTitleType.CALL, false));
+                    if (!isFind && defaultTitleType == AlarmTitleType.SHOPPING) {
+                        list.add(new AlarmTitleItem(AlarmTitleType.SHOPPING, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new AlarmTitleItem(AlarmTitleType.SHOPPING, false));
+                    if (!isFind && defaultTitleType == AlarmTitleType.GET_UP) {
+                        list.add(new AlarmTitleItem(AlarmTitleType.GET_UP, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new AlarmTitleItem(AlarmTitleType.GET_UP, false));
+                    if (!isFind && defaultTitleType == AlarmTitleType.DRINK_WATER) {
+                        list.add(new AlarmTitleItem(AlarmTitleType.DRINK_WATER, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new AlarmTitleItem(AlarmTitleType.DRINK_WATER, false));
+                    if (!isFind && defaultTitleType == AlarmTitleType.TAKE_PILL) {
+                        list.add(new AlarmTitleItem(AlarmTitleType.TAKE_PILL, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new AlarmTitleItem(AlarmTitleType.TAKE_PILL, false));
+                    if (!isFind && defaultTitleType == AlarmTitleType.MEETING) {
+                        list.add(new AlarmTitleItem(AlarmTitleType.MEETING, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new AlarmTitleItem(AlarmTitleType.MEETING, false));
+                    if (!isFind && defaultTitleType == AlarmTitleType.COURSE) {
+                        list.add(new AlarmTitleItem(AlarmTitleType.COURSE, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new AlarmTitleItem(AlarmTitleType.COURSE, false));
+                    if (!isFind && defaultTitleType == AlarmTitleType.EXERCISE) {
+                        list.add(new AlarmTitleItem(AlarmTitleType.EXERCISE, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new AlarmTitleItem(AlarmTitleType.EXERCISE, false));
+                    if (!isFind && defaultTitleType == AlarmTitleType.GREETING) {
+                        list.add(new AlarmTitleItem(AlarmTitleType.GREETING, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new AlarmTitleItem(AlarmTitleType.GREETING, false));
+                    if (!isFind && defaultTitleType == AlarmTitleType.TRAVEL) {
+                        list.add(new AlarmTitleItem(AlarmTitleType.TRAVEL, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new AlarmTitleItem(AlarmTitleType.TRAVEL, false));
+                    if (!isFind && defaultTitleType == AlarmTitleType.CREDIT_CARD) {
+                        list.add(new AlarmTitleItem(AlarmTitleType.CREDIT_CARD, true));
+                        isFind = true;
+                    }
+                    else
+                        list.add(new AlarmTitleItem(AlarmTitleType.CREDIT_CARD, false));
+
+                    return Observable.just(list);
+                }
+        );
     }
 
     public static List<DayWeekItem> getDayWeekItems() {

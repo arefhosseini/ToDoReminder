@@ -27,7 +27,7 @@
     <string name="every">هر</string>
     <string name="on">در زمان های</string>
     <string name="note">یادداشت</string>
-    <string name="title_hint">یادداشت خود را وارد کنید...</string>
+    <string name="title_hint">...</string>
     <string name="add_reminder">افزودن یادآور</string>
     <string name="ringtone">آهنگ زنگ</string>
     <string name="choose_ringtone">انتخاب زنگ</string>

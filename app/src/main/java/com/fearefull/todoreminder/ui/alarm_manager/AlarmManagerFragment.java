@@ -10,12 +10,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.data.model.db.Repeat;
+import com.fearefull.todoreminder.data.model.other.item.AlarmTitleItem;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.daily_repeat.DailyRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.monthly_repeat.MonthlyRepeatFragment;
@@ -42,8 +44,8 @@ import static com.fearefull.todoreminder.utils.AppConstants.ALARM_KEY;
 
 public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBinding, AlarmManagerViewModel>
         implements AlarmManagerNavigator, HasSupportFragmentInjector,
-        RepeatAdapter.RepeatAdapterListener, BaseRepeatFragment.RepeatCallBack,
-        RepeatManagerDialogFragment.RepeatManagerCallBack {
+        RepeatAdapter.RepeatAdapterListener, AlarmTitleAdapter.AlarmTitleAdapterListener,
+        BaseRepeatFragment.RepeatCallBack, RepeatManagerDialogFragment.RepeatManagerCallBack {
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
@@ -52,12 +54,19 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     @Inject
     @Named("AlarmManager")
     LinearLayoutManager layoutManager;
-    public static final String TAG = AlarmManagerFragment.class.getSimpleName();
+    @Inject
+    @Named("AlarmManager")
+    GridLayoutManager gridLayoutManager;
     @Inject
     ViewModelProviderFactory factory;
     @Inject
     @Named("AlarmManager")
     BaseViewPagerAdapter pagerAdapter;
+    @Inject
+    AlarmTitleAdapter titleAdapter;
+
+    public static final String TAG = AlarmManagerFragment.class.getSimpleName();
+
     private AlarmManagerViewModel viewModel;
     private FragmentAlarmManagerBinding binding;
     private AlarmManagerCallBack callBack;
@@ -106,6 +115,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         super.onViewCreated(view, savedInstanceState);
         binding = getViewDataBinding();
         repeatAdapter.setListener(this);
+        titleAdapter.setListener(this);
         setUp();
     }
 
@@ -114,6 +124,10 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         binding.repeatRecyclerView.setLayoutManager(layoutManager);
         binding.repeatRecyclerView.setItemAnimator(new DefaultItemAnimator());
         binding.repeatRecyclerView.setAdapter(repeatAdapter);
+
+        binding.titleRecyclerView.setLayoutManager(gridLayoutManager);
+        binding.titleRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        binding.titleRecyclerView.setAdapter(titleAdapter);
 
         binding.viewPager.setEnableSwipe(false);
 
@@ -171,6 +185,11 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     public void onRepeatItemClick(RepeatItem repeatItem) {
         viewModel.setSelectedRepeat(repeatItem.getRepeat());
         viewModel.getCurrentTabPager().setValue(repeatItem.getRepeat().getValue());
+    }
+
+    @Override
+    public void onAlarmTitleItemClick(AlarmTitleItem item) {
+        viewModel.updateTitleString(item.getType().getText());
     }
 
     @Override

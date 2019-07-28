@@ -8,7 +8,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
+import com.fearefull.todoreminder.data.model.other.item.AlarmTitleItem;
 import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
+import com.fearefull.todoreminder.data.model.other.type.AlarmTitleType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
@@ -24,8 +26,11 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     private Alarm alarm;
     private Repeat selectedRepeat;
     private int defaultRepeatCount;
-    private final ObservableField<String> titleString = new ObservableField<>();
+
     private final MutableLiveData<List<RepeatItem>> repeatItemsLiveData;
+    private final MutableLiveData<List<AlarmTitleItem>> alarmTitleItemsLiveData;
+
+    private final ObservableField<String> titleString = new ObservableField<>();
     private final ObservableField<String> ringtoneString = new ObservableField<>();
     private final ObservableField<String> repeatCounter = new ObservableField<>();
     private final MutableLiveData<Integer> currentTabPager;
@@ -36,6 +41,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     public AlarmManagerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
         repeatItemsLiveData = new MutableLiveData<>();
+        alarmTitleItemsLiveData = new MutableLiveData<>();
         currentTabPager = new MutableLiveData<>();
         pageLimitPager = new MutableLiveData<>();
         pageLimitPager.setValue(Repeat.getCount());
@@ -43,13 +49,28 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     private void fetchRepeatData() {
-        repeatItemsLiveData.setValue(AlarmUtils.getRepeatItems(alarm.getDefaultRepeat()));
+        getCompositeDisposable().add(AlarmUtils.getRepeatItems(alarm.getDefaultRepeat())
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(repeatItemsLiveData::setValue, Timber::e)
+        );
+
+        getCompositeDisposable().add(AlarmUtils.getAlarmTitleItems(AlarmTitleType.CUSTOM)
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(alarmTitleItemsLiveData::setValue, Timber::e)
+        );
+
         setSelectedRepeat(alarm.getDefaultRepeat());
         defaultRepeatCount = alarm.getRepeatCount();
     }
 
     public MutableLiveData<List<RepeatItem>> getRepeatItemsLiveData() {
         return repeatItemsLiveData;
+    }
+
+    public MutableLiveData<List<AlarmTitleItem>> getAlarmTitleItemsLiveData() {
+        return alarmTitleItemsLiveData;
     }
 
     public void onNavigationBackClick() {
@@ -89,7 +110,6 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     public void onTitleTextChange(CharSequence s) {
         alarm.setTitle(s.toString());
-        updateTitleString();
     }
 
     Alarm getAlarm() {
@@ -118,20 +138,20 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     void updateAlarm() {
-        updateTitleString();
+        updateTitleString(alarm.getTitle());
         updateRingtoneString();
         updateAddCounter(alarm.getRepeatCount());
         if (shouldExit)
             onSaveClick();
     }
 
+    void updateTitleString(String title) {
+        titleString.set(title);
+    }
+
     void openDefaultRepeatFragment() {
         currentTabPager.setValue(alarm.getDefaultRepeat().getValue());
         setIsLoading(false);
-    }
-
-    void updateTitleString() {
-        titleString.set(alarm.getTitle());
     }
 
     void updateRingtoneString() {
