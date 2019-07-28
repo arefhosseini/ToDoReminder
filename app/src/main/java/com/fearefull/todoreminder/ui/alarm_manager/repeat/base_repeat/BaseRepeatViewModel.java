@@ -63,7 +63,8 @@ public abstract class BaseRepeatViewModel<W extends BaseRepeatNavigator> extends
         }
         else if (response == RepeatResponseType.DUPLICATE) {
             getRepeatModel().reset();
-            getNavigator().showDuplicate();
+            getNavigator().send();
+            //getNavigator().showDuplicate();
         }
     }
 
