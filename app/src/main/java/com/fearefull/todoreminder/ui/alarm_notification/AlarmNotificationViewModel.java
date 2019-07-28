@@ -90,9 +90,14 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
         }
     }
 
-    public void onDismissClick() {
+    public void onSnoozeClick() {
         cancelCountdown();
         goOff();
+    }
+
+    public void onDismissClick() {
+        cancelCountdown();
+        insertHistory(createHistory(false));
     }
 
     public void onConfirmClick() {

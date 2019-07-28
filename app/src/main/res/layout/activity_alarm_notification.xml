@@ -71,6 +71,13 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.83" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontalLine5"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.925" />
 
         <ImageView
@@ -154,7 +161,7 @@
             android:onClick="@{() -> viewModel.onConfirmClick()}"
             app:fabColor="@color/greenDarkColor"
             app:fabType="circle"
-            app:layout_constraintBottom_toTopOf="@+id/horizontalLine4"
+            app:layout_constraintBottom_toTopOf="@+id/horizontalLine5"
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintEnd_toStartOf="@+id/verticalLine2"
             app:layout_constraintHorizontal_bias="0.0"
@@ -174,10 +181,10 @@
             android:clickable="true"
             android:focusable="true"
             android:background="?actionBarItemBackground"
-            android:onClick="@{() -> viewModel.onDismissClick()}"
+            android:onClick="@{() -> viewModel.onSnoozeClick()}"
             app:fabColor="@color/redDark2Color"
             app:fabType="circle"
-            app:layout_constraintBottom_toTopOf="@+id/horizontalLine4"
+            app:layout_constraintBottom_toTopOf="@+id/horizontalLine5"
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintEnd_toStartOf="@+id/verticalLine4"
             app:layout_constraintHorizontal_bias="0.0"
@@ -186,9 +193,38 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_close_black_24dp"
+                android:src="@drawable/ic_snooze_black_24dp"
                 android:padding="8dp"
                 android:tint="@color/whiteColor"/>
+        </com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout>
+
+        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?actionBarItemBackground"
+            android:onClick="@{() -> viewModel.onDismissClick()}"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin"
+            app:fabColor="@color/yellowColor"
+            app:fabType="circle"
+            app:layout_constraintBottom_toTopOf="@+id/horizontalLine5"
+            app:layout_constraintEnd_toStartOf="@+id/verticalLine3"
+            app:layout_constraintTop_toBottomOf="@id/horizontalLine4"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/verticalLine2" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/TextStyle.Title.Big3"
+                android:text="@string/later"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="@dimen/default_half_layout_padding"
+                android:textColor="@color/primaryTextColorDarkTheme"/>
+
         </com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

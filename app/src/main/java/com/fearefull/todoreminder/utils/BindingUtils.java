@@ -7,6 +7,7 @@ import android.widget.NumberPicker;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.MutableLiveData;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -24,6 +25,9 @@ import com.fearefull.todoreminder.ui.history.HistoryAdapter;
 import com.fearefull.todoreminder.ui.home.AlarmAdapter;
 
 import java.util.List;
+import java.util.Objects;
+
+import timber.log.Timber;
 
 public final class BindingUtils {
 
@@ -148,6 +152,15 @@ public final class BindingUtils {
                 }
                 break;
             }
+        }
+    }
+
+    @BindingAdapter({"setDivider"})
+    public static void setRefreshColors(RecyclerView recyclerView, Boolean isSet) {
+        if (isSet) {
+            DividerItemDecoration itemDecorator = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+            itemDecorator.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.divider)));
+            recyclerView.addItemDecoration(itemDecorator);
         }
     }
 }

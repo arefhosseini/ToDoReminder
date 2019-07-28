@@ -34,6 +34,7 @@
                     android:orientation="vertical"
                     android:layoutDirection="rtl"
                     android:padding="@dimen/recycler_view_padding"
+                    app:setDivider="@{true}"
                     app:adapter="@{viewModel.getAlarmItemsLiveData}"
                     tools:listitem="@layout/item_alarm" />
             </LinearLayout>
