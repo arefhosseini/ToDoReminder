@@ -54,6 +54,8 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public interface AlarmAdapterListener {
         void onAlarmClick(Alarm alarm);
+        void onAlarmLongClick(Alarm alarm);
+        void onAlarmSwitchClick(Alarm alarm);
     }
 
     public class AlarmViewHolder extends BaseViewHolder implements AlarmItemViewModel.AlarmItemViewModelListener {
@@ -77,6 +79,16 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onItemClick(Alarm alarm) {
             listener.onAlarmClick(alarm);
+        }
+
+        @Override
+        public void onLongClick(Alarm alarm) {
+            listener.onAlarmLongClick(alarm);
+        }
+
+        @Override
+        public void onSwitchClick(Alarm alarm) {
+            listener.onAlarmSwitchClick(alarm);
         }
     }
 }

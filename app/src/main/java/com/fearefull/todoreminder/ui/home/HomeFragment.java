@@ -17,6 +17,7 @@ import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.databinding.FragmentHomeBinding;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.main.MainCaller;
+import com.fearefull.todoreminder.utils.CommonUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -87,6 +88,18 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public void onAlarmClick(Alarm alarm) {
         callBack.onOpenAlarmManager(alarm);
+    }
+
+    @Override
+    public void onAlarmLongClick(Alarm alarm) {
+        viewModel.setDeletingAlarm(alarm);
+        CommonUtils.show2ButtonDialogNoTitle(getBaseActivity(), R.string.alarm_delete_message,
+                viewModel.getDeleteAlarmOnClickListener()).show();
+    }
+
+    @Override
+    public void onAlarmSwitchClick(Alarm alarm) {
+        viewModel.updateAlarm(alarm);
     }
 
     public boolean reloadAlarmData() {

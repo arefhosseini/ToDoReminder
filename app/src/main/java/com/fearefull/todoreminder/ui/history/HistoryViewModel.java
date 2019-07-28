@@ -86,7 +86,7 @@ public class HistoryViewModel extends BaseViewModel<HistoryNavigator> {
         this.deletingHistory = deletingHistory;
     }
 
-    public void setIsDoneHistory(History isDoneHistory) {
+    void setIsDoneHistory(History isDoneHistory) {
         this.isDoneHistory = isDoneHistory;
     }
 

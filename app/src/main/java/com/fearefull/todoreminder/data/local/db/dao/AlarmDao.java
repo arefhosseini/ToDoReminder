@@ -21,7 +21,7 @@ public interface AlarmDao {
     @Delete
     public void delete(Alarm alarm);
 
-    @Query("SELECT * FROM alarms")
+    @Query("SELECT * FROM alarms ORDER BY is_enable DESC")
     public List<Alarm> getAllAlarms();
 
     @Query("SELECT * FROM alarms WHERE is_enable = 1")
