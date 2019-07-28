@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.fearefull.todoreminder.data.model.other.DataConverter;
+import com.fearefull.todoreminder.data.model.other.type.AlarmTitleType;
 import com.fearefull.todoreminder.data.model.other.type.DayMonthType;
 import com.fearefull.todoreminder.data.model.other.type.DayWeekType;
 import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
@@ -40,6 +41,10 @@ public class Alarm implements Serializable {
     @NonNull
     @ColumnInfo(name = "title")
     private String title;
+
+    @NonNull
+    @ColumnInfo(name = "title_type")
+    private AlarmTitleType titleType;
 
     @NonNull
     @ColumnInfo(name = "ringtone")
@@ -155,6 +160,18 @@ public class Alarm implements Serializable {
         this.title = title;
     }
 
+
+    /**
+     * Control {@link #title}
+     */
+    @NonNull
+    public AlarmTitleType getTitleType() {
+        return titleType;
+    }
+
+    public void setTitleType(@NonNull AlarmTitleType titleType) {
+        this.titleType = titleType;
+    }
 
     /**
      * Control {@link #repeats}
@@ -551,9 +568,10 @@ public class Alarm implements Serializable {
         return nowYear;
     }
 
-    public Alarm(@NotNull String title) {
+    public Alarm() {
         this.isEnable = true;
-        this.title = title;
+        this.titleType = AlarmTitleType.getDefault();
+        this.title = titleType.getText();
         this.ringtone = "DEFAULT";
         this.note = "";
         repeats = new ArrayList<>();

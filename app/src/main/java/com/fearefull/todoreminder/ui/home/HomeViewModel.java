@@ -53,7 +53,7 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
     }
 
     public void onOpenAlarmManager() {
-        getNavigator().showAlarmManagerFragment(new Alarm("-"));
+        getNavigator().showAlarmManagerFragment(new Alarm());
     }
 
     void setDeletingAlarm(Alarm deletingAlarm) {

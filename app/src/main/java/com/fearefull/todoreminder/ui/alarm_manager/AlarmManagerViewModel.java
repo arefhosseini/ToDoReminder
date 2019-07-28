@@ -31,6 +31,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     private final MutableLiveData<List<AlarmTitleItem>> alarmTitleItemsLiveData;
 
     private final ObservableField<String> titleString = new ObservableField<>();
+    private final ObservableField<Integer> defaultImageResTitle = new ObservableField<>();
     private final ObservableField<String> ringtoneString = new ObservableField<>();
     private final ObservableField<String> repeatCounter = new ObservableField<>();
     private final MutableLiveData<Integer> currentTabPager;
@@ -52,14 +53,15 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         getCompositeDisposable().add(AlarmUtils.getRepeatItems(alarm.getDefaultRepeat())
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(repeatItemsLiveData::setValue, Timber::e)
+                .subscribe(repeatItemsLiveData::postValue, Timber::e)
         );
 
-        getCompositeDisposable().add(AlarmUtils.getAlarmTitleItems(AlarmTitleType.CUSTOM)
+        getCompositeDisposable().add(AlarmUtils.getAlarmTitleItems(alarm.getTitleType())
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(alarmTitleItemsLiveData::setValue, Timber::e)
+                .subscribe(alarmTitleItemsLiveData::postValue, Timber::e)
         );
+        defaultImageResTitle.set(alarm.getTitleType().getImageRes());
 
         setSelectedRepeat(alarm.getDefaultRepeat());
         defaultRepeatCount = alarm.getRepeatCount();
@@ -149,6 +151,16 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         titleString.set(title);
     }
 
+    void updateAlarmTitle(AlarmTitleType titleType) {
+        alarm.setTitleType(titleType);
+        updateTitleString(titleType.getText());
+        updateTitleImageRes(titleType.getImageRes());
+    }
+
+    void updateTitleImageRes(int imageRes) {
+        defaultImageResTitle.set(imageRes);
+    }
+
     void openDefaultRepeatFragment() {
         currentTabPager.setValue(alarm.getDefaultRepeat().getValue());
         setIsLoading(false);
@@ -170,6 +182,10 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     public ObservableField<String> getTitleString() {
         return titleString;
+    }
+
+    public ObservableField<Integer> getDefaultImageResTitle() {
+        return defaultImageResTitle;
     }
 
     public ObservableField<String> getRingtoneString() {

@@ -50,7 +50,7 @@ public class AppAlarmScheduler implements AlarmScheduler {
 
     private void scheduleClosestAlarm(List<Alarm> alarms) {
         Alarm closestAlarm;
-        Alarm currentAlarm = new Alarm("");
+        Alarm currentAlarm = new Alarm();
         RepeatModel closestRepeatModel;
         Snooze snooze = new Snooze();
         long closestTime = Long.MAX_VALUE;

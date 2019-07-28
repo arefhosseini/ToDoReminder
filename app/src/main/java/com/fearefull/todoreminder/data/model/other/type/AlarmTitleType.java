@@ -2,7 +2,9 @@ package com.fearefull.todoreminder.data.model.other.type;
 
 import com.fearefull.todoreminder.R;
 
-public enum AlarmTitleType {
+import java.io.Serializable;
+
+public enum AlarmTitleType implements Serializable {
     CUSTOM(1,"سفارشی", R.drawable.alarm_title_custom),
     TO_DO(2, "انجام دادن", R.drawable.alarm_title_to_do),
     BIRTHDAY(3, "تولد", R.drawable.alarm_title_birthday),
@@ -47,6 +49,10 @@ public enum AlarmTitleType {
                 return type;
             }
         }
+        return AlarmTitleType.CUSTOM;
+    }
+
+    public static AlarmTitleType getDefault() {
         return AlarmTitleType.CUSTOM;
     }
 }

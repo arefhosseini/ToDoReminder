@@ -3,6 +3,7 @@ package com.fearefull.todoreminder.data.model.other;
 import androidx.room.TypeConverter;
 
 import com.fearefull.todoreminder.data.model.db.Repeat;
+import com.fearefull.todoreminder.data.model.other.type.AlarmTitleType;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -98,5 +99,26 @@ public class DataConverter implements Serializable {
         Type type = new TypeToken<List<Repeat>>() {
         }.getType();
         return gson.fromJson(repeatListString, type);
+    }
+
+    @TypeConverter
+    public String fromAlarmTitleType(AlarmTitleType titleType) {
+        if (titleType == null)
+            return null;
+        Gson gson = new Gson();
+        Type type = new TypeToken<AlarmTitleType>() {
+        }.getType();
+        return gson.toJson(titleType, type);
+    }
+
+    @TypeConverter
+    public AlarmTitleType toAlarmTitleType(String AlarmTitleTypeString) {
+        if (AlarmTitleTypeString == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<AlarmTitleType>() {
+        }.getType();
+        return gson.fromJson(AlarmTitleTypeString, type);
     }
 }

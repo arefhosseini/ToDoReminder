@@ -24,10 +24,7 @@ public class RepeatItemViewModel {
     }
 
     public void onItemClick() {
-        if (!item.isSelected()) {
-            item.setSelected(true);
-            listener.onItemClick(item);
-        }
+        listener.onItemClick(item);
     }
 
     public interface RepeatItemViewModelListener {

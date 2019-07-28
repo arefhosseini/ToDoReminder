@@ -189,7 +189,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
 
     @Override
     public void onAlarmTitleItemClick(AlarmTitleItem item) {
-        viewModel.updateTitleString(item.getType().getText());
+        viewModel.updateAlarmTitle(item.getType());
     }
 
     @Override
