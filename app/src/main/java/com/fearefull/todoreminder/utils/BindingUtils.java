@@ -177,7 +177,7 @@ public final class BindingUtils {
     }
 
     @BindingAdapter({"android:src"})
-    public static void setImageViewResource(ImageView imageView, int resource) {
+    public static void setImageViewResource(ImageView imageView, Integer resource) {
         imageView.setImageResource(resource);
     }
 }
