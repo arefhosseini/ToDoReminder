@@ -8,6 +8,7 @@ public class HistoryItemViewModel {
     private final History history;
     private final HistoryItemViewModelListener listener;
     private final ObservableField<String> title;
+    private final ObservableField<Integer> imageRes;
     private final ObservableField<String> time;
     private final ObservableField<String> isDone;
 
@@ -16,10 +17,12 @@ public class HistoryItemViewModel {
         this.listener = listener;
 
         title = new ObservableField<>();
+        imageRes = new ObservableField<>();
         time = new ObservableField<>();
         isDone = new ObservableField<>();
 
         title.set(history.getTitle());
+        imageRes.set(history.getTitleType().getImageRes());
         time.set(history.timeToString());
         if (history.getDone()) {
             isDone.set("انجام شده");
@@ -31,6 +34,10 @@ public class HistoryItemViewModel {
 
     public ObservableField<String> getTitle() {
         return title;
+    }
+
+    public ObservableField<Integer> getImageRes() {
+        return imageRes;
     }
 
     public ObservableField<String> getTime() {

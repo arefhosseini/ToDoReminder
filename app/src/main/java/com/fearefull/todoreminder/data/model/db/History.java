@@ -6,14 +6,18 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import com.fearefull.todoreminder.data.model.other.DataConverter;
 import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
+import com.fearefull.todoreminder.data.model.other.type.AlarmTitleType;
 import com.fearefull.todoreminder.data.model.other.type.MonthType;
 import com.fearefull.todoreminder.databinding.ItemHistoryBinding;
 
 import java.io.Serializable;
 
 @Entity(tableName = "histories")
+@TypeConverters({DataConverter.class})
 public class History implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
@@ -27,6 +31,10 @@ public class History implements Serializable {
     @NonNull
     @ColumnInfo(name = "title")
     private String title;
+
+    @NonNull
+    @ColumnInfo(name = "title_type")
+    private AlarmTitleType titleType;
 
     @NonNull
     @ColumnInfo(name = "time")
@@ -77,6 +85,18 @@ public class History implements Serializable {
 
 
     /**
+     * Control {@link #titleType}
+     */
+    @NonNull
+    public AlarmTitleType getTitleType() {
+        return titleType;
+    }
+
+    public void setTitleType(@NonNull AlarmTitleType titleType) {
+        this.titleType = titleType;
+    }
+
+    /**
      * Control {@link #time}
      */
     @NonNull
@@ -113,9 +133,11 @@ public class History implements Serializable {
     }
 
 
-    public History(@NonNull Boolean isDone, @NonNull String title, @NonNull Long time) {
+    public History(@NonNull Boolean isDone, @NonNull String title, @NonNull AlarmTitleType titleType,
+                   @NonNull Long time) {
         this.isDone = isDone;
         this.title = title;
+        this.titleType = titleType;
         this.time = time;
         note = "";
     }

@@ -89,7 +89,8 @@
             app:layout_constraintStart_toStartOf="@+id/verticalLine2"
             app:layout_constraintEnd_toStartOf="@+id/verticalLine3"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/selected_bell" />
+            android:scaleType="fitCenter"
+            android:src="@{viewModel.imageRes, default=@drawable/alarm_title_custom}" />
 
         <LinearLayout
             android:layout_width="wrap_content"

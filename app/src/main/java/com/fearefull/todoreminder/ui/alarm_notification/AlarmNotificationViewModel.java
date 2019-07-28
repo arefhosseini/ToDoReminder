@@ -26,6 +26,7 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
     private final Handler handler;
 
     private final ObservableField<String> titleString;
+    private final ObservableField<Integer> imageRes;
     private final ObservableField<String> minuteString;
     private final ObservableField<String> hourString;
     private final ObservableField<String> dayString;
@@ -37,6 +38,7 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
         runnable = this::goOff;
         handler = new Handler();
         titleString = new ObservableField<>();
+        imageRes = new ObservableField<>();
         minuteString = new ObservableField<>();
         hourString = new ObservableField<>();
         dayString = new ObservableField<>();
@@ -61,6 +63,7 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
     private void setTime() {
         this.alarm.setNowTime();
         titleString.set(alarm.getTitle());
+        imageRes.set(alarm.getTitleType().getImageRes());
         minuteString.set(String.valueOf(alarm.getNowMinute()));
         hourString.set(String.valueOf(alarm.getNowHour()));
         dayString.set(String.valueOf(DayMonthType.getDayMonthTypeByValue(alarm.getNowDay()).getValue()));
@@ -106,7 +109,7 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
     }
 
     private History createHistory(boolean isDone) {
-        return new History(isDone, alarm.getTitle(),
+        return new History(isDone, alarm.getTitle(), alarm.getTitleType(),
                 History.getTimeStampTime(alarm.getNowMinute(), alarm.getNowHour(),
                         alarm.getNowDay(), alarm.getNowMonth(), alarm.getNowYear()));
     }
@@ -125,6 +128,10 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
 
     public ObservableField<String> getTitleString() {
         return titleString;
+    }
+
+    public ObservableField<Integer> getImageRes() {
+        return imageRes;
     }
 
     public ObservableField<String> getMinuteString() {

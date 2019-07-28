@@ -40,15 +40,14 @@
 
                 <ImageView
                     android:id="@+id/titleImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_marginEnd="8dp"
-                    android:scaleX="-1"
                     app:layout_constraintBottom_toBottomOf="@id/titleTextView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/titleTextView"
-                    android:tint="@color/iconColorLightTheme"
-                    app:srcCompat="@drawable/ic_label_black_24dp" />
+                    android:scaleType="fitCenter"
+                    android:src="@{viewModel.imageRes, default=@drawable/alarm_title_custom}" />
 
                 <TextView
                     android:id="@+id/titleTextView"

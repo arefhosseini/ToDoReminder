@@ -276,7 +276,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     public void showAlarmManagerFragment(Alarm alarm) {
         lockDrawer();
-
+        viewModel.setIsLoading(true);
         AlarmManagerFragment fragment = AlarmManagerFragment.newInstance(alarm);
         fragment.setCallBack(this);
         getSupportFragmentManager()
@@ -289,6 +289,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     public boolean onReloadAlarms() {
         return callerHome.reloadAlarmData();
+    }
+
+    @Override
+    public void alarmManagerIsSetUp() {
+        viewModel.setIsLoading(false);
     }
 
     @Override

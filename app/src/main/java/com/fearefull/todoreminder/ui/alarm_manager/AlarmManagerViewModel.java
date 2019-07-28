@@ -176,7 +176,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
             getNavigator().clearBell();
         else if (Integer.parseInt(Objects.requireNonNull(repeatCounter.get())) == 0)
             getNavigator().createWithShakeBell();
-        else if (counter > Integer.parseInt(Objects.requireNonNull(repeatCounter.get())))
+        else if (counter >= Integer.parseInt(Objects.requireNonNull(repeatCounter.get())))
             getNavigator().shakeBell();
         repeatCounter.set(String.valueOf(counter));
     }

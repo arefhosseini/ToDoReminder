@@ -162,6 +162,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         binding.viewPager.setAdapter(pagerAdapter);
 
         viewModel.initAlarm();
+        callBack.alarmManagerIsSetUp();
     }
 
     @Override
@@ -259,5 +260,6 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
 
     public interface AlarmManagerCallBack {
         boolean onReloadAlarms();
+        void alarmManagerIsSetUp();
     }
 }

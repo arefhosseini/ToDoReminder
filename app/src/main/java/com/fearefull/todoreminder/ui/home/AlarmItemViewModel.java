@@ -10,15 +10,18 @@ public class AlarmItemViewModel {
     private final Alarm alarm;
     private final AlarmItemViewModelListener listener;
     private final ObservableField<String> title;
+    private final ObservableField<Integer> imageRes;
     private final ObservableBoolean isEnabled;
 
     public AlarmItemViewModel(Alarm alarm, AlarmItemViewModelListener listener) {
         this.alarm = alarm;
         this.listener = listener;
         title = new ObservableField<>();
+        imageRes = new ObservableField<>();
         isEnabled = new ObservableBoolean();
 
         title.set(alarm.getTitle());
+        imageRes.set(alarm.getTitleType().getImageRes());
         isEnabled.set(alarm.getIsEnable());
     }
 
@@ -42,6 +45,10 @@ public class AlarmItemViewModel {
 
     public ObservableField<String> getTitle() {
         return title;
+    }
+
+    public ObservableField<Integer> getImageRes() {
+        return imageRes;
     }
 
     public ObservableBoolean getIsEnabled() {
