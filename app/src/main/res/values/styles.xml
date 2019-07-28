@@ -68,12 +68,12 @@
 
     <style name="TextStyle.Title.Big" parent="TextStyle.Title">
         <item name="android:textAppearance">@style/TextAppearance.Text.Light</item>
-        <item name="android:textSize">48sp</item>
+        <item name="android:textSize">36sp</item>
     </style>
 
     <style name="TextStyle.Title.Big2" parent="TextStyle.Title">
         <item name="android:textAppearance">@style/TextAppearance.Text.Light</item>
-        <item name="android:textSize">64sp</item>
+        <item name="android:textSize">48sp</item>
     </style>
 
     <style name="TextStyle.Title.Big3" parent="TextStyle.Title">

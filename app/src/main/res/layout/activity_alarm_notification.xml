@@ -71,7 +71,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.83" />
+            app:layout_constraintGuide_percent="0.875" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/horizontalLine5"
@@ -153,64 +153,84 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/horizontalLine3" />
 
-        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clickable="true"
             android:focusable="true"
-            android:background="?actionBarItemBackground"
             android:onClick="@{() -> viewModel.onConfirmClick()}"
-            app:fabColor="@color/greenDarkColor"
-            app:fabType="circle"
-            app:layout_constraintBottom_toTopOf="@+id/horizontalLine5"
+            android:background="@drawable/quarter_bottom_left_circle_confirm_bg"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="w,1:1"
-            app:layout_constraintEnd_toStartOf="@+id/verticalLine2"
+            app:layout_constraintEnd_toStartOf="@id/verticalLine1"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/verticalLine1" >
+            app:layout_constraintStart_toStartOf="parent" >
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/verticalLineConfirm"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.75" />
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_check_black_24dp"
-                android:padding="8dp"
-                android:tint="@color/whiteColor"/>
-        </com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout>
+                android:tint="@color/whiteColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintEnd_toStartOf="@id/verticalLineConfirm"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clickable="true"
             android:focusable="true"
-            android:background="?actionBarItemBackground"
             android:onClick="@{() -> viewModel.onSnoozeClick()}"
-            app:fabColor="@color/redDark2Color"
-            app:fabType="circle"
-            app:layout_constraintBottom_toTopOf="@+id/horizontalLine5"
+            android:background="@drawable/quarter_bottom_right_circle_snooze_bg"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="w,1:1"
-            app:layout_constraintEnd_toStartOf="@+id/verticalLine4"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/verticalLine3" >
+            app:layout_constraintStart_toStartOf="@id/verticalLine4" >
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/verticalLineSnooze"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.25" />
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_snooze_black_24dp"
-                android:padding="8dp"
-                android:tint="@color/whiteColor"/>
-        </com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout>
+                android:tint="@color/whiteColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintStart_toEndOf="@id/verticalLineSnooze"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clickable="true"
             android:focusable="true"
-            android:background="?actionBarItemBackground"
             android:onClick="@{() -> viewModel.onDismissClick()}"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
-            app:fabColor="@color/yellowColor"
-            app:fabType="circle"
-            app:layout_constraintBottom_toTopOf="@+id/horizontalLine5"
+            android:background="@drawable/half_top_circle_cancel_bg"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/verticalLine3"
             app:layout_constraintTop_toBottomOf="@id/horizontalLine4"
             app:layout_constraintHorizontal_bias="0.0"
@@ -220,12 +240,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 style="@style/TextStyle.Title.Big3"
-                android:text="@string/later"
-                android:layout_gravity="center"
+                android:text="@string/canceling"
+                android:layout_gravity="bottom"
                 android:gravity="center"
                 android:padding="@dimen/default_half_layout_padding"
                 android:textColor="@color/primaryTextColorDarkTheme"/>
-
-        </com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

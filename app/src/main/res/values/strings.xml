@@ -33,6 +33,7 @@
     <string name="choose_ringtone">انتخاب زنگ</string>
     <string name="confirm">تایید</string>
     <string name="cancel">لغو</string>
+    <string name="canceling">لغوکردن</string>
     <string name="add">افزودن</string>
     <string name="not_updated_time_error">زمان وارد شده مربوط به گذشته است، تغییرش دهید.</string>
     <string name="duplicate_time_error">زمان وارد شده تکراریست.</string>
