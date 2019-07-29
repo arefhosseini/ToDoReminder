@@ -97,7 +97,7 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
         }
         ringtone.play();
 
-        Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake_animation_infinite);
+        Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake_slow_animation_infinite);
         binding.bellIcon.startAnimation(shake);
     }
 

@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.MutableLiveData;
@@ -178,6 +179,13 @@ public final class BindingUtils {
 
     @BindingAdapter({"android:src"})
     public static void setImageViewResource(ImageView imageView, Integer resource) {
-        imageView.setImageResource(resource);
+        if (resource != null)
+            imageView.setImageResource(resource);
+    }
+
+    @BindingAdapter({"android:selection"})
+    public static void setTextEditSelectionCursor(AppCompatEditText editText, Integer selection) {
+        if (selection != null)
+            editText.setSelection(selection);
     }
 }

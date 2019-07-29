@@ -43,4 +43,7 @@
     <string name="alarm_delete_message">آیا میخواهید این یادآور پاک شود؟</string>
     <string name="history_is_done_message">آیا میخواهید این رکورد را به انجام شده تغییر دهید؟</string>
     <string name="later">بعدا</string>
+    <string name="snooze">زنگ زدن</string>
+    <string name="snooze_delay">وقفه بین هر زنگ</string>
+    <string name="snooze_count">تعداد دفعات هشدار</string>
 </resources>

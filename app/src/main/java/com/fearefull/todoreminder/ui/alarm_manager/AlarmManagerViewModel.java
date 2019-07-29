@@ -32,6 +32,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     private final ObservableField<String> titleString = new ObservableField<>();
     private final ObservableField<Integer> defaultImageResTitle = new ObservableField<>();
+    private final ObservableField<Integer> selectionTitleEditText = new ObservableField<>();
     private final ObservableField<String> ringtoneString = new ObservableField<>();
     private final ObservableField<String> repeatCounter = new ObservableField<>();
     private final MutableLiveData<Integer> currentTabPager;
@@ -150,6 +151,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     void updateTitleString(String title) {
         titleString.set(title);
+        selectionTitleEditText.set(title.length());
     }
 
     void updateAlarmTitle(AlarmTitleType titleType) {
@@ -187,6 +189,10 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     public ObservableField<Integer> getDefaultImageResTitle() {
         return defaultImageResTitle;
+    }
+
+    public ObservableField<Integer> getSelectionTitleEditText() {
+        return selectionTitleEditText;
     }
 
     public ObservableField<String> getRingtoneString() {

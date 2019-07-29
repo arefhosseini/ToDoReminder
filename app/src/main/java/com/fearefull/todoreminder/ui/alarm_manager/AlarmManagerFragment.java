@@ -33,6 +33,8 @@ import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.base.BaseViewPagerAdapter;
 import com.fearefull.todoreminder.utils.CommonUtils;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -191,6 +193,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     @Override
     public void onAlarmTitleItemClick(AlarmTitleItem item) {
         viewModel.updateAlarmTitle(item.getType());
+        binding.titleEditText.requestFocus();
     }
 
     @Override
