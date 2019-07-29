@@ -168,6 +168,13 @@ public final class BindingUtils {
         }
     }
 
+    @BindingAdapter({"pickerSpeed"})
+    public static void setPickerSpeed(NumberPicker pickerSpeed, Integer speed) {
+        if (speed != null) {
+            pickerSpeed.setOnLongPressUpdateInterval(speed.longValue());
+        }
+    }
+
     @BindingAdapter({"setDivider"})
     public static void setRefreshColors(RecyclerView recyclerView, Boolean isSet) {
         if (isSet) {

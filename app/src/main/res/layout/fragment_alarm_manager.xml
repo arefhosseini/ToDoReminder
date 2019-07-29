@@ -547,7 +547,8 @@
                                                 android:layout_width="24dp"
                                                 android:layout_height="24dp"
                                                 android:clickable="true"
-                                                android:focusable="true">
+                                                android:focusable="true"
+                                                android:onClick="@{() -> viewModel.onDecreaseSnoozeDelay()}">
 
                                                 <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
                                                     android:layout_width="16dp"
@@ -566,7 +567,7 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 style="@style/TextStyle.Title.Sub"
-                                                android:text="5 دقیقه"
+                                                android:text="@{viewModel.snoozeDelayString}"
                                                 android:layout_gravity="center"
                                                 android:paddingLeft="@dimen/default_layout_padding"
                                                 android:paddingRight="@dimen/default_layout_padding"
@@ -576,7 +577,8 @@
                                                 android:layout_width="24dp"
                                                 android:layout_height="24dp"
                                                 android:clickable="true"
-                                                android:focusable="true">
+                                                android:focusable="true"
+                                                android:onClick="@{() -> viewModel.onIncreaseSnoozeDelay()}">
 
                                                 <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
                                                     android:layout_width="16dp"
@@ -621,7 +623,8 @@
                                                 android:layout_width="24dp"
                                                 android:layout_height="24dp"
                                                 android:clickable="true"
-                                                android:focusable="true">
+                                                android:focusable="true"
+                                                android:onClick="@{() -> viewModel.onDecreaseSnoozeCount()}">
 
                                                 <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
                                                     android:layout_width="16dp"
@@ -640,7 +643,7 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 style="@style/TextStyle.Title.Sub"
-                                                android:text="10"
+                                                android:text="@{viewModel.snoozeCountString}"
                                                 android:layout_gravity="center"
                                                 android:paddingLeft="@dimen/default_layout_padding"
                                                 android:paddingRight="@dimen/default_layout_padding"
@@ -650,7 +653,8 @@
                                                 android:layout_width="24dp"
                                                 android:layout_height="24dp"
                                                 android:clickable="true"
-                                                android:focusable="true">
+                                                android:focusable="true"
+                                                android:onClick="@{() -> viewModel.onIncreaseSnoozeCount()}">
 
                                                 <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
                                                     android:layout_width="16dp"

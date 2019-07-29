@@ -6,7 +6,7 @@ interface AlarmManagerNavigator {
     void goBack();
     void save();
     void openCustomRepeatPickerFragment();
-    void closeAllExpansions();
+    void openRingtonePickerDialog();
     void shakeBell();
     void createWithShakeBell();
     void clearBell();

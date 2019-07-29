@@ -43,4 +43,12 @@ public enum SnoozeType implements Serializable {
         }
         return SnoozeType.TENTH;
     }
+
+    public static SnoozeType setBeforeSnooze(SnoozeType type) {
+        if (type.value != 0) {
+            return getSnoozeTypeByValue(type.value - 1);
+        }
+        return SnoozeType.NONE;
+    }
+
 }

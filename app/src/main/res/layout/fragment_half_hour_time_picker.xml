@@ -25,6 +25,7 @@
             app:defaultIndex="@{viewModel.halfHourTypePickerDefaultIndex}"
             android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onHalfHourTypePickerValueChange(oldVal, newVal)}"
             app:dividedColor="@{@color/secondaryColorLightTheme}"
+            app:pickerSpeed="@{1000}"
             android:descendantFocusability="blocksDescendants"
             android:layout_gravity="center_horizontal" />
 
@@ -43,6 +44,7 @@
             app:defaultIndex="@{viewModel.hourPickerDefaultIndex}"
             android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onHourPickerValueChange(oldVal, newVal)}"
             app:dividedColor="@{@color/secondaryColorLightTheme}"
+            app:pickerSpeed="@{1000}"
             android:descendantFocusability="blocksDescendants"
             android:layout_gravity="center_horizontal" />
 
@@ -65,6 +67,7 @@
             app:defaultIndex="@{viewModel.minutePickerDefaultIndex}"
             android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onMinutePickerValueChange(oldVal, newVal)}"
             app:dividedColor="@{@color/secondaryColorLightTheme}"
+            app:pickerSpeed="@{1000}"
             android:descendantFocusability="blocksDescendants"
             android:layout_gravity="center_horizontal" />
 

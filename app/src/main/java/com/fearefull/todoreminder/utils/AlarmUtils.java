@@ -56,8 +56,8 @@ public final class AlarmUtils {
 
     public static List<String> getHalfHourTypes() {
         List<String> stringTypes = new ArrayList<>();
-        stringTypes.add(HalfHourType.AM.getPersianText());
-        stringTypes.add(HalfHourType.PM.getPersianText());
+        stringTypes.add(HalfHourType.AM.getPersianShortText());
+        stringTypes.add(HalfHourType.PM.getPersianShortText());
         return stringTypes;
     }
 

@@ -5,6 +5,7 @@ import android.net.Uri;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 
+import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
@@ -14,6 +15,7 @@ import com.fearefull.todoreminder.data.model.other.type.AlarmTitleType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
+import com.github.florent37.expansionpanel.ExpansionLayout;
 import com.kevalpatel.ringtonepicker.RingtonePickerListener;
 
 import java.util.List;
@@ -35,8 +37,11 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     private final ObservableField<Integer> selectionTitleEditText = new ObservableField<>();
     private final ObservableField<String> ringtoneString = new ObservableField<>();
     private final ObservableField<String> repeatCounter = new ObservableField<>();
+    private final ObservableField<String> snoozeDelayString = new ObservableField<>();
+    private final ObservableField<String> snoozeCountString = new ObservableField<>();
     private final MutableLiveData<Integer> currentTabPager;
     private final MutableLiveData<Integer> pageLimitPager;
+
     private boolean shouldUpdateAlarm = false;
     private boolean shouldExit = false;
 
@@ -139,6 +144,8 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         fetchRepeatData();
         updateAlarm();
         openDefaultRepeatFragment();
+        updateSnoozeCount();
+        updateSnoozeDelay();
     }
 
     void updateAlarm() {
@@ -149,7 +156,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
             onSaveClick();
     }
 
-    void updateTitleString(String title) {
+    private void updateTitleString(String title) {
         titleString.set(title);
         selectionTitleEditText.set(title.length());
     }
@@ -160,20 +167,20 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         updateTitleImageRes(titleType.getImageRes());
     }
 
-    void updateTitleImageRes(int imageRes) {
+    private void updateTitleImageRes(int imageRes) {
         defaultImageResTitle.set(imageRes);
     }
 
-    void openDefaultRepeatFragment() {
+    private void openDefaultRepeatFragment() {
         currentTabPager.setValue(alarm.getDefaultRepeat().getValue());
         setIsLoading(false);
     }
 
-    void updateRingtoneString() {
+    private void updateRingtoneString() {
         ringtoneString.set(alarm.getRingtone());
     }
 
-    void updateAddCounter(int counter) {
+    private void updateAddCounter(int counter) {
         if (counter == 0)
             getNavigator().clearBell();
         else if (Integer.parseInt(Objects.requireNonNull(repeatCounter.get())) == 0)
@@ -181,6 +188,14 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         else if (counter >= Integer.parseInt(Objects.requireNonNull(repeatCounter.get())))
             getNavigator().shakeBell();
         repeatCounter.set(String.valueOf(counter));
+    }
+
+    private void updateSnoozeCount() {
+        snoozeCountString.set(String.valueOf(alarm.getSnoozeType().getValue()));
+    }
+
+    private void updateSnoozeDelay() {
+        snoozeDelayString.set(alarm.getSnoozeDelayMinute() + " دقیقه");
     }
 
     public ObservableField<String> getTitleString() {
@@ -201,6 +216,14 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     public ObservableField<String> getRepeatCounter() {
         return repeatCounter;
+    }
+
+    public ObservableField<String> getSnoozeCountString() {
+        return snoozeCountString;
+    }
+
+    public ObservableField<String> getSnoozeDelayString() {
+        return snoozeDelayString;
     }
 
     public MutableLiveData<Integer> getCurrentTabPager() {
@@ -231,11 +254,37 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     };
 
     public void onRingtoneClick() {
-        getNavigator().closeAllExpansions();
+        getNavigator().openRingtonePickerDialog();
     }
 
     public void onRepeatManagerClick() {
         getNavigator().onShowRepeatManagerDialog();
+    }
+
+    public void onIncreaseSnoozeDelay() {
+        alarm.setSnoozeDelay(alarm.getSnoozeDelayMinute() + 1);
+        updateSnoozeDelay();
+    }
+
+    public void onDecreaseSnoozeDelay() {
+        if (alarm.getSnoozeDelayMinute() > 1) {
+            alarm.setSnoozeDelay(alarm.getSnoozeDelayMinute() - 1);
+            updateSnoozeDelay();
+        }
+    }
+
+    public void onIncreaseSnoozeCount() {
+        if (alarm.getSnoozeType().getValue() <= 9) {
+            alarm.forwardSnoozeType();
+            updateSnoozeCount();
+        }
+    }
+
+    public void onDecreaseSnoozeCount() {
+        if (alarm.getSnoozeType().getValue() >= 1) {
+            alarm.backwardSnoozeType();
+            updateSnoozeCount();
+        }
     }
 
     Uri getDefaultRingtone() {

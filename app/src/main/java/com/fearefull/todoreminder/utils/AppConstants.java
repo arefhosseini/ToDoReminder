@@ -9,7 +9,7 @@ public final class AppConstants {
     public static final int END_YEAR = 1450;
     public static final String ALARM_KEY = "alarm_key";
     public static final long COUNT_DOWN_ALARM_TIMER = 1000 * 60;
-    public static final long DEFAULT_SNOOZE_TIMER = 1000 * 20;
+    public static final long DEFAULT_SNOOZE_TIMER = 1000 * 60 * 5;
 
 
     private AppConstants() {

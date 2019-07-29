@@ -231,6 +231,15 @@ public class Alarm implements Serializable {
         this.snoozeType = snoozeType;
     }
 
+    @Ignore
+    public void forwardSnoozeType() {
+        snoozeType = SnoozeType.setNextSnooze(snoozeType);
+    }
+
+    @Ignore
+    public void backwardSnoozeType() {
+        snoozeType = SnoozeType.setBeforeSnooze(snoozeType);
+    }
 
     /**
      * Control {@link #snoozeDelay}
@@ -241,6 +250,16 @@ public class Alarm implements Serializable {
 
     public void setSnoozeDelay(Long snoozeDelay) {
         this.snoozeDelay = snoozeDelay;
+    }
+
+    @Ignore
+    public void setSnoozeDelay(int delayMinute) {
+        this.snoozeDelay = (long) (delayMinute * 60 * 1000);
+    }
+
+    @Ignore
+    public int getSnoozeDelayMinute() {
+        return (int) (snoozeDelay / (60 * 1000));
     }
 
     /**

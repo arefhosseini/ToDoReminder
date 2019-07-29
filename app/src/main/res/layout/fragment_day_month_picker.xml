@@ -23,6 +23,7 @@
             app:defaultIndex="@{viewModel.dayMonthPickerDefaultIndex}"
             android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onDayMonthPickerValueChange(oldVal, newVal)}"
             app:dividedColor="@{@color/secondaryColorLightTheme}"
+            app:pickerSpeed="@{1000}"
             android:descendantFocusability="blocksDescendants"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>

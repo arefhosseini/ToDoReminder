@@ -32,8 +32,7 @@ import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerD
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.base.BaseViewPagerAdapter;
 import com.fearefull.todoreminder.utils.CommonUtils;
-
-import java.util.Objects;
+import com.github.florent37.expansionpanel.ExpansionLayout;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -41,6 +40,7 @@ import javax.inject.Named;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
+import timber.log.Timber;
 
 import static com.fearefull.todoreminder.utils.AppConstants.ALARM_KEY;
 
@@ -74,7 +74,8 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     private AlarmManagerCallBack callBack;
     private AlarmManagerCaller callerOnceRepeat, callerDailyRepeat, callerWeeklyRepeat, callerMonthlyRepeat,
             callerYearlyRepeat;
-
+    private ExpansionLayout.Listener expansionLayoutListener;
+    private boolean isShowRingtoneDialog = false;
     public static AlarmManagerFragment newInstance(Alarm alarm) {
         Bundle args = new Bundle();
         AlarmManagerFragment fragment = new AlarmManagerFragment();
@@ -163,6 +164,24 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         //pagerAdapter.addFragment(simpleFragment3, "custom");
         binding.viewPager.setAdapter(pagerAdapter);
 
+        expansionLayoutListener = (expansionLayout, expanded) -> {
+            if (binding.titleExpansionLayout == expansionLayout) {
+                if (expanded) {
+                    binding.titleEditText.requestFocus();
+                }
+                else {
+                    hideKeyboard();
+                    binding.titleEditText.clearFocus();
+                }
+            }
+            if (!expanded && isShowRingtoneDialog)
+                showRingtonePickerDialog();
+        };
+
+        binding.titleExpansionLayout.addListener(expansionLayoutListener);
+        binding.repeatExpansionLayout.addListener(expansionLayoutListener);
+        binding.snoozeExpansionLayout.addListener(expansionLayoutListener);
+
         viewModel.initAlarm();
         callBack.alarmManagerIsSetUp();
     }
@@ -197,13 +216,21 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     }
 
     @Override
-    public void closeAllExpansions() {
+    public void openRingtonePickerDialog() {
+        isShowRingtoneDialog = true;
         if (binding.titleExpansionLayout.isExpanded())
             binding.titleExpansionLayout.collapse(true);
         else if (binding.repeatExpansionLayout.isExpanded())
             binding.repeatExpansionLayout.collapse(true);
+        else if (binding.snoozeExpansionLayout.isExpanded())
+            binding.snoozeExpansionLayout.collapse(true);
+        else
+            showRingtonePickerDialog();
+    }
 
+    private void showRingtonePickerDialog() {
         CommonUtils.showRingtonePicker(this, viewModel.getDefaultRingtone(), viewModel.ringtonePickerListener);
+        isShowRingtoneDialog = false;
     }
 
     public void setCallBack(AlarmManagerCallBack callBack) {
