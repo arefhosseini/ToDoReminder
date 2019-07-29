@@ -38,8 +38,8 @@ public class AlarmItemViewModel {
         return false;
     }
 
-    public void onSwitchChanged(boolean checked) {
-        alarm.setIsEnable(checked);
+    public void onSwitchClick() {
+        alarm.setIsEnable(!alarm.getIsEnable());
         listener.onSwitchClick(alarm);
     }
 

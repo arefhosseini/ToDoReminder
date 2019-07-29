@@ -52,7 +52,7 @@ public class AppAlarmScheduler implements AlarmScheduler {
         Alarm closestAlarm;
         Alarm currentAlarm = new Alarm();
         RepeatModel closestRepeatModel;
-        Snooze snooze = new Snooze();
+        Snooze selectedSnooze = new Snooze();
         long closestTime = Long.MAX_VALUE;
         long currentTime = System.currentTimeMillis();
         long checkTime = 0;
@@ -73,27 +73,30 @@ public class AppAlarmScheduler implements AlarmScheduler {
                     closestTime = checkTime;
                     closestRepeatModel = alarm.getRepeatModel(index);
                     closestAlarm = alarm;
-                    snooze.setAlarmId(closestAlarm.getId());
-                    snooze.setModel(closestRepeatModel);
+                    selectedSnooze.setAlarmId(closestAlarm.getId());
+                    selectedSnooze.setModel(closestRepeatModel);
                 }
             }
         }
 
         List<Snooze> snoozeList = dataManager.getAllSnoozes();
         if (snoozeList.size() > 0) {
-            for (Snooze s: snoozeList) {
-                checkTime = AppConstants.SNOOZE_TIMER;
-                if (checkTime < closestTime) {
-                    closestTime = checkTime;
-                    snooze = s;
+            for (Snooze snooze: snoozeList) {
+                for (Alarm alarm: alarms) {
+                    if (snooze.getAlarmId() == alarm.getId()) {
+                        if (alarm.getSnoozeDelay() < closestTime) {
+                            closestTime = alarm.getSnoozeDelay();
+                            selectedSnooze = snooze;
+                        }
+                        break;
+                    }
                 }
             }
         }
 
-        if (!snooze.isNull()) {
+        if (!selectedSnooze.isNull()) {
             PersistableBundleCompat extras = new PersistableBundleCompat();
-
-            extras.putString(Snooze.SNOOZE_KEY, Snooze.toJson(snooze));
+            extras.putString(Snooze.SNOOZE_KEY, Snooze.toJson(selectedSnooze));
             int scheduleId = DemoSyncJob.scheduleJob(closestTime, extras);
             dataManager.setSchedule(scheduleId);
             Timber.e("Starting time: %s", closestTime);

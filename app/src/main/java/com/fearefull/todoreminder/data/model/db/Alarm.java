@@ -16,8 +16,8 @@ import com.fearefull.todoreminder.data.model.other.type.MonthType;
 import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
 import com.fearefull.todoreminder.data.model.other.RepeatModel;
 import com.fearefull.todoreminder.data.model.other.item.RepeatManagerItem;
-
-import org.jetbrains.annotations.NotNull;
+import com.fearefull.todoreminder.data.model.other.type.SnoozeType;
+import com.fearefull.todoreminder.utils.AppConstants;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -58,6 +58,12 @@ public class Alarm implements Serializable {
 
     @ColumnInfo(name = "repeats_status")
     private List<Boolean> repeatsStatus;
+
+    @ColumnInfo(name = "snooze_type")
+    private SnoozeType snoozeType;
+
+    @ColumnInfo(name = "snooze_delay")
+    private Long snoozeDelay;
 
     @ColumnInfo(name = "minutes")
     private List<Integer> minutes;
@@ -213,6 +219,29 @@ public class Alarm implements Serializable {
         repeatsStatus.add(repeatStatus);
     }
 
+
+    /**
+     * Control {@link #snoozeType}
+     */
+    public SnoozeType getSnoozeType() {
+        return snoozeType;
+    }
+
+    public void setSnoozeType(SnoozeType snoozeType) {
+        this.snoozeType = snoozeType;
+    }
+
+
+    /**
+     * Control {@link #snoozeDelay}
+     */
+    public Long getSnoozeDelay() {
+        return snoozeDelay;
+    }
+
+    public void setSnoozeDelay(Long snoozeDelay) {
+        this.snoozeDelay = snoozeDelay;
+    }
 
     /**
      * Control {@link #ringtone}
@@ -574,6 +603,8 @@ public class Alarm implements Serializable {
         this.title = titleType.getText();
         this.ringtone = "DEFAULT";
         this.note = "";
+        this.snoozeType = SnoozeType.getDefaultSnoozeType();
+        this.snoozeDelay = AppConstants.DEFAULT_SNOOZE_TIMER;
         repeats = new ArrayList<>();
         repeatsStatus = new ArrayList<>();
         minutes = new ArrayList<>();

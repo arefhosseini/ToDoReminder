@@ -3,6 +3,7 @@ package com.fearefull.todoreminder.data.local.prefs;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Snooze;
 import com.fearefull.todoreminder.di.PreferenceInfo;
 import com.google.gson.Gson;
@@ -71,7 +72,7 @@ public class AppPreferencesHelper implements PreferencesHelper {
     }
 
     @Override
-    public void removeSnooze(Snooze snooze) {
+    public void deleteSnooze(Snooze snooze) {
         List<Snooze> snoozes = getAllSnoozes();
         snoozes.remove(snooze);
         Snooze selectedSnooze = null;
@@ -84,17 +85,26 @@ public class AppPreferencesHelper implements PreferencesHelper {
         }
         if (selectedSnooze != null) {
             snoozes.remove(selectedSnooze);
-            Timber.e("Removing");
         }
         setSnoozeList(snoozes);
     }
 
     @Override
-    public Snooze getSnoozeByAlarmId(long alarmId) {
+    public Snooze getSnoozeByAlarm(Alarm alarm) {
         for (Snooze snooze: getAllSnoozes()) {
-            if (snooze.getAlarmId() == alarmId)
+            if (snooze.getAlarmId() == alarm.getId())
                 return snooze;
         }
         return new Snooze();
+    }
+
+    @Override
+    public void deleteSnoozeByAlarm(Alarm alarm) {
+        for (Snooze snooze: getAllSnoozes()) {
+            if (snooze.getAlarmId() == alarm.getId()) {
+                deleteSnooze(snooze);
+                break;
+            }
+        }
     }
 }

@@ -55,8 +55,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public void removeSnooze(Snooze snooze) {
-        preferencesHelper.removeSnooze(snooze);
+    public void deleteSnooze(Snooze snooze) {
+        preferencesHelper.deleteSnooze(snooze);
     }
 
     @Override
@@ -125,12 +125,12 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Snooze getSnoozeByAlarmId(long alarmId) {
-        return preferencesHelper.getSnoozeByAlarmId(alarmId);
+    public Snooze getSnoozeByAlarm(Alarm alarm) {
+        return preferencesHelper.getSnoozeByAlarm(alarm);
     }
 
     @Override
-    public Snooze getSnoozeByAlarm(Alarm alarm) {
-        return getSnoozeByAlarmId(alarm.getId());
+    public void deleteSnoozeByAlarm(Alarm alarm) {
+        preferencesHelper.deleteSnoozeByAlarm(alarm);
     }
 }

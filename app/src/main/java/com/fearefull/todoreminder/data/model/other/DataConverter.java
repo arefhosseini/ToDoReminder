@@ -4,6 +4,7 @@ import androidx.room.TypeConverter;
 
 import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.data.model.other.type.AlarmTitleType;
+import com.fearefull.todoreminder.data.model.other.type.SnoozeType;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -120,5 +121,26 @@ public class DataConverter implements Serializable {
         Type type = new TypeToken<AlarmTitleType>() {
         }.getType();
         return gson.fromJson(AlarmTitleTypeString, type);
+    }
+
+    @TypeConverter
+    public String fromSnoozeType(SnoozeType snoozeType) {
+        if (snoozeType == null)
+            return null;
+        Gson gson = new Gson();
+        Type type = new TypeToken<SnoozeType>() {
+        }.getType();
+        return gson.toJson(snoozeType, type);
+    }
+
+    @TypeConverter
+    public SnoozeType toSnoozeType(String SnoozeTypeString) {
+        if (SnoozeTypeString == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<SnoozeType>() {
+        }.getType();
+        return gson.fromJson(SnoozeTypeString, type);
     }
 }

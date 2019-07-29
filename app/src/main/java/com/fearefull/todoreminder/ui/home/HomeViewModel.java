@@ -72,6 +72,7 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                     if (result && Objects.requireNonNull(alarmItemsLiveData.getValue()).contains(deletingAlarm)) {
                         alarmItemsLiveData.getValue().remove(deletingAlarm);
                         alarmItemsLiveData.setValue(alarmItemsLiveData.getValue());
+                        getDataManager().deleteSnoozeByAlarm(deletingAlarm);
                         deletingAlarm = null;
                         alarmScheduler.schedule();
                     }
@@ -87,6 +88,7 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                 .subscribe(result -> {
                     if (result) {
                         alarmItemsLiveData.setValue(alarmItemsLiveData.getValue());
+                        getDataManager().deleteSnoozeByAlarm(alarm);
                         alarmScheduler.schedule();
                     }
 

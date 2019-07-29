@@ -10,7 +10,6 @@ import com.fearefull.todoreminder.data.model.db.History;
 import com.fearefull.todoreminder.data.model.db.Snooze;
 import com.fearefull.todoreminder.data.model.other.type.DayMonthType;
 import com.fearefull.todoreminder.data.model.other.type.MonthType;
-import com.fearefull.todoreminder.data.model.other.type.SnoozeType;
 import com.fearefull.todoreminder.schedule.AlarmScheduler;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AppConstants;
@@ -74,7 +73,7 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
     }
 
     private void setCountdown() {
-        handler.postDelayed(runnable, AppConstants.COUTNT_DOWN_ALARM_TIMER);
+        handler.postDelayed(runnable, AppConstants.COUNT_DOWN_ALARM_TIMER);
     }
 
     private void cancelCountdown() {
@@ -82,7 +81,8 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
     }
 
     private void goOff() {
-        if (snooze.getType() != SnoozeType.THIRD) {
+        Timber.e("snooze: %s, alarm: %s", snooze.getType().toString(), alarm.getSnoozeType().toString());
+        if (snooze.getType() != alarm.getSnoozeType()) {
             snooze.setNextSnooze();
             getDataManager().addSnooze(snooze);
             alarmScheduler.schedule();
@@ -119,7 +119,7 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(result -> {
-                    getDataManager().removeSnooze(snooze);
+                    getDataManager().deleteSnooze(snooze);
                     alarmScheduler.schedule();
                     getNavigator().destroy();
                 }, Timber::e)

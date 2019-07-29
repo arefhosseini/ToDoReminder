@@ -45,7 +45,6 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         this.alarmScheduler = alarmScheduler;
     }
 
-
     @NotNull
     @Override
     public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {

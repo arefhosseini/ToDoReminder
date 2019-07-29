@@ -8,10 +8,8 @@ public final class AppConstants {
     public static final int START_YEAR = 1397;
     public static final int END_YEAR = 1450;
     public static final String ALARM_KEY = "alarm_key";
-    public static final String DEFAULT_NOTE = "یادداشت شما";
-    public static final int RINGTONE_PICKER_CODE = 101;
-    public static final long COUTNT_DOWN_ALARM_TIMER = 1000 * 20;
-    public static final long SNOOZE_TIMER = 1000 * 20;
+    public static final long COUNT_DOWN_ALARM_TIMER = 1000 * 60;
+    public static final long DEFAULT_SNOOZE_TIMER = 1000 * 20;
 
 
     private AppConstants() {

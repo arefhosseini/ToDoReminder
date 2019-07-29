@@ -46,12 +46,7 @@ public class Snooze implements Serializable {
     }
 
     public void setNextSnooze() {
-        if (type == SnoozeType.NONE)
-            type = SnoozeType.FIRST;
-        else if (type == SnoozeType.FIRST)
-            type = SnoozeType.SECOND;
-        else if (type == SnoozeType.SECOND)
-            type = SnoozeType.THIRD;
+        type = SnoozeType.setNextSnooze(type);
     }
 
     public boolean isSame(Snooze snooze) {
