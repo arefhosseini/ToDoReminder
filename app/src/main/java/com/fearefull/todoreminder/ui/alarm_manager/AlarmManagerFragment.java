@@ -124,15 +124,15 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
 
     private void setUp() {
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        binding.repeatRecyclerView.setLayoutManager(layoutManager);
-        binding.repeatRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        binding.repeatRecyclerView.setAdapter(repeatAdapter);
+        binding.repeatContent.repeatRecyclerView.setLayoutManager(layoutManager);
+        binding.repeatContent.repeatRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        binding.repeatContent.repeatRecyclerView.setAdapter(repeatAdapter);
 
-        binding.titleRecyclerView.setLayoutManager(gridLayoutManager);
-        binding.titleRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        binding.titleRecyclerView.setAdapter(titleAdapter);
+        binding.titleContent.titleRecyclerView.setLayoutManager(gridLayoutManager);
+        binding.titleContent.titleRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        binding.titleContent.titleRecyclerView.setAdapter(titleAdapter);
 
-        binding.viewPager.setEnableSwipe(false);
+        binding.repeatContent.viewPager.setEnableSwipe(false);
 
         OnceRepeatFragment onceRepeatFragment = OnceRepeatFragment.newInstance(viewModel.getAlarm());
         onceRepeatFragment.setCallBack(this);
@@ -162,25 +162,25 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         pagerAdapter.addFragment(monthlyRepeatFragment, "monthly");
         pagerAdapter.addFragment(yearlyRepeatFragment, "yearly");
         //pagerAdapter.addFragment(simpleFragment3, "custom");
-        binding.viewPager.setAdapter(pagerAdapter);
+        binding.repeatContent.viewPager.setAdapter(pagerAdapter);
 
         expansionLayoutListener = (expansionLayout, expanded) -> {
-            if (binding.titleExpansionLayout == expansionLayout) {
+            if (binding.titleContent.titleExpansionLayout == expansionLayout) {
                 if (expanded) {
-                    binding.titleEditText.requestFocus();
+                    binding.titleContent.titleEditText.requestFocus();
                 }
                 else {
                     hideKeyboard();
-                    binding.titleEditText.clearFocus();
+                    binding.titleContent.titleEditText.clearFocus();
                 }
             }
             if (!expanded && isShowRingtoneDialog)
                 showRingtonePickerDialog();
         };
 
-        binding.titleExpansionLayout.addListener(expansionLayoutListener);
-        binding.repeatExpansionLayout.addListener(expansionLayoutListener);
-        binding.snoozeExpansionLayout.addListener(expansionLayoutListener);
+        binding.titleContent.titleExpansionLayout.addListener(expansionLayoutListener);
+        binding.repeatContent.repeatExpansionLayout.addListener(expansionLayoutListener);
+        binding.snoozeContent.snoozeExpansionLayout.addListener(expansionLayoutListener);
 
         viewModel.initAlarm();
         callBack.alarmManagerIsSetUp();
@@ -212,18 +212,18 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     @Override
     public void onAlarmTitleItemClick(AlarmTitleItem item) {
         viewModel.updateAlarmTitle(item.getType());
-        binding.titleEditText.requestFocus();
+        binding.titleContent.titleEditText.requestFocus();
     }
 
     @Override
     public void openRingtonePickerDialog() {
         isShowRingtoneDialog = true;
-        if (binding.titleExpansionLayout.isExpanded())
-            binding.titleExpansionLayout.collapse(true);
-        else if (binding.repeatExpansionLayout.isExpanded())
-            binding.repeatExpansionLayout.collapse(true);
-        else if (binding.snoozeExpansionLayout.isExpanded())
-            binding.snoozeExpansionLayout.collapse(true);
+        if (binding.titleContent.titleExpansionLayout.isExpanded())
+            binding.titleContent.titleExpansionLayout.collapse(true);
+        else if (binding.repeatContent.repeatExpansionLayout.isExpanded())
+            binding.repeatContent.repeatExpansionLayout.collapse(true);
+        else if (binding.snoozeContent.snoozeExpansionLayout.isExpanded())
+            binding.snoozeContent.snoozeExpansionLayout.collapse(true);
         else
             showRingtonePickerDialog();
     }
@@ -259,19 +259,19 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     @Override
     public void createWithShakeBell() {
         Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake_animation);
-        binding.repeatManagerIcon.setImageResource(R.drawable.selected_bell);
-        binding.repeatManagerIcon.startAnimation(shake);
+        binding.repeatContent.repeatManagerIcon.setImageResource(R.drawable.selected_bell);
+        binding.repeatContent.repeatManagerIcon.startAnimation(shake);
     }
 
     @Override
     public void shakeBell() {
         Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake_animation);
-        binding.repeatManagerIcon.startAnimation(shake);
+        binding.repeatContent.repeatManagerIcon.startAnimation(shake);
     }
 
     @Override
     public void clearBell() {
-        binding.repeatManagerIcon.setImageResource(R.drawable.unselected_bell);
+        binding.repeatContent.repeatManagerIcon.setImageResource(R.drawable.unselected_bell);
     }
 
     @Override
