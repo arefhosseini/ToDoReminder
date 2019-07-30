@@ -228,6 +228,33 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
             showRingtonePickerDialog();
     }
 
+    @Override
+    public void changeExpansionTitleLayout() {
+        if (binding.titleContent.titleExpansionLayout.isExpanded()) {
+            binding.titleContent.titleExpansionLayout.collapse(true);
+        }
+        else
+            binding.titleContent.titleExpansionLayout.expand(true);
+    }
+
+    @Override
+    public void changeExpansionRepeatLayout() {
+        if (binding.repeatContent.repeatExpansionLayout.isExpanded()) {
+            binding.repeatContent.repeatExpansionLayout.collapse(true);
+        }
+        else
+            binding.repeatContent.repeatExpansionLayout.expand(true);
+    }
+
+    @Override
+    public void changeExpansionSnoozeLayout() {
+        if (binding.snoozeContent.snoozeExpansionLayout.isExpanded()) {
+            binding.snoozeContent.snoozeExpansionLayout.collapse(true);
+        }
+        else
+            binding.snoozeContent.snoozeExpansionLayout.expand(true);
+    }
+
     private void showRingtonePickerDialog() {
         CommonUtils.showRingtonePicker(this, viewModel.getDefaultRingtone(), viewModel.ringtonePickerListener);
         isShowRingtoneDialog = false;

@@ -12,4 +12,7 @@ interface AlarmManagerNavigator {
     void clearBell();
     void onShowRepeatManagerDialog();
     void getLastRepeat(Repeat repeat);
+    void changeExpansionTitleLayout();
+    void changeExpansionRepeatLayout();
+    void changeExpansionSnoozeLayout();
 }

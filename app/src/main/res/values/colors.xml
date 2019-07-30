@@ -29,6 +29,7 @@
 
     <!--background colors for light theme-->
     <color name="backgroundColorLightTheme">#FFFAFAFA</color>
+    <color name="backgroundColorPrimaryTheme">#DDD5EC</color>
 
     <!--background colors for dark theme-->
     <color name="backgroundColorDarkTheme">#303030</color>

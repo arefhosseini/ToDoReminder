@@ -18,24 +18,24 @@
         android:layout_height="wrap_content">
 
         <com.github.florent37.expansionpanel.ExpansionHeader
-            android:layout_height="80dp"
+            android:layout_height="88dp"
             android:layout_width="match_parent"
             android:id="@+id/titleHeader"
             app:expansion_headerIndicator="@id/titleHeaderIndicator"
             app:expansion_layout="@id/titleExpansionLayout"
-            android:translationZ="14dp"
-            app:expansion_toggleOnClick="true">
+            app:expansion_toggleOnClick="false"
+            android:translationZ="14dp">
 
             <com.github.florent37.shapeofview.shapes.ArcView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:elevation="4dp"
                 app:shape_arc_height="-24dp"
                 app:shape_arc_position="top">
 
                 <com.github.florent37.shapeofview.shapes.ArcView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     app:shape_arc_height="24dp"
                     app:shape_arc_position="bottom">
 
@@ -45,73 +45,44 @@
                         android:background="@color/primaryColorGradient1"/>
 
                     <RelativeLayout
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="24dp"
                         android:layout_gravity="center"
-                        android:paddingLeft="@dimen/default_layout_padding"
-                        android:paddingRight="@dimen/default_layout_padding"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent">
+                        android:onClick="@{() -> viewModel.headerTitleClick()}"
+                        android:clickable="true"
+                        android:focusable="true">
 
                         <ImageView
                             android:id="@+id/titleHeaderIcon"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:scaleType="fitCenter"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_note_black_24dp"
-                            android:tint="@color/primaryTextColorDarkTheme"/>
+                            android:src="@{viewModel.defaultImageResTitle, default=@drawable/alarm_title_custom}"/>
 
                         <TextView
                             style="@style/TextStyle.Title"
                             android:id="@+id/titleHeaderText"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
+                            android:layout_marginRight="8dp"
                             android:layout_toLeftOf="@id/titleHeaderIcon"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="8dp"
                             android:textColor="@color/primaryTextColorDarkTheme"
                             android:text="@string/title" />
-
-                        <LinearLayout
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_centerHorizontal="true"
-                            android:layout_alignParentBottom="true"
-                            android:gravity="center">
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:id="@+id/title_edit_text"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:inputType="textMultiLine"
-                                android:maxLines="2"
-                                android:padding="@dimen/default_half_layout_padding"
-                                android:background="@null"
-                                android:text="@{viewModel.titleString}"
-                                android:gravity="right"
-                                android:maxWidth="120dp"
-                                android:scrollbars="vertical"
-                                android:selection="@{viewModel.selectionTitleEditText}"
-                                android:textColor="@color/secondaryTextColorDarkTheme"
-                                android:onTextChanged="@{(s, start, count, after) -> viewModel.onTitleTextChange(s)}"
-                                android:textDirection="rtl"
-                                android:hint="@string/title_hint"/>
-
-                            <ImageView
-                                android:id="@+id/image_view"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:scaleType="fitCenter"
-                                android:src="@{viewModel.defaultImageResTitle, default=@drawable/alarm_title_custom}"/>
-                        </LinearLayout>
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:adjustViewBounds="true"
                             android:id="@+id/titleHeaderIndicator"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
                             android:tint="@color/primaryTextColorDarkTheme"
                             app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
 
@@ -119,6 +90,28 @@
                 </com.github.florent37.shapeofview.shapes.ArcView>
 
             </com.github.florent37.shapeofview.shapes.ArcView>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/title_edit_text"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:maxLines="2"
+                android:layout_centerHorizontal="true"
+                android:background="@null"
+                android:gravity="center"
+                android:text="@{viewModel.titleString}"
+                android:layout_gravity="center_horizontal|bottom"
+                android:paddingBottom="@dimen/default_half_half_layout_padding"
+                android:paddingTop="@dimen/default_half_half_layout_padding"
+                android:layout_marginBottom="@dimen/default_half_half_layout_padding"
+                android:selection="@{viewModel.selectionTitleEditText}"
+                android:textColor="@color/secondaryTextColorDarkTheme"
+                android:maxWidth="200dp"
+                android:onTextChanged="@{(s, start, count, after) -> viewModel.onTitleTextChange(s)}"
+                android:textDirection="rtl"
+                android:translationZ="20dp"
+                android:hint="@string/title_hint"/>
 
             <include layout="@layout/curved_line_bg_color" />
         </com.github.florent37.expansionpanel.ExpansionHeader>
@@ -146,12 +139,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layoutDirection="rtl"
-                    android:paddingBottom="16dp"
                     app:adapter="@{viewModel.getAlarmTitleItemsLiveData}"
                     tools:listitem="@layout/item_alarm_title" />
 
             </LinearLayout>
-
         </com.github.florent37.expansionpanel.ExpansionLayout>
     </FrameLayout>
 </layout>

@@ -5,7 +5,6 @@ import android.net.Uri;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 
-import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
@@ -15,7 +14,6 @@ import com.fearefull.todoreminder.data.model.other.type.AlarmTitleType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
-import com.github.florent37.expansionpanel.ExpansionLayout;
 import com.kevalpatel.ringtonepicker.RingtonePickerListener;
 
 import java.util.List;
@@ -51,6 +49,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         alarmTitleItemsLiveData = new MutableLiveData<>();
         currentTabPager = new MutableLiveData<>();
         pageLimitPager = new MutableLiveData<>();
+
         pageLimitPager.setValue(Repeat.getCount());
         repeatCounter.set("0");
     }
@@ -285,6 +284,18 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
             alarm.backwardSnoozeType();
             updateSnoozeCount();
         }
+    }
+
+    public void headerTitleClick() {
+        getNavigator().changeExpansionTitleLayout();
+    }
+
+    public void headerRepeatClick() {
+        getNavigator().changeExpansionRepeatLayout();
+    }
+
+    public void headerSnoozeClick() {
+        getNavigator().changeExpansionSnoozeLayout();
     }
 
     Uri getDefaultRingtone() {

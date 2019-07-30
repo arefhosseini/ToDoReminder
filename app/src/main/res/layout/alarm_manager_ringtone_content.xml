@@ -20,12 +20,9 @@
         android:translationZ="6dp">
 
         <FrameLayout
-            android:layout_height="80dp"
+            android:layout_height="88dp"
             android:layout_width="match_parent"
-            android:id="@+id/ringtoneHeader"
-            android:focusable="true"
-            android:clickable="true"
-            android:onClick="@{() -> viewModel.onRingtoneClick()}">
+            android:id="@+id/ringtoneHeader">
 
             <com.github.florent37.shapeofview.shapes.ArcView
                 android:layout_width="match_parent"
@@ -46,11 +43,16 @@
                         android:background="@color/primaryColorGradient4"/>
 
                     <RelativeLayout
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
                         android:layout_gravity="center"
-                        android:paddingLeft="@dimen/default_layout_padding"
-                        android:paddingRight="@dimen/default_layout_padding"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent">
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="@{() -> viewModel.onRingtoneClick()}">
 
                         <ImageView
                             android:id="@+id/ringtoneHeaderIcon"

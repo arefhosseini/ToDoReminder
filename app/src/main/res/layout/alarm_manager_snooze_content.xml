@@ -20,24 +20,24 @@
         android:layout_marginTop="-24dp">
 
         <com.github.florent37.expansionpanel.ExpansionHeader
-            android:layout_height="80dp"
+            android:layout_height="88dp"
             android:layout_width="match_parent"
             android:id="@+id/snoozeHeader"
             app:expansion_headerIndicator="@id/snoozeHeaderIndicator"
             app:expansion_layout="@id/snoozeExpansionLayout"
-            android:translationZ="8dp"
-            app:expansion_toggleOnClick="true">
+            app:expansion_toggleOnClick="false"
+            android:translationZ="8dp">
 
             <com.github.florent37.shapeofview.shapes.ArcView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:elevation="4dp"
                 app:shape_arc_height="-24dp"
                 app:shape_arc_position="top">
 
                 <com.github.florent37.shapeofview.shapes.ArcView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     app:shape_arc_height="24dp"
                     app:shape_arc_position="bottom">
 
@@ -47,11 +47,16 @@
                         android:background="@color/primaryColorGradient3"/>
 
                     <RelativeLayout
-                        android:layout_gravity="center"
-                        android:paddingLeft="@dimen/default_layout_padding"
-                        android:paddingRight="@dimen/default_layout_padding"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent">
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:onClick="@{() -> viewModel.headerSnoozeClick()}"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_gravity="center">
 
                         <ImageView
                             android:id="@+id/snoozeHeaderIcon"
@@ -102,7 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="60dp"
+                android:paddingTop="72dp"
                 android:paddingBottom="16dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"

@@ -19,24 +19,24 @@
         android:layout_marginTop="-24dp">
 
         <com.github.florent37.expansionpanel.ExpansionHeader
-            android:layout_height="80dp"
+            android:layout_height="88dp"
             android:layout_width="match_parent"
             android:id="@+id/repeatHeader"
             app:expansion_headerIndicator="@id/repeatHeaderIndicator"
             app:expansion_layout="@id/repeatExpansionLayout"
-            android:translationZ="10dp"
-            app:expansion_toggleOnClick="true">
+            app:expansion_toggleOnClick="false"
+            android:translationZ="10dp">
 
             <com.github.florent37.shapeofview.shapes.ArcView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:elevation="4dp"
                 app:shape_arc_height="-24dp"
                 app:shape_arc_position="top">
 
                 <com.github.florent37.shapeofview.shapes.ArcView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     app:shape_arc_height="24dp"
                     app:shape_arc_position="bottom">
 
@@ -46,11 +46,16 @@
                         android:background="@color/primaryColorGradient2"/>
 
                     <RelativeLayout
-                        android:layout_gravity="center"
-                        android:paddingLeft="@dimen/default_layout_padding"
-                        android:paddingRight="@dimen/default_layout_padding"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent">
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="@{() -> viewModel.headerRepeatClick()}"
+                        android:layout_gravity="center">
 
                         <ImageView
                             android:id="@+id/repeatHeaderIcon"
@@ -95,7 +100,6 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="24dp"
-            app:expansion_expanded="true"
             android:translationZ="8dp"
             android:background="@color/primaryLightColorLightTheme">
 
@@ -104,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:paddingTop="66dp">
+                android:paddingTop="72dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/repeatRecyclerView"
@@ -113,7 +117,6 @@
                     android:orientation="horizontal"
                     android:layout_gravity="center_horizontal"
                     android:layoutDirection="rtl"
-                    android:paddingBottom="8dp"
                     app:adapter="@{viewModel.getRepeatItemsLiveData}"
                     tools:listitem="@layout/item_repeat" />
 
