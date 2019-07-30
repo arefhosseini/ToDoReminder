@@ -131,6 +131,9 @@ public class Alarm implements Serializable {
     @Ignore
     private int nowYear;
 
+    @Ignore
+    private long nearestTime;
+
     /**
      * Control {@link #id}
      */
@@ -616,6 +619,14 @@ public class Alarm implements Serializable {
         return nowYear;
     }
 
+    public long getNearestTime() {
+        return nearestTime;
+    }
+
+    public void setNearestTime(long nearestTime) {
+        this.nearestTime = nearestTime;
+    }
+
     public Alarm() {
         this.isEnable = true;
         this.titleType = AlarmTitleType.getDefault();
@@ -634,6 +645,7 @@ public class Alarm implements Serializable {
         weeksYear = new ArrayList<>();
         months = new ArrayList<>();
         years = new ArrayList<>();
+        nearestTime = Long.MAX_VALUE;
 
         setDefaultValues();
         setNowTime();

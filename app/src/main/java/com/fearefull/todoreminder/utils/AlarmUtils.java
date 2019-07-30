@@ -1,8 +1,12 @@
 package com.fearefull.todoreminder.utils;
 
+import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
+import com.fearefull.todoreminder.data.model.other.RepeatModel;
 import com.fearefull.todoreminder.data.model.other.item.AlarmTitleItem;
 import com.fearefull.todoreminder.data.model.other.item.DayWeekItem;
+import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
+import com.fearefull.todoreminder.data.model.other.persian_date.PersianDateFormat;
 import com.fearefull.todoreminder.data.model.other.type.AlarmTitleType;
 import com.fearefull.todoreminder.data.model.other.type.DayMonthType;
 import com.fearefull.todoreminder.data.model.other.type.DayWeekType;
@@ -11,11 +15,15 @@ import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Observer;
 import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import timber.log.Timber;
 
 public final class AlarmUtils {
 
@@ -315,5 +323,201 @@ public final class AlarmUtils {
         list.add(new DayWeekItem(DayWeekType.DAY_7, false));
 
         return list;
+    }
+
+    public static Observable<List<Alarm>> sortAlarms(List<Alarm> alarmList) {
+        return Observable.defer(() -> {
+            List<Alarm> allAlarmList = new ArrayList<>();
+            List<Alarm> disabledAlarmList = new ArrayList<>();
+            List<Alarm> doneAlarmList = new ArrayList<>();
+            Alarm currentAlarm = new Alarm();
+            long currentTime = System.currentTimeMillis();
+            long checkTime;
+
+            for (Alarm alarm: alarmList) {
+                if (!alarm.getIsEnable())
+                    disabledAlarmList.add(alarm);
+                else {
+                    for (int index = 0; index < alarm.getRepeatCount(); index++) {
+                        if (alarm.getRepeat(index) == Repeat.ONCE) {
+                            checkTime = scheduleOnceRepeat(alarm.getRepeatModel(index), currentTime);
+                            if (checkTime > 0 && checkTime < alarm.getNearestTime())
+                                alarm.setNearestTime(checkTime);
+                            else if (checkTime <= 0 && !doneAlarmList.contains(alarm))
+                                doneAlarmList.add(alarm);
+                        }
+                        else if (alarm.getRepeat(index) == Repeat.DAILY) {
+                            checkTime = scheduleDailyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
+                            if (checkTime < alarm.getNearestTime())
+                                alarm.setNearestTime(checkTime);
+                        }
+                        else if (alarm.getRepeat(index) == Repeat.WEEKLY) {
+                            checkTime = scheduleWeeklyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
+                            if (checkTime < alarm.getNearestTime())
+                                alarm.setNearestTime(checkTime);
+                        }
+                        else if (alarm.getRepeat(index) == Repeat.MONTHLY) {
+                            checkTime = scheduleMonthlyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
+                            if (checkTime < alarm.getNearestTime())
+                                alarm.setNearestTime(checkTime);
+                        }
+                        else if (alarm.getRepeat(index) == Repeat.YEARLY) {
+                            checkTime = scheduleYearlyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
+                            if (checkTime < alarm.getNearestTime())
+                                alarm.setNearestTime(checkTime);
+                        }
+                        if (!disabledAlarmList.contains(alarm) && !doneAlarmList.contains(alarm) && !allAlarmList.contains(alarm)) {
+                            allAlarmList.add(alarm);
+                        }
+                    }
+                }
+            }
+
+            Collections.sort(allAlarmList, (o1, o2) -> {
+                if(o1.getNearestTime() == o2.getNearestTime())
+                    return 0;
+                return o1.getNearestTime() < o2.getNearestTime() ? -1 : 1;
+            });
+
+            Collections.sort(doneAlarmList, (o1, o2) -> {
+                if(o1.getNearestTime() == o2.getNearestTime())
+                    return 0;
+                return o1.getNearestTime() < o2.getNearestTime() ? -1 : 1;
+            });
+
+            allAlarmList.addAll(doneAlarmList);
+            allAlarmList.addAll(disabledAlarmList);
+            Timber.e("First: %d, Last:%d", alarmList.size(), allAlarmList.size());
+            return Observable.just(allAlarmList);
+        });
+    }
+
+    private static long scheduleOnceRepeat(RepeatModel repeatModel, long currentTime) {
+        PersianDate checkDate = new PersianDate();
+        checkDate.setSecond(0);
+        checkDate.setMinute(repeatModel.getMinute());
+        checkDate.setHour(repeatModel.getHour());
+        checkDate.setShDay(repeatModel.getDayMonth());
+        checkDate.setShMonth(repeatModel.getMonth());
+        checkDate.setShYear(repeatModel.getYear());
+        if (checkDate.getTime() - currentTime > 0)
+            return checkDate.getTime();
+        return checkDate.getTime() - currentTime;
+    }
+
+    private static long scheduleDailyRepeat(RepeatModel repeatModel, long currentTime, Alarm currentAlarm) {
+        PersianDate checkDate = new PersianDate();
+        checkDate.setSecond(0);
+        checkDate.setMinute(repeatModel.getMinute());
+        checkDate.setHour(repeatModel.getHour());
+        checkDate.setShDay(currentAlarm.getNowDay());
+        checkDate.setShMonth(currentAlarm.getNowMonth());
+        checkDate.setShYear(currentAlarm.getNowYear());
+
+        boolean isFindNearTime = false;
+        long checkTime = -1;
+        while (!isFindNearTime) {
+            checkTime = checkDate.getTime() - currentTime;
+            if (checkTime > 1000)
+                isFindNearTime = true;
+            else {
+                checkDate.addDay(1);
+                checkDate.setMinute(repeatModel.getMinute());
+                checkDate.setHour(repeatModel.getHour());
+            }
+        }
+        return checkDate.getTime();
+    }
+
+    private static long scheduleWeeklyRepeat(RepeatModel repeatModel, long currentTime, Alarm currentAlarm) {
+        PersianDate nowDate;
+        PersianDate bestTime = null;
+        PersianDate checkDate = new PersianDate();
+        checkDate.setSecond(0);
+        checkDate.setMinute(repeatModel.getMinute());
+        checkDate.setHour(repeatModel.getHour());
+        checkDate.setShDay(currentAlarm.getNowDay());
+        checkDate.setShMonth(currentAlarm.getNowMonth());
+        checkDate.setShYear(currentAlarm.getNowYear());
+
+        boolean isFindNearTime = false;
+        long minTime;
+        long checkTime;
+        while (!isFindNearTime) {
+            minTime = Long.MAX_VALUE;
+            for (int dayWeek: repeatModel.getDaysWeek()) {
+                int dayWeekIndex = Alarm.dayWeekToIndex(dayWeek);
+                nowDate = new PersianDate(checkDate.getTime());
+                checkTime = nowDate.getTime() - currentTime;
+                if (nowDate.dayOfWeek() == dayWeekIndex && checkTime > 1000 && checkTime < minTime) {
+                    minTime = checkTime;
+                    bestTime = new PersianDate(checkDate.getTime());
+                }
+                else if (nowDate.dayOfWeek() < dayWeekIndex){
+                    nowDate.addDay(dayWeekIndex - nowDate.dayOfWeek());
+                    checkTime = nowDate.getTime() - currentTime;
+                    if (nowDate.dayOfWeek() == dayWeekIndex && checkTime > 1000 && checkTime < minTime) {
+                        minTime = checkTime;
+                        bestTime = new PersianDate(checkDate.getTime());
+                    }
+                }
+            }
+            if (minTime < Long.MAX_VALUE)
+                isFindNearTime = true;
+            else {
+                checkDate.addDay(7 - checkDate.dayOfWeek() + Alarm.indexToDayWeek(repeatModel.getDaysWeek().get(0)));
+            }
+        }
+        return bestTime.getTime();
+    }
+
+    private static long scheduleMonthlyRepeat(RepeatModel repeatModel, long currentTime, Alarm currentAlarm) {
+        PersianDate checkDate = new PersianDate();
+        checkDate.setSecond(0);
+        checkDate.setMinute(repeatModel.getMinute());
+        checkDate.setHour(repeatModel.getHour());
+        checkDate.setShDay(repeatModel.getDayMonth());
+        checkDate.setShMonth(currentAlarm.getNowMonth());
+        checkDate.setShYear(currentAlarm.getNowYear());
+
+        boolean isFindNearTime = false;
+        long checkTime = -1;
+        while (!isFindNearTime) {
+            checkTime = checkDate.getTime() - currentTime;
+            if (checkTime > 1000)
+                isFindNearTime = true;
+            else {
+                checkDate.addMonth(1);
+                checkDate.setMinute(repeatModel.getMinute());
+                checkDate.setHour(repeatModel.getHour());
+            }
+        }
+        return checkDate.getTime();
+    }
+
+    private static long scheduleYearlyRepeat(RepeatModel repeatModel, long currentTime, Alarm currentAlarm) {
+        PersianDate checkDate = new PersianDate();
+        checkDate.setSecond(0);
+        checkDate.setMinute(repeatModel.getMinute());
+        checkDate.setHour(repeatModel.getHour());
+        checkDate.setShDay(repeatModel.getDayMonth());
+        checkDate.setShMonth(repeatModel.getMonth());
+        checkDate.setShYear(currentAlarm.getNowYear());
+
+        boolean isFindNearTime = false;
+        long checkTime = -1;
+        while (!isFindNearTime) {
+            checkTime = checkDate.getTime() - currentTime;
+            if (checkTime > 1000)
+                isFindNearTime = true;
+            else {
+                checkDate.addYear(1);
+                checkDate.setMinute(repeatModel.getMinute());
+                checkDate.setHour(repeatModel.getHour());
+                checkDate.setShDay(repeatModel.getDayMonth());
+                checkDate.setShMonth(repeatModel.getMonth());
+            }
+        }
+        return checkDate.getTime();
     }
 }

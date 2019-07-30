@@ -9,6 +9,7 @@ import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.schedule.AlarmScheduler;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
+import com.fearefull.todoreminder.utils.AlarmUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
 import java.util.List;
@@ -37,6 +38,14 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
     private void fetchAlarmData() {
         getCompositeDisposable().add(getDataManager()
                 .getAllAlarms()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(this::sortAlarms, Timber::e)
+        );
+    }
+
+    private void sortAlarms(List<Alarm> alarmList) {
+        getCompositeDisposable().add(AlarmUtils.sortAlarms(alarmList)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(alarmItemsLiveData::setValue, Timber::e)
@@ -70,8 +79,7 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(result -> {
                     if (result && Objects.requireNonNull(alarmItemsLiveData.getValue()).contains(deletingAlarm)) {
-                        alarmItemsLiveData.getValue().remove(deletingAlarm);
-                        alarmItemsLiveData.setValue(alarmItemsLiveData.getValue());
+                        fetchAlarmData();
                         getDataManager().deleteSnoozeByAlarm(deletingAlarm);
                         deletingAlarm = null;
                         alarmScheduler.schedule();
@@ -87,7 +95,7 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(result -> {
                     if (result) {
-                        alarmItemsLiveData.setValue(alarmItemsLiveData.getValue());
+                        fetchAlarmData();
                         getDataManager().deleteSnoozeByAlarm(alarm);
                         alarmScheduler.schedule();
                     }

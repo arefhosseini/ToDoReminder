@@ -31,7 +31,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0)
+        if (position == 0 && alarmList.get(position).getIsEnable())
             return AlarmItemViewType.FIRST.value;
         else if (alarmList.get(position).getIsEnable())
             return AlarmItemViewType.ENABLED.value;
