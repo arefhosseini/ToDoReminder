@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fearefull.todoreminder.ui.home.AlarmItemViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true"
+        android:layoutDirection="ltr"
+        android:layout_marginTop="-4dp"
+        android:background="?attr/selectableItemBackground"
+        android:onClick="@{() -> viewModel.onItemClick()}"
+        android:onLongClick="@{() -> viewModel.onLongClick()}">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontalLine1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.65" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontalLine2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.67" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontalLine3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.78" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontalLine4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.80" />
+
+        <FrameLayout
+            android:id="@+id/circle_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/circle_gray_bg"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="@+id/horizontalLine2"
+            app:layout_constraintEnd_toStartOf="@+id/horizontalLine3"
+            android:translationZ="2dp"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="@dimen/default_half_layout_padding"
+                android:scaleType="fitCenter"
+                android:src="@{viewModel.imageRes, default=@drawable/alarm_title_custom}"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/title_text_view"
+            style="@style/TextStyle.Title.Sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@{viewModel.title}"
+            android:textColor="@color/disabledTextColorLightTheme"
+            app:layout_constraintEnd_toStartOf="@id/circle_layout"
+            app:layout_constraintBottom_toBottomOf="@id/circle_layout"
+            app:layout_constraintTop_toTopOf="@id/circle_layout" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:checked="@{viewModel.isEnabled}"
+            android:onClick="@{() -> viewModel.onSwitchClick()}"
+            android:scaleX="-1"
+            app:layout_constraintBottom_toBottomOf="@id/circle_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/circle_layout" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="100dp"
+            android:background="@drawable/vertical_line_radius_gray_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/horizontalLine1"
+            app:layout_constraintEnd_toStartOf="@+id/horizontalLine4" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

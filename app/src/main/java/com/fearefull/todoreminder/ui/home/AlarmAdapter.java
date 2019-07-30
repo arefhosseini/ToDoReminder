@@ -7,7 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.data.model.db.Alarm;
-import com.fearefull.todoreminder.databinding.ItemAlarmBinding;
+import com.fearefull.todoreminder.databinding.ItemAlarmDisabledBinding;
+import com.fearefull.todoreminder.databinding.ItemAlarmEnabledBinding;
+import com.fearefull.todoreminder.databinding.ItemAlarmFirstBinding;
+import com.fearefull.todoreminder.ui.base.BaseAlarmViewHolder;
 import com.fearefull.todoreminder.ui.base.BaseViewHolder;
 
 import java.util.ArrayList;
@@ -27,6 +30,16 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (position == 0)
+            return AlarmItemViewType.FIRST.value;
+        else if (alarmList.get(position).getIsEnable())
+            return AlarmItemViewType.ENABLED.value;
+        else
+            return AlarmItemViewType.DISABLED.value;
+    }
+
+    @Override
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         holder.onBind(position);
     }
@@ -34,9 +47,19 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemAlarmBinding binding = ItemAlarmBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
-        return new AlarmViewHolder(binding);
+        if (AlarmItemViewType.getTypeByValue(viewType) == AlarmItemViewType.FIRST) {
+            ItemAlarmFirstBinding binding = ItemAlarmFirstBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            return new AlarmFirstViewHolder(binding, listener);
+        }
+        if (AlarmItemViewType.getTypeByValue(viewType) == AlarmItemViewType.ENABLED) {
+            ItemAlarmEnabledBinding binding = ItemAlarmEnabledBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            return new AlarmEnabledViewHolder(binding, listener);
+        }
+        else {
+            ItemAlarmDisabledBinding binding = ItemAlarmDisabledBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            return new AlarmDisabledViewHolder(binding, listener);
+        }
     }
 
     public void addItems(List<Alarm> alarmList) {
@@ -58,13 +81,14 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         void onAlarmSwitchClick(Alarm alarm);
     }
 
-    public class AlarmViewHolder extends BaseViewHolder implements AlarmItemViewModel.AlarmItemViewModelListener {
-        private final ItemAlarmBinding binding;
+    public class AlarmEnabledViewHolder extends BaseAlarmViewHolder {
+        private final ItemAlarmEnabledBinding binding;
         private AlarmItemViewModel viewModel;
 
-        public AlarmViewHolder(ItemAlarmBinding binding) {
+        AlarmEnabledViewHolder(ItemAlarmEnabledBinding binding, AlarmAdapter.AlarmAdapterListener listener) {
             super(binding.getRoot());
             this.binding = binding;
+            this.listener = listener;
         }
 
         @Override
@@ -75,20 +99,44 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             binding.executePendingBindings();
 
         }
+    }
 
-        @Override
-        public void onItemClick(Alarm alarm) {
-            listener.onAlarmClick(alarm);
+    public class AlarmFirstViewHolder extends BaseAlarmViewHolder {
+        private final ItemAlarmFirstBinding binding;
+        private AlarmItemViewModel viewModel;
+
+        AlarmFirstViewHolder(ItemAlarmFirstBinding binding, AlarmAdapter.AlarmAdapterListener listener) {
+            super(binding.getRoot());
+            this.binding = binding;
+            this.listener = listener;
+
         }
 
         @Override
-        public void onLongClick(Alarm alarm) {
-            listener.onAlarmLongClick(alarm);
+        public void onBind(int position) {
+            final Alarm alarm = alarmList.get(position);
+            viewModel = new AlarmItemViewModel(alarm, this);
+            binding.setViewModel(viewModel);
+            binding.executePendingBindings();
+        }
+    }
+
+    public class AlarmDisabledViewHolder extends BaseAlarmViewHolder {
+        private final ItemAlarmDisabledBinding binding;
+        private AlarmItemViewModel viewModel;
+
+        AlarmDisabledViewHolder(ItemAlarmDisabledBinding binding, AlarmAdapter.AlarmAdapterListener listener) {
+            super(binding.getRoot());
+            this.binding = binding;
+            this.listener = listener;
         }
 
         @Override
-        public void onSwitchClick(Alarm alarm) {
-            listener.onAlarmSwitchClick(alarm);
+        public void onBind(int position) {
+            final Alarm alarm = alarmList.get(position);
+            viewModel = new AlarmItemViewModel(alarm, this);
+            binding.setViewModel(viewModel);
+            binding.executePendingBindings();
         }
     }
 }
