@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.databinding.ItemAlarmDisabledBinding;
-import com.fearefull.todoreminder.databinding.ItemAlarmEnabledBinding;
+import com.fearefull.todoreminder.databinding.ItemAlarmDoneBinding;
 import com.fearefull.todoreminder.databinding.ItemAlarmFirstBinding;
+import com.fearefull.todoreminder.databinding.ItemAlarmNotDoneBinding;
 import com.fearefull.todoreminder.ui.base.BaseAlarmViewHolder;
 import com.fearefull.todoreminder.ui.base.BaseViewHolder;
 
@@ -31,12 +32,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0 && alarmList.get(position).getIsEnable())
-            return AlarmItemViewType.FIRST.value;
-        else if (alarmList.get(position).getIsEnable())
-            return AlarmItemViewType.ENABLED.value;
-        else
-            return AlarmItemViewType.DISABLED.value;
+        return alarmList.get(position).getAlarmType().value;
     }
 
     @Override
@@ -48,13 +44,17 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        if (AlarmItemViewType.getTypeByValue(viewType) == AlarmItemViewType.FIRST) {
+        if (AlarmType.getTypeByValue(viewType) == AlarmType.FIRST) {
             ItemAlarmFirstBinding binding = ItemAlarmFirstBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
             return new AlarmFirstViewHolder(binding, listener);
         }
-        if (AlarmItemViewType.getTypeByValue(viewType) == AlarmItemViewType.ENABLED) {
-            ItemAlarmEnabledBinding binding = ItemAlarmEnabledBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-            return new AlarmEnabledViewHolder(binding, listener);
+        else if (AlarmType.getTypeByValue(viewType) == AlarmType.DONE) {
+            ItemAlarmDoneBinding binding = ItemAlarmDoneBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            return new AlarmDoneViewHolder(binding, listener);
+        }
+        else if (AlarmType.getTypeByValue(viewType) == AlarmType.NOT_DONE) {
+            ItemAlarmNotDoneBinding binding = ItemAlarmNotDoneBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            return new AlarmNotDoneViewHolder(binding, listener);
         }
         else {
             ItemAlarmDisabledBinding binding = ItemAlarmDisabledBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
@@ -100,11 +100,30 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
     }
 
-    public class AlarmEnabledViewHolder extends BaseAlarmViewHolder {
-        private final ItemAlarmEnabledBinding binding;
+    public class AlarmDoneViewHolder extends BaseAlarmViewHolder {
+        private final ItemAlarmDoneBinding binding;
         private AlarmItemViewModel viewModel;
 
-        AlarmEnabledViewHolder(ItemAlarmEnabledBinding binding, AlarmAdapter.AlarmAdapterListener listener) {
+        AlarmDoneViewHolder(ItemAlarmDoneBinding binding, AlarmAdapter.AlarmAdapterListener listener) {
+            super(binding.getRoot());
+            this.binding = binding;
+            this.listener = listener;
+        }
+
+        @Override
+        public void onBind(int position) {
+            final Alarm alarm = alarmList.get(position);
+            viewModel = new AlarmItemViewModel(alarm, this);
+            binding.setViewModel(viewModel);
+            binding.executePendingBindings();
+        }
+    }
+
+    public class AlarmNotDoneViewHolder extends BaseAlarmViewHolder {
+        private final ItemAlarmNotDoneBinding binding;
+        private AlarmItemViewModel viewModel;
+
+        AlarmNotDoneViewHolder(ItemAlarmNotDoneBinding binding, AlarmAdapter.AlarmAdapterListener listener) {
             super(binding.getRoot());
             this.binding = binding;
             this.listener = listener;

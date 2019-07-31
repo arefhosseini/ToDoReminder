@@ -12,6 +12,7 @@ import com.fearefull.todoreminder.data.model.other.type.DayMonthType;
 import com.fearefull.todoreminder.data.model.other.type.DayWeekType;
 import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
 import com.fearefull.todoreminder.data.model.other.type.MonthType;
+import com.fearefull.todoreminder.ui.home.AlarmType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -322,6 +323,7 @@ public final class AlarmUtils {
     public static Observable<List<Alarm>> sortAlarms(List<Alarm> alarmList) {
         return Observable.defer(() -> {
             List<Alarm> allAlarmList = new ArrayList<>();
+            List<Alarm> notDoneAlarmList = new ArrayList<>();
             List<Alarm> disabledAlarmList = new ArrayList<>();
             List<Alarm> doneAlarmList = new ArrayList<>();
             Alarm currentAlarm = new Alarm();
@@ -329,8 +331,10 @@ public final class AlarmUtils {
             long checkTime = 0;
 
             for (Alarm alarm: alarmList) {
-                if (!alarm.getIsEnable())
+                if (!alarm.getIsEnable()) {
                     disabledAlarmList.add(alarm);
+                    alarm.setAlarmType(AlarmType.DISABLED);
+                }
                 else {
                     for (int index = 0; index < alarm.getRepeatCount(); index++) {
                         if (alarm.getRepeat(index) == Repeat.ONCE) {
@@ -357,19 +361,25 @@ public final class AlarmUtils {
                         )
                             alarm.setNearestTime(checkTime);
                     }
-                    if (alarm.getNearestTime() < currentTime && !doneAlarmList.contains(alarm) && !allAlarmList.contains(alarm))
+                    if (alarm.getNearestTime() < currentTime && !doneAlarmList.contains(alarm) && !notDoneAlarmList.contains(alarm)) {
                         doneAlarmList.add(alarm);
-                    else if (!disabledAlarmList.contains(alarm) && !doneAlarmList.contains(alarm) && !allAlarmList.contains(alarm)) {
-                        allAlarmList.add(alarm);
+                        alarm.setAlarmType(AlarmType.DONE);
+                    }
+                    else if (!disabledAlarmList.contains(alarm) && !doneAlarmList.contains(alarm) && !notDoneAlarmList.contains(alarm)) {
+                        notDoneAlarmList.add(alarm);
+                        alarm.setAlarmType(AlarmType.NOT_DONE);
                     }
                 }
             }
 
-            Collections.sort(allAlarmList, (o1, o2) -> {
+            Collections.sort(notDoneAlarmList, (o1, o2) -> {
                 if(o1.getNearestTime() == o2.getNearestTime())
                     return 0;
                 return o1.getNearestTime() < o2.getNearestTime() ? -1 : 1;
             });
+
+            if (!notDoneAlarmList.isEmpty())
+                notDoneAlarmList.get(0).setAlarmType(AlarmType.FIRST);
 
             Collections.sort(doneAlarmList, (o1, o2) -> {
                 if(o1.getNearestTime() == o2.getNearestTime())
@@ -378,6 +388,7 @@ public final class AlarmUtils {
             });
 
             allAlarmList.addAll(doneAlarmList);
+            allAlarmList.addAll(notDoneAlarmList);
             allAlarmList.addAll(disabledAlarmList);
             return Observable.just(allAlarmList);
         });

@@ -40,7 +40,7 @@
                     android:paddingBottom="@dimen/default_half_half_layout_padding"
                     app:setDivider="@{false}"
                     app:adapter="@{viewModel.getAlarmItemsLiveData}"
-                    tools:listitem="@layout/item_alarm_enabled" />
+                    tools:listitem="@layout/item_alarm_done" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

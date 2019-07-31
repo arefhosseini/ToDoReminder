@@ -20,27 +20,6 @@
         android:onLongClick="@{() -> viewModel.onLongClick()}">
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/horizontalLineLeftRipple"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.55" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/horizontalLineRightRipple"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.80" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/verticalLineBottomRipple"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.80" />
-
-        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/horizontalLine1"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -52,15 +31,15 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.61" />
+            app:layout_constraintGuide_percent="0.62" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/horizontalLine3"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.74" />
-        
+            app:layout_constraintGuide_percent="0.73" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/horizontalLine4"
             android:layout_width="0dp"
@@ -68,32 +47,16 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.75" />
 
-        <com.agrawalsuneet.loaderspack.loaders.MultipleRippleLoader
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="@+id/horizontalLineLeftRipple"
-            app:layout_constraintEnd_toStartOf="@+id/horizontalLineRightRipple"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/verticalLineBottomRipple"
-            app:multipleripple_animDuration="6000"
-            app:multipleripple_circleColor="@color/secondaryColorLightTheme"
-            app:multipleripple_circleInitialRadius="20dp"
-            app:multipleripple_fromAlpha="0.8"
-            app:multipleripple_interpolator="@android:anim/decelerate_interpolator"
-            app:multipleripple_noOfRipples="3"
-            app:multipleripple_toAplha="0.1" />
-
         <FrameLayout
             android:id="@+id/circle_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/circle_secondary_bg"
-            android:translationZ="2dp"
+            android:background="@drawable/circle_secondary_light_bg"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="@+id/horizontalLine2"
             app:layout_constraintEnd_toStartOf="@+id/horizontalLine3"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/verticalLineBottomRipple">
+            android:translationZ="2dp"
+            app:layout_constraintTop_toTopOf="parent" >
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
@@ -121,16 +84,16 @@
 
         <TextView
             android:id="@+id/title_text_view"
-            style="@style/TextStyle.Title"
+            style="@style/TextStyle.Title.Sub"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:text="@{viewModel.title}"
             android:textColor="@color/primaryTextColorLightTheme"
             android:gravity="right"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toStartOf="@id/circle_layout"
             app:layout_constraintBottom_toBottomOf="@id/circle_layout"
+            app:layout_constraintEnd_toStartOf="@id/circle_layout"
             app:layout_constraintStart_toEndOf="@+id/switch1"
             app:layout_constraintTop_toTopOf="@id/circle_layout" />
 
@@ -147,13 +110,11 @@
             app:layout_constraintTop_toTopOf="@id/circle_layout" />
 
         <View
-            android:id="@+id/view"
             android:layout_width="10dp"
-            android:layout_height="126dp"
-            android:background="@drawable/vertical_line_radius_secondary_bg"
+            android:layout_height="78dp"
+            android:background="@drawable/vertical_line_radius_secondary_light_bg"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/horizontalLine4"
-            app:layout_constraintStart_toStartOf="@+id/horizontalLine1" />
+            app:layout_constraintStart_toStartOf="@+id/horizontalLine1"
+            app:layout_constraintEnd_toStartOf="@+id/horizontalLine4" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

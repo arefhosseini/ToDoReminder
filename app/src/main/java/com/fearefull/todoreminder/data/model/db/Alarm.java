@@ -17,6 +17,7 @@ import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
 import com.fearefull.todoreminder.data.model.other.RepeatModel;
 import com.fearefull.todoreminder.data.model.other.item.RepeatManagerItem;
 import com.fearefull.todoreminder.data.model.other.type.SnoozeType;
+import com.fearefull.todoreminder.ui.home.AlarmType;
 import com.fearefull.todoreminder.utils.AppConstants;
 
 import java.io.Serializable;
@@ -133,6 +134,9 @@ public class Alarm implements Serializable {
 
     @Ignore
     private long nearestTime;
+
+    @Ignore
+    private AlarmType alarmType;
 
     /**
      * Control {@link #id}
@@ -623,47 +627,52 @@ public class Alarm implements Serializable {
         return nearestTime;
     }
 
+    public AlarmType getAlarmType() {
+        return alarmType;
+    }
+
+    public void setAlarmType(AlarmType alarmType) {
+        this.alarmType = alarmType;
+    }
+
     @Ignore
     public String getNearestTimeString() {
-        if (System.currentTimeMillis() < nearestTime) {
-            PersianDate persianDate = new PersianDate(nearestTime);
-            setNowTime();
-            boolean isFinished = false;
-            StringBuilder stringBuilder = new StringBuilder();
+        PersianDate persianDate = new PersianDate(nearestTime);
+        setNowTime();
+        boolean isFinished = false;
+        StringBuilder stringBuilder = new StringBuilder();
 
-            if (nowMonth == persianDate.getShMonth() && nowYear == persianDate.getShYear()) {
-                if (nowDay - persianDate.getShDay() < 3) {
-                    stringBuilder
-                            .append(getTime12StringByValue(persianDate.getMinute(), persianDate.getHour()))
-                            .append(" ");
-                    if (nowDay == persianDate.getShDay())
-                        stringBuilder.append("امروز");
-                    else if (nowDay + 1 == persianDate.getShDay())
-                        stringBuilder.append("فردا");
-                    else if (nowDay + 2 == persianDate.getShDay())
-                        stringBuilder.append("پس فردا");
-                }
-                else {
-                    stringBuilder
-                            .append(persianDate.getShDay())
-                            .append(" ")
-                            .append(MonthType.getMonthType(persianDate.getShMonth()).getText());
-                }
-                isFinished = true;
+        if (nowMonth == persianDate.getShMonth() && nowYear == persianDate.getShYear()) {
+            if (nowDay - persianDate.getShDay() < 3) {
+                stringBuilder
+                        .append(getTime12StringByValue(persianDate.getMinute(), persianDate.getHour()))
+                        .append(" ");
+                if (nowDay == persianDate.getShDay())
+                    stringBuilder.append("امروز");
+                else if (nowDay + 1 == persianDate.getShDay())
+                    stringBuilder.append("فردا");
+                else if (nowDay + 2 == persianDate.getShDay())
+                    stringBuilder.append("پس فردا");
             }
-            if (!isFinished) {
+            else {
                 stringBuilder
                         .append(persianDate.getShDay())
+                        .append(" ")
                         .append(MonthType.getMonthType(persianDate.getShMonth()).getText());
-
-                if (nowYear != persianDate.getShYear()) {
-                    stringBuilder.append(" ").append(persianDate.getShYear());
-                }
             }
-            Timber.e(stringBuilder.toString());
-            return stringBuilder.toString();
+            isFinished = true;
         }
-        return "گذشته است";
+        if (!isFinished) {
+            stringBuilder
+                    .append(persianDate.getShDay())
+                    .append(MonthType.getMonthType(persianDate.getShMonth()).getText());
+
+            if (nowYear != persianDate.getShYear()) {
+                stringBuilder.append(" ").append(persianDate.getShYear());
+            }
+        }
+        Timber.e(stringBuilder.toString());
+        return stringBuilder.toString();
     }
 
     public void setNearestTime(long nearestTime) {
@@ -689,6 +698,7 @@ public class Alarm implements Serializable {
         months = new ArrayList<>();
         years = new ArrayList<>();
         nearestTime = Long.MAX_VALUE;
+        alarmType = AlarmType.getDefaultType();
 
         setDefaultValues();
         setNowTime();

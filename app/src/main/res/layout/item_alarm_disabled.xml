@@ -96,7 +96,7 @@
 
         <View
             android:layout_width="10dp"
-            android:layout_height="100dp"
+            android:layout_height="78dp"
             android:background="@drawable/vertical_line_radius_gray_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/horizontalLine1"
