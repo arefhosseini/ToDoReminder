@@ -15,7 +15,6 @@
         android:clickable="true"
         android:focusable="true"
         android:layoutDirection="ltr"
-        android:layout_marginTop="-4dp"
         android:background="?attr/selectableItemBackground"
         android:onClick="@{() -> viewModel.onItemClick()}"
         android:onLongClick="@{() -> viewModel.onLongClick()}">

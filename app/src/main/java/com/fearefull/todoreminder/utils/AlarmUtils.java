@@ -340,7 +340,7 @@ public final class AlarmUtils {
                 else {
                     for (int index = 0; index < alarm.getRepeatCount(); index++) {
                         if (alarm.getRepeat(index) == Repeat.ONCE) {
-                            checkTime = scheduleOnceRepeat(alarm.getRepeatModel(index), currentTime);
+                            checkTime = scheduleOnceRepeat(alarm.getRepeatModel(index));
                         }
                         else if (alarm.getRepeat(index) == Repeat.DAILY) {
                             checkTime = scheduleDailyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
@@ -355,12 +355,20 @@ public final class AlarmUtils {
                             checkTime = scheduleYearlyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
                         }
 
-                        alarm.setNearestTime(checkTime);
-                        if (checkTime <= 0 && !doneAlarmList.contains(alarm) && !allAlarmList.contains(alarm))
-                            doneAlarmList.add(alarm);
-                        else if (!disabledAlarmList.contains(alarm) && !doneAlarmList.contains(alarm) && !allAlarmList.contains(alarm)) {
-                            allAlarmList.add(alarm);
-                        }
+                        Timber.e("checkTime: %d, current: %d, nearest: %s", checkTime, currentTime, alarm.getNearestTime());
+
+                        if (
+                                alarm.getNearestTime() == Long.MAX_VALUE ||
+                                checkTime > currentTime && alarm.getNearestTime() > currentTime && checkTime < alarm.getNearestTime() ||
+                                checkTime > currentTime && alarm.getNearestTime() < currentTime ||
+                                checkTime < currentTime && alarm.getNearestTime() < currentTime && checkTime < alarm.getNearestTime()
+                        )
+                            alarm.setNearestTime(checkTime);
+                    }
+                    if (alarm.getNearestTime() < currentTime && !doneAlarmList.contains(alarm) && !allAlarmList.contains(alarm))
+                        doneAlarmList.add(alarm);
+                    else if (!disabledAlarmList.contains(alarm) && !doneAlarmList.contains(alarm) && !allAlarmList.contains(alarm)) {
+                        allAlarmList.add(alarm);
                     }
                 }
             }
@@ -383,7 +391,7 @@ public final class AlarmUtils {
         });
     }
 
-    private static long scheduleOnceRepeat(RepeatModel repeatModel, long currentTime) {
+    private static long scheduleOnceRepeat(RepeatModel repeatModel) {
         PersianDate checkDate = new PersianDate();
         checkDate.setSecond(0);
         checkDate.setMinute(repeatModel.getMinute());
@@ -391,9 +399,7 @@ public final class AlarmUtils {
         checkDate.setShDay(repeatModel.getDayMonth());
         checkDate.setShMonth(repeatModel.getMonth());
         checkDate.setShYear(repeatModel.getYear());
-        if (checkDate.getTime() - currentTime > 0)
-            return checkDate.getTime();
-        return checkDate.getTime() - currentTime;
+        return checkDate.getTime();
     }
 
     private static long scheduleDailyRepeat(RepeatModel repeatModel, long currentTime, Alarm currentAlarm) {

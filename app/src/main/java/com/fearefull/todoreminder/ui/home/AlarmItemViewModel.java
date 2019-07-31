@@ -17,10 +17,10 @@ public class AlarmItemViewModel {
     public AlarmItemViewModel(Alarm alarm, AlarmItemViewModelListener listener) {
         this.alarm = alarm;
         this.listener = listener;
-        title = new ObservableField<>();
-        time = new ObservableField<>();
-        imageRes = new ObservableField<>();
-        isEnabled = new ObservableBoolean();
+        this.title = new ObservableField<>();
+        this.time = new ObservableField<>();
+        this.imageRes = new ObservableField<>();
+        this.isEnabled = new ObservableBoolean();
 
         title.set(alarm.getTitle());
         if (alarm.getIsEnable())

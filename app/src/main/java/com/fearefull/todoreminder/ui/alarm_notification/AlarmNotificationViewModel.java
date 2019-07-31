@@ -8,8 +8,6 @@ import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.History;
 import com.fearefull.todoreminder.data.model.db.Snooze;
-import com.fearefull.todoreminder.data.model.other.type.DayMonthType;
-import com.fearefull.todoreminder.data.model.other.type.MonthType;
 import com.fearefull.todoreminder.schedule.AlarmScheduler;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AppConstants;
@@ -26,10 +24,8 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
 
     private final ObservableField<String> titleString;
     private final ObservableField<Integer> imageRes;
-    private final ObservableField<String> minuteString;
-    private final ObservableField<String> hourString;
-    private final ObservableField<String> dayString;
-    private final ObservableField<String> monthString;
+    private final ObservableField<String> timeString;
+    private final ObservableField<String> dateString;
 
     public AlarmNotificationViewModel(DataManager dataManager, SchedulerProvider schedulerProvider, AlarmScheduler alarmScheduler) {
         super(dataManager, schedulerProvider);
@@ -38,10 +34,8 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
         handler = new Handler();
         titleString = new ObservableField<>();
         imageRes = new ObservableField<>();
-        minuteString = new ObservableField<>();
-        hourString = new ObservableField<>();
-        dayString = new ObservableField<>();
-        monthString = new ObservableField<>();
+        timeString = new ObservableField<>();
+        dateString = new ObservableField<>();
     }
 
     void init(Snooze snooze) {
@@ -63,10 +57,8 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
         this.alarm.setNowTime();
         titleString.set(alarm.getTitle());
         imageRes.set(alarm.getTitleType().getImageRes());
-        minuteString.set(String.valueOf(alarm.getNowMinute()));
-        hourString.set(String.valueOf(alarm.getNowHour()));
-        dayString.set(String.valueOf(DayMonthType.getDayMonthTypeByValue(alarm.getNowDay()).getValue()));
-        monthString.set(MonthType.getMonthType(alarm.getNowMonth()).getText());
+        timeString.set(alarm.getTime12StringByValue(alarm.getNowMinute(), alarm.getNowHour()));
+        dateString.set(alarm.getDateByDayMonthAndMonthByValue(alarm.getNowDay(), alarm.getNowMonth()));
 
         setCountdown();
         snooze.log();
@@ -134,19 +126,11 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
         return imageRes;
     }
 
-    public ObservableField<String> getMinuteString() {
-        return minuteString;
+    public ObservableField<String> getTimeString() {
+        return timeString;
     }
 
-    public ObservableField<String> getHourString() {
-        return hourString;
-    }
-
-    public ObservableField<String> getDayString() {
-        return dayString;
-    }
-
-    public ObservableField<String> getMonthString() {
-        return monthString;
+    public ObservableField<String> getDateString() {
+        return dateString;
     }
 }

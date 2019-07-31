@@ -85,7 +85,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     public void onSaveClick() {
-        if (alarm.getRepeatCount() > defaultRepeatCount || shouldExit) {
+        if (alarm.getRepeatCount() != defaultRepeatCount || shouldExit) {
             alarm.setIsEnable(true);
             if (shouldUpdateAlarm) {
                 getCompositeDisposable().add(getDataManager()

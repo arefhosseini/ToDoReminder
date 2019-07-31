@@ -101,45 +101,23 @@
             app:layout_constraintTop_toBottomOf="@id/horizontalLine2">
 
             <TextView
-                style="@style/TextStyle.Title.Big"
+                style="@style/TextStyle.Title.Big3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/default_half_layout_padding"
                 android:paddingRight="@dimen/default_half_layout_padding"
-                android:text="@{viewModel.monthString}"
-                android:textColor="@color/primaryTextColorDarkTheme" />
-            <TextView
-                style="@style/TextStyle.Title.Big"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/default_half_layout_padding"
-                android:paddingRight="@dimen/default_half_layout_padding"
-                android:text="@{viewModel.dayString}"
+                android:text="@{viewModel.dateString}"
                 android:textColor="@color/primaryTextColorDarkTheme" />
             <Space
                 android:layout_width="16dp"
                 android:layout_height="16dp" />
             <TextView
-                style="@style/TextStyle.Title.Big2"
+                style="@style/TextStyle.Title.Big"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/default_half_layout_padding"
                 android:paddingRight="@dimen/default_half_layout_padding"
-                android:text="@{viewModel.hourString}"
-                android:textColor="@color/primaryTextColorDarkTheme" />
-            <TextView
-                style="@style/TextStyle.Title.Big2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=":"
-                android:textColor="@color/primaryTextColorDarkTheme" />
-            <TextView
-                style="@style/TextStyle.Title.Big2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/default_half_layout_padding"
-                android:paddingRight="@dimen/default_half_layout_padding"
-                android:text="@{viewModel.minuteString}"
+                android:text="@{viewModel.timeString}"
                 android:textColor="@color/primaryTextColorDarkTheme" />
         </LinearLayout>
 
@@ -164,7 +142,7 @@
             <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:layout_gravity="center"
                 android:onClick="@{() -> viewModel.onConfirmClick()}"
                 app:fabColor="@color/greenDarkColor">

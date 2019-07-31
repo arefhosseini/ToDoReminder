@@ -957,9 +957,15 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
-    public String getDateByDayMonthAndMonth(int indexDayMonth, int indexMonth, int indexYear) {
+    public String getDateByDayMonthAndMonthByIndex(int indexDayMonth, int indexMonth) {
         return DayMonthType.getDayMonthTypeByValue(daysMonth.get(indexDayMonth)).getValue() + " " +
                 MonthType.getMonthType(months.get(indexMonth)).getText();
+    }
+
+    @Ignore
+    public String getDateByDayMonthAndMonthByValue(int dayMonth, int month) {
+        return DayMonthType.getDayMonthTypeByValue(dayMonth).getValue() + " " +
+                MonthType.getMonthType(month).getText();
     }
 
     @Ignore
@@ -991,7 +997,7 @@ public class Alarm implements Serializable {
     @Ignore
     public String getRepeatManagerStringByYearly(int index) {
         return getTime12StringByIndex(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + "-" +
-                getDateByDayMonthAndMonth(indexDayMonthByIndexRepeat(index), indexMonthByIndexRepeat(index), indexYearByIndexRepeat(index)) +
+                getDateByDayMonthAndMonthByIndex(indexDayMonthByIndexRepeat(index), indexMonthByIndexRepeat(index)) +
                 " (" + repeats.get(index).getText() + ")";
     }
 

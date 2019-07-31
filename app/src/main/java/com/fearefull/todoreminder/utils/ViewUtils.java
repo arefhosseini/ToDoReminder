@@ -11,6 +11,8 @@ import androidx.core.content.ContextCompat;
 
 import com.fearefull.todoreminder.R;
 
+import timber.log.Timber;
+
 public final class ViewUtils {
 
     private ViewUtils() {

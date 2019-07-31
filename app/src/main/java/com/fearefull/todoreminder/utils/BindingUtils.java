@@ -2,7 +2,6 @@ package com.fearefull.todoreminder.utils;
 
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 
@@ -31,8 +30,6 @@ import com.fearefull.todoreminder.ui.home.AlarmAdapter;
 
 import java.util.List;
 import java.util.Objects;
-
-import timber.log.Timber;
 
 public final class BindingUtils {
 
@@ -195,11 +192,5 @@ public final class BindingUtils {
     public static void setTextEditSelectionCursor(AppCompatEditText editText, Integer selection) {
         if (selection != null)
             editText.setSelection(selection);
-    }
-
-    @BindingAdapter("onTouchListener")
-    public static void setOnTouchListener(View view, View.OnTouchListener onTouchListener) {
-        if (onTouchListener != null)
-            view.setOnTouchListener(onTouchListener);
     }
 }
