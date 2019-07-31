@@ -194,6 +194,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     @Override
     public void save() {
         if(callBack.onReloadAlarms()) {
+            hideKeyboard();
             goBack();
         }
     }

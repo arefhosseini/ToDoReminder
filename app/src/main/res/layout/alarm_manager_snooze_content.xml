@@ -139,7 +139,7 @@
                             android:layout_height="24dp"
                             android:clickable="true"
                             android:focusable="true"
-                            android:background="@null"
+                            android:background="@color/transparent"
                             android:onClick="@{() -> viewModel.onDecreaseSnoozeDelay()}">
 
                             <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
@@ -170,7 +170,7 @@
                             android:layout_height="24dp"
                             android:clickable="true"
                             android:focusable="true"
-                            android:background="@null"
+                            android:background="@color/transparent"
                             android:onClick="@{() -> viewModel.onIncreaseSnoozeDelay()}">
 
                             <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
@@ -217,13 +217,14 @@
                             android:layout_height="24dp"
                             android:clickable="true"
                             android:focusable="true"
-                            android:background="@null"
+                            android:background="@color/transparent"
                             android:onClick="@{() -> viewModel.onDecreaseSnoozeCount()}">
 
                             <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
+                                android:background="@color/transparent"
                                 app:fabColor="@color/secondaryColorLightTheme">
                                 <androidx.appcompat.widget.AppCompatImageView
                                     android:layout_width="match_parent"
@@ -248,7 +249,6 @@
                             android:layout_height="24dp"
                             android:clickable="true"
                             android:focusable="true"
-                            android:background="@null"
                             android:onClick="@{() -> viewModel.onIncreaseSnoozeCount()}">
 
                             <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout

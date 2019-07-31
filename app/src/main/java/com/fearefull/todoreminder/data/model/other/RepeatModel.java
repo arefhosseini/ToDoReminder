@@ -146,22 +146,24 @@ public class RepeatModel {
 
             if (currentDate.after(checkDate))
                 return RepeatResponseType.TRUE;
-            checkDate.addDay(1);
-            if (currentDate.after(checkDate)) {
-                minute = checkDate.getMinute();
-                hour = checkDate.getHour();
-                dayMonth = checkDate.getShDay();
-                month = checkDate.getShMonth();
-                year = checkDate.getShYear();
+            PersianDate newPd = new PersianDate(checkDate.getTime());
+            newPd.addDay(1);
+            if (currentDate.after(newPd)) {
+                minute = newPd.getMinute();
+                hour = newPd.getHour();
+                dayMonth = newPd.getShDay();
+                month = newPd.getShMonth();
+                year = newPd.getShYear();
                 return RepeatResponseType.TRUE;
             }
-            checkDate.addYear(1);
-            if (currentDate.after(checkDate)) {
-                minute = checkDate.getMinute();
-                hour = checkDate.getHour();
-                dayMonth = checkDate.getShDay();
-                month = checkDate.getShMonth();
-                year = checkDate.getShYear();
+            newPd = new PersianDate(checkDate.getTime());
+            newPd.addYear(1);
+            if (currentDate.after(newPd)) {
+                minute = newPd.getMinute();
+                hour = newPd.getHour();
+                dayMonth = newPd.getShDay();
+                month = newPd.getShMonth();
+                year = newPd.getShYear();
                 return RepeatResponseType.TRUE;
             }
             reset();

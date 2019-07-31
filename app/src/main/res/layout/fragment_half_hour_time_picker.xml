@@ -26,7 +26,6 @@
             android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onHalfHourTypePickerValueChange(oldVal, newVal)}"
             app:dividedColor="@{@color/secondaryColorLightTheme}"
             app:pickerSpeed="@{1000}"
-            android:descendantFocusability="blocksDescendants"
             android:layout_gravity="center_horizontal" />
 
         <Space
@@ -45,7 +44,6 @@
             android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onHourPickerValueChange(oldVal, newVal)}"
             app:dividedColor="@{@color/secondaryColorLightTheme}"
             app:pickerSpeed="@{1000}"
-            android:descendantFocusability="blocksDescendants"
             android:layout_gravity="center_horizontal" />
 
         <TextView
@@ -68,7 +66,6 @@
             android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onMinutePickerValueChange(oldVal, newVal)}"
             app:dividedColor="@{@color/secondaryColorLightTheme}"
             app:pickerSpeed="@{1000}"
-            android:descendantFocusability="blocksDescendants"
             android:layout_gravity="center_horizontal" />
 
     </LinearLayout>

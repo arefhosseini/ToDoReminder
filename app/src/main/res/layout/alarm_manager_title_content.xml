@@ -105,6 +105,7 @@
                 android:paddingBottom="@dimen/default_half_half_layout_padding"
                 android:paddingTop="@dimen/default_half_half_layout_padding"
                 android:layout_marginBottom="@dimen/default_half_half_layout_padding"
+                android:textSize="12sp"
                 android:selection="@{viewModel.selectionTitleEditText}"
                 android:textColor="@color/secondaryTextColorDarkTheme"
                 android:maxWidth="200dp"

@@ -623,6 +623,49 @@ public class Alarm implements Serializable {
         return nearestTime;
     }
 
+    @Ignore
+    public String getNearestTimeString() {
+        if (System.currentTimeMillis() < nearestTime) {
+            PersianDate persianDate = new PersianDate(nearestTime);
+            setNowTime();
+            boolean isFinished = false;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            if (nowMonth == persianDate.getShMonth() && nowYear == persianDate.getShYear()) {
+                if (nowDay - persianDate.getShDay() < 3) {
+                    stringBuilder
+                            .append(getTime12StringByValue(persianDate.getMinute(), persianDate.getHour()))
+                            .append(" ");
+                    if (nowDay == persianDate.getShDay())
+                        stringBuilder.append("امروز");
+                    else if (nowDay + 1 == persianDate.getShDay())
+                        stringBuilder.append("فردا");
+                    else if (nowDay + 2 == persianDate.getShDay())
+                        stringBuilder.append("پس فردا");
+                }
+                else {
+                    stringBuilder
+                            .append(persianDate.getShDay())
+                            .append(" ")
+                            .append(MonthType.getMonthType(persianDate.getShMonth()).getText());
+                }
+                isFinished = true;
+            }
+            if (!isFinished) {
+                stringBuilder
+                        .append(persianDate.getShDay())
+                        .append(MonthType.getMonthType(persianDate.getShMonth()).getText());
+
+                if (nowYear != persianDate.getShYear()) {
+                    stringBuilder.append(" ").append(persianDate.getShYear());
+                }
+            }
+            Timber.e(stringBuilder.toString());
+            return stringBuilder.toString();
+        }
+        return "گذشته است";
+    }
+
     public void setNearestTime(long nearestTime) {
         this.nearestTime = nearestTime;
     }
@@ -836,7 +879,7 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
-    public String getTime12String(int indexMinute, int indexHour) {
+    public String getTime12StringByIndex(int indexMinute, int indexHour) {
         int minute = minutes.get(indexMinute);
         int halfHour = hourToHalfHour(hours.get(indexHour));
         if (minute < 10)
@@ -845,9 +888,24 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
-    public String getTime24String(int indexMinute, int indexHour) {
+    public String getTime12StringByValue(int minute, int hour) {
+        int halfHour = hourToHalfHour(hour);
+        if (minute < 10)
+            return halfHour + ":" + "0" + minute + " " + getHalfHourType(hour).getPersianShortText();
+        return halfHour + ":" + minute + " " + getHalfHourType(hour).getPersianShortText();
+    }
+
+    @Ignore
+    public String getTime24StringByIndex(int indexMinute, int indexHour) {
         int minute = minutes.get(indexMinute);
         int hour = hours.get(indexHour);
+        if (minute < 10)
+            return hour + ":" + "0" + minute;
+        return hour + ":" + minute;
+    }
+
+    @Ignore
+    public String getTime24StringByValue(int minute, int hour) {
         if (minute < 10)
             return hour + ":" + "0" + minute;
         return hour + ":" + minute;
@@ -906,33 +964,33 @@ public class Alarm implements Serializable {
 
     @Ignore
     public String getRepeatManagerStringByOnce(int index) {
-        return getTime12String(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + "-" +
+        return getTime12StringByIndex(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + "-" +
                 getDateByDayMonthAndMonthAndYear(indexDayMonthByIndexRepeat(index), indexMonthByIndexRepeat(index), indexYearByIndexRepeat(index)) +
                 " (" + repeats.get(index).getText() + ")";
     }
 
     @Ignore
     public String getRepeatManagerStringByDaily(int index) {
-        return getTime12String(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + " (" +
+        return getTime12StringByIndex(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + " (" +
                 repeats.get(index).getText() + ")";
     }
 
     @Ignore
     public String getRepeatManagerStringByWeekly(int index) {
-        return getTime12String(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) +
+        return getTime12StringByIndex(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) +
                 " " + getDaysWeekString(indexDayWeekByIndexRepeat(index));
     }
 
     @Ignore
     public String getRepeatManagerStringByMonthly(int index) {
-        return getTime12String(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + " " +
+        return getTime12StringByIndex(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + " " +
                 DayMonthType.getDayMonthTypeByValue(daysMonth.get(indexDayMonthByIndexRepeat(index))).getTextTh() +
                 " هرماه";
     }
 
     @Ignore
     public String getRepeatManagerStringByYearly(int index) {
-        return getTime12String(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + "-" +
+        return getTime12StringByIndex(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + "-" +
                 getDateByDayMonthAndMonth(indexDayMonthByIndexRepeat(index), indexMonthByIndexRepeat(index), indexYearByIndexRepeat(index)) +
                 " (" + repeats.get(index).getText() + ")";
     }

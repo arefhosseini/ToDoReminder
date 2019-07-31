@@ -332,7 +332,7 @@ public final class AlarmUtils {
             List<Alarm> doneAlarmList = new ArrayList<>();
             Alarm currentAlarm = new Alarm();
             long currentTime = System.currentTimeMillis();
-            long checkTime;
+            long checkTime = 0;
 
             for (Alarm alarm: alarmList) {
                 if (!alarm.getIsEnable())
@@ -341,32 +341,24 @@ public final class AlarmUtils {
                     for (int index = 0; index < alarm.getRepeatCount(); index++) {
                         if (alarm.getRepeat(index) == Repeat.ONCE) {
                             checkTime = scheduleOnceRepeat(alarm.getRepeatModel(index), currentTime);
-                            if (checkTime > 0 && checkTime < alarm.getNearestTime())
-                                alarm.setNearestTime(checkTime);
-                            else if (checkTime <= 0 && !doneAlarmList.contains(alarm))
-                                doneAlarmList.add(alarm);
                         }
                         else if (alarm.getRepeat(index) == Repeat.DAILY) {
                             checkTime = scheduleDailyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
-                            if (checkTime < alarm.getNearestTime())
-                                alarm.setNearestTime(checkTime);
                         }
                         else if (alarm.getRepeat(index) == Repeat.WEEKLY) {
                             checkTime = scheduleWeeklyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
-                            if (checkTime < alarm.getNearestTime())
-                                alarm.setNearestTime(checkTime);
                         }
                         else if (alarm.getRepeat(index) == Repeat.MONTHLY) {
                             checkTime = scheduleMonthlyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
-                            if (checkTime < alarm.getNearestTime())
-                                alarm.setNearestTime(checkTime);
                         }
                         else if (alarm.getRepeat(index) == Repeat.YEARLY) {
                             checkTime = scheduleYearlyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
-                            if (checkTime < alarm.getNearestTime())
-                                alarm.setNearestTime(checkTime);
                         }
-                        if (!disabledAlarmList.contains(alarm) && !doneAlarmList.contains(alarm) && !allAlarmList.contains(alarm)) {
+
+                        alarm.setNearestTime(checkTime);
+                        if (checkTime <= 0 && !doneAlarmList.contains(alarm) && !allAlarmList.contains(alarm))
+                            doneAlarmList.add(alarm);
+                        else if (!disabledAlarmList.contains(alarm) && !doneAlarmList.contains(alarm) && !allAlarmList.contains(alarm)) {
                             allAlarmList.add(alarm);
                         }
                     }
@@ -387,7 +379,6 @@ public final class AlarmUtils {
 
             allAlarmList.addAll(doneAlarmList);
             allAlarmList.addAll(disabledAlarmList);
-            Timber.e("First: %d, Last:%d", alarmList.size(), allAlarmList.size());
             return Observable.just(allAlarmList);
         });
     }

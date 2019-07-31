@@ -29,7 +29,6 @@
             android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onMonthPickerValueChange(oldVal, newVal)}"
             app:dividedColor="@{@color/secondaryColorLightTheme}"
             app:pickerSpeed="@{1000}"
-            android:descendantFocusability="blocksDescendants"
             android:layout_gravity="center_horizontal" />
 
         <Space
@@ -48,7 +47,6 @@
             android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onDayPickerValueChange(oldVal, newVal)}"
             app:dividedColor="@{@color/secondaryColorLightTheme}"
             app:pickerSpeed="@{1000}"
-            android:descendantFocusability="blocksDescendants"
             android:layout_gravity="center_horizontal" />
         <Space
             android:layout_width="0dp"
