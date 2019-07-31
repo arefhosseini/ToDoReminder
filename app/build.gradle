@@ -97,7 +97,7 @@ dependencies {
     // arc navigation view
     implementation "com.rom4ek:arcnavigationview:$rootProject.arcNavigationViewVersion"
 
-    //
+    // ripple pulse
     implementation "com.gauravbhola.ripplepulsebackground:library:$rootProject.ripplePulseVersion"
 
     // debug database
