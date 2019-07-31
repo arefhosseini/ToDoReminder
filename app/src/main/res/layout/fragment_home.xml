@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:ripple="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -18,12 +18,14 @@
         tools:ignore="RtlHardcoded">
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:ignore="RtlHardcoded"
             android:background="@color/backgroundColorLightTheme">
 
             <LinearLayout
+                android:id="@+id/scroll_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -33,13 +35,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layoutDirection="rtl"
-                    android:padding="@dimen/recycler_view_padding"
+                    android:paddingLeft="@dimen/default_half_layout_padding"
+                    android:paddingRight="@dimen/default_half_layout_padding"
+                    android:paddingBottom="@dimen/default_half_half_layout_padding"
                     app:setDivider="@{false}"
                     app:adapter="@{viewModel.getAlarmItemsLiveData}"
                     tools:listitem="@layout/item_alarm_enabled" />
             </LinearLayout>
-
-
         </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -55,6 +57,14 @@
             android:focusable="true"
             android:onClick="@{() -> viewModel.onOpenAlarmManager()}"
             android:src="@drawable/ic_add_black_24dp" />
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/address_looking_up"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
     </RelativeLayout>
 
 </layout>

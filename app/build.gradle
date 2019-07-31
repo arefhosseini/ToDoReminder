@@ -103,6 +103,9 @@ dependencies {
     // arc navigation view
     implementation "com.rom4ek:arcnavigationview:$rootProject.arcNavigationViewVersion"
 
+    // loaders pack
+    implementation "com.agrawalsuneet.androidlibs:loaderspack:$rootProject.loadersPackVersion"
+
     // debug database
     debugImplementation "com.amitshekhar.android:debug-db:$rootProject.debugDBVersion"
 

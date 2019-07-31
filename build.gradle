@@ -71,6 +71,9 @@ ext {
     // arc navigation view
     arcNavigationViewVersion = '1.0.3'
 
+    // loaders pack
+    loadersPackVersion = '1.2.3'
+
     // debug database
     debugDBVersion = '1.0.6'
 

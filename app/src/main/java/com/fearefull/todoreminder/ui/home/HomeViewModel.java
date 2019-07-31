@@ -36,6 +36,7 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
     }
 
     private void fetchAlarmData() {
+        setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
                 .getAllAlarms()
                 .subscribeOn(getSchedulerProvider().io())
@@ -48,7 +49,10 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
         getCompositeDisposable().add(AlarmUtils.sortAlarms(alarmList)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(alarmItemsLiveData::setValue, Timber::e)
+                .subscribe(alarms -> {
+                    alarmItemsLiveData.setValue(alarms);
+                    setIsLoading(false);
+                }, Timber::e)
         );
     }
 

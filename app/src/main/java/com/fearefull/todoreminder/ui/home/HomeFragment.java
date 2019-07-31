@@ -5,6 +5,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,8 +20,12 @@ import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.main.MainCaller;
 import com.fearefull.todoreminder.utils.CommonUtils;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import timber.log.Timber;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel>
         implements HomeNavigator, AlarmAdapter.AlarmAdapterListener, MainCaller {
@@ -83,6 +88,16 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         binding.alarmRecyclerView.setLayoutManager(layoutManager);
         binding.alarmRecyclerView.setItemAnimator(new DefaultItemAnimator());
         binding.alarmRecyclerView.setAdapter(alarmAdapter);
+
+        // hide fab on scroll recycler view
+        binding.scrollView.setOnScrollChangeListener(
+                (NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY > oldScrollY) {
+                binding.fab.hide();
+            } else {
+                binding.fab.show();
+            }
+        });
     }
 
     @Override
