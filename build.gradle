@@ -71,9 +71,6 @@ ext {
     // arc navigation view
     arcNavigationViewVersion = '1.0.3'
 
-    // ripple pulse
-    ripplePulseVersion = '1.0.0'
-
     // debug database
     debugDBVersion = '1.0.6'
 

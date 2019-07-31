@@ -15,7 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primaryColorLightTheme">
+        android:background="@drawable/primary_gradient_bg">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/verticalLine1"
@@ -153,98 +153,69 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/horizontalLine3" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="@{() -> viewModel.onConfirmClick()}"
-            android:background="@drawable/quarter_bottom_left_circle_confirm_bg"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="w,1:1"
-            app:layout_constraintEnd_toStartOf="@id/verticalLine1"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" >
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/verticalLine1"
+            app:layout_constraintEnd_toStartOf="@id/verticalLine4"
+            app:layout_constraintBottom_toTopOf="@id/horizontalLine5"
+            android:orientation="horizontal">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/verticalLineConfirm"
+            <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.75" />
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:layout_gravity="center"
+                android:onClick="@{() -> viewModel.onConfirmClick()}"
+                app:fabColor="@color/greenDarkColor">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_check_black_24dp"
+                    android:padding="@dimen/default_half_layout_padding"
+                    android:tint="@color/whiteColor"/>
+            </com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout>
 
-            <ImageView
+            <Space
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_check_black_24dp"
-                android:tint="@color/whiteColor"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toStartOf="@id/verticalLineConfirm"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="@{() -> viewModel.onSnoozeClick()}"
-            android:background="@drawable/quarter_bottom_right_circle_snooze_bg"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="w,1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/verticalLine4" >
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/verticalLineSnooze"
+            <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.25" />
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:onClick="@{() -> viewModel.onSnoozeClick()}"
+                app:fabColor="@color/yellowColor">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/default_half_layout_padding"
+                    android:src="@drawable/ic_snooze_black_24dp"
+                    android:tint="@color/whiteColor"/>
+            </com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout>
 
-            <ImageView
+            <Space
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_snooze_black_24dp"
-                android:tint="@color/whiteColor"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintStart_toEndOf="@id/verticalLineSnooze"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="@{() -> viewModel.onDismissClick()}"
-            android:background="@drawable/half_top_circle_cancel_bg"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/verticalLine3"
-            app:layout_constraintTop_toBottomOf="@id/horizontalLine4"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/verticalLine2" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                style="@style/TextStyle.Title.Big3"
-                android:text="@string/canceling"
-                android:layout_gravity="bottom"
-                android:gravity="center"
-                android:padding="@dimen/default_half_layout_padding"
-                android:textColor="@color/primaryTextColorDarkTheme"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:onClick="@{() -> viewModel.onDismissClick()}"
+                app:fabColor="@color/redDark2Color">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/TextStyle.Heading"
+                    android:text="@string/canceling"
+                    android:gravity="center"
+                    android:textColor="@color/primaryTextColorDarkTheme"/>
+            </com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

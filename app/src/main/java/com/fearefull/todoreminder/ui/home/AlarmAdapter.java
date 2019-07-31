@@ -81,11 +81,11 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         void onAlarmSwitchClick(Alarm alarm);
     }
 
-    public class AlarmEnabledViewHolder extends BaseAlarmViewHolder {
-        private final ItemAlarmEnabledBinding binding;
+    public class AlarmFirstViewHolder extends BaseAlarmViewHolder {
+        private final ItemAlarmFirstBinding binding;
         private AlarmItemViewModel viewModel;
 
-        AlarmEnabledViewHolder(ItemAlarmEnabledBinding binding, AlarmAdapter.AlarmAdapterListener listener) {
+        AlarmFirstViewHolder(ItemAlarmFirstBinding binding, AlarmAdapter.AlarmAdapterListener listener) {
             super(binding.getRoot());
             this.binding = binding;
             this.listener = listener;
@@ -97,19 +97,17 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             viewModel = new AlarmItemViewModel(alarm, this);
             binding.setViewModel(viewModel);
             binding.executePendingBindings();
-
         }
     }
 
-    public class AlarmFirstViewHolder extends BaseAlarmViewHolder {
-        private final ItemAlarmFirstBinding binding;
+    public class AlarmEnabledViewHolder extends BaseAlarmViewHolder {
+        private final ItemAlarmEnabledBinding binding;
         private AlarmItemViewModel viewModel;
 
-        AlarmFirstViewHolder(ItemAlarmFirstBinding binding, AlarmAdapter.AlarmAdapterListener listener) {
+        AlarmEnabledViewHolder(ItemAlarmEnabledBinding binding, AlarmAdapter.AlarmAdapterListener listener) {
             super(binding.getRoot());
             this.binding = binding;
             this.listener = listener;
-
         }
 
         @Override

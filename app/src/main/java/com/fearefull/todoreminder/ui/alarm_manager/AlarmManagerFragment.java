@@ -183,6 +183,8 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         binding.snoozeContent.snoozeExpansionLayout.addListener(expansionLayoutListener);
 
         viewModel.initAlarm();
+        changeExpansionRepeatLayout();
+
         callBack.alarmManagerIsSetUp();
     }
 

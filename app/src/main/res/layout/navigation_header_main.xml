@@ -22,7 +22,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/primary_gradinet_bg"
+            android:background="@drawable/primary_gradient_bg"
             android:orientation="vertical"
             android:padding="16dp">
 

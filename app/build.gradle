@@ -6,6 +6,12 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 2
+
+def versionFinal = "${versionMajor}.${versionMinor}.${versionPatch}"
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -13,8 +19,8 @@ android {
         applicationId "com.fearefull.todoreminder"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "1.0.1.2"
+        versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
+        versionName versionFinal
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -96,9 +102,6 @@ dependencies {
 
     // arc navigation view
     implementation "com.rom4ek:arcnavigationview:$rootProject.arcNavigationViewVersion"
-
-    // ripple pulse
-    implementation "com.gauravbhola.ripplepulsebackground:library:$rootProject.ripplePulseVersion"
 
     // debug database
     debugImplementation "com.amitshekhar.android:debug-db:$rootProject.debugDBVersion"
