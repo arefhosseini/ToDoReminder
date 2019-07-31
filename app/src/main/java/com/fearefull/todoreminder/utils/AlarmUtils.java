@@ -5,25 +5,19 @@ import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.data.model.other.RepeatModel;
 import com.fearefull.todoreminder.data.model.other.item.AlarmTitleItem;
 import com.fearefull.todoreminder.data.model.other.item.DayWeekItem;
+import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
-import com.fearefull.todoreminder.data.model.other.persian_date.PersianDateFormat;
 import com.fearefull.todoreminder.data.model.other.type.AlarmTitleType;
 import com.fearefull.todoreminder.data.model.other.type.DayMonthType;
 import com.fearefull.todoreminder.data.model.other.type.DayWeekType;
-import com.fearefull.todoreminder.data.model.other.type.MonthType;
-import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
+import com.fearefull.todoreminder.data.model.other.type.MonthType;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Observer;
-import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import timber.log.Timber;
 
 public final class AlarmUtils {
 
@@ -354,8 +348,6 @@ public final class AlarmUtils {
                         else if (alarm.getRepeat(index) == Repeat.YEARLY) {
                             checkTime = scheduleYearlyRepeat(alarm.getRepeatModel(index), currentTime, currentAlarm);
                         }
-
-                        Timber.e("checkTime: %d, current: %d, nearest: %s", checkTime, currentTime, alarm.getNearestTime());
 
                         if (
                                 alarm.getNearestTime() == Long.MAX_VALUE ||

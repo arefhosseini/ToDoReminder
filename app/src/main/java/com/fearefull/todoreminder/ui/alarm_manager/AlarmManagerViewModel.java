@@ -42,6 +42,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     private boolean shouldUpdateAlarm = false;
     private boolean shouldExit = false;
+    private boolean autoUpdateTitleEditText = false;
 
     public AlarmManagerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -117,6 +118,15 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     public void onTitleTextChange(CharSequence s) {
+        if (autoUpdateTitleEditText) {
+            if (alarm.getTitle().length() == s.length() && selectionTitleEditText.get() != null && s.length() == selectionTitleEditText.get()) {
+                selectionTitleEditText.set(0);
+                selectionTitleEditText.set(s.length());
+            }
+            else
+                selectionTitleEditText.set(s.length());
+            autoUpdateTitleEditText = false;
+        }
         alarm.setTitle(s.toString());
     }
 
@@ -157,12 +167,12 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     private void updateTitleString(String title) {
         titleString.set(title);
-        selectionTitleEditText.set(title.length());
+        autoUpdateTitleEditText = true;
     }
 
     void updateAlarmTitle(AlarmTitleType titleType) {
         alarm.setTitleType(titleType);
-        updateTitleString(titleType.getText());
+        updateTitleString(titleType.getText() + " ");
         updateTitleImageRes(titleType.getImageRes());
     }
 
