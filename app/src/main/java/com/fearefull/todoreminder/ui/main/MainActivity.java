@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private ActivityMainBinding binding;
     private DrawerLayout drawer;
     private NavigationView navigationView;
-    private MainCaller callerHome;
+    private MainCaller callerHome, callerHistory;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, MainActivity.class);
@@ -158,6 +158,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             unlockDrawer();
             if (tag.equals(AboutFragment.TAG) || tag.equals(SettingsFragment.TAG)) {
                 navigationView.setCheckedItem(R.id.navigationItemHome);
+                if (tag.equals(SettingsFragment.TAG)) {
+                    if (viewModel.getSettings().isChanged()) {
+                        if (callerHome != null)
+                            callerHome.settingsChanged();
+                        if (callerHistory != null)
+                            callerHistory.settingsChanged();
+                    }
+                }
             }
         }
     }
@@ -273,6 +281,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         HistoryFragment historyFragment = (HistoryFragment) getSupportFragmentManager().findFragmentByTag(HistoryFragment.TAG);
         if (historyFragment == null) {
             historyFragment = HistoryFragment.newInstance();
+            callerHistory = historyFragment;
         }
         binding.toolbarTitle.setText(R.string.history);
         getSupportFragmentManager()

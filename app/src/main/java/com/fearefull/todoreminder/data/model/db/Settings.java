@@ -5,10 +5,20 @@ import com.fearefull.todoreminder.data.model.other.type.HourType;
 import java.io.Serializable;
 
 public class Settings implements Serializable {
+    private boolean isChanged;
     private HourType hourType;
 
     public Settings() {
+        isChanged = false;
         this.hourType = HourType.FULL_HOUR;
+    }
+
+    public boolean isChanged() {
+        return isChanged;
+    }
+
+    public void setChanged(boolean changed) {
+        isChanged = changed;
     }
 
     public HourType getHourType() {

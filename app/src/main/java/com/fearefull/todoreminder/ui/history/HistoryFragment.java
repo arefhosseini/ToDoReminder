@@ -2,7 +2,6 @@ package com.fearefull.todoreminder.ui.history;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,13 +16,14 @@ import com.fearefull.todoreminder.data.model.db.History;
 import com.fearefull.todoreminder.databinding.FragmentHistoryBinding;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
+import com.fearefull.todoreminder.ui.main.MainCaller;
 import com.fearefull.todoreminder.utils.CommonUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 public class HistoryFragment extends BaseFragment<FragmentHistoryBinding, HistoryViewModel>
-        implements HistoryNavigator, HistoryAdapter.HistoryAdapterListener{
+        implements HistoryNavigator, HistoryAdapter.HistoryAdapterListener, MainCaller {
 
     public static final String TAG = HistoryFragment.class.getSimpleName();
     @Inject
@@ -100,5 +100,15 @@ public class HistoryFragment extends BaseFragment<FragmentHistoryBinding, Histor
     @Override
     public void setDoneHistory(History history) {
         historyAdapter.setDoneHistory(history);
+    }
+
+    @Override
+    public boolean reloadAlarmData() {
+        return false;
+    }
+
+    @Override
+    public void settingsChanged() {
+        historyAdapter.settingsUpdated();
     }
 }

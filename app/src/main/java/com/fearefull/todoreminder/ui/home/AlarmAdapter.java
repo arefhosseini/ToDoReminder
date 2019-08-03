@@ -78,6 +78,10 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         alarmList.clear();
     }
 
+    public void settingsUpdated() {
+        notifyDataSetChanged();
+    }
+
     public void setListener(AlarmAdapterListener listener) {
         this.listener = listener;
     }

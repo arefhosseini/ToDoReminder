@@ -55,6 +55,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         historyList.clear();
     }
 
+    public void settingsUpdated() {
+        notifyDataSetChanged();
+    }
+
     public void setDoneHistory(History history) {
         if (history.getDone()) {
              history.getBinding().isDoneLayout.setBackground(

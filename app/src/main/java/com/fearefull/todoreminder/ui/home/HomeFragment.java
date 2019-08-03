@@ -20,12 +20,8 @@ import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.main.MainCaller;
 import com.fearefull.todoreminder.utils.CommonUtils;
 
-import org.jetbrains.annotations.NotNull;
-
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import timber.log.Timber;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel>
         implements HomeNavigator, AlarmAdapter.AlarmAdapterListener, MainCaller {
@@ -122,6 +118,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         alarmAdapter.clearItems();
         viewModel.reloadAlarmData();
         return true;
+    }
+
+    @Override
+    public void settingsChanged() {
+        alarmAdapter.settingsUpdated();
     }
 
     @Override
