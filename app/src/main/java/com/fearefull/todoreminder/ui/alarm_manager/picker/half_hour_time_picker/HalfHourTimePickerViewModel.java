@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
@@ -29,8 +30,9 @@ public class HalfHourTimePickerViewModel extends BaseViewModel<HalfHourTimePicke
     private MutableLiveData<Integer> halfHourTypePickerMaxIndex;
     private MutableLiveData<Integer> halfHourTypePickerDefaultIndex;
 
-    public HalfHourTimePickerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+    public HalfHourTimePickerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider,
+                                       Settings settings) {
+        super(dataManager, schedulerProvider, settings);
 
         minutePickerValues = new MutableLiveData<>();
         minutePickerMaxIndex = new MutableLiveData<>();

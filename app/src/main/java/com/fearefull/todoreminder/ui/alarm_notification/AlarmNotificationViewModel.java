@@ -7,6 +7,7 @@ import androidx.databinding.ObservableField;
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.History;
+import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.data.model.db.Snooze;
 import com.fearefull.todoreminder.schedule.AlarmScheduler;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
@@ -27,8 +28,9 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
     private final ObservableField<String> timeString;
     private final ObservableField<String> dateString;
 
-    public AlarmNotificationViewModel(DataManager dataManager, SchedulerProvider schedulerProvider, AlarmScheduler alarmScheduler) {
-        super(dataManager, schedulerProvider);
+    public AlarmNotificationViewModel(DataManager dataManager, SchedulerProvider schedulerProvider,
+                                      AlarmScheduler alarmScheduler, Settings settings) {
+        super(dataManager, schedulerProvider, settings);
         this.alarmScheduler = alarmScheduler;
         runnable = this::goOff;
         handler = new Handler();

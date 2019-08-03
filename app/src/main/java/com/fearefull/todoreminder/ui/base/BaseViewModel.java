@@ -4,6 +4,7 @@ import androidx.databinding.ObservableBoolean;
 import androidx.lifecycle.ViewModel;
 
 import com.fearefull.todoreminder.data.DataManager;
+import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
 import java.lang.ref.WeakReference;
@@ -18,14 +19,16 @@ public abstract class BaseViewModel<N> extends ViewModel {
 
     private final SchedulerProvider schedulerProvider;
 
+    private final Settings settings;
+
     private CompositeDisposable compositeDisposable;
 
     private WeakReference<N> navigator;
 
-    public BaseViewModel(DataManager dataManager,
-                         SchedulerProvider schedulerProvider) {
+    public BaseViewModel(DataManager dataManager, SchedulerProvider schedulerProvider, Settings settings) {
         this.dataManager = dataManager;
         this.schedulerProvider = schedulerProvider;
+        this.settings = settings;
         this.compositeDisposable = new CompositeDisposable();
     }
 
@@ -41,6 +44,10 @@ public abstract class BaseViewModel<N> extends ViewModel {
 
     public DataManager getDataManager() {
         return dataManager;
+    }
+
+    public Settings getSettings() {
+        return settings;
     }
 
     public ObservableBoolean getIsLoading() {

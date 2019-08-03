@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.data.model.other.item.RepeatManagerItem;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
@@ -15,8 +16,8 @@ public class RepeatManagerViewModel extends BaseViewModel<RepeatManagerNavigator
     private Alarm alarm;
     private final MutableLiveData<List<RepeatManagerItem>> repeatManagerItemsLiveData;
 
-    public RepeatManagerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+    public RepeatManagerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider, Settings settings) {
+        super(dataManager, schedulerProvider, settings);
         repeatManagerItemsLiveData = new MutableLiveData<>();
     }
 

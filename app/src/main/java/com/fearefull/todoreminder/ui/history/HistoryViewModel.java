@@ -10,6 +10,7 @@ import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.History;
 import com.fearefull.todoreminder.data.model.db.Repeat;
+import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
@@ -36,8 +37,8 @@ public class HistoryViewModel extends BaseViewModel<HistoryNavigator> {
         }
     };
 
-    public HistoryViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+    public HistoryViewModel(DataManager dataManager, SchedulerProvider schedulerProvider, Settings settings) {
+        super(dataManager, schedulerProvider, settings);
         historyItemsLiveData = new MutableLiveData<>();
         isRefreshing = new ObservableBoolean();
         fetchData();

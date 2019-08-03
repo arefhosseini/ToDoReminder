@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
+import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.data.model.other.RepeatModel;
 import com.fearefull.todoreminder.data.model.other.type.RepeatResponseType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
@@ -18,8 +19,8 @@ public abstract class BaseRepeatViewModel<W extends BaseRepeatNavigator> extends
     private final MutableLiveData<Integer> currentTabPager;
     private final MutableLiveData<Integer> pageLimitPager;
 
-    public BaseRepeatViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+    public BaseRepeatViewModel(DataManager dataManager, SchedulerProvider schedulerProvider, Settings settings) {
+        super(dataManager, schedulerProvider, settings);
         repeatModel = new RepeatModel();
         currentTabPager = new MutableLiveData<>();
         pageLimitPager = new MutableLiveData<>();

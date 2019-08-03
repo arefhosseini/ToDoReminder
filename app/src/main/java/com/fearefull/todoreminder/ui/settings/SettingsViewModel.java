@@ -10,14 +10,10 @@ import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
 public class SettingsViewModel extends BaseViewModel<SettingsNavigator> {
 
-    private final Settings settings;
-
     private ObservableBoolean isFullHourTypeEnabled;
 
-    public SettingsViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
-
-        settings = getDataManager().getSettings();
+    public SettingsViewModel(DataManager dataManager, SchedulerProvider schedulerProvider, Settings settings) {
+        super(dataManager, schedulerProvider, settings);
 
         isFullHourTypeEnabled = new ObservableBoolean(settings.getHourType() == HourType.FULL_HOUR);
     }
@@ -26,15 +22,11 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator> {
         getNavigator().goBack();
     }
 
-    public Settings getSettings() {
-        return settings;
-    }
-
     public ObservableBoolean getIsFullHourTypeEnabled() {
         return isFullHourTypeEnabled;
     }
 
     public void onFullHourTypeSwitchClick() {
-        settings.changeHourType();
+        getSettings().changeHourType();
     }
 }

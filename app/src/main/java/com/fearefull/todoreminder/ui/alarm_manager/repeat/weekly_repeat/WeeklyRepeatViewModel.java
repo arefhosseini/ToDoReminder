@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Repeat;
+import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.data.model.other.item.DayWeekItem;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
@@ -17,8 +18,8 @@ import timber.log.Timber;
 public class WeeklyRepeatViewModel extends BaseRepeatViewModel<WeeklyRepeatNavigator> {
     private final MutableLiveData<List<DayWeekItem>> dayWeekItemsLiveData;
 
-    public WeeklyRepeatViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+    public WeeklyRepeatViewModel(DataManager dataManager, SchedulerProvider schedulerProvider, Settings settings) {
+        super(dataManager, schedulerProvider, settings);
         dayWeekItemsLiveData = new MutableLiveData<>();
         getPageLimitPager().setValue(1);
     }

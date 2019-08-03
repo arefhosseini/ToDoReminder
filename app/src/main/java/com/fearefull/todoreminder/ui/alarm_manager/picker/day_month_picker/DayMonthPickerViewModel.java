@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.data.model.other.type.MonthType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
@@ -17,8 +18,9 @@ public class DayMonthPickerViewModel extends BaseViewModel<DayMonthPickerNavigat
     private MutableLiveData<Integer> dayMonthPickerMaxIndex;
     private MutableLiveData<Integer> dayMonthPickerDefaultIndex;
 
-    public DayMonthPickerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+    public DayMonthPickerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider,
+                                   Settings settings) {
+        super(dataManager, schedulerProvider, settings);
         dayMonthPickerValues = new MutableLiveData<>();
         dayMonthPickerMaxIndex = new MutableLiveData<>();
         dayMonthPickerDefaultIndex = new MutableLiveData<>();

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fearefull.todoreminder.data.DataManager;
+import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.schedule.AlarmScheduler;
 import com.fearefull.todoreminder.schedule.AppAlarmScheduler;
 import com.fearefull.todoreminder.ui.about.AboutViewModel;
@@ -37,6 +38,7 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
     private final DataManager dataManager;
     private final SchedulerProvider schedulerProvider;
     private final AlarmScheduler alarmScheduler;
+    private final Settings settings;
 
     @Inject
     public ViewModelProviderFactory(DataManager dataManager, SchedulerProvider schedulerProvider,
@@ -44,6 +46,10 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         this.dataManager = dataManager;
         this.schedulerProvider = schedulerProvider;
         this.alarmScheduler = alarmScheduler;
+        this.settings = dataManager.getSettings();
+        if (settings == null) {
+            dataManager.setSettings(new Settings());
+        }
     }
 
     @NotNull
@@ -53,81 +59,81 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         // activities
         if (modelClass.isAssignableFrom(SplashViewModel.class)) {
             //noinspection unchecked
-            return (T) new SplashViewModel(dataManager, schedulerProvider);
+            return (T) new SplashViewModel(dataManager, schedulerProvider, settings);
         }
         if (modelClass.isAssignableFrom(MainViewModel.class)) {
             //noinspection unchecked
-            return (T) new MainViewModel(dataManager, schedulerProvider);
+            return (T) new MainViewModel(dataManager, schedulerProvider, settings);
         }
 
         // main fragments
         if (modelClass.isAssignableFrom(HomeViewModel.class)) {
             //noinspection unchecked
-            return (T) new HomeViewModel(dataManager, schedulerProvider, alarmScheduler);
+            return (T) new HomeViewModel(dataManager, schedulerProvider, alarmScheduler, settings);
         }
         if (modelClass.isAssignableFrom(HistoryViewModel.class)) {
             //noinspection unchecked
-            return (T) new HistoryViewModel(dataManager, schedulerProvider);
+            return (T) new HistoryViewModel(dataManager, schedulerProvider, settings);
         }
         if (modelClass.isAssignableFrom(AboutViewModel.class)) {
             //noinspection unchecked
-            return (T) new AboutViewModel(dataManager, schedulerProvider);
+            return (T) new AboutViewModel(dataManager, schedulerProvider, settings);
         }
         if (modelClass.isAssignableFrom(AlarmManagerViewModel.class)) {
             //noinspection unchecked
-            return (T) new AlarmManagerViewModel(dataManager, schedulerProvider);
+            return (T) new AlarmManagerViewModel(dataManager, schedulerProvider, settings);
         }
         if (modelClass.isAssignableFrom(SettingsViewModel.class)) {
             //noinspection unchecked
-            return (T) new SettingsViewModel(dataManager, schedulerProvider);
+            return (T) new SettingsViewModel(dataManager, schedulerProvider, settings);
         }
         if (modelClass.isAssignableFrom(AlarmNotificationViewModel.class)) {
             //noinspection unchecked
-            return (T) new AlarmNotificationViewModel(dataManager, schedulerProvider, alarmScheduler);
+            return (T) new AlarmNotificationViewModel(dataManager, schedulerProvider, alarmScheduler, settings);
         }
         if (modelClass.isAssignableFrom(SimpleViewModel.class)) {
             //noinspection unchecked
-            return (T) new SimpleViewModel(dataManager, schedulerProvider);
+            return (T) new SimpleViewModel(dataManager, schedulerProvider, settings);
         }
         if (modelClass.isAssignableFrom(RepeatManagerViewModel.class)) {
             //noinspection unchecked
-            return (T) new RepeatManagerViewModel(dataManager, schedulerProvider);
+            return (T) new RepeatManagerViewModel(dataManager, schedulerProvider, settings);
         }
 
         // pickers fragment
         if (modelClass.isAssignableFrom(HalfHourTimePickerViewModel.class)) {
             //noinspection unchecked
-            return (T) new HalfHourTimePickerViewModel(dataManager, schedulerProvider);
+            return (T) new HalfHourTimePickerViewModel(dataManager, schedulerProvider, settings);
         }
         if (modelClass.isAssignableFrom(DatePickerViewModel.class)) {
             //noinspection unchecked
-            return (T) new DatePickerViewModel(dataManager, schedulerProvider);
+            return (T) new DatePickerViewModel(dataManager, schedulerProvider, settings);
         }
         if (modelClass.isAssignableFrom(DayMonthPickerViewModel.class)) {
             //noinspection unchecked
-            return (T) new DayMonthPickerViewModel(dataManager, schedulerProvider);
+            return (T) new DayMonthPickerViewModel(dataManager, schedulerProvider, settings);
         }
 
         // repeats fragment
         if (modelClass.isAssignableFrom(OnceRepeatViewModel.class)) {
             //noinspection unchecked
-            return (T) new OnceRepeatViewModel(dataManager, schedulerProvider);
+            return (T) new OnceRepeatViewModel(dataManager, schedulerProvider, settings);
         }
         if (modelClass.isAssignableFrom(DailyRepeatViewModel.class)) {
             //noinspection unchecked
-            return (T) new DailyRepeatViewModel(dataManager, schedulerProvider);
+            return (T) new DailyRepeatViewModel(dataManager, schedulerProvider, settings);
         }
         if (modelClass.isAssignableFrom(WeeklyRepeatViewModel.class)) {
             //noinspection unchecked
-            return (T) new WeeklyRepeatViewModel(dataManager, schedulerProvider);
+            return (T) new WeeklyRepeatViewModel(dataManager, schedulerProvider, settings);
         }
         if (modelClass.isAssignableFrom(MonthlyRepeatViewModel.class)) {
             //noinspection unchecked
-            return (T) new MonthlyRepeatViewModel(dataManager, schedulerProvider);
+            return (T) new MonthlyRepeatViewModel(dataManager, schedulerProvider, settings);
         }
         if (modelClass.isAssignableFrom(YearlyRepeatViewModel.class)) {
             //noinspection unchecked
-            return (T) new YearlyRepeatViewModel(dataManager, schedulerProvider);
+            return (T) new YearlyRepeatViewModel(dataManager, schedulerProvider, settings);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

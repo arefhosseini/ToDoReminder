@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
+import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.data.model.other.item.AlarmTitleItem;
 import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 import com.fearefull.todoreminder.data.model.other.type.AlarmTitleType;
@@ -44,8 +45,8 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     private boolean shouldExit = false;
     private boolean autoUpdateTitleEditText = false;
 
-    public AlarmManagerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+    public AlarmManagerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider, Settings settings) {
+        super(dataManager, schedulerProvider, settings);
         repeatItemsLiveData = new MutableLiveData<>();
         alarmTitleItemsLiveData = new MutableLiveData<>();
         currentTabPager = new MutableLiveData<>();
