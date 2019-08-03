@@ -643,11 +643,15 @@ public class Alarm implements Serializable {
         StringBuilder stringBuilder = new StringBuilder();
 
         if (nowMonth == persianDate.getShMonth() && nowYear == persianDate.getShYear()) {
-            if (nowDay - persianDate.getShDay() < 3) {
+            if (persianDate.getShDay() - nowDay < 3 && persianDate.getShDay() - nowDay > -3) {
                 stringBuilder
                         .append(getTime12StringByValue(persianDate.getMinute(), persianDate.getHour()))
                         .append(" ");
-                if (nowDay == persianDate.getShDay())
+                if (nowDay - 2 == persianDate.getShDay())
+                    stringBuilder.append("پریروز");
+                else if (nowDay - 1 == persianDate.getShDay())
+                    stringBuilder.append("دیروز");
+                else if (nowDay == persianDate.getShDay())
                     stringBuilder.append("امروز");
                 else if (nowDay + 1 == persianDate.getShDay())
                     stringBuilder.append("فردا");
@@ -671,7 +675,6 @@ public class Alarm implements Serializable {
                 stringBuilder.append(" ").append(persianDate.getShYear());
             }
         }
-        Timber.e(stringBuilder.toString());
         return stringBuilder.toString();
     }
 
