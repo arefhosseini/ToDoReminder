@@ -18,4 +18,11 @@ public class Settings implements Serializable {
     public void setHourType(HourType hourType) {
         this.hourType = hourType;
     }
+
+    public void changeHourType() {
+        if (hourType == HourType.FULL_HOUR)
+            hourType = HourType.HALF_HOUR;
+        else
+            hourType = HourType.FULL_HOUR;
+    }
 }

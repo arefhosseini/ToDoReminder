@@ -1,4 +1,10 @@
 package com.fearefull.todoreminder.ui.settings;
 
-public class SettingsFragmentProvider {
+import dagger.Module;
+import dagger.android.ContributesAndroidInjector;
+
+@Module
+public abstract class SettingsFragmentProvider {
+    @ContributesAndroidInjector
+    abstract SettingsFragment provideSettingsFragmentFactory();
 }

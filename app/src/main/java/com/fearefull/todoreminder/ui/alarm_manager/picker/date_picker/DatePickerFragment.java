@@ -58,7 +58,6 @@ public class DatePickerFragment extends BaseFragment<FragmentDatePickerBinding, 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel.setNavigator(this);
-        assert getArguments() != null;
     }
 
     @Override

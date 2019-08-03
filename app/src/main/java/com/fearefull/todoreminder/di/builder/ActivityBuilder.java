@@ -6,6 +6,7 @@ import com.fearefull.todoreminder.ui.alarm_notification.AlarmNotificationActivit
 import com.fearefull.todoreminder.ui.history.HistoryFragmentProvider;
 import com.fearefull.todoreminder.ui.home.HomeFragmentProvider;
 import com.fearefull.todoreminder.ui.main.MainActivity;
+import com.fearefull.todoreminder.ui.settings.SettingsFragmentProvider;
 import com.fearefull.todoreminder.ui.splash.SplashActivity;
 
 import dagger.Module;
@@ -19,6 +20,7 @@ public abstract class ActivityBuilder {
             HistoryFragmentProvider.class,
             AboutFragmentProvider.class,
             AlarmManagerFragmentProvider.class,
+            SettingsFragmentProvider.class,
     })
     abstract MainActivity contributesMainActivity();
 

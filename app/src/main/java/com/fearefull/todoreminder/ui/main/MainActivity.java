@@ -29,6 +29,7 @@ import com.fearefull.todoreminder.ui.base.BaseActivity;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.ui.history.HistoryFragment;
 import com.fearefull.todoreminder.ui.home.HomeFragment;
+import com.fearefull.todoreminder.ui.settings.SettingsFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -41,7 +42,7 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel>
         implements MainNavigator, HasSupportFragmentInjector, AlarmManagerFragment.AlarmManagerCallBack,
-        HomeFragment.HomeCallBack {
+        HomeFragment.HomeCallBack, SettingsFragment.SettingsFragmentCallBack {
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
@@ -109,10 +110,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             if (fragment == null) {
                 fragment = getSupportFragmentManager().findFragmentByTag(HistoryFragment.TAG);
                 if (fragment == null) {
-                    if (drawer.isDrawerOpen(Gravity.RIGHT))
-                        lockDrawer();
-                    else
-                        finish();
+                    fragment = getSupportFragmentManager().findFragmentByTag(SettingsFragment.TAG);
+                    if (fragment == null) {
+                        if (drawer.isDrawerOpen(Gravity.RIGHT))
+                            lockDrawer();
+                        else
+                            finish();
+                    }
+                    else {
+                        onFragmentDetached(SettingsFragment.TAG);
+                    }
                 }
                 else {
                     showHomeFragment();
@@ -149,7 +156,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     .remove(fragment)
                     .commitNow();
             unlockDrawer();
-            if (tag.equals(AboutFragment.TAG)) {
+            if (tag.equals(AboutFragment.TAG) || tag.equals(SettingsFragment.TAG)) {
                 navigationView.setCheckedItem(R.id.navigationItemHome);
             }
         }
@@ -227,7 +234,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                             }
                             return true;
                         case R.id.navigationItemSettings:
-                            //
+                            showSettingsFragment();
                             return true;
                         case R.id.navigationItemAbout:
                             showAboutFragment();
@@ -274,6 +281,22 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 .commit();
     }
 
+    private void showSettingsFragment() {
+        SettingsFragment settingsFragment = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(SettingsFragment.TAG);
+        if (settingsFragment == null) {
+            settingsFragment = SettingsFragment.newInstance();
+            settingsFragment.setCallBack(this);
+        }
+
+        lockDrawer();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                .replace(R.id.mainRootView, settingsFragment, SettingsFragment.TAG)
+                .commit();
+    }
+
     public void showAlarmManagerFragment(Alarm alarm) {
         lockDrawer();
         viewModel.setIsLoading(true);
@@ -299,5 +322,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     public void onOpenAlarmManager(Alarm alarm) {
         showAlarmManagerFragment(alarm);
+    }
+
+    @Override
+    public void onSettingsChanged() {
+
     }
 }

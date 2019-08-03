@@ -1,4 +1,5 @@
 package com.fearefull.todoreminder.ui.settings;
 
-public class SettingsNavigator {
+public interface SettingsNavigator {
+    void goBack();
 }
