@@ -9,6 +9,7 @@ import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.History;
 import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.data.model.db.Snooze;
+import com.fearefull.todoreminder.data.model.other.type.HourType;
 import com.fearefull.todoreminder.schedule.AlarmScheduler;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AppConstants;
@@ -59,7 +60,10 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
         this.alarm.setNowTime();
         titleString.set(alarm.getTitle());
         imageRes.set(alarm.getTitleType().getImageRes());
-        timeString.set(alarm.getTime12StringByValue(alarm.getNowMinute(), alarm.getNowHour()));
+        if (getSettings().getHourType() == HourType.HALF_HOUR)
+            timeString.set(Alarm.getTime12StringByValue(alarm.getNowMinute(), alarm.getNowHour()));
+        else
+            timeString.set(Alarm.getTime24StringByValue(alarm.getNowMinute(), alarm.getNowHour()));
         dateString.set(alarm.getDateByDayMonthAndMonthByValue(alarm.getNowDay(), alarm.getNowMonth()));
 
         setCountdown();
