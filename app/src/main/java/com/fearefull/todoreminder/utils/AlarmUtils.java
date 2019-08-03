@@ -31,7 +31,7 @@ public final class AlarmUtils {
     }
 
     public static List<String> get24Hours() {
-        return getNumbers(1, 24);
+        return getNumbers(0, 23);
     }
 
     private static List<String> getNumbers(int start, int end) {
