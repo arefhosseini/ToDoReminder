@@ -12,6 +12,7 @@ import com.fearefull.todoreminder.data.model.other.type.AlarmTitleType;
 import com.fearefull.todoreminder.data.model.other.type.DayMonthType;
 import com.fearefull.todoreminder.data.model.other.type.DayWeekType;
 import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
+import com.fearefull.todoreminder.data.model.other.type.HourType;
 import com.fearefull.todoreminder.data.model.other.type.MonthType;
 import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
 import com.fearefull.todoreminder.data.model.other.RepeatModel;
@@ -983,33 +984,31 @@ public class Alarm implements Serializable {
 
     @Ignore
     public String getRepeatManagerStringByOnce(int index) {
-        return getTime12StringByIndex(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + "-" +
+        return  " " +
                 getDateByDayMonthAndMonthAndYear(indexDayMonthByIndexRepeat(index), indexMonthByIndexRepeat(index), indexYearByIndexRepeat(index)) +
                 " (" + repeats.get(index).getText() + ")";
     }
 
     @Ignore
     public String getRepeatManagerStringByDaily(int index) {
-        return getTime12StringByIndex(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + " (" +
-                repeats.get(index).getText() + ")";
+        return " (" + repeats.get(index).getText() + ")";
     }
 
     @Ignore
     public String getRepeatManagerStringByWeekly(int index) {
-        return getTime12StringByIndex(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) +
-                " " + getDaysWeekString(indexDayWeekByIndexRepeat(index));
+        return " " + getDaysWeekString(indexDayWeekByIndexRepeat(index));
     }
 
     @Ignore
     public String getRepeatManagerStringByMonthly(int index) {
-        return getTime12StringByIndex(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + " " +
+        return " " +
                 DayMonthType.getDayMonthTypeByValue(daysMonth.get(indexDayMonthByIndexRepeat(index))).getTextTh() +
                 " هرماه";
     }
 
     @Ignore
     public String getRepeatManagerStringByYearly(int index) {
-        return getTime12StringByIndex(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)) + "-" +
+        return " " +
                 getDateByDayMonthAndMonthByIndex(indexDayMonthByIndexRepeat(index), indexMonthByIndexRepeat(index)) +
                 " (" + repeats.get(index).getText() + ")";
     }
@@ -1115,26 +1114,34 @@ public class Alarm implements Serializable {
         addMonthByValue(model.getMonth());
     }
 
-    public String getRepeatManagerString(int index) {
+    public String getRepeatManagerString(int index, HourType hourType) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (hourType == HourType.HALF_HOUR) {
+            stringBuilder.append(getTime12StringByIndex(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)));
+        }
+        else {
+            stringBuilder.append(getTime24StringByIndex(indexMinuteByIndexRepeat(index), indexHourByIndexRepeat(index)));
+        }
+
         if (repeats.get(index) == Repeat.ONCE)
-            return getRepeatManagerStringByOnce(index);
+            stringBuilder.append(getRepeatManagerStringByOnce(index));
         if (repeats.get(index) == Repeat.DAILY)
-            return getRepeatManagerStringByDaily(index);
+            stringBuilder.append(getRepeatManagerStringByDaily(index));
         if (repeats.get(index) == Repeat.WEEKLY)
-            return getRepeatManagerStringByWeekly(index);
+            stringBuilder.append(getRepeatManagerStringByWeekly(index));
         if (repeats.get(index) == Repeat.MONTHLY)
-            return getRepeatManagerStringByMonthly(index);
+            stringBuilder.append(getRepeatManagerStringByMonthly(index));
         if (repeats.get(index) == Repeat.YEARLY)
-            return getRepeatManagerStringByYearly(index);
-        return "";
+            stringBuilder.append(getRepeatManagerStringByYearly(index));
+        return stringBuilder.toString();
     }
 
     @Ignore
-    public Observable<List<RepeatManagerItem>> getRepeatManagerItemList() {
+    public Observable<List<RepeatManagerItem>> getRepeatManagerItemList(HourType hourType) {
         return Observable.fromCallable(() -> {
             List<RepeatManagerItem> list = new ArrayList<>();
             for (int index = 0; index < getRepeatCount(); index++) {
-                list.add(new RepeatManagerItem(getRepeatManagerString(index)));
+                list.add(new RepeatManagerItem(getRepeatManagerString(index, hourType)));
             }
             return list;
         });

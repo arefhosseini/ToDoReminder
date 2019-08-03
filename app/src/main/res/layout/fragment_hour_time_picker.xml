@@ -2,9 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
-            type="com.fearefull.todoreminder.ui.alarm_manager.picker.half_hour_time_picker.HalfHourTimePickerViewModel" />
+            type="com.fearefull.todoreminder.ui.alarm_manager.picker.hour_time_picker.HourTimePickerViewModel" />
     </data>
 
     <LinearLayout
@@ -26,11 +28,13 @@
             android:onValueChange="@{(picker ,oldVal, newVal) -> viewModel.onHalfHourTypePickerValueChange(oldVal, newVal)}"
             app:dividedColor="@{@color/secondaryColorLightTheme}"
             app:pickerSpeed="@{1000}"
+            android:visibility="@{viewModel.isHalfHourType ? View.VISIBLE : View.GONE}"
             android:layout_gravity="center_horizontal" />
 
         <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:visibility="@{viewModel.isHalfHourType ? View.VISIBLE : View.GONE}"
             android:layout_weight="1"/>
 
         <NumberPicker

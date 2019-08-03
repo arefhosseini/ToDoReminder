@@ -17,7 +17,7 @@ import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.databinding.FragmentYearlyRepeatBinding;
 import com.fearefull.todoreminder.ui.alarm_manager.picker.date_picker.DatePickerFragment;
-import com.fearefull.todoreminder.ui.alarm_manager.picker.half_hour_time_picker.HalfHourTimePickerFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.picker.hour_time_picker.HourTimePickerFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatCaller;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatFragment;
 import com.fearefull.todoreminder.ui.base.BaseViewPagerAdapter;
@@ -30,7 +30,7 @@ import javax.inject.Named;
 import static com.fearefull.todoreminder.utils.AppConstants.ALARM_KEY;
 
 public class YearlyRepeatFragment extends BaseRepeatFragment<FragmentYearlyRepeatBinding, YearlyRepeatViewModel>
-        implements YearlyRepeatNavigator, HalfHourTimePickerFragment.HalfHourTimePickerCallBack,
+        implements YearlyRepeatNavigator, HourTimePickerFragment.HourTimePickerCallBack,
         DatePickerFragment.DatePickerCallBack {
 
     public static final String TAG = YearlyRepeatFragment.class.getSimpleName();
@@ -85,11 +85,11 @@ public class YearlyRepeatFragment extends BaseRepeatFragment<FragmentYearlyRepea
     public void setUp() {
         binding.viewPager.setEnableSwipe(false);
 
-        HalfHourTimePickerFragment
-                halfHourTimePickerFragment = HalfHourTimePickerFragment.newInstance(
+        HourTimePickerFragment
+                hourTimePickerFragment = HourTimePickerFragment.newInstance(
                 viewModel.getAlarm().getDefaultMinute(), viewModel.getAlarm().getDefaultHour());
-        halfHourTimePickerFragment.setCallBackForYearlyRepeat(this);
-        callerHalfHourTimePicker = halfHourTimePickerFragment;
+        hourTimePickerFragment.setCallBackForYearlyRepeat(this);
+        callerHalfHourTimePicker = hourTimePickerFragment;
 
         DatePickerFragment datePickerFragment =
                 DatePickerFragment.newInstance(viewModel.getAlarm().getDefaultDayMonth(),
@@ -97,7 +97,7 @@ public class YearlyRepeatFragment extends BaseRepeatFragment<FragmentYearlyRepea
         datePickerFragment.setCallBackForYearlyRepeat(this);
         callerDatePicker = datePickerFragment;
 
-        pagerAdapter.addFragment(halfHourTimePickerFragment, "halfHourTimePicker");
+        pagerAdapter.addFragment(hourTimePickerFragment, "halfHourTimePicker");
         pagerAdapter.addFragment(datePickerFragment, "datePicker");
         binding.viewPager.setAdapter(pagerAdapter);
 
@@ -130,7 +130,7 @@ public class YearlyRepeatFragment extends BaseRepeatFragment<FragmentYearlyRepea
     }
 
     @Override
-    public void getHalfHourTimePickerResult(int minute, int hour) {
+    public void getHourTimePickerResult(int minute, int hour) {
         viewModel.getRepeatModel().setMinute(minute);
         viewModel.getRepeatModel().setHour(hour);
         viewModel.checkForSend(Repeat.YEARLY);

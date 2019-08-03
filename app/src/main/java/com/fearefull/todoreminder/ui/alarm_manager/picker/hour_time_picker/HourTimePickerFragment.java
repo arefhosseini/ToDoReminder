@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.ui.alarm_manager.picker.full_hour_time_picker;
+package com.fearefull.todoreminder.ui.alarm_manager.picker.hour_time_picker;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,29 +10,29 @@ import androidx.lifecycle.ViewModelProviders;
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.data.model.db.Repeat;
-import com.fearefull.todoreminder.databinding.FragmentFullHourTimePickerBinding;
+import com.fearefull.todoreminder.databinding.FragmentHourTimePickerBinding;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatCaller;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
-public class FullHourTimePickerFragment extends BaseFragment<FragmentFullHourTimePickerBinding, FullHourTimePickerViewModel>
-        implements FullHourTimePickerNavigator, BaseRepeatCaller {
+public class HourTimePickerFragment extends BaseFragment<FragmentHourTimePickerBinding, HourTimePickerViewModel>
+        implements HourTimePickerNavigator, BaseRepeatCaller {
 
-    public static final String TAG = FullHourTimePickerFragment.class.getSimpleName();
+    public static final String TAG = HourTimePickerFragment.class.getSimpleName();
     private static final String MINUTE_KEY = "minute_key";
     private static final String HOUR_KEY = "hour_key";
 
     @Inject
     ViewModelProviderFactory factory;
-    private FullHourTimePickerViewModel viewModel;
-    private FullHourTimePickerCallBack callBackForOnceRepeat, callBackForDailyRepeat, callBackForWeeklyRepeat,
+    private HourTimePickerViewModel viewModel;
+    private HourTimePickerCallBack callBackForOnceRepeat, callBackForDailyRepeat, callBackForWeeklyRepeat,
             callBackForMonthlyRepeat, callBackForYearlyRepeat;
 
-    public static FullHourTimePickerFragment newInstance(int minute, int hour) {
+    public static HourTimePickerFragment newInstance(int minute, int hour) {
         Bundle args = new Bundle();
-        FullHourTimePickerFragment fragment = new FullHourTimePickerFragment();
+        HourTimePickerFragment fragment = new HourTimePickerFragment();
         args.putSerializable(MINUTE_KEY, minute);
         args.putSerializable(HOUR_KEY, hour);
         fragment.setArguments(args);
@@ -46,12 +46,12 @@ public class FullHourTimePickerFragment extends BaseFragment<FragmentFullHourTim
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_full_hour_time_picker;
+        return R.layout.fragment_hour_time_picker;
     }
 
     @Override
-    public FullHourTimePickerViewModel getViewModel() {
-        viewModel = ViewModelProviders.of(this, factory).get(FullHourTimePickerViewModel.class);
+    public HourTimePickerViewModel getViewModel() {
+        viewModel = ViewModelProviders.of(this, factory).get(HourTimePickerViewModel.class);
         return viewModel;
     }
 
@@ -69,41 +69,41 @@ public class FullHourTimePickerFragment extends BaseFragment<FragmentFullHourTim
         viewModel.init(getArguments().getInt(MINUTE_KEY), getArguments().getInt(HOUR_KEY));
     }
 
-    public void setCallBackForOnceRepeat(FullHourTimePickerCallBack callBackForOnceRepeat) {
+    public void setCallBackForOnceRepeat(HourTimePickerCallBack callBackForOnceRepeat) {
         this.callBackForOnceRepeat = callBackForOnceRepeat;
     }
 
-    public void setCallBackForDailyRepeat(FullHourTimePickerCallBack callBackForDailyRepeat) {
+    public void setCallBackForDailyRepeat(HourTimePickerCallBack callBackForDailyRepeat) {
         this.callBackForDailyRepeat = callBackForDailyRepeat;
     }
 
-    public void setCallBackForWeeklyRepeat(FullHourTimePickerCallBack callBackForWeeklyRepeat) {
+    public void setCallBackForWeeklyRepeat(HourTimePickerCallBack callBackForWeeklyRepeat) {
         this.callBackForWeeklyRepeat = callBackForWeeklyRepeat;
     }
 
-    public void setCallBackForMonthlyRepeat(FullHourTimePickerCallBack callBackForMonthlyRepeat) {
+    public void setCallBackForMonthlyRepeat(HourTimePickerCallBack callBackForMonthlyRepeat) {
         this.callBackForMonthlyRepeat = callBackForMonthlyRepeat;
     }
 
-    public void setCallBackForYearlyRepeat(FullHourTimePickerCallBack callBackForYearlyRepeat) {
+    public void setCallBackForYearlyRepeat(HourTimePickerCallBack callBackForYearlyRepeat) {
         this.callBackForYearlyRepeat = callBackForYearlyRepeat;
     }
 
     @Override
     public void call(Repeat repeat) {
         if (repeat == Repeat.ONCE)
-            callBackForOnceRepeat.getFullHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
+            callBackForOnceRepeat.getHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
         else if (repeat == Repeat.DAILY)
-            callBackForDailyRepeat.getFullHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
+            callBackForDailyRepeat.getHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
         else if (repeat == Repeat.WEEKLY)
-            callBackForWeeklyRepeat.getFullHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
+            callBackForWeeklyRepeat.getHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
         else if (repeat == Repeat.MONTHLY)
-            callBackForMonthlyRepeat.getFullHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
+            callBackForMonthlyRepeat.getHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
         else if (repeat == Repeat.YEARLY)
-            callBackForYearlyRepeat.getFullHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
+            callBackForYearlyRepeat.getHourTimePickerResult(viewModel.getMinute(), viewModel.getHour());
     }
 
-    public interface FullHourTimePickerCallBack {
-        void getFullHourTimePickerResult(int minute, int hour);
+    public interface HourTimePickerCallBack {
+        void getHourTimePickerResult(int minute, int hour);
     }
 }

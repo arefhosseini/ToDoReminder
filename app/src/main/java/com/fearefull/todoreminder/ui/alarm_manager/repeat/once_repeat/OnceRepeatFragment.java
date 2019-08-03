@@ -17,7 +17,7 @@ import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.databinding.FragmentOnceRepeatBinding;
 import com.fearefull.todoreminder.ui.alarm_manager.picker.date_picker.DatePickerFragment;
-import com.fearefull.todoreminder.ui.alarm_manager.picker.half_hour_time_picker.HalfHourTimePickerFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.picker.hour_time_picker.HourTimePickerFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatCaller;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatFragment;
 import com.fearefull.todoreminder.ui.base.BaseViewPagerAdapter;
@@ -27,13 +27,10 @@ import java.util.Objects;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import timber.log.Timber;
-
 import static com.fearefull.todoreminder.utils.AppConstants.ALARM_KEY;
 
 public class OnceRepeatFragment extends BaseRepeatFragment<FragmentOnceRepeatBinding, OnceRepeatViewModel>
-        implements OnceRepeatNavigator, HalfHourTimePickerFragment.HalfHourTimePickerCallBack,
-        DatePickerFragment.DatePickerCallBack {
+        implements OnceRepeatNavigator, HourTimePickerFragment.HourTimePickerCallBack, DatePickerFragment.DatePickerCallBack {
 
     public static final String TAG = OnceRepeatFragment.class.getSimpleName();
 
@@ -87,11 +84,11 @@ public class OnceRepeatFragment extends BaseRepeatFragment<FragmentOnceRepeatBin
     public void setUp() {
         binding.viewPager.setEnableSwipe(false);
 
-        HalfHourTimePickerFragment
-                halfHourTimePickerFragment = HalfHourTimePickerFragment.newInstance(
+        HourTimePickerFragment
+                hourTimePickerFragment = HourTimePickerFragment.newInstance(
                         viewModel.getAlarm().getDefaultMinute(), viewModel.getAlarm().getDefaultHour());
-        halfHourTimePickerFragment.setCallBackForOnceRepeat(this);
-        callerHalfHourTimePicker = halfHourTimePickerFragment;
+        hourTimePickerFragment.setCallBackForOnceRepeat(this);
+        callerHalfHourTimePicker = hourTimePickerFragment;
 
         DatePickerFragment datePickerFragment =
                 DatePickerFragment.newInstance(viewModel.getAlarm().getDefaultDayMonth(),
@@ -99,7 +96,7 @@ public class OnceRepeatFragment extends BaseRepeatFragment<FragmentOnceRepeatBin
         datePickerFragment.setCallBackForOnceRepeat(this);
         callerDatePicker = datePickerFragment;
 
-        pagerAdapter.addFragment(halfHourTimePickerFragment, "halfHourTimePicker");
+        pagerAdapter.addFragment(hourTimePickerFragment, "hourTimePicker");
         pagerAdapter.addFragment(datePickerFragment, "datePicker");
         binding.viewPager.setAdapter(pagerAdapter);
 
@@ -132,7 +129,7 @@ public class OnceRepeatFragment extends BaseRepeatFragment<FragmentOnceRepeatBin
     }
 
     @Override
-    public void getHalfHourTimePickerResult(int minute, int hour) {
+    public void getHourTimePickerResult(int minute, int hour) {
         viewModel.getRepeatModel().setMinute(minute);
         viewModel.getRepeatModel().setHour(hour);
         viewModel.checkForSend(Repeat.ONCE);

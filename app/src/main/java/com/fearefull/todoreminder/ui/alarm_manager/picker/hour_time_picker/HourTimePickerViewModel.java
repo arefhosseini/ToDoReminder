@@ -1,22 +1,26 @@
-package com.fearefull.todoreminder.ui.alarm_manager.picker.half_hour_time_picker;
+package com.fearefull.todoreminder.ui.alarm_manager.picker.hour_time_picker;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.lifecycle.MutableLiveData;
 
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
+import com.fearefull.todoreminder.data.model.other.type.HourType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
 import java.util.List;
 
-public class HalfHourTimePickerViewModel extends BaseViewModel<HalfHourTimePickerNavigator> {
+public class HourTimePickerViewModel extends BaseViewModel<HourTimePickerNavigator> {
 
     private int minute;
     private int hour;
     private HalfHourType halfHourType;
+
+    private final ObservableBoolean isHalfHourType;
 
     private MutableLiveData<List<String>> minutePickerValues;
     private MutableLiveData<Integer> minutePickerMaxIndex;
@@ -30,9 +34,11 @@ public class HalfHourTimePickerViewModel extends BaseViewModel<HalfHourTimePicke
     private MutableLiveData<Integer> halfHourTypePickerMaxIndex;
     private MutableLiveData<Integer> halfHourTypePickerDefaultIndex;
 
-    public HalfHourTimePickerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider,
-                                       Settings settings) {
+    public HourTimePickerViewModel(DataManager dataManager, SchedulerProvider schedulerProvider,
+                                   Settings settings) {
         super(dataManager, schedulerProvider, settings);
+
+        isHalfHourType = new ObservableBoolean(settings.getHourType() == HourType.HALF_HOUR);
 
         minutePickerValues = new MutableLiveData<>();
         minutePickerMaxIndex = new MutableLiveData<>();
@@ -56,20 +62,32 @@ public class HalfHourTimePickerViewModel extends BaseViewModel<HalfHourTimePicke
         minutePickerMaxIndex.setValue(59);
         minutePickerDefaultIndex.setValue(Alarm.minuteToIndex(minute));
 
-        hourPickerValues.setValue(AlarmUtils.get12Hours());
-        hourPickerMaxIndex.setValue(11);
-        hourPickerDefaultIndex.setValue(Alarm.halfHourToIndex(Alarm.hourToHalfHour(hour)));
+        if (isHalfHourType.get()) {
+            hourPickerValues.setValue(AlarmUtils.get12Hours());
+            hourPickerMaxIndex.setValue(11);
+            hourPickerDefaultIndex.setValue(Alarm.halfHourToIndex(Alarm.hourToHalfHour(hour)));
 
-        halfHourTypePickerValues.setValue(AlarmUtils.getHalfHourTypes());
-        halfHourTypePickerMaxIndex.setValue(1);
-        halfHourTypePickerDefaultIndex.setValue(Alarm.halfHourTypeToIndex(halfHourType));
+            halfHourTypePickerValues.setValue(AlarmUtils.getHalfHourTypes());
+            halfHourTypePickerMaxIndex.setValue(1);
+            halfHourTypePickerDefaultIndex.setValue(Alarm.halfHourTypeToIndex(halfHourType));
+        }
+        else {
+            hourPickerValues.setValue(AlarmUtils.get24Hours());
+            hourPickerMaxIndex.setValue(23);
+            hourPickerDefaultIndex.setValue(Alarm.hourToIndex(hour));
+        }
     }
 
     public void onHourPickerValueChange(int oldVal, int newVal) {
-        if ((Alarm.indexTo12Hour(newVal) == 12 && Alarm.indexTo12Hour(oldVal) == 11) ||
-                (Alarm.indexTo12Hour(newVal) == 11 && Alarm.indexTo12Hour(oldVal) == 12))
-            changeHalfHourType();
-        hour = Alarm.halfHourToHour(Alarm.indexTo12Hour(newVal), halfHourType);
+        if (isHalfHourType.get()) {
+            if ((Alarm.indexTo12Hour(newVal) == 12 && Alarm.indexTo12Hour(oldVal) == 11) ||
+                    (Alarm.indexTo12Hour(newVal) == 11 && Alarm.indexTo12Hour(oldVal) == 12))
+                changeHalfHourType();
+            hour = Alarm.halfHourToHour(Alarm.indexTo12Hour(newVal), halfHourType);
+        }
+        else {
+            hour = Alarm.indexTo24Hour(newVal);
+        }
         hourPickerDefaultIndex.setValue(newVal);
     }
 
@@ -134,6 +152,10 @@ public class HalfHourTimePickerViewModel extends BaseViewModel<HalfHourTimePicke
 
     int getHour() {
         return hour;
+    }
+
+    public ObservableBoolean getIsHalfHourType() {
+        return isHalfHourType;
     }
 
     public MutableLiveData<List<String>> getMinutePickerValues() {

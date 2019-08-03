@@ -31,7 +31,7 @@ public class RepeatManagerViewModel extends BaseViewModel<RepeatManagerNavigator
     }
 
     private void fetchData() {
-        getCompositeDisposable().add(alarm.getRepeatManagerItemList()
+        getCompositeDisposable().add(alarm.getRepeatManagerItemList(getSettings().getHourType())
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(repeatManagerItemsLiveData::setValue, throwable -> {

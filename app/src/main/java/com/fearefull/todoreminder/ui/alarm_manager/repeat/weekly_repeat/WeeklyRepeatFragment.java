@@ -8,8 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
@@ -17,7 +15,7 @@ import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.data.model.other.item.DayWeekItem;
 import com.fearefull.todoreminder.databinding.FragmentWeeklyRepeatBinding;
-import com.fearefull.todoreminder.ui.alarm_manager.picker.half_hour_time_picker.HalfHourTimePickerFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.picker.hour_time_picker.HourTimePickerFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatCaller;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatFragment;
 import com.fearefull.todoreminder.ui.base.BaseViewPagerAdapter;
@@ -28,7 +26,7 @@ import javax.inject.Named;
 import static com.fearefull.todoreminder.utils.AppConstants.ALARM_KEY;
 
 public class WeeklyRepeatFragment extends BaseRepeatFragment<FragmentWeeklyRepeatBinding, WeeklyRepeatViewModel>
-        implements WeeklyRepeatNavigator, HalfHourTimePickerFragment.HalfHourTimePickerCallBack,
+        implements WeeklyRepeatNavigator, HourTimePickerFragment.HourTimePickerCallBack,
         DayWeekAdapter.DayWeekAdapterListener {
 
     public static final String TAG = WeeklyRepeatFragment.class.getSimpleName();
@@ -94,13 +92,13 @@ public class WeeklyRepeatFragment extends BaseRepeatFragment<FragmentWeeklyRepea
 
         binding.viewPager.setEnableSwipe(false);
 
-        HalfHourTimePickerFragment
-                halfHourTimePickerFragment = HalfHourTimePickerFragment.newInstance(
+        HourTimePickerFragment
+                hourTimePickerFragment = HourTimePickerFragment.newInstance(
                 viewModel.getAlarm().getDefaultMinute(), viewModel.getAlarm().getDefaultHour());
-        halfHourTimePickerFragment.setCallBackForWeeklyRepeat(this);
-        callerHalfHourTimePicker = halfHourTimePickerFragment;
+        hourTimePickerFragment.setCallBackForWeeklyRepeat(this);
+        callerHalfHourTimePicker = hourTimePickerFragment;
 
-        pagerAdapter.addFragment(halfHourTimePickerFragment, "halfHourTimePicker");
+        pagerAdapter.addFragment(hourTimePickerFragment, "halfHourTimePicker");
         binding.viewPager.setAdapter(pagerAdapter);
 
         viewModel.getCurrentTabPager().setValue(0);
@@ -117,7 +115,7 @@ public class WeeklyRepeatFragment extends BaseRepeatFragment<FragmentWeeklyRepea
     }
 
     @Override
-    public void getHalfHourTimePickerResult(int minute, int hour) {
+    public void getHourTimePickerResult(int minute, int hour) {
         viewModel.sendDaysWeek(minute, hour);
     }
 

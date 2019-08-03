@@ -12,9 +12,8 @@ import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.databinding.FragmentMonthlyRepeatBinding;
-import com.fearefull.todoreminder.ui.about.AboutFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.picker.day_month_picker.DayMonthPickerFragment;
-import com.fearefull.todoreminder.ui.alarm_manager.picker.half_hour_time_picker.HalfHourTimePickerFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.picker.hour_time_picker.HourTimePickerFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatCaller;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatFragment;
 
@@ -22,7 +21,7 @@ import static com.fearefull.todoreminder.utils.AppConstants.ALARM_KEY;
 
 public class MonthlyRepeatFragment extends BaseRepeatFragment<FragmentMonthlyRepeatBinding, MonthlyRepeatViewModel>
 implements MonthlyRepeatNavigator, DayMonthPickerFragment.DayMonthPickerCallBack,
-        HalfHourTimePickerFragment.HalfHourTimePickerCallBack {
+        HourTimePickerFragment.HourTimePickerCallBack {
 
     public static final String TAG = MonthlyRepeatFragment.class.getSimpleName();
 
@@ -72,14 +71,14 @@ implements MonthlyRepeatNavigator, DayMonthPickerFragment.DayMonthPickerCallBack
     @Override
     public void setUp() {
 
-        HalfHourTimePickerFragment halfHourTimePickerFragment =
-                HalfHourTimePickerFragment.newInstance(viewModel.getAlarm().getDefaultMinute(), viewModel.getAlarm().getDefaultHour());
-        halfHourTimePickerFragment.setCallBackForMonthlyRepeat(this);
-        callerHalfHourTimePicker = halfHourTimePickerFragment;
+        HourTimePickerFragment hourTimePickerFragment =
+                HourTimePickerFragment.newInstance(viewModel.getAlarm().getDefaultMinute(), viewModel.getAlarm().getDefaultHour());
+        hourTimePickerFragment.setCallBackForMonthlyRepeat(this);
+        callerHalfHourTimePicker = hourTimePickerFragment;
         getChildFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
-                .add(R.id.time_picker_root_view, halfHourTimePickerFragment, HalfHourTimePickerFragment.TAG)
+                .add(R.id.time_picker_root_view, hourTimePickerFragment, HourTimePickerFragment.TAG)
                 .commit();
 
 
@@ -103,7 +102,7 @@ implements MonthlyRepeatNavigator, DayMonthPickerFragment.DayMonthPickerCallBack
     }
 
     @Override
-    public void getHalfHourTimePickerResult(int minute, int hour) {
+    public void getHourTimePickerResult(int minute, int hour) {
         viewModel.getRepeatModel().setMinute(minute);
         viewModel.getRepeatModel().setHour(hour);
         viewModel.checkForSend(Repeat.MONTHLY);

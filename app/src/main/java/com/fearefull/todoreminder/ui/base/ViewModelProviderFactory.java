@@ -9,12 +9,12 @@ import com.fearefull.todoreminder.schedule.AlarmScheduler;
 import com.fearefull.todoreminder.schedule.AppAlarmScheduler;
 import com.fearefull.todoreminder.ui.about.AboutViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerViewModel;
+import com.fearefull.todoreminder.ui.alarm_manager.picker.date_picker.DatePickerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.picker.day_month_picker.DayMonthPickerViewModel;
+import com.fearefull.todoreminder.ui.alarm_manager.picker.hour_time_picker.HourTimePickerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.daily_repeat.DailyRepeatViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.monthly_repeat.MonthlyRepeatViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.once_repeat.OnceRepeatViewModel;
-import com.fearefull.todoreminder.ui.alarm_manager.picker.date_picker.DatePickerViewModel;
-import com.fearefull.todoreminder.ui.alarm_manager.picker.half_hour_time_picker.HalfHourTimePickerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.weekly_repeat.WeeklyRepeatViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.yearly_repeat.YearlyRepeatViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerViewModel;
@@ -101,9 +101,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         }
 
         // pickers fragment
-        if (modelClass.isAssignableFrom(HalfHourTimePickerViewModel.class)) {
+        if (modelClass.isAssignableFrom(HourTimePickerViewModel.class)) {
             //noinspection unchecked
-            return (T) new HalfHourTimePickerViewModel(dataManager, schedulerProvider, settings);
+            return (T) new HourTimePickerViewModel(dataManager, schedulerProvider, settings);
         }
         if (modelClass.isAssignableFrom(DatePickerViewModel.class)) {
             //noinspection unchecked
