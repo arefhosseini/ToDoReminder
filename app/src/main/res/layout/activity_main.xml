@@ -37,11 +37,6 @@
                     app:shape_arc_height="24dp"
                     app:shape_arc_position="bottom">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="78dp"
-                        android:background="@color/primaryColorLightTheme"/>
-
                     <com.google.android.material.appbar.AppBarLayout
                         android:id="@+id/appBar"
                         android:layout_width="match_parent"
@@ -51,7 +46,7 @@
                         <androidx.appcompat.widget.Toolbar
                             android:id="@+id/toolbar"
                             android:layout_width="match_parent"
-                            android:layout_height="54dp"
+                            android:layout_height="78dp"
                             android:padding="0dp"
                             app:layout_collapseMode="pin"
                             app:popupTheme="@style/AppTheme.PopupOverlay" >

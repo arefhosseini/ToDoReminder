@@ -1,6 +1,7 @@
 package com.fearefull.todoreminder.ui.alarm_manager;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -111,6 +112,8 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         viewModel.setNavigator(this);
         assert getArguments() != null;
         viewModel.setAlarm((Alarm) getArguments().getSerializable(ALARM_KEY));
+
+        callBack.alarmManagerIsSetUp();
     }
 
     @Override
@@ -183,9 +186,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         binding.snoozeContent.snoozeExpansionLayout.addListener(expansionLayoutListener);
 
         viewModel.initAlarm();
-        changeExpansionRepeatLayout();
-
-        callBack.alarmManagerIsSetUp();
+        new Handler().postDelayed(this::changeExpansionRepeatLayout, 1000L);
     }
 
     @Override

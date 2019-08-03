@@ -38,7 +38,7 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
     private final DataManager dataManager;
     private final SchedulerProvider schedulerProvider;
     private final AlarmScheduler alarmScheduler;
-    private final Settings settings;
+    private Settings settings;
 
     @Inject
     public ViewModelProviderFactory(DataManager dataManager, SchedulerProvider schedulerProvider,
@@ -48,7 +48,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         this.alarmScheduler = alarmScheduler;
         this.settings = dataManager.getSettings();
         if (settings == null) {
-            dataManager.setSettings(new Settings());
+            settings = new Settings();
+            dataManager.setSettings(settings);
+
         }
     }
 

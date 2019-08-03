@@ -313,7 +313,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         fragment.setCallBack(this);
         getSupportFragmentManager()
                 .beginTransaction()
-                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
                 .replace(R.id.mainRootView, fragment, AlarmManagerFragment.TAG)
                 .commit();
     }
