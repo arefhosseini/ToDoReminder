@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.data.model.db.Snooze;
 import com.fearefull.todoreminder.di.PreferenceInfo;
 import com.google.gson.Gson;
@@ -21,6 +22,7 @@ public class AppPreferencesHelper implements PreferencesHelper {
 
     private static final String PREF_KEY_SCHEDULE = "PREF_KEY_SCHEDULE";
     private static final String PREF_KEY_SNOOZE = "PREF_KEY_SNOOZE";
+    private static final String PREF_KEY_SETTINGS = "PREF_KEY_SETTINGS";
     private final SharedPreferences prefs;
     private final Gson gson;
 
@@ -106,5 +108,16 @@ public class AppPreferencesHelper implements PreferencesHelper {
                 break;
             }
         }
+    }
+
+    @Override
+    public Settings getSettings() {
+        return gson.fromJson(prefs.getString(PREF_KEY_SETTINGS, null), Settings.class);
+    }
+
+    @Override
+    public void setSettings(Settings settings) {
+        String json = gson.toJson(settings);
+        prefs.edit().putString(PREF_KEY_SETTINGS, json).apply();
     }
 }

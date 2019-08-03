@@ -4,10 +4,10 @@ import com.fearefull.todoreminder.data.model.other.type.HourType;
 
 import java.io.Serializable;
 
-public class Setting implements Serializable {
+public class Settings implements Serializable {
     private HourType hourType;
 
-    public Setting() {
+    public Settings() {
         this.hourType = HourType.FULL_HOUR;
     }
 

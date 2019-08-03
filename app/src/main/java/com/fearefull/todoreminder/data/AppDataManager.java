@@ -7,6 +7,7 @@ import com.fearefull.todoreminder.data.local.db.DbHelper;
 import com.fearefull.todoreminder.data.local.prefs.PreferencesHelper;
 import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.History;
+import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.data.model.db.Snooze;
 import com.google.gson.Gson;
 
@@ -132,5 +133,15 @@ public class AppDataManager implements DataManager {
     @Override
     public void deleteSnoozeByAlarm(Alarm alarm) {
         preferencesHelper.deleteSnoozeByAlarm(alarm);
+    }
+
+    @Override
+    public Settings getSettings() {
+        return preferencesHelper.getSettings();
+    }
+
+    @Override
+    public void setSettings(Settings settings) {
+        preferencesHelper.setSettings(settings);
     }
 }
