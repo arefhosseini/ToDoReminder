@@ -76,6 +76,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         super.onViewCreated(view, savedInstanceState);
         binding = getViewDataBinding();
         alarmAdapter.setListener(this);
+        alarmAdapter.setSettings(viewModel.getSettings());
         setUp();
     }
 

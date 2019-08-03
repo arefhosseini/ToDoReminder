@@ -11,6 +11,7 @@ import androidx.room.TypeConverters;
 import com.fearefull.todoreminder.data.model.other.DataConverter;
 import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
 import com.fearefull.todoreminder.data.model.other.type.AlarmTitleType;
+import com.fearefull.todoreminder.data.model.other.type.HourType;
 import com.fearefull.todoreminder.data.model.other.type.MonthType;
 import com.fearefull.todoreminder.databinding.ItemHistoryBinding;
 
@@ -155,9 +156,23 @@ public class History implements Serializable {
     }
 
     @Ignore
-    public String timeToString() {
+    public String timeToString(HourType hourType) {
+        if (hourType == HourType.HALF_HOUR)
+            return halfTimeToString();
+        return fullTimeToString();
+    }
+
+    @Ignore
+    public String halfTimeToString() {
         PersianDate persianDate = new PersianDate(time);
-        return persianDate.getHour() + ":" + persianDate.getMinute() + " " + persianDate.getShDay() +
+        return Alarm.getTime12StringByValue(persianDate.getMinute(), persianDate.getHour()) + " " + persianDate.getShDay() +
+                " " + MonthType.getMonthType(persianDate.getShMonth()).getText() + " " + persianDate.getShYear();
+    }
+
+    @Ignore
+    public String fullTimeToString() {
+        PersianDate persianDate = new PersianDate(time);
+        return Alarm.getTime24StringByValue(persianDate.getMinute(), persianDate.getHour()) + " " + persianDate.getShDay() +
                 " " + MonthType.getMonthType(persianDate.getShMonth()).getText() + " " + persianDate.getShYear();
     }
 }

@@ -2,6 +2,8 @@ package com.fearefull.todoreminder.ui.home;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.fearefull.todoreminder.data.model.db.Settings;
+
 import javax.inject.Named;
 
 import dagger.Module;

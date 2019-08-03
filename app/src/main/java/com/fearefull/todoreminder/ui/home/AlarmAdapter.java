@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.data.model.other.type.AlarmType;
 import com.fearefull.todoreminder.databinding.ItemAlarmDefaultBinding;
 import com.fearefull.todoreminder.databinding.ItemAlarmDisabledBinding;
@@ -21,9 +22,14 @@ import java.util.List;
 public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private final List<Alarm> alarmList;
     private AlarmAdapterListener listener;
+    private Settings settings;
 
     public AlarmAdapter() {
         this.alarmList = new ArrayList<>();
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 
     @Override
@@ -95,7 +101,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             final Alarm alarm = alarmList.get(position);
-            viewModel = new AlarmItemViewModel(alarm, this,
+            viewModel = new AlarmItemViewModel(alarm, this, settings,
                     position == 0, position == alarmList.size() - 1);
             binding.setViewModel(viewModel);
             binding.executePendingBindings();
@@ -115,7 +121,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             final Alarm alarm = alarmList.get(position);
-            viewModel = new AlarmItemViewModel(alarm, this,
+            viewModel = new AlarmItemViewModel(alarm, this, settings,
                     position == 0, position == alarmList.size() - 1);
             binding.setViewModel(viewModel);
             binding.executePendingBindings();
@@ -135,7 +141,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             final Alarm alarm = alarmList.get(position);
-            viewModel = new AlarmItemViewModel(alarm, this,
+            viewModel = new AlarmItemViewModel(alarm, this, settings,
                     position == 0, position == alarmList.size() - 1);
 
             binding.setViewModel(viewModel);
@@ -156,7 +162,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             final Alarm alarm = alarmList.get(position);
-            viewModel = new AlarmItemViewModel(alarm, this,
+            viewModel = new AlarmItemViewModel(alarm, this, settings,
                     position == 0, position == alarmList.size() - 1);
             binding.setViewModel(viewModel);
             binding.executePendingBindings();

@@ -72,6 +72,7 @@ public class HistoryFragment extends BaseFragment<FragmentHistoryBinding, Histor
         super.onViewCreated(view, savedInstanceState);
         binding = getViewDataBinding();
         historyAdapter.setListener(this);
+        historyAdapter.setSettings(viewModel.getSettings());
         setUp();
     }
 

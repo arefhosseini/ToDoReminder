@@ -3,6 +3,7 @@ package com.fearefull.todoreminder.ui.history;
 import androidx.databinding.ObservableField;
 
 import com.fearefull.todoreminder.data.model.db.History;
+import com.fearefull.todoreminder.data.model.db.Settings;
 
 public class HistoryItemViewModel {
     private final History history;
@@ -12,7 +13,7 @@ public class HistoryItemViewModel {
     private final ObservableField<String> time;
     private final ObservableField<String> isDone;
 
-    public HistoryItemViewModel(History history, HistoryItemViewModelListener listener) {
+    public HistoryItemViewModel(History history, HistoryItemViewModelListener listener, Settings settings) {
         this.history = history;
         this.listener = listener;
 
@@ -23,7 +24,7 @@ public class HistoryItemViewModel {
 
         title.set(history.getTitle());
         imageRes.set(history.getTitleType().getImageRes());
-        time.set(history.timeToString());
+        time.set(history.timeToString(settings.getHourType()));
         if (history.getDone()) {
             isDone.set("انجام شده");
         }

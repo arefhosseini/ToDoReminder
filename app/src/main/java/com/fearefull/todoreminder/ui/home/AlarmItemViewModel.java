@@ -5,6 +5,7 @@ import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.data.model.db.Settings;
 
 public class AlarmItemViewModel {
     private final Alarm alarm;
@@ -16,7 +17,7 @@ public class AlarmItemViewModel {
     private final ObservableBoolean isFirst;
     private final ObservableBoolean isLast;
 
-    public AlarmItemViewModel(Alarm alarm, AlarmItemViewModelListener listener,
+    public AlarmItemViewModel(Alarm alarm, AlarmItemViewModelListener listener, Settings settings,
                               boolean isFirst, boolean isLast) {
         this.alarm = alarm;
         this.listener = listener;
@@ -29,7 +30,7 @@ public class AlarmItemViewModel {
 
         title.set(alarm.getTitle());
         if (alarm.getIsEnable())
-            time.set(alarm.getNearestTimeString());
+            time.set(alarm.getNearestTimeString(settings.getHourType()));
         imageRes.set(alarm.getTitleType().getImageRes());
         isEnabled.set(alarm.getIsEnable());
         this.isFirst.set(isFirst);

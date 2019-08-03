@@ -637,7 +637,7 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
-    public String getNearestTimeString() {
+    public String getNearestTimeString(HourType hourType) {
         PersianDate persianDate = new PersianDate(nearestTime);
         setNowTime();
         boolean isFinished = false;
@@ -645,9 +645,13 @@ public class Alarm implements Serializable {
 
         if (nowMonth == persianDate.getShMonth() && nowYear == persianDate.getShYear()) {
             if (persianDate.getShDay() - nowDay < 3 && persianDate.getShDay() - nowDay > -3) {
-                stringBuilder
-                        .append(getTime12StringByValue(persianDate.getMinute(), persianDate.getHour()))
-                        .append(" ");
+                if (hourType == HourType.HALF_HOUR) {
+                    stringBuilder.append(getTime12StringByValue(persianDate.getMinute(), persianDate.getHour()));
+                }
+                else {
+                    stringBuilder.append(getTime24StringByValue(persianDate.getMinute(), persianDate.getHour()));
+                }
+                stringBuilder.append(" ");
                 if (nowDay - 2 == persianDate.getShDay())
                     stringBuilder.append("پریروز");
                 else if (nowDay - 1 == persianDate.getShDay())
@@ -902,7 +906,7 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
-    public String getTime12StringByValue(int minute, int hour) {
+    public static String getTime12StringByValue(int minute, int hour) {
         int halfHour = hourToHalfHour(hour);
         if (minute < 10)
             return halfHour + ":" + "0" + minute + " " + getHalfHourType(hour).getPersianShortText();
@@ -919,7 +923,7 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
-    public String getTime24StringByValue(int minute, int hour) {
+    public static String getTime24StringByValue(int minute, int hour) {
         if (minute < 10)
             return hour + ":" + "0" + minute;
         return hour + ":" + minute;
@@ -1045,7 +1049,7 @@ public class Alarm implements Serializable {
     }
 
     @Ignore
-    public HalfHourType getHalfHourType(int hour) {
+    public static HalfHourType getHalfHourType(int hour) {
         if (hour >= 0 && hour < 12)
             return HalfHourType.AM;
         return HalfHourType.PM;

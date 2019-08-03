@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.data.model.db.History;
+import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.databinding.ItemHistoryBinding;
 import com.fearefull.todoreminder.ui.base.BaseViewHolder;
 
@@ -18,9 +19,14 @@ import java.util.List;
 public class HistoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private final List<History> historyList;
     private HistoryAdapterListener listener;
+    private Settings settings;
 
     public HistoryAdapter() {
         this.historyList = new ArrayList<>();
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 
     @Override
@@ -77,7 +83,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             final History item = historyList.get(position);
-            viewModel = new HistoryItemViewModel(item, this);
+            viewModel = new HistoryItemViewModel(item, this, settings);
             binding.setViewModel(viewModel);
             binding.executePendingBindings();
             item.setBinding(binding);
