@@ -1,4 +1,4 @@
-package com.fearefull.todoreminder.ui.home;
+package com.fearefull.todoreminder.data.model.other.type;
 
 public enum AlarmType {
     DEFAULT(1),
@@ -10,6 +10,10 @@ public enum AlarmType {
 
     AlarmType(int value) {
         this.value = value;
+    }
+
+    public int getValue() {
+        return value;
     }
 
     public static AlarmType getTypeByValue(int value) {

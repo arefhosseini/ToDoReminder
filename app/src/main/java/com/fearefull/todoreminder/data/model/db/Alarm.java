@@ -17,7 +17,7 @@ import com.fearefull.todoreminder.data.model.other.persian_date.PersianDate;
 import com.fearefull.todoreminder.data.model.other.RepeatModel;
 import com.fearefull.todoreminder.data.model.other.item.RepeatManagerItem;
 import com.fearefull.todoreminder.data.model.other.type.SnoozeType;
-import com.fearefull.todoreminder.ui.home.AlarmType;
+import com.fearefull.todoreminder.data.model.other.type.AlarmType;
 import com.fearefull.todoreminder.utils.AppConstants;
 
 import java.io.Serializable;

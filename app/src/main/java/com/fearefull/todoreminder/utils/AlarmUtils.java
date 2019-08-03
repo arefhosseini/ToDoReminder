@@ -12,7 +12,7 @@ import com.fearefull.todoreminder.data.model.other.type.DayMonthType;
 import com.fearefull.todoreminder.data.model.other.type.DayWeekType;
 import com.fearefull.todoreminder.data.model.other.type.HalfHourType;
 import com.fearefull.todoreminder.data.model.other.type.MonthType;
-import com.fearefull.todoreminder.ui.home.AlarmType;
+import com.fearefull.todoreminder.data.model.other.type.AlarmType;
 
 import java.util.ArrayList;
 import java.util.Collections;

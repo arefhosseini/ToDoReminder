@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.data.model.other.type.AlarmType;
 import com.fearefull.todoreminder.databinding.ItemAlarmDefaultBinding;
 import com.fearefull.todoreminder.databinding.ItemAlarmDisabledBinding;
 import com.fearefull.todoreminder.databinding.ItemAlarmDoneBinding;
@@ -32,7 +33,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        return alarmList.get(position).getAlarmType().value;
+        return alarmList.get(position).getAlarmType().getValue();
     }
 
     @Override
