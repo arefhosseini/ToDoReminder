@@ -9,4 +9,6 @@
     <dimen name="default_half_layout_padding">8dp</dimen>
     <dimen name="default_half_half_layout_padding">4dp</dimen>
     <dimen name="recycler_view_padding">8dp</dimen>
+    <dimen name="padding_arc">24dp</dimen>
+    <dimen name="padding_null">0dp</dimen>
 </resources>

@@ -379,7 +379,7 @@ public final class AlarmUtils {
             });
 
             if (!notDoneAlarmList.isEmpty())
-                notDoneAlarmList.get(0).setAlarmType(AlarmType.FIRST);
+                notDoneAlarmList.get(0).setAlarmType(AlarmType.DEFAULT);
 
             Collections.sort(doneAlarmList, (o1, o2) -> {
                 if(o1.getNearestTime() == o2.getNearestTime())

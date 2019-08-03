@@ -13,20 +13,27 @@ public class AlarmItemViewModel {
     private final ObservableField<String> time;
     private final ObservableField<Integer> imageRes;
     private final ObservableBoolean isEnabled;
+    private final ObservableBoolean isFirst;
+    private final ObservableBoolean isLast;
 
-    public AlarmItemViewModel(Alarm alarm, AlarmItemViewModelListener listener) {
+    public AlarmItemViewModel(Alarm alarm, AlarmItemViewModelListener listener,
+                              boolean isFirst, boolean isLast) {
         this.alarm = alarm;
         this.listener = listener;
         this.title = new ObservableField<>();
         this.time = new ObservableField<>();
         this.imageRes = new ObservableField<>();
         this.isEnabled = new ObservableBoolean();
+        this.isFirst = new ObservableBoolean();
+        this.isLast = new ObservableBoolean();
 
         title.set(alarm.getTitle());
         if (alarm.getIsEnable())
             time.set(alarm.getNearestTimeString());
         imageRes.set(alarm.getTitleType().getImageRes());
         isEnabled.set(alarm.getIsEnable());
+        this.isFirst.set(isFirst);
+        this.isLast.set(isLast);
     }
 
     public Alarm getAlarm() {
@@ -61,6 +68,14 @@ public class AlarmItemViewModel {
 
     public ObservableBoolean getIsEnabled() {
         return isEnabled;
+    }
+
+    public ObservableBoolean getIsFirst() {
+        return isFirst;
+    }
+
+    public ObservableBoolean getIsLast() {
+        return isLast;
     }
 
     public interface AlarmItemViewModelListener {

@@ -7,9 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.data.model.db.Alarm;
+import com.fearefull.todoreminder.databinding.ItemAlarmDefaultBinding;
 import com.fearefull.todoreminder.databinding.ItemAlarmDisabledBinding;
 import com.fearefull.todoreminder.databinding.ItemAlarmDoneBinding;
-import com.fearefull.todoreminder.databinding.ItemAlarmFirstBinding;
 import com.fearefull.todoreminder.databinding.ItemAlarmNotDoneBinding;
 import com.fearefull.todoreminder.ui.base.BaseAlarmViewHolder;
 import com.fearefull.todoreminder.ui.base.BaseViewHolder;
@@ -44,9 +44,9 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        if (AlarmType.getTypeByValue(viewType) == AlarmType.FIRST) {
-            ItemAlarmFirstBinding binding = ItemAlarmFirstBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-            return new AlarmFirstViewHolder(binding, listener);
+        if (AlarmType.getTypeByValue(viewType) == AlarmType.DEFAULT) {
+            ItemAlarmDefaultBinding binding = ItemAlarmDefaultBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            return new AlarmDefaultViewHolder(binding, listener);
         }
         else if (AlarmType.getTypeByValue(viewType) == AlarmType.DONE) {
             ItemAlarmDoneBinding binding = ItemAlarmDoneBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
@@ -81,11 +81,11 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         void onAlarmSwitchClick(Alarm alarm);
     }
 
-    public class AlarmFirstViewHolder extends BaseAlarmViewHolder {
-        private final ItemAlarmFirstBinding binding;
+    public class AlarmDefaultViewHolder extends BaseAlarmViewHolder {
+        private final ItemAlarmDefaultBinding binding;
         private AlarmItemViewModel viewModel;
 
-        AlarmFirstViewHolder(ItemAlarmFirstBinding binding, AlarmAdapter.AlarmAdapterListener listener) {
+        AlarmDefaultViewHolder(ItemAlarmDefaultBinding binding, AlarmAdapter.AlarmAdapterListener listener) {
             super(binding.getRoot());
             this.binding = binding;
             this.listener = listener;
@@ -94,7 +94,8 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             final Alarm alarm = alarmList.get(position);
-            viewModel = new AlarmItemViewModel(alarm, this);
+            viewModel = new AlarmItemViewModel(alarm, this,
+                    position == 0, position == alarmList.size() - 1);
             binding.setViewModel(viewModel);
             binding.executePendingBindings();
         }
@@ -113,7 +114,8 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             final Alarm alarm = alarmList.get(position);
-            viewModel = new AlarmItemViewModel(alarm, this);
+            viewModel = new AlarmItemViewModel(alarm, this,
+                    position == 0, position == alarmList.size() - 1);
             binding.setViewModel(viewModel);
             binding.executePendingBindings();
         }
@@ -132,7 +134,9 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             final Alarm alarm = alarmList.get(position);
-            viewModel = new AlarmItemViewModel(alarm, this);
+            viewModel = new AlarmItemViewModel(alarm, this,
+                    position == 0, position == alarmList.size() - 1);
+
             binding.setViewModel(viewModel);
             binding.executePendingBindings();
         }
@@ -151,7 +155,8 @@ public class AlarmAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             final Alarm alarm = alarmList.get(position);
-            viewModel = new AlarmItemViewModel(alarm, this);
+            viewModel = new AlarmItemViewModel(alarm, this,
+                    position == 0, position == alarmList.size() - 1);
             binding.setViewModel(viewModel);
             binding.executePendingBindings();
         }

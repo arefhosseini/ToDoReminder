@@ -1,7 +1,7 @@
 package com.fearefull.todoreminder.ui.home;
 
 public enum AlarmType {
-    FIRST(1),
+    DEFAULT(1),
     DONE(2),
     NOT_DONE(3),
     DISABLED(4);

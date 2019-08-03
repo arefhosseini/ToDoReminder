@@ -15,6 +15,7 @@
         android:clickable="true"
         android:focusable="true"
         android:layoutDirection="ltr"
+        android:paddingTop="@{viewModel.isFirst? @dimen/padding_arc : @dimen/padding_null}"
         android:background="?attr/selectableItemBackground"
         android:onClick="@{() -> viewModel.onItemClick()}"
         android:onLongClick="@{() -> viewModel.onLongClick()}">
@@ -97,7 +98,7 @@
         <View
             android:layout_width="10dp"
             android:layout_height="78dp"
-            android:background="@drawable/vertical_line_radius_gray_bg"
+            android:background="@{viewModel.isLast? @drawable/vertical_line_radius_gray_bg : @drawable/vertical_line_gray_bg}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/horizontalLine1"
             app:layout_constraintEnd_toStartOf="@+id/horizontalLine4" />
