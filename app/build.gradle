@@ -79,7 +79,10 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomDatabaseVersion"
 
     // font
-    implementation "uk.co.chrisjenx:calligraphy:$rootProject.calligraphyVersion"
+    implementation "io.github.inflationx:calligraphy3:$rootProject.calligraphyVersion"
+
+    // view inflation
+    implementation "io.github.inflationx:viewpump:$rootProject.viewPumpVersion"
 
     // parser
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
