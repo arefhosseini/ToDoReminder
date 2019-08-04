@@ -37,8 +37,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin">
+            android:layout_marginLeft="@dimen/default_layout_padding"
+            android:layout_marginRight="@dimen/default_layout_padding">
 
             <FrameLayout
                 android:id="@+id/day_month_picker_root_view"

@@ -23,7 +23,7 @@
             android:layoutDirection="rtl"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:layout_marginRight="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_layout_padding"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             app:adapter="@{viewModel.getDayWeekItemsLiveData}"

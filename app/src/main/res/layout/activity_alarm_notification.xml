@@ -34,10 +34,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.65" />
+            app:layout_constraintGuide_percent="0.43" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/verticalLine4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.58" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/verticalLine5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.65" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/verticalLine6"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
@@ -85,7 +99,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintStart_toStartOf="@+id/verticalLine2"
-            app:layout_constraintEnd_toStartOf="@+id/verticalLine3"
+            app:layout_constraintEnd_toStartOf="@+id/verticalLine5"
             app:layout_constraintTop_toTopOf="parent"
             android:scaleType="fitCenter"
             android:src="@{viewModel.imageRes, default=@drawable/alarm_title_custom}" />
@@ -129,79 +143,59 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/horizontalLine3" />
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="@id/verticalLine1"
+            app:layout_constraintEnd_toEndOf="@id/verticalLine2"
             app:layout_constraintBottom_toTopOf="@id/horizontalLine5"
-            android:orientation="horizontal">
+            app:layout_constraintDimensionRatio="w,1:1"
+            android:layout_gravity="center"
+            android:background="@drawable/circle_green_bg_focusable"
+            android:onClick="@{() -> viewModel.onConfirmClick()}">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/default_half_layout_padding"
+                android:src="@drawable/ic_check_black_24dp"
+                android:tint="@color/whiteColor"/>
+        </FrameLayout>
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"/>
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="@id/verticalLine3"
+            app:layout_constraintEnd_toEndOf="@id/verticalLine4"
+            app:layout_constraintBottom_toTopOf="@id/horizontalLine5"
+            app:layout_constraintDimensionRatio="w,1:1"
+            android:layout_gravity="center"
+            android:background="@drawable/circle_yellow_bg_focusable"
+            android:onClick="@{() -> viewModel.onSnoozeClick()}">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/default_half_layout_padding"
+                android:src="@drawable/ic_snooze_black_24dp"
+                android:tint="@color/whiteColor"/>
+        </FrameLayout>
 
-            <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:layout_gravity="center"
-                android:onClick="@{() -> viewModel.onConfirmClick()}"
-                app:fabColor="@color/greenDarkColor">
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_check_black_24dp"
-                    android:padding="@dimen/default_half_layout_padding"
-                    android:tint="@color/whiteColor"/>
-            </com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout>
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-            <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:layout_gravity="center"
-                android:onClick="@{() -> viewModel.onSnoozeClick()}"
-                app:fabColor="@color/yellowColor">
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/default_half_layout_padding"
-                    android:src="@drawable/ic_snooze_black_24dp"
-                    android:tint="@color/whiteColor"/>
-            </com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout>
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-            <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:layout_gravity="center"
-                android:onClick="@{() -> viewModel.onDismissClick()}"
-                app:fabColor="@color/redDark2Color">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    style="@style/TextStyle.Heading"
-                    android:text="@string/canceling"
-                    android:gravity="center"
-                    android:textColor="@color/primaryTextColorDarkTheme"/>
-            </com.robertlevonyan.views.customfloatingactionbutton.FloatingActionLayout>
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"/>
-        </LinearLayout>
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="@id/verticalLine5"
+            app:layout_constraintEnd_toEndOf="@id/verticalLine6"
+            app:layout_constraintBottom_toTopOf="@id/horizontalLine5"
+            app:layout_constraintDimensionRatio="w,1:1"
+            android:layout_gravity="center"
+            android:background="@drawable/circle_red_bg_focusable"
+            android:onClick="@{() -> viewModel.onDismissClick()}">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/TextStyle.Heading"
+                android:text="@string/canceling"
+                android:gravity="center"
+                android:textColor="@color/primaryTextColorDarkTheme"/>
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

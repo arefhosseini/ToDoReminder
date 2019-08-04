@@ -79,10 +79,6 @@ ext {
     // source: https://developer.android.com/jetpack/androidx/releases/work
     workManagerVersion = '2.1.0'
 
-    // custom FAB
-    // source: https://github.com/robertlevonyan/customFloatingActionButton
-    costomFABVersion = '2.1.0'
-
     // arc navigation view
     // source: https://github.com/rom4ek/ArcNavigationView
     arcNavigationViewVersion = '1.0.3'
