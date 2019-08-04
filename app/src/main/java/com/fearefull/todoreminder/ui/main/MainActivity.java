@@ -306,13 +306,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 .commit();
     }
 
-    public void showAlarmManagerFragment(Alarm alarm) {
+    public void showAlarmManagerFragment(long alarmId) {
         lockDrawer();
         viewModel.setIsLoading(true);
-        AlarmManagerFragment fragment = AlarmManagerFragment.newInstance(alarm);
+        AlarmManagerFragment fragment = AlarmManagerFragment.newInstance(alarmId);
         fragment.setCallBack(this);
         getSupportFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
                 .replace(R.id.mainRootView, fragment, AlarmManagerFragment.TAG)
                 .commit();
     }
@@ -328,8 +329,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     @Override
-    public void onOpenAlarmManager(Alarm alarm) {
-        showAlarmManagerFragment(alarm);
+    public void onOpenAlarmManager(long alarmId) {
+        showAlarmManagerFragment(alarmId);
     }
 
     @Override

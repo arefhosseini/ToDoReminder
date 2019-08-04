@@ -16,6 +16,8 @@
         android:focusable="true"
         android:layoutDirection="ltr"
         android:background="?attr/selectableItemBackground"
+        android:paddingLeft="@dimen/default_half_layout_padding"
+        android:paddingRight="@dimen/default_half_layout_padding"
         android:paddingTop="@{viewModel.isFirst? @dimen/padding_arc : @dimen/padding_null}"
         android:onClick="@{() -> viewModel.onItemClick()}"
         android:onLongClick="@{() -> viewModel.onLongClick()}">

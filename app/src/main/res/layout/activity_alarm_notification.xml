@@ -134,6 +134,8 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/default_half_layout_padding"
+            android:paddingRight="@dimen/default_half_layout_padding"
             app:layout_constraintStart_toStartOf="@id/verticalLine1"
             app:layout_constraintEnd_toStartOf="@id/verticalLine4"
             app:layout_constraintBottom_toTopOf="@id/horizontalLine5"

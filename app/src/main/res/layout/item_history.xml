@@ -22,6 +22,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
+            android:paddingTop="@{viewModel.isFirst? @dimen/padding_arc : @dimen/padding_null}"
             android:onLongClick="@{() -> viewModel.onLongClick()}"
             android:orientation="vertical"
             app:cardCornerRadius="6dp"

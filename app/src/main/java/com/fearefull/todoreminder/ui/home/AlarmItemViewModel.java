@@ -25,16 +25,14 @@ public class AlarmItemViewModel {
         this.time = new ObservableField<>();
         this.imageRes = new ObservableField<>();
         this.isEnabled = new ObservableBoolean();
-        this.isFirst = new ObservableBoolean();
-        this.isLast = new ObservableBoolean();
+        this.isFirst = new ObservableBoolean(isFirst);
+        this.isLast = new ObservableBoolean(isLast);
 
         title.set(alarm.getTitle());
         if (alarm.getIsEnable())
             time.set(alarm.getNearestTimeString(settings.getHourType()));
         imageRes.set(alarm.getTitleType().getImageRes());
-        isEnabled.set(alarm.getIsEnable());
-        this.isFirst.set(isFirst);
-        this.isLast.set(isLast);
+        isEnabled.set(alarm.getIsEnable());;
     }
 
     public Alarm getAlarm() {

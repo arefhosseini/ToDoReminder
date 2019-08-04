@@ -87,7 +87,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             final History item = historyList.get(position);
-            viewModel = new HistoryItemViewModel(item, this, settings);
+            viewModel = new HistoryItemViewModel(item, this, settings, position == 0);
             binding.setViewModel(viewModel);
             binding.executePendingBindings();
             item.setBinding(binding);

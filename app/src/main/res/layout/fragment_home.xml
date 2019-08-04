@@ -35,8 +35,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layoutDirection="rtl"
-                    android:paddingLeft="@dimen/default_half_layout_padding"
-                    android:paddingRight="@dimen/default_half_layout_padding"
                     android:paddingBottom="@dimen/default_half_half_layout_padding"
                     app:setDivider="@{false}"
                     app:adapter="@{viewModel.getAlarmItemsLiveData}"

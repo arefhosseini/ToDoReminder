@@ -5,6 +5,7 @@ import com.fearefull.todoreminder.data.model.db.Repeat;
 interface AlarmManagerNavigator {
     void goBack();
     void save();
+    void onSetUp();
     void openCustomRepeatPickerFragment();
     void openRingtonePickerDialog();
     void shakeBell();

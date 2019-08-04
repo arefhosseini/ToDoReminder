@@ -75,10 +75,10 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     private AlarmManagerCaller callerOnceRepeat, callerDailyRepeat, callerWeeklyRepeat, callerMonthlyRepeat,
             callerYearlyRepeat;
     private boolean isShowRingtoneDialog = false;
-    public static AlarmManagerFragment newInstance(Alarm alarm) {
+    public static AlarmManagerFragment newInstance(long alarmId) {
         Bundle args = new Bundle();
         AlarmManagerFragment fragment = new AlarmManagerFragment();
-        args.putSerializable(ALARM_KEY, alarm);
+        args.putSerializable(ALARM_KEY, alarmId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -108,10 +108,6 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel.setNavigator(this);
-        assert getArguments() != null;
-        viewModel.setAlarm((Alarm) getArguments().getSerializable(ALARM_KEY));
-
-        callBack.alarmManagerIsSetUp();
     }
 
     @Override
@@ -120,6 +116,14 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         binding = getViewDataBinding();
         repeatAdapter.setListener(this);
         titleAdapter.setListener(this);
+
+        assert getArguments() != null;
+        viewModel.setAlarmById(getArguments().getLong(ALARM_KEY));
+        callBack.alarmManagerIsSetUp();
+    }
+
+    @Override
+    public void onSetUp() {
         setUp();
     }
 
@@ -179,8 +183,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         binding.repeatContent.repeatExpansionLayout.addListener(expansionLayoutListener);
         binding.snoozeContent.snoozeExpansionLayout.addListener(expansionLayoutListener);
 
-        viewModel.initAlarm();
-        new Handler().postDelayed(this::changeExpansionRepeatLayout, 1000L);
+        new Handler().postDelayed(this::changeExpansionRepeatLayout, 2000L);
     }
 
     @Override

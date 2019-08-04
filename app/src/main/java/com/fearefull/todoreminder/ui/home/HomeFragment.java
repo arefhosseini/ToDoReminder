@@ -99,7 +99,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     @Override
     public void onAlarmClick(Alarm alarm) {
-        callBack.onOpenAlarmManager(alarm);
+        callBack.onOpenAlarmManager(alarm.getId());
     }
 
     @Override
@@ -126,11 +126,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     }
 
     @Override
-    public void showAlarmManagerFragment(Alarm alarm) {
-        callBack.onOpenAlarmManager(alarm);
+    public void showAlarmManagerFragment(long alarmId) {
+        callBack.onOpenAlarmManager(alarmId);
     }
 
     public interface HomeCallBack {
-        void onOpenAlarmManager(Alarm alarm);
+        void onOpenAlarmManager(long alarmId);
     }
 }

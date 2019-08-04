@@ -88,7 +88,10 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     public void onSaveClick() {
         if (alarm.getRepeatCount() != defaultRepeatCount || shouldExit) {
-            alarm.setIsEnable(true);
+            if (defaultRepeatCount > 0 && alarm.getRepeatCount() == 0)
+                alarm.setIsEnable(false);
+            else
+                alarm.setIsEnable(true);
             if (shouldUpdateAlarm) {
                 getCompositeDisposable().add(getDataManager()
                         .updateAlarm(alarm)
@@ -120,7 +123,8 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     public void onTitleTextChange(CharSequence s) {
         if (autoUpdateTitleEditText) {
-            if (alarm.getTitle().length() == s.length() && selectionTitleEditText.get() != null && s.length() == selectionTitleEditText.get()) {
+            if (alarm.getTitle().length() == s.length() && selectionTitleEditText.get() != null &&
+                    s.length() == selectionTitleEditText.get()) {
                 selectionTitleEditText.set(0);
                 selectionTitleEditText.set(s.length());
             }
@@ -133,6 +137,24 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     Alarm getAlarm() {
         return alarm;
+    }
+
+    void setAlarmById(long alarmId) {
+        if (alarmId != -1) {
+            getCompositeDisposable().add(getDataManager().getAlarmById(alarmId)
+                    .subscribeOn(getSchedulerProvider().io())
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(alarm -> {
+                        this.alarm = alarm;
+                        shouldUpdateAlarm = true;
+                        initAlarm();
+                    }, Timber::e)
+            );
+        }
+        else {
+            alarm = new Alarm();
+            initAlarm();
+        }
     }
 
     void setAlarm(Alarm alarm) {
@@ -148,14 +170,12 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     void initAlarm() {
-        if (alarm.getRepeatCount() > 0)
-            shouldUpdateAlarm = true;
-        setIsLoading(true);
         fetchRepeatData();
         updateAlarm();
         openDefaultRepeatFragment();
         updateSnoozeCount();
         updateSnoozeDelay();
+        getNavigator().onSetUp();
     }
 
     void updateAlarm() {
@@ -183,7 +203,6 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     private void openDefaultRepeatFragment() {
         currentTabPager.setValue(alarm.getDefaultRepeat().getValue());
-        setIsLoading(false);
     }
 
     private void updateRingtoneString() {

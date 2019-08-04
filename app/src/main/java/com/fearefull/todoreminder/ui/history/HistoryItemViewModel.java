@@ -1,5 +1,6 @@
 package com.fearefull.todoreminder.ui.history;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
 import com.fearefull.todoreminder.data.model.db.History;
@@ -12,15 +13,18 @@ public class HistoryItemViewModel {
     private final ObservableField<Integer> imageRes;
     private final ObservableField<String> time;
     private final ObservableField<String> isDone;
+    private final ObservableBoolean isFirst;
 
-    public HistoryItemViewModel(History history, HistoryItemViewModelListener listener, Settings settings) {
+    public HistoryItemViewModel(History history, HistoryItemViewModelListener listener,
+                                Settings settings, boolean isFirst) {
         this.history = history;
         this.listener = listener;
 
-        title = new ObservableField<>();
-        imageRes = new ObservableField<>();
-        time = new ObservableField<>();
-        isDone = new ObservableField<>();
+        this.title = new ObservableField<>();
+        this.imageRes = new ObservableField<>();
+        this.time = new ObservableField<>();
+        this.isDone = new ObservableField<>();
+        this.isFirst = new ObservableBoolean(isFirst);
 
         title.set(history.getTitle());
         imageRes.set(history.getTitleType().getImageRes());
@@ -51,6 +55,10 @@ public class HistoryItemViewModel {
 
     public ObservableField<String> getIsDone() {
         return isDone;
+    }
+
+    public ObservableBoolean getIsFirst() {
+        return isFirst;
     }
 
     public boolean onLongClick() {
