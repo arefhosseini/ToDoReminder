@@ -1,5 +1,7 @@
 package com.fearefull.todoreminder.ui.splash;
 
+import android.os.Handler;
+
 import com.fearefull.todoreminder.data.DataManager;
 import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
@@ -16,6 +18,6 @@ public class SplashViewModel extends BaseViewModel<SplashNavigator> {
     }
 
     private void decideNextActivity() {
-        getNavigator().openMainActivity();
+        new Handler().postDelayed(() -> getNavigator().openMainActivity(), 2000L);
     }
 }
