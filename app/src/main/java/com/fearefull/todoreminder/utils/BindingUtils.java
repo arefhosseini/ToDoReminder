@@ -32,6 +32,8 @@ import com.fearefull.todoreminder.ui.home.AlarmAdapter;
 import java.util.List;
 import java.util.Objects;
 
+import timber.log.Timber;
+
 public final class BindingUtils {
 
     private BindingUtils() {
@@ -155,12 +157,12 @@ public final class BindingUtils {
                     ColorDrawable colorDrawable = new ColorDrawable(dividedColor);
                     pf.set(picker, colorDrawable);
                 } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
+                    Timber.e(e);
                 } catch (Resources.NotFoundException e) {
-                    e.printStackTrace();
+                    Timber.e(e);
                 }
                 catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    Timber.e(e);
                 }
                 break;
             }

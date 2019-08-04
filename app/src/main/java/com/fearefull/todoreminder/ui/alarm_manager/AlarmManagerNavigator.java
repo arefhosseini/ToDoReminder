@@ -16,4 +16,5 @@ interface AlarmManagerNavigator {
     void changeExpansionTitleLayout();
     void changeExpansionRepeatLayout();
     void changeExpansionSnoozeLayout();
+    void changeExpansionOtherOptionsLayout();
 }

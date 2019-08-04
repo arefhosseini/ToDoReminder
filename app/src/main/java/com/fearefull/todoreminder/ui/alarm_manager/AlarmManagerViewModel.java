@@ -328,6 +328,10 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         getNavigator().changeExpansionSnoozeLayout();
     }
 
+    public void headerOtherOptionsClick() {
+        getNavigator().changeExpansionOtherOptionsLayout();
+    }
+
     Uri getDefaultRingtone() {
         return null;
     }

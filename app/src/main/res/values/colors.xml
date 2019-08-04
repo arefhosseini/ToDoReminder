@@ -11,6 +11,7 @@
     <color name="primaryColorGradient2">#3A207A</color>
     <color name="primaryColorGradient3">#301A68</color>
     <color name="primaryColorGradient4">#22104B</color>
+    <color name="primaryColorGradient5">#1B0C3F</color>
 
     <!--primary light color gradient-->
     <color name="primaryLightColorGradient1">#946FDD</color>

@@ -133,6 +133,13 @@
                             layout="@layout/alarm_manager_ringtone_content"
                             app:viewModel="@{viewModel}"
                             android:id="@+id/ringtone_content"/>
+
+                        <include layout="@layout/curved_line_bg_color" />
+
+                        <include
+                            layout="@layout/alarm_manager_other_options_content"
+                            app:viewModel="@{viewModel}"
+                            android:id="@+id/other_options_content"/>
                     </com.github.florent37.expansionpanel.viewgroup.ExpansionsViewGroupLinearLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>

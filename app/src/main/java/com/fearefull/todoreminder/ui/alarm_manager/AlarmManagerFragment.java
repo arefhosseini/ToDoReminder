@@ -182,6 +182,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         binding.titleContent.titleExpansionLayout.addListener(expansionLayoutListener);
         binding.repeatContent.repeatExpansionLayout.addListener(expansionLayoutListener);
         binding.snoozeContent.snoozeExpansionLayout.addListener(expansionLayoutListener);
+        binding.otherOptionsContent.otherOptionsExpansionLayout.addListener(expansionLayoutListener);
 
         new Handler().postDelayed(this::changeExpansionRepeatLayout, 2000L);
     }
@@ -225,6 +226,8 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
             binding.repeatContent.repeatExpansionLayout.collapse(true);
         else if (binding.snoozeContent.snoozeExpansionLayout.isExpanded())
             binding.snoozeContent.snoozeExpansionLayout.collapse(true);
+        else if (binding.otherOptionsContent.otherOptionsExpansionLayout.isExpanded())
+            binding.otherOptionsContent.otherOptionsExpansionLayout.collapse(true);
         else
             showRingtonePickerDialog();
     }
@@ -254,6 +257,15 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         }
         else
             binding.snoozeContent.snoozeExpansionLayout.expand(true);
+    }
+
+    @Override
+    public void changeExpansionOtherOptionsLayout() {
+        if (binding.otherOptionsContent.otherOptionsExpansionLayout.isExpanded()) {
+            binding.otherOptionsContent.otherOptionsExpansionLayout.collapse(true);
+        }
+        else
+            binding.otherOptionsContent.otherOptionsExpansionLayout.expand(true);
     }
 
     private void showRingtonePickerDialog() {

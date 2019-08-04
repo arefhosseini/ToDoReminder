@@ -47,4 +47,5 @@
     <string name="snooze_delay">وقفه بین هر زنگ</string>
     <string name="snooze_count">تعداد دفعات هشدار</string>
     <string name="full_hour_format">فرمت 24 ساعت</string>
+    <string name="other_options">تنظیمات دیگر</string>
 </resources>
