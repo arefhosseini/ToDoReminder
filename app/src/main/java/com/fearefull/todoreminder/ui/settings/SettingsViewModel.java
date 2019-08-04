@@ -30,6 +30,7 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator> {
     public void onFullHourTypeSwitchClick() {
         getSettings().changeHourType();
         getSettings().setChanged(true);
+        isFullHourTypeEnabled.set(getSettings().getHourType() == HourType.FULL_HOUR);
         saveChanges();
     }
 

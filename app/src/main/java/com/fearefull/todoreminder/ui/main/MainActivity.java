@@ -32,6 +32,8 @@ import com.fearefull.todoreminder.ui.home.HomeFragment;
 import com.fearefull.todoreminder.ui.settings.SettingsFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -104,45 +106,38 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @SuppressLint("RtlHardcoded")
     @Override
     public void onBackPressed() {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(AboutFragment.TAG);
-        if (fragment == null) {
-            fragment = getSupportFragmentManager().findFragmentByTag(AlarmManagerFragment.TAG);
-            if (fragment == null) {
-                fragment = getSupportFragmentManager().findFragmentByTag(HistoryFragment.TAG);
-                if (fragment == null) {
-                    fragment = getSupportFragmentManager().findFragmentByTag(SettingsFragment.TAG);
-                    if (fragment == null) {
-                        if (drawer.isDrawerOpen(Gravity.RIGHT))
-                            lockDrawer();
-                        else
+        if (drawer.isDrawerOpen(Gravity.RIGHT)) {
+            drawer.closeDrawer(Gravity.RIGHT);
+        }
+        else {
+            if (getSupportFragmentManager().findFragmentByTag(AboutFragment.TAG) == null) {
+                if (getSupportFragmentManager().findFragmentByTag(AlarmManagerFragment.TAG) == null) {
+                    if (getSupportFragmentManager().findFragmentByTag(HistoryFragment.TAG) == null) {
+                        if (getSupportFragmentManager().findFragmentByTag(SettingsFragment.TAG) == null) {
                             finish();
+                        }
+                        else {
+                            onFragmentDetached(SettingsFragment.TAG);
+                        }
                     }
                     else {
-                        onFragmentDetached(SettingsFragment.TAG);
+                        showHomeFragment();
+                        navigationView.setCheckedItem(R.id.navigationItemHome);
+                        viewModel.setNavigationItem(MainNavigationItem.HOME);
                     }
                 }
                 else {
-                    showHomeFragment();
-                    navigationView.setCheckedItem(R.id.navigationItemHome);
-                    viewModel.setNavigationItem(MainNavigationItem.HOME);
+                    onFragmentDetached(AlarmManagerFragment.TAG);
                 }
             }
-            else {
-                onFragmentDetached(AlarmManagerFragment.TAG);
-            }
+            else
+                onFragmentDetached(AboutFragment.TAG);
         }
-        else
-            onFragmentDetached(AboutFragment.TAG);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
     }
 
     public void onFragmentDetached(String tag) {
