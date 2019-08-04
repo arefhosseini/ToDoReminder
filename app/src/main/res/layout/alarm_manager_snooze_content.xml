@@ -169,7 +169,7 @@
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="18dp"
                                 android:layout_height="18dp"
-                                android:src="@drawable/ic_remove_black_24dp"
+                                android:src="@drawable/ic_add_black_24dp"
                                 android:layout_gravity="center"
                                 android:tint="@color/whiteColor"/>
                         </FrameLayout>
@@ -237,7 +237,7 @@
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="18dp"
                                 android:layout_height="18dp"
-                                android:src="@drawable/ic_remove_black_24dp"
+                                android:src="@drawable/ic_add_black_24dp"
                                 android:layout_gravity="center"
                                 android:tint="@color/whiteColor"/>
                         </FrameLayout>

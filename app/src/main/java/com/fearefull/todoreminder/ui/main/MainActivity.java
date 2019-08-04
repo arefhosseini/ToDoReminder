@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -19,7 +18,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
-import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.databinding.ActivityMainBinding;
 import com.fearefull.todoreminder.databinding.NavigationHeaderMainBinding;
 import com.fearefull.todoreminder.schedule.ScheduleService;
@@ -31,8 +29,6 @@ import com.fearefull.todoreminder.ui.history.HistoryFragment;
 import com.fearefull.todoreminder.ui.home.HomeFragment;
 import com.fearefull.todoreminder.ui.settings.SettingsFragment;
 import com.google.android.material.navigation.NavigationView;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -152,7 +148,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     .commitNow();
             unlockDrawer();
             if (tag.equals(AboutFragment.TAG) || tag.equals(SettingsFragment.TAG)) {
-                navigationView.setCheckedItem(R.id.navigationItemHome);
+                if (viewModel.getNavigationItem() == MainNavigationItem.HOME) {
+                    navigationView.setCheckedItem(R.id.navigationItemHome);
+                }
+                else if (viewModel.getNavigationItem() == MainNavigationItem.HISTORY) {
+                    navigationView.setCheckedItem(R.id.navigationItemHistory);
+                }
                 if (tag.equals(SettingsFragment.TAG)) {
                     if (viewModel.getSettings().isChanged()) {
                         if (callerHome != null)
