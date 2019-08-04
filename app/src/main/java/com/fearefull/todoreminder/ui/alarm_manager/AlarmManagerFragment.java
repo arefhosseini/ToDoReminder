@@ -17,21 +17,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
+import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.data.model.other.item.AlarmTitleItem;
+import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
+import com.fearefull.todoreminder.databinding.FragmentAlarmManagerBinding;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.daily_repeat.DailyRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.monthly_repeat.MonthlyRepeatFragment;
+import com.fearefull.todoreminder.ui.alarm_manager.repeat.once_repeat.OnceRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.weekly_repeat.WeeklyRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.yearly_repeat.YearlyRepeatFragment;
-import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
-import com.fearefull.todoreminder.data.model.db.Alarm;
-import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
-import com.fearefull.todoreminder.databinding.FragmentAlarmManagerBinding;
-import com.fearefull.todoreminder.ui.alarm_manager.repeat.once_repeat.OnceRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerDialogFragment;
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.base.BaseViewPagerAdapter;
+import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.utils.CommonUtils;
 import com.github.florent37.expansionpanel.ExpansionLayout;
 
@@ -41,7 +41,6 @@ import javax.inject.Named;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
-import timber.log.Timber;
 
 import static com.fearefull.todoreminder.utils.AppConstants.ALARM_KEY;
 
@@ -75,7 +74,6 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     private AlarmManagerCallBack callBack;
     private AlarmManagerCaller callerOnceRepeat, callerDailyRepeat, callerWeeklyRepeat, callerMonthlyRepeat,
             callerYearlyRepeat;
-    private ExpansionLayout.Listener expansionLayoutListener;
     private boolean isShowRingtoneDialog = false;
     public static AlarmManagerFragment newInstance(Alarm alarm) {
         Bundle args = new Bundle();
@@ -157,22 +155,18 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         yearlyRepeatFragment.setCallBack(this);
         callerYearlyRepeat = yearlyRepeatFragment;
 
-        //SimpleFragment simpleFragment3 = SimpleFragment.newInstance(viewModel.getAlarm());
-
         pagerAdapter.addFragment(onceRepeatFragment, "once");
         pagerAdapter.addFragment(dailyRepeatFragment, "daily");
         pagerAdapter.addFragment(weeklyRepeatFragment, "weekly");
         pagerAdapter.addFragment(monthlyRepeatFragment, "monthly");
         pagerAdapter.addFragment(yearlyRepeatFragment, "yearly");
-        //pagerAdapter.addFragment(simpleFragment3, "custom");
         binding.repeatContent.viewPager.setAdapter(pagerAdapter);
 
-        expansionLayoutListener = (expansionLayout, expanded) -> {
+        ExpansionLayout.Listener expansionLayoutListener = (expansionLayout, expanded) -> {
             if (binding.titleContent.titleExpansionLayout == expansionLayout) {
                 if (expanded) {
                     binding.titleContent.titleEditText.requestFocus();
-                }
-                else {
+                } else {
                     hideKeyboard();
                     binding.titleContent.titleEditText.clearFocus();
                 }
