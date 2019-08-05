@@ -58,8 +58,8 @@
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="@+id/horizontalLine2"
             app:layout_constraintEnd_toStartOf="@+id/horizontalLine3"
-            android:translationZ="2dp"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintTop_toTopOf="parent"
+            android:translationZ="2dp">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
@@ -68,6 +68,23 @@
                 android:padding="@dimen/default_half_layout_padding"
                 android:scaleType="fitCenter"
                 android:src="@{viewModel.imageRes, default=@drawable/alarm_title_custom}"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="@+id/horizontalLine1"
+            app:layout_constraintEnd_toStartOf="@+id/horizontalLine4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            android:paddingTop="@dimen/default_half_half_layout_padding">
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@{viewModel.isLast? @drawable/vertical_line_radius_secondary_dark_bg : @drawable/vertical_line_secondary_dark_bg}" />
         </FrameLayout>
 
         <TextView
@@ -111,13 +128,5 @@
             app:layout_constraintBottom_toBottomOf="@id/circle_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/circle_layout" />
-
-        <View
-            android:layout_width="10dp"
-            android:layout_height="78dp"
-            android:background="@{viewModel.isLast? @drawable/vertical_line_radius_secondary_dark_bg : @drawable/vertical_line_secondary_dark_bg}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/horizontalLine1"
-            app:layout_constraintEnd_toStartOf="@+id/horizontalLine4" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

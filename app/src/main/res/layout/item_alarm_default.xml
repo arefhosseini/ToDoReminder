@@ -37,13 +37,6 @@
             app:layout_constraintGuide_percent="0.75" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/verticalLineBottomRipple"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.80" />
-
-        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/horizontalLine1"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -77,7 +70,8 @@
             app:layout_constraintStart_toStartOf="@+id/horizontalLineLeftRipple"
             app:layout_constraintEnd_toStartOf="@+id/horizontalLineRightRipple"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/verticalLineBottomRipple"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
             app:multipleripple_animDuration="6000"
             app:multipleripple_circleColor="@color/secondaryColorLightTheme"
             app:multipleripple_circleInitialRadius="20dp"
@@ -96,7 +90,7 @@
             app:layout_constraintStart_toStartOf="@+id/horizontalLine2"
             app:layout_constraintEnd_toStartOf="@+id/horizontalLine3"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/verticalLineBottomRipple">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
@@ -105,6 +99,21 @@
                 android:padding="@dimen/default_half_layout_padding"
                 android:scaleType="fitCenter"
                 android:src="@{viewModel.imageRes, default=@drawable/alarm_title_custom}"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="@+id/horizontalLine1"
+            app:layout_constraintEnd_toStartOf="@+id/horizontalLine4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@{viewModel.isLast?  (viewModel.isFirst? @drawable/vertical_line_radius_secondary_bg : @drawable/vertical_line_bottom_radius_secondary_bg) : (viewModel.isFirst? @drawable/vertical_line_top_radius_secondary_bg : @drawable/vertical_line_secondary_bg)}" />
         </FrameLayout>
 
         <TextView
@@ -148,15 +157,5 @@
             app:layout_constraintBottom_toBottomOf="@id/circle_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/circle_layout" />
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="10dp"
-            android:layout_height="126dp"
-            android:background="@{viewModel.isLast?  (viewModel.isFirst? @drawable/vertical_line_radius_secondary_bg : @drawable/vertical_line_bottom_radius_secondary_bg) : (viewModel.isFirst? @drawable/vertical_line_top_radius_secondary_bg : @drawable/vertical_line_secondary_bg)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/horizontalLine4"
-            app:layout_constraintStart_toStartOf="@+id/horizontalLine1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

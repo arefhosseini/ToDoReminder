@@ -149,14 +149,14 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
                     .subscribe(alarm -> {
                         this.alarm = alarm;
                         shouldUpdateAlarm = true;
-                        isVibrateEnabled.set(alarm.getVibrate());
+                        isVibrateEnabled.set(alarm.isVibrate());
                         initAlarm();
                     }, Timber::e)
             );
         }
         else {
             alarm = new Alarm();
-            isVibrateEnabled.set(alarm.getVibrate());
+            isVibrateEnabled.set(alarm.isVibrate());
             initAlarm();
         }
     }
@@ -325,8 +325,8 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     public void onVibrateSwitchClick() {
-        alarm.setVibrate(!alarm.getVibrate());
-        isVibrateEnabled.set(alarm.getVibrate());
+        alarm.setVibrate(!alarm.isVibrate());
+        isVibrateEnabled.set(alarm.isVibrate());
     }
 
     public void headerTitleClick() {

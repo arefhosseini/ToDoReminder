@@ -10,6 +10,7 @@ public final class AppConstants {
     public static final String ALARM_KEY = "alarm_key";
     public static final long COUNT_DOWN_ALARM_TIMER = 1000 * 60;
     public static final long DEFAULT_SNOOZE_TIMER = 1000 * 60 * 5;
+    public static final long[] VIBRATE_PATTERN = {0, 500, 1000};
 
 
     private AppConstants() {

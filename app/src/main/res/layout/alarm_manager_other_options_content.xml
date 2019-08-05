@@ -137,7 +137,7 @@
                             android:textColor="@color/primaryTextColorLightTheme"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:text="@string/vibrate" />
+                            android:text="@string/isVibrate" />
 
                         <Switch
                             android:id="@+id/switch_full_hour"

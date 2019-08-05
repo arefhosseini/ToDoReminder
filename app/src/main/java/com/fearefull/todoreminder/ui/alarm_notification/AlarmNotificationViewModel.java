@@ -51,6 +51,7 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
                 alarm -> {
                     this.alarm = alarm;
                     setTime();
+                    getNavigator().setUp();
                 },
                 throwable -> {})
         );
@@ -122,6 +123,10 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
                     getNavigator().destroy();
                 }, Timber::e)
         );
+    }
+
+    Alarm getAlarm() {
+        return alarm;
     }
 
     public ObservableField<String> getTitleString() {

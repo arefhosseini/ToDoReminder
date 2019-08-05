@@ -9,7 +9,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,17 +19,15 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
-import com.fearefull.todoreminder.data.model.db.Alarm;
 import com.fearefull.todoreminder.data.model.db.Snooze;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.databinding.ActivityAlarmNotificationBinding;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
-import com.fearefull.todoreminder.utils.CommonUtils;
-import com.google.gson.Gson;
+import com.fearefull.todoreminder.utils.AppConstants;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
-
-import timber.log.Timber;
 
 public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotificationBinding, AlarmNotificationViewModel>
         implements AlarmNotificationNavigator {
@@ -38,6 +37,7 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
     private ActivityAlarmNotificationBinding binding;
     private AlarmNotificationViewModel viewModel;
     private Ringtone ringtone;
+    private Vibrator vibrator;
 
     public static Intent newIntent(Context context, String snoozeJson) {
         Intent intent = new Intent(context, AlarmNotificationActivity.class);
@@ -69,10 +69,10 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
         viewModel.setNavigator(this);
         binding = getViewDataBinding();
         viewModel.init(Snooze.jsonToSnooze(getIntent().getStringExtra(Snooze.SNOOZE_KEY)));
-        setUp();
     }
 
-    private void setUp() {
+    @Override
+    public void setUp() {
         getWindow().addFlags(
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
                         WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
@@ -95,6 +95,15 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
         } else {
             ringtone.setStreamType(AudioManager.STREAM_ALARM);
         }
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (viewModel.getAlarm().isVibrate()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createWaveform(AppConstants.VIBRATE_PATTERN, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                Objects.requireNonNull(vibrator).vibrate(AppConstants.VIBRATE_PATTERN, -1);
+            }
+        }
+
         ringtone.play();
 
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake_slow_animation_infinite);
@@ -109,6 +118,8 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
     @Override
     public void destroy() {
         ringtone.stop();
+        if (vibrator != null)
+            vibrator.cancel();
         finish();
     }
 

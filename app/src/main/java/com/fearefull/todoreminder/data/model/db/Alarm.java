@@ -67,8 +67,8 @@ public class Alarm implements Serializable {
     @ColumnInfo(name = "snooze_delay")
     private Long snoozeDelay;
 
-    @ColumnInfo(name = "vibrate")
-    private Boolean vibrate;
+    @ColumnInfo(name = "isVibrate")
+    private Boolean isVibrate;
 
     @ColumnInfo(name = "minutes")
     private List<Integer> minutes;
@@ -274,14 +274,14 @@ public class Alarm implements Serializable {
     }
 
     /**
-     * Control {@link #vibrate}
+     * Control {@link #isVibrate}
      */
-    public Boolean getVibrate() {
-        return vibrate;
+    public Boolean isVibrate() {
+        return isVibrate;
     }
 
-    public void setVibrate(Boolean vibrate) {
-        this.vibrate = vibrate;
+    public void setVibrate(Boolean isVibrate) {
+        this.isVibrate = isVibrate;
     }
 
     /**
@@ -709,7 +709,7 @@ public class Alarm implements Serializable {
         this.note = "";
         this.snoozeType = SnoozeType.getDefaultSnoozeType();
         this.snoozeDelay = AppConstants.DEFAULT_SNOOZE_TIMER;
-        this.vibrate = false;
+        this.isVibrate = false;
         repeats = new ArrayList<>();
         repeatsStatus = new ArrayList<>();
         minutes = new ArrayList<>();
