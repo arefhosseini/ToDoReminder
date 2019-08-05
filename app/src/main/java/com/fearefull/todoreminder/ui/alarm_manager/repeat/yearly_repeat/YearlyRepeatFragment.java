@@ -97,12 +97,12 @@ public class YearlyRepeatFragment extends BaseRepeatFragment<FragmentYearlyRepea
         datePickerFragment.setCallBackForYearlyRepeat(this);
         callerDatePicker = datePickerFragment;
 
-        pagerAdapter.addFragment(hourTimePickerFragment, "halfHourTimePicker");
+        pagerAdapter.addFragment(hourTimePickerFragment, "hourTimePicker");
         pagerAdapter.addFragment(datePickerFragment, "datePicker");
         binding.viewPager.setAdapter(pagerAdapter);
 
-        timePickerClick();
-        viewModel.getCurrentTabPager().setValue(0);
+        datePickerClick();
+        viewModel.getCurrentTabPager().setValue(1);
     }
 
     @Override

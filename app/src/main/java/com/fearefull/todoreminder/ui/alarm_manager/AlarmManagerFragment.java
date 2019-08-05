@@ -184,7 +184,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         binding.snoozeContent.snoozeExpansionLayout.addListener(expansionLayoutListener);
         binding.otherOptionsContent.otherOptionsExpansionLayout.addListener(expansionLayoutListener);
 
-        new Handler().postDelayed(this::changeExpansionRepeatLayout, 2000L);
+        new Handler().postDelayed(this::changeExpansionRepeatLayout, 1000L);
     }
 
     @Override

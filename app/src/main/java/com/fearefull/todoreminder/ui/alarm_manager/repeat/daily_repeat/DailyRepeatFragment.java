@@ -89,7 +89,7 @@ public class DailyRepeatFragment extends BaseRepeatFragment<FragmentDailyRepeatB
         hourTimePickerFragment.setCallBackForDailyRepeat(this);
         callerHalfHourTimePicker = hourTimePickerFragment;
 
-        pagerAdapter.addFragment(hourTimePickerFragment, "halfHourTimePicker");
+        pagerAdapter.addFragment(hourTimePickerFragment, "hourTimePicker");
         binding.viewPager.setAdapter(pagerAdapter);
 
         timePickerClick();

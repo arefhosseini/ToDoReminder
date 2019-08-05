@@ -98,7 +98,7 @@ public class WeeklyRepeatFragment extends BaseRepeatFragment<FragmentWeeklyRepea
         hourTimePickerFragment.setCallBackForWeeklyRepeat(this);
         callerHalfHourTimePicker = hourTimePickerFragment;
 
-        pagerAdapter.addFragment(hourTimePickerFragment, "halfHourTimePicker");
+        pagerAdapter.addFragment(hourTimePickerFragment, "hourTimePicker");
         binding.viewPager.setAdapter(pagerAdapter);
 
         viewModel.getCurrentTabPager().setValue(0);

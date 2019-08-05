@@ -3,17 +3,16 @@ package com.fearefull.todoreminder.data.model.other.type;
 import java.io.Serializable;
 
 public enum SnoozeType implements Serializable {
-    NONE(0),
-    FIRST(1),
-    SECOND(2),
-    THIRD(3),
-    FOURTH(4),
-    FIFTH(5),
-    SIXTH(6),
-    SEVENTH(7),
-    EIGHTH(8),
-    NINTH(9),
-    TENTH(10);
+    ONCE(1),
+    TWICE(2),
+    THREE_TIMES(3),
+    FOUR_TIMES(4),
+    FIVE_TIMES(5),
+    SIX_TIMES(6),
+    SEVEN_TIMES(7),
+    EIGHT_TIMES(8),
+    NINE_TIMES(9),
+    TEN_TIMES(10);
 
     private int value;
 
@@ -30,25 +29,25 @@ public enum SnoozeType implements Serializable {
             if (type.value == value)
                 return type;
         }
-        return SnoozeType.THIRD;
+        return SnoozeType.THREE_TIMES;
     }
 
     public static SnoozeType getDefaultSnoozeType() {
-        return SnoozeType.THIRD;
+        return SnoozeType.THREE_TIMES;
     }
 
     public static SnoozeType setNextSnooze(SnoozeType type) {
         if (type.value != 10) {
             return getSnoozeTypeByValue(type.value + 1);
         }
-        return SnoozeType.TENTH;
+        return SnoozeType.TEN_TIMES;
     }
 
     public static SnoozeType setBeforeSnooze(SnoozeType type) {
-        if (type.value != 0) {
+        if (type.value != 1) {
             return getSnoozeTypeByValue(type.value - 1);
         }
-        return SnoozeType.NONE;
+        return SnoozeType.ONCE;
     }
 
 }

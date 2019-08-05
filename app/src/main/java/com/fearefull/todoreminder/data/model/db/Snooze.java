@@ -16,7 +16,7 @@ public class Snooze implements Serializable {
     private RepeatModel model;
 
     public Snooze() {
-        type = SnoozeType.NONE;
+        type = SnoozeType.ONCE;
         model = new RepeatModel();
         alarmId = -1;
     }
@@ -70,14 +70,14 @@ public class Snooze implements Serializable {
     }
 
     public void log() {
-        if (type == SnoozeType.NONE)
-            Timber.e("None time snooze");
-        else if (type == SnoozeType.FIRST)
-            Timber.e("First time snooze");
-        else if (type == SnoozeType.SECOND)
-            Timber.e("Second time snooze");
-        else if (type == SnoozeType.THIRD)
-            Timber.e("Third time snooze");
+        if (type == SnoozeType.ONCE)
+            Timber.e("1 time snooze");
+        else if (type == SnoozeType.TWICE)
+            Timber.e("2 times snooze");
+        else if (type == SnoozeType.THREE_TIMES)
+            Timber.e("3 times snooze");
+        else if (type == SnoozeType.FOUR_TIMES)
+            Timber.e("4 times snooze");
     }
 
     public boolean isNull() {

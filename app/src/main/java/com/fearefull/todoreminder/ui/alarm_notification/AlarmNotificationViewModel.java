@@ -2,6 +2,7 @@ package com.fearefull.todoreminder.ui.alarm_notification;
 
 import android.os.Handler;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
 import com.fearefull.todoreminder.data.DataManager;
@@ -10,6 +11,7 @@ import com.fearefull.todoreminder.data.model.db.History;
 import com.fearefull.todoreminder.data.model.db.Settings;
 import com.fearefull.todoreminder.data.model.db.Snooze;
 import com.fearefull.todoreminder.data.model.other.type.HourType;
+import com.fearefull.todoreminder.data.model.other.type.SnoozeType;
 import com.fearefull.todoreminder.schedule.AlarmScheduler;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AppConstants;
@@ -28,6 +30,7 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
     private final ObservableField<Integer> imageRes;
     private final ObservableField<String> timeString;
     private final ObservableField<String> dateString;
+    private final ObservableBoolean isSnoozeEnable;
 
     public AlarmNotificationViewModel(DataManager dataManager, SchedulerProvider schedulerProvider,
                                       AlarmScheduler alarmScheduler, Settings settings) {
@@ -39,6 +42,7 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
         imageRes = new ObservableField<>();
         timeString = new ObservableField<>();
         dateString = new ObservableField<>();
+        isSnoozeEnable = new ObservableBoolean();
     }
 
     void init(Snooze snooze) {
@@ -51,6 +55,7 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
                 alarm -> {
                     this.alarm = alarm;
                     setTime();
+                    isSnoozeEnable.set(snooze.getType() != alarm.getSnoozeType());
                     getNavigator().setUp();
                 },
                 throwable -> {})
@@ -143,5 +148,9 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
 
     public ObservableField<String> getDateString() {
         return dateString;
+    }
+
+    public ObservableBoolean getIsSnoozeEnable() {
+        return isSnoozeEnable;
     }
 }
