@@ -5,6 +5,7 @@ import android.net.Uri;
 import androidx.room.TypeConverter;
 
 import com.fearefull.todoreminder.data.model.db.Repeat;
+import com.fearefull.todoreminder.data.model.db.Ringtone;
 import com.fearefull.todoreminder.data.model.other.type.AlarmTitleType;
 import com.fearefull.todoreminder.data.model.other.type.SnoozeType;
 import com.google.gson.Gson;
@@ -115,14 +116,14 @@ public class DataConverter implements Serializable {
     }
 
     @TypeConverter
-    public AlarmTitleType toAlarmTitleType(String AlarmTitleTypeString) {
-        if (AlarmTitleTypeString == null) {
+    public AlarmTitleType toAlarmTitleType(String alarmTitleTypeString) {
+        if (alarmTitleTypeString == null) {
             return (null);
         }
         Gson gson = new Gson();
         Type type = new TypeToken<AlarmTitleType>() {
         }.getType();
-        return gson.fromJson(AlarmTitleTypeString, type);
+        return gson.fromJson(alarmTitleTypeString, type);
     }
 
     @TypeConverter
@@ -136,13 +137,34 @@ public class DataConverter implements Serializable {
     }
 
     @TypeConverter
-    public SnoozeType toSnoozeType(String SnoozeTypeString) {
-        if (SnoozeTypeString == null) {
+    public SnoozeType toSnoozeType(String snoozeTypeString) {
+        if (snoozeTypeString == null) {
             return (null);
         }
         Gson gson = new Gson();
         Type type = new TypeToken<SnoozeType>() {
         }.getType();
-        return gson.fromJson(SnoozeTypeString, type);
+        return gson.fromJson(snoozeTypeString, type);
+    }
+
+    @TypeConverter
+    public String fromRingtoneType(Ringtone ringtone) {
+        if (ringtone == null)
+            return null;
+        Gson gson = new Gson();
+        Type type = new TypeToken<Ringtone>() {
+        }.getType();
+        return gson.toJson(ringtone, type);
+    }
+
+    @TypeConverter
+    public SnoozeType toRingtoneType(String ringtoneTypeString) {
+        if (ringtoneTypeString == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<Ringtone>() {
+        }.getType();
+        return gson.fromJson(ringtoneTypeString, type);
     }
 }

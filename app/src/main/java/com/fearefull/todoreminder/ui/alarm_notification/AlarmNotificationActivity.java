@@ -26,6 +26,8 @@ import com.fearefull.todoreminder.ui.base.BaseActivity;
 import com.fearefull.todoreminder.utils.AppConstants;
 
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -38,6 +40,7 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
     private AlarmNotificationViewModel viewModel;
     private Ringtone ringtone;
     private Vibrator vibrator;
+    private Timer timer;
 
     public static Intent newIntent(Context context, String snoozeJson) {
         Intent intent = new Intent(context, AlarmNotificationActivity.class);
@@ -107,7 +110,14 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
                 Objects.requireNonNull(vibrator).vibrate(AppConstants.VIBRATE_PATTERN, -1);
             }
         }
-
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                if (!ringtone.isPlaying()) {
+                    ringtone.play();
+                }
+            }
+        }, 1000, 1000);
         ringtone.play();
 
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake_slow_animation_infinite);
@@ -122,6 +132,8 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
     @Override
     public void destroy() {
         ringtone.stop();
+        if (timer != null)
+            timer.cancel();
         if (vibrator != null)
             vibrator.cancel();
         finish();
