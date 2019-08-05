@@ -80,16 +80,20 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
                         WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
                         WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON);
 
-        Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        if (alert == null){
-            // alert is null, using backup
-            alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        if (viewModel.getAlarm().getRingtoneUri() == null) {
+            Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             if (alert == null){
-                // alert backup is null, using 2nd backup
-                alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                // alert is null, using backup
+                alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                if (alert == null){
+                    // alert backup is null, using 2nd backup
+                    alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                }
             }
+            ringtone = RingtoneManager.getRingtone(getApplicationContext(), alert);
         }
-        ringtone = RingtoneManager.getRingtone(getApplicationContext(), alert);
+        else
+            ringtone = RingtoneManager.getRingtone(getApplicationContext(), viewModel.getAlarm().getUriRingtoneUri());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ringtone.setAudioAttributes(new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build());
         } else {

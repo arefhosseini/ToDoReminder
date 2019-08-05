@@ -269,7 +269,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     }
 
     private void showRingtonePickerDialog() {
-        CommonUtils.showRingtonePicker(this, viewModel.getDefaultRingtone(), viewModel.ringtonePickerListener);
+        CommonUtils.showRingtonePicker(this, viewModel.getAlarm().getUriRingtoneUri(), viewModel.ringtonePickerListener);
         isShowRingtoneDialog = false;
     }
 

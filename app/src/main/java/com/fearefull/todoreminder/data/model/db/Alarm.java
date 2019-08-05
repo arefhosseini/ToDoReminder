@@ -1,5 +1,7 @@
 package com.fearefull.todoreminder.data.model.db;
 
+import android.net.Uri;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -51,6 +53,9 @@ public class Alarm implements Serializable {
     @NonNull
     @ColumnInfo(name = "ringtone")
     private String ringtone;
+
+    @ColumnInfo(name = "ringtone_uri")
+    private String ringtoneUri;
 
     @ColumnInfo(name = "note")
     private String note;
@@ -296,6 +301,27 @@ public class Alarm implements Serializable {
         this.ringtone = ringtone;
     }
 
+
+    /**
+     * Control {@link #ringtoneUri}
+     */
+    public String getRingtoneUri() {
+        return ringtoneUri;
+    }
+
+    public void setRingtoneUri(String ringtoneUri) {
+        this.ringtoneUri = ringtoneUri;
+    }
+
+    public Uri getUriRingtoneUri() {
+        if (ringtoneUri != null)
+            return Uri.parse(ringtoneUri);
+        return null;
+    }
+
+    public void setUriRingtoneUri(Uri ringtoneUri) {
+        this.ringtoneUri = ringtoneUri.toString();
+    }
 
     /**
      * Control {@link #note}
@@ -705,7 +731,8 @@ public class Alarm implements Serializable {
         this.isEnable = true;
         this.titleType = AlarmTitleType.getDefault();
         this.title = titleType.getText();
-        this.ringtone = "DEFAULT";
+        this.ringtone = AppConstants.DEFAULT_RINGTONE_NAME;
+        this.ringtoneUri = null;
         this.note = "";
         this.snoozeType = SnoozeType.getDefaultSnoozeType();
         this.snoozeDelay = AppConstants.DEFAULT_SNOOZE_TIMER;

@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:background="?attr/selectableItemBackground"
+        android:background="?android:attr/selectableItemBackground"
         android:onClick="@{() -> viewModel.onItemClick()}"
         android:layout_margin="@dimen/default_half_half_layout_padding"
         android:padding="@dimen/default_half_layout_padding">

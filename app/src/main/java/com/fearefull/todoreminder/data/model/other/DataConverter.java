@@ -1,5 +1,7 @@
 package com.fearefull.todoreminder.data.model.other;
 
+import android.net.Uri;
+
 import androidx.room.TypeConverter;
 
 import com.fearefull.todoreminder.data.model.db.Repeat;

@@ -294,7 +294,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     RingtonePickerListener ringtonePickerListener = (ringtoneName, ringtoneUri) -> {
         if (ringtoneUri != null) {
             alarm.setRingtone(ringtoneName);
-            //alarm.getRingtoneString().setUri(ringtoneUri);
+            alarm.setUriRingtoneUri(ringtoneUri);
             updateRingtoneString();
         }
     };
@@ -352,9 +352,5 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
 
     public void headerOtherOptionsClick() {
         getNavigator().changeExpansionOtherOptionsLayout();
-    }
-
-    Uri getDefaultRingtone() {
-        return null;
     }
 }

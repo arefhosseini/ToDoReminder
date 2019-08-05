@@ -5,8 +5,10 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.provider.Settings;
 import android.util.Patterns;
@@ -22,7 +24,9 @@ import com.kevalpatel.ringtonepicker.RingtonePickerListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 public final class CommonUtils {
@@ -130,5 +134,20 @@ public final class CommonUtils {
 
         //Display the dialog.
         ringtonePickerBuilder.show();
+    }
+
+    public Map<String, String> getAlarmNotificationList(Context context) {
+        RingtoneManager manager = new RingtoneManager(context);
+        manager.setType(RingtoneManager.TYPE_ALARM);
+        Cursor cursor = manager.getCursor();
+
+        Map<String, String> list = new HashMap<>();
+        while (cursor.moveToNext()) {
+            String notificationTitle = cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX);
+            String notificationUri = cursor.getString(RingtoneManager.URI_COLUMN_INDEX) + "/" + cursor.getString(RingtoneManager.ID_COLUMN_INDEX);
+
+            list.put(notificationTitle, notificationUri);
+        }
+        return list;
     }
 }

@@ -100,9 +100,7 @@ public class AlarmTitleAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 item.setSelected(true);
                 selectedItem.setSelected(false);
                 changeSelected(selectedItem, item);
-
             }
-
             listener.onAlarmTitleItemClick(item);
         }
     }
