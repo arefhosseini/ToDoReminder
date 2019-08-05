@@ -21,6 +21,8 @@ public interface DbHelper {
     Observable<Boolean> updateHistory(final History history);
     Observable<Boolean> deleteHistory(final History history);
     Observable<List<History>> getAllHistories();
+    Observable<Boolean> updateHistoriesByAlarm(Alarm alarm);
+    Observable<Boolean> deleteHistoriesByAlarm(Alarm alarm);
     Observable<History> getHistoryById(long id);
     Observable<Boolean> deleteAllHistories();
 

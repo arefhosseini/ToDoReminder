@@ -26,6 +26,10 @@ public class History implements Serializable {
     private Long id;
 
     @NonNull
+    @ColumnInfo(name = "alarm_id")
+    private Long alarmId;
+
+    @NonNull
     @ColumnInfo(name = "is_done")
     private Boolean isDone;
 
@@ -47,6 +51,7 @@ public class History implements Serializable {
     @Ignore
     private ItemHistoryBinding binding;
 
+
     /**
      * Control {@link #id}
      */
@@ -58,6 +63,18 @@ public class History implements Serializable {
         this.id = id;
     }
 
+
+    /**
+     * Control {@link #id}
+     */
+    @NonNull
+    public Long getAlarmId() {
+        return alarmId;
+    }
+
+    public void setAlarmId(@NonNull Long alarmId) {
+        this.alarmId = alarmId;
+    }
 
     /**
      * Control {@link #isDone}
@@ -97,6 +114,7 @@ public class History implements Serializable {
         this.titleType = titleType;
     }
 
+
     /**
      * Control {@link #time}
      */
@@ -134,8 +152,9 @@ public class History implements Serializable {
     }
 
 
-    public History(@NonNull Boolean isDone, @NonNull String title, @NonNull AlarmTitleType titleType,
+    public History(@NonNull long alarmId, @NonNull Boolean isDone, @NonNull String title, @NonNull AlarmTitleType titleType,
                    @NonNull Long time) {
+        this.alarmId = alarmId;
         this.isDone = isDone;
         this.title = title;
         this.titleType = titleType;

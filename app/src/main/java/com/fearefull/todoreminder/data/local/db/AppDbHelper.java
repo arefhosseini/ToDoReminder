@@ -98,6 +98,28 @@ public class AppDbHelper implements DbHelper{
     }
 
     @Override
+    public Observable<Boolean> updateHistoriesByAlarm(Alarm alarm) {
+        return Observable.fromCallable(() -> {
+            List<History> historyList = appDatabase.historyDao().getHistoriesByAlarmId(alarm.getId());
+            for (History history: historyList) {
+                history.setTitle(alarm.getTitle());
+                history.setTitleType(alarm.getTitleType());
+                appDatabase.historyDao().update(history);
+            }
+            Timber.e("updateHistoriesByAlarm");
+            return true;
+        });
+    }
+
+    @Override
+    public Observable<Boolean> deleteHistoriesByAlarm(Alarm alarm) {
+        return Observable.fromCallable(() -> {
+            appDatabase.historyDao().deleteHistoriesByAlarmId(alarm.getId());
+            return true;
+        });
+    }
+
+    @Override
     public Observable<History> getHistoryById(long id) {
         return Observable.fromCallable(() -> appDatabase.historyDao().getHistoryById(id));
     }

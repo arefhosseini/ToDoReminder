@@ -80,17 +80,26 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
     }
 
     private void deleteAlarm() {
-        getCompositeDisposable().add(getDataManager().deleteAlarm(deletingAlarm)
+        getCompositeDisposable().add(getDataManager()
+                .deleteHistoriesByAlarm(deletingAlarm)
                 .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(result -> {
-                    if (result && Objects.requireNonNull(alarmItemsLiveData.getValue()).contains(deletingAlarm)) {
-                        fetchAlarmData();
-                        getDataManager().deleteSnoozeByAlarm(deletingAlarm);
-                        deletingAlarm = null;
-                        alarmScheduler.schedule();
-                    }
+                .subscribeOn(getSchedulerProvider().io())
+                .subscribe(historyResult -> {
+                    if (historyResult) {
+                        getCompositeDisposable().add(getDataManager().deleteAlarm(deletingAlarm)
+                                .subscribeOn(getSchedulerProvider().io())
+                                .observeOn(getSchedulerProvider().ui())
+                                .subscribe(result -> {
+                                    if (result && Objects.requireNonNull(alarmItemsLiveData.getValue()).contains(deletingAlarm)) {
+                                        fetchAlarmData();
+                                        getDataManager().deleteSnoozeByAlarm(deletingAlarm);
+                                        deletingAlarm = null;
+                                        alarmScheduler.schedule();
+                                    }
 
+                                }, Timber::e)
+                        );
+                    }
                 }, Timber::e)
         );
     }

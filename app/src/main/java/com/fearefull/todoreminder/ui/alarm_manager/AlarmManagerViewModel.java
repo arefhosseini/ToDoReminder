@@ -96,12 +96,21 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
                 alarm.setIsEnable(true);
             if (shouldUpdateAlarm) {
                 getCompositeDisposable().add(getDataManager()
-                        .updateAlarm(alarm)
+                        .updateHistoriesByAlarm(alarm)
                         .subscribeOn(getSchedulerProvider().io())
-                        .observeOn(getSchedulerProvider().ui())
-                        .subscribe(result -> {
-                            if (result)
-                                getNavigator().save();
+                        .subscribeOn(getSchedulerProvider().io())
+                        .subscribe(historyResult -> {
+                            if (historyResult) {
+                                getCompositeDisposable().add(getDataManager()
+                                        .updateAlarm(alarm)
+                                        .subscribeOn(getSchedulerProvider().io())
+                                        .observeOn(getSchedulerProvider().ui())
+                                        .subscribe(alarmResult -> {
+                                            if (alarmResult)
+                                                getNavigator().save();
+                                        }, Timber::e)
+                                );
+                            }
                         }, Timber::e)
                 );
             }

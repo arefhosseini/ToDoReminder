@@ -116,6 +116,16 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Observable<Boolean> updateHistoriesByAlarm(Alarm alarm) {
+        return dbHelper.updateHistoriesByAlarm(alarm);
+    }
+
+    @Override
+    public Observable<Boolean> deleteHistoriesByAlarm(Alarm alarm) {
+        return dbHelper.deleteHistoriesByAlarm(alarm);
+    }
+
+    @Override
     public Observable<History> getHistoryById(long id) {
         return dbHelper.getHistoryById(id);
     }

@@ -113,7 +113,7 @@ public class AlarmNotificationViewModel extends BaseViewModel<AlarmNotificationN
     }
 
     private History createHistory(boolean isDone) {
-        return new History(isDone, alarm.getTitle(), alarm.getTitleType(),
+        return new History(alarm.getId(), isDone, alarm.getTitle(), alarm.getTitleType(),
                 History.getTimeStampTime(alarm.getNowMinute(), alarm.getNowHour(),
                         alarm.getNowDay(), alarm.getNowMonth(), alarm.getNowYear()));
     }

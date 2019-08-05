@@ -28,6 +28,12 @@ public interface HistoryDao {
     @Query("SELECT * FROM histories WHERE id = :id")
     public History getHistoryById(Long id);
 
+    @Query("SELECT * FROM histories WHERE alarm_id = :alarmId")
+    public List<History> getHistoriesByAlarmId(Long alarmId);
+
+    @Query("DELETE FROM histories WHERE alarm_id = :alarmId")
+    public void deleteHistoriesByAlarmId(Long alarmId);
+
     @Query("DELETE FROM histories")
     public void resetTable();
 }
