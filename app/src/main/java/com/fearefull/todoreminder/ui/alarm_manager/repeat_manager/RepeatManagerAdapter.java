@@ -56,7 +56,8 @@ public class RepeatManagerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         void onRemoveClick(RepeatManagerItem repeatManagerItem);
     }
 
-    public class RepeatManagerViewHolder extends BaseViewHolder implements RepeatManagerItemViewModel.RepeatManagerItemViewModelListener {
+    public class RepeatManagerViewHolder extends BaseViewHolder
+            implements RepeatManagerItemViewModel.RepeatManagerItemViewModelListener {
         private final ItemRepeatManagerBinding binding;
         private RepeatManagerItemViewModel itemViewModel;
 
@@ -71,7 +72,6 @@ public class RepeatManagerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             itemViewModel = new RepeatManagerItemViewModel(item, this);
             binding.setViewModel(itemViewModel);
             binding.executePendingBindings();
-
         }
 
         @Override

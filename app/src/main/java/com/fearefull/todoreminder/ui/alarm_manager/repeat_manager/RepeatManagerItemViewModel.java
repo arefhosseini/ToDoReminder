@@ -12,8 +12,7 @@ public class RepeatManagerItemViewModel {
     public RepeatManagerItemViewModel(RepeatManagerItem item, RepeatManagerItemViewModelListener listener) {
         this.item = item;
         this.listener = listener;
-        text = new ObservableField<>();
-        text.set(item.getText());
+        text = new ObservableField<>(item.getText());
     }
 
     public RepeatManagerItem getItem() {

@@ -11,6 +11,9 @@ import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
+
+import timber.log.Timber;
 
 public class RepeatManagerViewModel extends BaseViewModel<RepeatManagerNavigator> {
     private Alarm alarm;
@@ -34,9 +37,7 @@ public class RepeatManagerViewModel extends BaseViewModel<RepeatManagerNavigator
         getCompositeDisposable().add(alarm.getRepeatManagerItemList(getSettings().getHourType())
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(repeatManagerItemsLiveData::setValue, throwable -> {
-
-                })
+                .subscribe(repeatManagerItemsLiveData::setValue, Timber::e)
         );
     }
 

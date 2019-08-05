@@ -12,6 +12,8 @@ import com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.picker.date_picker.DatePickerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.picker.day_month_picker.DayMonthPickerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.picker.hour_time_picker.HourTimePickerViewModel;
+import com.fearefull.todoreminder.ui.alarm_manager.picker.ringtone_picker.RingtonePickerItemViewModel;
+import com.fearefull.todoreminder.ui.alarm_manager.picker.ringtone_picker.RingtonePickerViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.daily_repeat.DailyRepeatViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.monthly_repeat.MonthlyRepeatViewModel;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.once_repeat.OnceRepeatViewModel;
@@ -100,6 +102,10 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         if (modelClass.isAssignableFrom(RepeatManagerViewModel.class)) {
             //noinspection unchecked
             return (T) new RepeatManagerViewModel(dataManager, schedulerProvider, settings);
+        }
+        if (modelClass.isAssignableFrom(RingtonePickerViewModel.class)) {
+            //noinspection unchecked
+            return (T) new RingtonePickerViewModel(dataManager, schedulerProvider, settings);
         }
 
         // pickers fragment

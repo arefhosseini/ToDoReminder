@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="RtlHardcoded">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fearefull.todoreminder.ui.alarm_manager.picker.ringtone_picker.RingtonePickerItemViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> viewModel.onClick()}"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="right|center_vertical"
+        android:paddingLeft="@dimen/default_layout_padding"
+        android:paddingRight="@dimen/default_layout_padding"
+        android:paddingTop="@dimen/default_half_half_layout_padding"
+        android:paddingBottom="@dimen/default_half_half_layout_padding">
+
+        <RadioButton
+            android:id="@+id/radio"
+            android:checked="@{viewModel.isSelected}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextStyle.Title"
+            android:layout_toLeftOf="@id/radio"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/default_half_layout_padding"
+            android:paddingRight="@dimen/default_half_layout_padding"
+            android:text="@{viewModel.text}"
+            android:textColor="@color/primaryTextColorLightTheme"/>
+    </RelativeLayout>
+</layout>

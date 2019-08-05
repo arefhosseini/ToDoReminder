@@ -1,7 +1,5 @@
 package com.fearefull.todoreminder.data.model.db;
 
-import android.net.Uri;
-
 import com.fearefull.todoreminder.data.model.other.type.RingtoneType;
 
 import java.io.Serializable;
@@ -9,18 +7,18 @@ import java.io.Serializable;
 public class Ringtone implements Serializable {
     private final RingtoneType type;
     private final String title;
-    private final Uri uri;
+    private final String uriString;
 
     public Ringtone() {
         this.type = RingtoneType.getDefaultRingtone();
         this.title = type.getName();
-        this.uri = null;
+        this.uriString = null;
     }
 
-    public Ringtone(RingtoneType type, String title, Uri uri) {
+    public Ringtone(RingtoneType type, String title, String uriString) {
         this.type = type;
         this.title = title;
-        this.uri = uri;
+        this.uriString = uriString;
     }
 
     public RingtoneType getType() {
@@ -31,7 +29,11 @@ public class Ringtone implements Serializable {
         return title;
     }
 
-    public Uri getUri() {
-        return uri;
+    public String getUriString() {
+        return uriString;
+    }
+
+    public boolean isSame(Ringtone ringtone) {
+        return ringtone.type == type && ringtone.title.equals(title);
     }
 }

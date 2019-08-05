@@ -3,6 +3,7 @@ package com.fearefull.todoreminder.ui.alarm_manager;
 import com.fearefull.todoreminder.ui.alarm_manager.picker.date_picker.DatePickerFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.picker.day_month_picker.DayMonthPickerFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.picker.hour_time_picker.HourTimePickerFragmentProvider;
+import com.fearefull.todoreminder.ui.alarm_manager.picker.ringtone_picker.RingtonePickerDialogFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.daily_repeat.DailyRepeatFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.monthly_repeat.MonthlyRepeatFragmentProvider;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.once_repeat.OnceRepeatFragmentProvider;
@@ -29,6 +30,7 @@ public abstract class AlarmManagerFragmentProvider {
             DatePickerFragmentProvider.class,
             DayMonthPickerFragmentProvider.class,
             RepeatManagerDialogFragmentProvider.class,
+            RingtonePickerDialogFragmentProvider.class,
     })
     abstract AlarmManagerFragment provideAlarmManagerFragmentFactory();
 }

@@ -1,7 +1,5 @@
 package com.fearefull.todoreminder.ui.alarm_manager;
 
-import android.net.Uri;
-
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
@@ -16,7 +14,6 @@ import com.fearefull.todoreminder.data.model.other.type.AlarmTitleType;
 import com.fearefull.todoreminder.ui.base.BaseViewModel;
 import com.fearefull.todoreminder.utils.AlarmUtils;
 import com.fearefull.todoreminder.utils.rx.SchedulerProvider;
-import com.kevalpatel.ringtonepicker.RingtonePickerListener;
 
 import java.util.List;
 import java.util.Objects;
@@ -219,7 +216,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     private void updateRingtoneString() {
-        ringtoneString.set(alarm.getRingtone());
+        ringtoneString.set(alarm.getRingtone().getTitle());
     }
 
     private void updateAddCounter(int counter) {
@@ -290,14 +287,6 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
             getNavigator().openCustomRepeatPickerFragment();
         }
     };*/
-
-    RingtonePickerListener ringtonePickerListener = (ringtoneName, ringtoneUri) -> {
-        if (ringtoneUri != null) {
-            alarm.setRingtone(ringtoneName);
-            alarm.setUriRingtoneUri(ringtoneUri);
-            updateRingtoneString();
-        }
-    };
 
     public void onRingtoneClick() {
         getNavigator().openRingtonePickerDialog();

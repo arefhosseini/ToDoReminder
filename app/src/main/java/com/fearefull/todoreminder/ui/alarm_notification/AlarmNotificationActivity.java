@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.fearefull.todoreminder.BR;
 import com.fearefull.todoreminder.R;
 import com.fearefull.todoreminder.data.model.db.Snooze;
+import com.fearefull.todoreminder.data.model.other.type.RingtoneType;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.databinding.ActivityAlarmNotificationBinding;
 import com.fearefull.todoreminder.ui.base.BaseActivity;
@@ -83,25 +84,37 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
                         WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
                         WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON);
 
-        if (viewModel.getAlarm().getRingtoneUri() == null) {
-            Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-            if (alert == null){
-                // alert is null, using backup
-                alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        if (viewModel.getAlarm().getRingtone().getType() != RingtoneType.SILENT) {
+            if (viewModel.getAlarm().getRingtone().getUriString() == null) {
+                Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
                 if (alert == null){
-                    // alert backup is null, using 2nd backup
-                    alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                    // alert is null, using backup
+                    alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                    if (alert == null){
+                        // alert backup is null, using 2nd backup
+                        alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                    }
                 }
+                ringtone = RingtoneManager.getRingtone(getApplicationContext(), alert);
             }
-            ringtone = RingtoneManager.getRingtone(getApplicationContext(), alert);
+            else
+                ringtone = RingtoneManager.getRingtone(getApplicationContext(), Uri.parse(viewModel.getAlarm().getRingtone().getUriString()));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ringtone.setAudioAttributes(new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build());
+            } else {
+                ringtone.setStreamType(AudioManager.STREAM_ALARM);
+            }
+            timer = new Timer();
+            timer.scheduleAtFixedRate(new TimerTask() {
+                public void run() {
+                    if (!ringtone.isPlaying()) {
+                        ringtone.play();
+                    }
+                }
+            }, 1000, 1000);
+            ringtone.play();
         }
-        else
-            ringtone = RingtoneManager.getRingtone(getApplicationContext(), viewModel.getAlarm().getUriRingtoneUri());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ringtone.setAudioAttributes(new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build());
-        } else {
-            ringtone.setStreamType(AudioManager.STREAM_ALARM);
-        }
+
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if (viewModel.getAlarm().isVibrate()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -110,15 +123,6 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
                 Objects.requireNonNull(vibrator).vibrate(AppConstants.VIBRATE_PATTERN, -1);
             }
         }
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            public void run() {
-                if (!ringtone.isPlaying()) {
-                    ringtone.play();
-                }
-            }
-        }, 1000, 1000);
-        ringtone.play();
 
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake_slow_animation_infinite);
         binding.bellIcon.startAnimation(shake);
@@ -131,7 +135,8 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
 
     @Override
     public void destroy() {
-        ringtone.stop();
+        if (ringtone != null)
+            ringtone.stop();
         if (timer != null)
             timer.cancel();
         if (vibrator != null)

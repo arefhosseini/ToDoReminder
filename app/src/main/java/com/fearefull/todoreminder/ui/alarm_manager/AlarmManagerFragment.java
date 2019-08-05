@@ -22,6 +22,7 @@ import com.fearefull.todoreminder.data.model.db.Repeat;
 import com.fearefull.todoreminder.data.model.other.item.AlarmTitleItem;
 import com.fearefull.todoreminder.data.model.other.item.RepeatItem;
 import com.fearefull.todoreminder.databinding.FragmentAlarmManagerBinding;
+import com.fearefull.todoreminder.ui.alarm_manager.picker.ringtone_picker.RingtonePickerDialogFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.base_repeat.BaseRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.daily_repeat.DailyRepeatFragment;
 import com.fearefull.todoreminder.ui.alarm_manager.repeat.monthly_repeat.MonthlyRepeatFragment;
@@ -47,7 +48,8 @@ import static com.fearefull.todoreminder.utils.AppConstants.ALARM_KEY;
 public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBinding, AlarmManagerViewModel>
         implements AlarmManagerNavigator, HasSupportFragmentInjector,
         RepeatAdapter.RepeatAdapterListener, AlarmTitleAdapter.AlarmTitleAdapterListener,
-        BaseRepeatFragment.RepeatCallBack, RepeatManagerDialogFragment.RepeatManagerCallBack {
+        BaseRepeatFragment.RepeatCallBack, RepeatManagerDialogFragment.RepeatManagerCallBack,
+        RingtonePickerDialogFragment.RingtonePickerCallBack {
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
@@ -74,7 +76,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     private AlarmManagerCallBack callBack;
     private AlarmManagerCaller callerOnceRepeat, callerDailyRepeat, callerWeeklyRepeat, callerMonthlyRepeat,
             callerYearlyRepeat;
-    private boolean isShowRingtoneDialog = false;
+    private boolean shouldShowRingtoneDialog = false;
     public static AlarmManagerFragment newInstance(long alarmId) {
         Bundle args = new Bundle();
         AlarmManagerFragment fragment = new AlarmManagerFragment();
@@ -175,7 +177,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
                     binding.titleContent.titleEditText.clearFocus();
                 }
             }
-            if (!expanded && isShowRingtoneDialog)
+            if (!expanded && shouldShowRingtoneDialog)
                 showRingtonePickerDialog();
         };
 
@@ -219,7 +221,7 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
 
     @Override
     public void openRingtonePickerDialog() {
-        isShowRingtoneDialog = true;
+        shouldShowRingtoneDialog = true;
         if (binding.titleContent.titleExpansionLayout.isExpanded())
             binding.titleContent.titleExpansionLayout.collapse(true);
         else if (binding.repeatContent.repeatExpansionLayout.isExpanded())
@@ -269,8 +271,11 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
     }
 
     private void showRingtonePickerDialog() {
-        CommonUtils.showRingtonePicker(this, viewModel.getAlarm().getUriRingtoneUri(), viewModel.ringtonePickerListener);
-        isShowRingtoneDialog = false;
+        RingtonePickerDialogFragment dialogFragment = RingtonePickerDialogFragment.newInstance(viewModel.getAlarm());
+        dialogFragment.setCallBack(this);
+        dialogFragment.show(getChildFragmentManager(), RingtonePickerDialogFragment.TAG);
+
+        shouldShowRingtoneDialog = false;
     }
 
     public void setCallBack(AlarmManagerCallBack callBack) {
@@ -292,6 +297,12 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
 
     @Override
     public void onAlarmChangedByRepeatManager(Alarm alarm) {
+        viewModel.setAlarm(alarm);
+        viewModel.updateAlarm();
+    }
+
+    @Override
+    public void onAlarmChangedByRingtonePicker(Alarm alarm) {
         viewModel.setAlarm(alarm);
         viewModel.updateAlarm();
     }
