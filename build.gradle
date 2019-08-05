@@ -67,10 +67,6 @@ ext {
     // source: https://github.com/florent37/ShapeOfView
     shapeOfViewVersion = '1.4.7'
 
-    // ringtone picker
-    // source: https://github.com/kevalpatel2106/android-ringtone-picker
-    ringtonePickerVersion = '1.2'
-
     // android job
     // source: https://github.com/evernote/android-job
     androidJobVersion = '1.3.0-rc1'

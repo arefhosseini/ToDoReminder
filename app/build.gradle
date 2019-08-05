@@ -94,9 +94,6 @@ dependencies {
     // shape of view
     implementation "com.github.florent37:shapeofview:$rootProject.shapeOfViewVersion"
 
-    // ringtone picker
-    implementation "com.kevalpatel2106:ringtonepicker:$rootProject.ringtonePickerVersion"
-
     // android job & work manager
     implementation "com.evernote:android-job:$rootProject.androidJobVersion"
     implementation "androidx.work:work-runtime:$rootProject.workManagerVersion"

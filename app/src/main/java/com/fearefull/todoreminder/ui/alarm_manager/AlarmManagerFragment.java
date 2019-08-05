@@ -33,7 +33,6 @@ import com.fearefull.todoreminder.ui.alarm_manager.repeat_manager.RepeatManagerD
 import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.base.BaseViewPagerAdapter;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
-import com.fearefull.todoreminder.utils.CommonUtils;
 import com.github.florent37.expansionpanel.ExpansionLayout;
 
 import javax.inject.Inject;
