@@ -113,11 +113,41 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:background="@color/primaryLightColorLightTheme"
-                    android:paddingTop="72dp"
+                    android:paddingTop="44dp"
                     android:paddingBottom="16dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
                     android:baselineAligned="false">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_arc"
+                        android:paddingLeft="@dimen/default_layout_padding"
+                        android:paddingRight="@dimen/default_layout_padding"
+                        android:paddingTop="@dimen/default_half_layout_padding"
+                        android:paddingBottom="@dimen/default_half_layout_padding"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="@{() -> viewModel.onVibrateSwitchClick()}">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/TextStyle.Title"
+                            android:textColor="@color/primaryTextColorLightTheme"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="@string/vibrate" />
+
+                        <Switch
+                            android:id="@+id/switch_full_hour"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:checked="@{viewModel.isVibrateEnabled}"
+                            android:scaleX="-1" />
+                    </RelativeLayout>
 
                 </LinearLayout>
             </com.github.florent37.shapeofview.shapes.ArcView>

@@ -2,6 +2,7 @@ package com.fearefull.todoreminder.ui.alarm_manager;
 
 import android.net.Uri;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 
@@ -38,6 +39,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     private final ObservableField<String> repeatCounter = new ObservableField<>();
     private final ObservableField<String> snoozeDelayString = new ObservableField<>();
     private final ObservableField<String> snoozeCountString = new ObservableField<>();
+    private ObservableBoolean isVibrateEnabled = new ObservableBoolean();
     private final MutableLiveData<Integer> currentTabPager;
     private final MutableLiveData<Integer> pageLimitPager;
 
@@ -147,12 +149,14 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
                     .subscribe(alarm -> {
                         this.alarm = alarm;
                         shouldUpdateAlarm = true;
+                        isVibrateEnabled.set(alarm.getVibrate());
                         initAlarm();
                     }, Timber::e)
             );
         }
         else {
             alarm = new Alarm();
+            isVibrateEnabled.set(alarm.getVibrate());
             initAlarm();
         }
     }
@@ -263,6 +267,10 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         return pageLimitPager;
     }
 
+    public ObservableBoolean getIsVibrateEnabled() {
+        return isVibrateEnabled;
+    }
+
     /*DialogInterface.OnClickListener repeatPickerOnClickListener = (dialog, which) -> {
         if (Alarm.indexToRepeat(which) != Repeat.CUSTOM) {
             alarm.setRepeat(Alarm.indexToRepeat(which));
@@ -314,6 +322,11 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
             alarm.backwardSnoozeType();
             updateSnoozeCount();
         }
+    }
+
+    public void onVibrateSwitchClick() {
+        alarm.setVibrate(!alarm.getVibrate());
+        isVibrateEnabled.set(alarm.getVibrate());
     }
 
     public void headerTitleClick() {
