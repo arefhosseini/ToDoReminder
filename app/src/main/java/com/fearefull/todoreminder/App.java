@@ -9,6 +9,7 @@ import com.evernote.android.job.JobManager;
 import com.fearefull.todoreminder.di.component.DaggerAppComponent;
 import com.fearefull.todoreminder.schedule.AlarmScheduler;
 import com.fearefull.todoreminder.schedule.AppJobCreator;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import javax.inject.Inject;
 
@@ -76,5 +77,7 @@ public class App extends Application implements HasActivityInjector, HasBroadcas
         );
 
         jobManager.addJobCreator(appJobCreator);
+
+        FirebaseAnalytics.getInstance(this);
     }
 }

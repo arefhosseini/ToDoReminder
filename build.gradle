@@ -4,13 +4,13 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+        maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.2'
-        
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'com.google.gms:google-services:4.2.0'
+        classpath 'io.fabric.tools:gradle:1.31.0'
+
     }
 }
 
@@ -42,6 +42,12 @@ ext {
     vectorDrawableVersion = '1.0.0-beta01'
     animatedVectorDrawableVersion = '1.0.0-beta01'
     constraintLayoutVersion = '1.1.3'
+
+    // firebase
+    firebaseVersion = '17.0.1'
+
+    // crashlytic
+    crashlyticVersion = '2.10.1'
 
     // database
     // source: https://developer.android.com/jetpack/androidx/releases/room#declaring_dependencies
