@@ -153,7 +153,7 @@ public class AppAlarmScheduler implements AlarmScheduler {
         checkDate.setShMonth(currentAlarm.getNowMonth());
         checkDate.setShYear(currentAlarm.getNowYear());
         PersianDateFormat format = new PersianDateFormat();
-
+        Timber.e("nowDay: %d,nowMonth: %d, nowYear: %d", currentAlarm.getNowDay(), currentAlarm.getNowMonth(), currentAlarm.getNowYear());
         boolean isFindNearTime = false;
         long minTime = -1;
         long checkTime;
@@ -166,21 +166,21 @@ public class AppAlarmScheduler implements AlarmScheduler {
                 checkTime = nowDate.getTime() - currentTime;
                 if (nowDate.dayOfWeek() == dayWeekIndex && checkTime > 1000 && checkTime < minTime) {
                     minTime = checkTime;
-                    bestTime = new PersianDate(checkDate.getTime());
+                    bestTime = new PersianDate(nowDate.getTime());
                 }
                 else if (nowDate.dayOfWeek() < dayWeekIndex){
                     nowDate.addDay(dayWeekIndex - nowDate.dayOfWeek());
                     checkTime = nowDate.getTime() - currentTime;
                     if (nowDate.dayOfWeek() == dayWeekIndex && checkTime > 1000 && checkTime < minTime) {
                         minTime = checkTime;
-                        bestTime = new PersianDate(checkDate.getTime());
+                        bestTime = new PersianDate(nowDate.getTime());
                     }
                 }
             }
             if (minTime < Long.MAX_VALUE)
                 isFindNearTime = true;
             else {
-                checkDate.addDay(7 - checkDate.dayOfWeek() + Alarm.indexToDayWeek(repeatModel.getDaysWeek().get(0)));
+                checkDate.addDay(7 - checkDate.dayOfWeek() + Alarm.dayWeekToIndex(repeatModel.getDaysWeek().get(0)));
             }
         }
         Timber.i(format.format(bestTime));

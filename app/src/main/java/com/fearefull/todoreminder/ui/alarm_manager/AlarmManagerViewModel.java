@@ -87,7 +87,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     public void onSaveClick() {
-        if (alarm.getRepeatCount() != defaultRepeatCount || isAlarmChanged || shouldExit) {
+        if (alarm.getRepeatCount() != defaultRepeatCount && isAlarmChanged || shouldExit) {
             if (defaultRepeatCount > 0 && alarm.getRepeatCount() == 0)
                 alarm.setIsEnable(false);
             else
@@ -193,6 +193,8 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         updateTitleString(alarm.getTitle());
         updateRingtoneString();
         updateAddCounter(alarm.getRepeatCount());
+        if (alarm.getRepeatCount() != defaultRepeatCount)
+            isAlarmChanged = true;
         if (shouldExit)
             onSaveClick();
     }

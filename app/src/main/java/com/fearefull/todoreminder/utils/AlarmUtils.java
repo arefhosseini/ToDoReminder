@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
+import timber.log.Timber;
 
 public final class AlarmUtils {
 
@@ -357,7 +358,7 @@ public final class AlarmUtils {
                                 alarm.getNearestTime() == Long.MAX_VALUE ||
                                 checkTime > currentTime && alarm.getNearestTime() > currentTime && checkTime < alarm.getNearestTime() ||
                                 checkTime > currentTime && alarm.getNearestTime() < currentTime ||
-                                checkTime < currentTime && alarm.getNearestTime() < currentTime && checkTime < alarm.getNearestTime()
+                                checkTime < currentTime && alarm.getNearestTime() < currentTime && checkTime > alarm.getNearestTime()
                         )
                             alarm.setNearestTime(checkTime);
                     }
@@ -451,21 +452,21 @@ public final class AlarmUtils {
                 checkTime = nowDate.getTime() - currentTime;
                 if (nowDate.dayOfWeek() == dayWeekIndex && checkTime > 1000 && checkTime < minTime) {
                     minTime = checkTime;
-                    bestTime = new PersianDate(checkDate.getTime());
+                    bestTime = new PersianDate(nowDate.getTime());
                 }
                 else if (nowDate.dayOfWeek() < dayWeekIndex){
                     nowDate.addDay(dayWeekIndex - nowDate.dayOfWeek());
                     checkTime = nowDate.getTime() - currentTime;
                     if (nowDate.dayOfWeek() == dayWeekIndex && checkTime > 1000 && checkTime < minTime) {
                         minTime = checkTime;
-                        bestTime = new PersianDate(checkDate.getTime());
+                        bestTime = new PersianDate(nowDate.getTime());
                     }
                 }
             }
             if (minTime < Long.MAX_VALUE)
                 isFindNearTime = true;
             else {
-                checkDate.addDay(7 - checkDate.dayOfWeek() + Alarm.indexToDayWeek(repeatModel.getDaysWeek().get(0)));
+                checkDate.addDay(7 - checkDate.dayOfWeek() + Alarm.dayWeekToIndex(repeatModel.getDaysWeek().get(0)));
             }
         }
         return bestTime.getTime();
