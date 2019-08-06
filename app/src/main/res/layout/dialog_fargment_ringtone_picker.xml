@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.fearefull.todoreminder.ui.alarm_manager.picker.ringtone_picker.RingtonePickerViewModel" />
@@ -51,5 +53,13 @@
                 android:onClick="@{() -> viewModel.onCancelClick()}"
                 android:text="@string/cancel"/>
         </RelativeLayout>
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/address_looking_up"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
     </RelativeLayout>
 </layout>

@@ -118,9 +118,9 @@ public class AlarmNotificationActivity extends BaseActivity<ActivityAlarmNotific
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if (viewModel.getAlarm().isVibrate()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createWaveform(AppConstants.VIBRATE_PATTERN, VibrationEffect.DEFAULT_AMPLITUDE));
+                vibrator.vibrate(VibrationEffect.createWaveform(AppConstants.VIBRATE_PATTERN, 0));
             } else {
-                Objects.requireNonNull(vibrator).vibrate(AppConstants.VIBRATE_PATTERN, -1);
+                Objects.requireNonNull(vibrator).vibrate(AppConstants.VIBRATE_PATTERN, 0);
             }
         }
 

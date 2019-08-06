@@ -146,6 +146,7 @@
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:checked="@{viewModel.isVibrateEnabled}"
+                            android:onClick="@{() -> viewModel.onVibrateSwitchClick()}"
                             android:scaleX="-1" />
                     </RelativeLayout>
 

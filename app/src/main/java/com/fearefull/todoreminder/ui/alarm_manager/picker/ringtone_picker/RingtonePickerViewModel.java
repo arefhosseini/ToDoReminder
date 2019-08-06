@@ -26,11 +26,13 @@ public class RingtonePickerViewModel extends BaseViewModel<RingtonePickerNavigat
     }
 
     void init(Alarm alarm) {
+        setIsLoading(true);
         this.alarm = alarm;
         this.ringtone = alarm.getRingtone();
         getCompositeDisposable().add(RingtoneUtils.getRingtoneList(getNavigator().getContext(), alarm.getRingtone())
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
+                .doOnComplete(() -> setIsLoading(false))
                 .subscribe(ringtoneManagerItemLiveData::setValue, Timber::e)
         );
     }

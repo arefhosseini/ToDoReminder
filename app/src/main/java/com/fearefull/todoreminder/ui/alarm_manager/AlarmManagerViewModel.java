@@ -40,6 +40,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     private final MutableLiveData<Integer> currentTabPager;
     private final MutableLiveData<Integer> pageLimitPager;
 
+    private boolean isAlarmChanged = false;
     private boolean shouldUpdateAlarm = false;
     private boolean shouldExit = false;
     private boolean autoUpdateTitleEditText = false;
@@ -86,7 +87,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     }
 
     public void onSaveClick() {
-        if (alarm.getRepeatCount() != defaultRepeatCount || shouldExit) {
+        if (alarm.getRepeatCount() != defaultRepeatCount || isAlarmChanged || shouldExit) {
             if (defaultRepeatCount > 0 && alarm.getRepeatCount() == 0)
                 alarm.setIsEnable(false);
             else
@@ -205,6 +206,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         alarm.setTitleType(titleType);
         updateTitleString(titleType.getText() + " ");
         updateTitleImageRes(titleType.getImageRes());
+        isAlarmChanged = true;
     }
 
     private void updateTitleImageRes(int imageRes) {
@@ -299,12 +301,14 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
     public void onIncreaseSnoozeDelay() {
         alarm.setSnoozeDelay(alarm.getSnoozeDelayMinute() + 1);
         updateSnoozeDelay();
+        isAlarmChanged = true;
     }
 
     public void onDecreaseSnoozeDelay() {
         if (alarm.getSnoozeDelayMinute() > 1) {
             alarm.setSnoozeDelay(alarm.getSnoozeDelayMinute() - 1);
             updateSnoozeDelay();
+            isAlarmChanged = true;
         }
     }
 
@@ -312,6 +316,7 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         if (alarm.getSnoozeType().getValue() <= 9) {
             alarm.forwardSnoozeType();
             updateSnoozeCount();
+            isAlarmChanged = true;
         }
     }
 
@@ -319,12 +324,14 @@ public class AlarmManagerViewModel extends BaseViewModel<AlarmManagerNavigator> 
         if (alarm.getSnoozeType().getValue() >= 1) {
             alarm.backwardSnoozeType();
             updateSnoozeCount();
+            isAlarmChanged = true;
         }
     }
 
     public void onVibrateSwitchClick() {
         alarm.setVibrate(!alarm.isVibrate());
         isVibrateEnabled.set(alarm.isVibrate());
+        isAlarmChanged = true;
     }
 
     public void headerTitleClick() {

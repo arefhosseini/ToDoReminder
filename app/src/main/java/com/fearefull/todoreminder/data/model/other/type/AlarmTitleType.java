@@ -5,7 +5,7 @@ import com.fearefull.todoreminder.R;
 import java.io.Serializable;
 
 public enum AlarmTitleType implements Serializable {
-    CUSTOM(1,"سفارشی", R.drawable.alarm_title_custom),
+    CUSTOM(1,"پیشفرض", R.drawable.alarm_title_custom),
     TO_DO(2, "انجام دادن", R.drawable.alarm_title_to_do),
     BIRTHDAY(3, "تولد", R.drawable.alarm_title_birthday),
     ANNIVERSARY(4, "سالگرد", R.drawable.alarm_title_anniversary),

@@ -112,6 +112,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:checked="@{viewModel.isFullHourTypeEnabled}"
+                        android:onClick="@{() -> viewModel.onFullHourTypeSwitchClick()}"
                         android:scaleX="-1" />
                 </RelativeLayout>
             </LinearLayout>

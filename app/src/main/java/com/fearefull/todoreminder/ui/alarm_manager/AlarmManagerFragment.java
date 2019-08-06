@@ -120,7 +120,6 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
 
         assert getArguments() != null;
         viewModel.setAlarmById(getArguments().getLong(ALARM_KEY));
-        callBack.alarmManagerIsSetUp();
     }
 
     @Override
@@ -185,7 +184,8 @@ public class AlarmManagerFragment extends BaseFragment<FragmentAlarmManagerBindi
         binding.snoozeContent.snoozeExpansionLayout.addListener(expansionLayoutListener);
         binding.otherOptionsContent.otherOptionsExpansionLayout.addListener(expansionLayoutListener);
 
-        new Handler().postDelayed(this::changeExpansionRepeatLayout, 1000L);
+        callBack.alarmManagerIsSetUp();
+        new Handler().postDelayed(this::changeExpansionRepeatLayout, 500L);
     }
 
     @Override

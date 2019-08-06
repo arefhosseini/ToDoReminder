@@ -69,7 +69,7 @@ public class Alarm implements Serializable {
     @ColumnInfo(name = "snooze_delay")
     private Long snoozeDelay;
 
-    @ColumnInfo(name = "isVibrate")
+    @ColumnInfo(name = "is_vibrate")
     private Boolean isVibrate;
 
     @ColumnInfo(name = "minutes")

@@ -25,31 +25,39 @@ public final class RingtoneUtils {
             List<RingtonePickerItem> list = new ArrayList<>();
             Ringtone ringtone;
             RingtonePickerItem ringtonePickerItem;
+            boolean isFindSame = false;
 
             ringtone = new Ringtone();
             ringtonePickerItem = new RingtonePickerItem(ringtone);
-            if (ringtone.isSame(defaultRingtone))
+            if (ringtone.isSame(defaultRingtone)) {
                 ringtonePickerItem.setDefault(true);
+                isFindSame = true;
+            }
             list.add(ringtonePickerItem);
 
             ringtone = new Ringtone(RingtoneType.SILENT, RingtoneType.SILENT.getName(), null);
             ringtonePickerItem = new RingtonePickerItem(ringtone);
-            if (ringtone.isSame(defaultRingtone))
+            if (!isFindSame && ringtone.isSame(defaultRingtone)) {
                 ringtonePickerItem.setDefault(true);
+                isFindSame = true;
+            }
             list.add(ringtonePickerItem);
 
             RingtoneManager ringtoneManager = new RingtoneManager(context);
             ringtoneManager.setType(RingtoneManager.TYPE_ALARM);
             Cursor cursor = ringtoneManager.getCursor();
-            if (cursor.getCount() != 0 && cursor.moveToFirst()) {
-                while(!cursor.isAfterLast() && cursor.moveToNext()) {
+            if (cursor.getCount() != 0) {
+                while(cursor.moveToNext()) {
+                    android.media.Ringtone ringtoneSound = ringtoneManager.getRingtone(cursor.getPosition());
                     ringtone = new Ringtone(
                             RingtoneType.ALARM,
-                            ringtoneManager.getRingtone(cursor.getPosition()).getTitle(context),
+                            ringtoneSound.getTitle(context),
                             ringtoneManager.getRingtoneUri(cursor.getPosition()).toString());
                     ringtonePickerItem = new RingtonePickerItem(ringtone);
-                    if (ringtone.isSame(defaultRingtone))
+                    if (!isFindSame && ringtone.isSame(defaultRingtone)) {
                         ringtonePickerItem.setDefault(true);
+                        isFindSame = true;
+                    }
                     list.add(ringtonePickerItem);
                 }
                 cursor.close();
