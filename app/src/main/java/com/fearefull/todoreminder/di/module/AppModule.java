@@ -29,6 +29,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.adtrace.sdk.AdTraceConfig;
+import io.adtrace.sdk.LogLevel;
 import io.github.inflationx.calligraphy3.CalligraphyConfig;
 
 @Module
@@ -113,5 +115,12 @@ public class AppModule {
     @Provides
     SchedulerProvider provideSchedulerProvider() {
         return new AppSchedulerProvider();
+    }
+
+    @Provides
+    AdTraceConfig provideAdTraceConfig(Context context) {
+        String adtraceToken = AppConstants.ADTRACE_TOKEN;
+        String environment = AdTraceConfig.ENVIRONMENT_SANDBOX;
+        return new AdTraceConfig(context, adtraceToken, environment);
     }
 }

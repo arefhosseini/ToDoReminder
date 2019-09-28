@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
+apply plugin: 'com.google.firebase.firebase-perf'
 
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
@@ -78,6 +79,12 @@ dependencies {
     implementation "com.google.firebase:firebase-core:$rootProject.firebaseVersion"
     implementation "com.google.firebase:firebase-analytics:$rootProject.firebaseVersion"
 
+    // firebase performance
+    implementation "com.google.firebase:firebase-perf:$rootProject.firebasePerformanceVersion"
+
+    // firebase messaging
+    implementation "com.google.firebase:firebase-messaging:$rootProject.firebaseMessagingVersion"
+
     // crashlytic
     implementation "com.crashlytics.sdk.android:crashlytics:$rootProject.crashlyticVersion"
 
@@ -139,5 +146,16 @@ dependencies {
 
     // view model
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycleVersion"
+
+    // install referrer
+    implementation "com.android.installreferrer:installreferrer:$rootProject.installreferrerVersion"
+
+    // adtrace SDK
+//    implementation "io.adtrace:android-sdk:$rootProject.adtraceVersion"
+    implementation project(path: ':adtrace-sdk')
+
+    implementation "com.google.android.gms:play-services-analytics:$rootProject.playServicesVersion"
+
+    implementation "ir.metrix:metrix:$rootProject.metrixVersion"
 }

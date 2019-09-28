@@ -3,6 +3,7 @@ package com.fearefull.todoreminder.ui.main;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -28,6 +29,8 @@ import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.ui.history.HistoryFragment;
 import com.fearefull.todoreminder.ui.home.HomeFragment;
 import com.fearefull.todoreminder.ui.settings.SettingsFragment;
+import com.fearefull.todoreminder.utils.AppConstants;
+import com.fearefull.todoreminder.utils.CommonUtils;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -37,6 +40,8 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
+import io.adtrace.sdk.AdTrace;
+import ir.metrix.sdk.Metrix;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel>
         implements MainNavigator, HasSupportFragmentInjector, AlarmManagerFragment.AlarmManagerCallBack,
@@ -87,6 +92,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
         viewModel.setNavigator(this);
+
+        // reattribution via deep link
+        Intent intent = getIntent();
+        Uri data = intent.getData();
+        Metrix.getInstance().appWillOpenUrl(data);
+        AdTrace.appWillOpenUrl(data, getApplicationContext());
+
         startService(new Intent(this, ScheduleService.class));
         setUp();
     }
@@ -250,6 +262,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     private void showAboutFragment() {
+        // add sample log to firebaseAnalytics
+        CommonUtils.sendAdtraceSampleEvent(AppConstants.ADTRACE_EVENT_TOKEN_SHOW_ABOUT);
+
         lockDrawer();
         getSupportFragmentManager()
                 .beginTransaction()

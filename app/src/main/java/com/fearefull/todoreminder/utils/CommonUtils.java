@@ -9,17 +9,22 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.RingtoneManager;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Patterns;
 
 import com.fearefull.todoreminder.BuildConfig;
 import com.fearefull.todoreminder.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import io.adtrace.sdk.AdTrace;
+import io.adtrace.sdk.AdTraceEvent;
 
 public final class CommonUtils {
 
@@ -102,5 +107,24 @@ public final class CommonUtils {
             list.put(notificationTitle, notificationUri);
         }
         return list;
+    }
+
+    public static void sendFirebaseSampleEvent(Context context) {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "id");
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "name");
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
+        FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    }
+
+    public static void sendAdtraceSampleEvent(String eventToken) {
+        AdTraceEvent event = new AdTraceEvent(eventToken);
+        AdTrace.trackEvent(event);
+    }
+
+    public static void sendAdtraceSampleRevenueEvent(String revenueEventToken) {
+        AdTraceEvent event = new AdTraceEvent(revenueEventToken);
+        event.setRevenue(1, "EUR");
+        AdTrace.trackEvent(event);
     }
 }
