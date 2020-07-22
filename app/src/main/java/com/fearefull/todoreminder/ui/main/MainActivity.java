@@ -263,7 +263,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     private void showAboutFragment() {
         // add sample log to firebaseAnalytics
-        CommonUtils.sendAdtraceSampleEvent(AppConstants.ADTRACE_EVENT_TOKEN_SHOW_ABOUT);
+        CommonUtils.sendAdtraceEvent(AppConstants.ADTRACE_EVENT_TOKEN_SHOW_ABOUT);
 
         lockDrawer();
         getSupportFragmentManager()

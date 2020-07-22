@@ -2,7 +2,6 @@ package com.fearefull.todoreminder.ui.history;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,16 +18,9 @@ import com.fearefull.todoreminder.ui.base.BaseFragment;
 import com.fearefull.todoreminder.ui.base.ViewModelProviderFactory;
 import com.fearefull.todoreminder.ui.main.MainCaller;
 import com.fearefull.todoreminder.utils.CommonUtils;
-import com.google.firebase.iid.FirebaseInstanceId;
-
-import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import timber.log.Timber;
-
-import static com.fearefull.todoreminder.ui.alarm_manager.AlarmManagerFragment.TAG;
 
 public class HistoryFragment extends BaseFragment<FragmentHistoryBinding, HistoryViewModel>
         implements HistoryNavigator, HistoryAdapter.HistoryAdapterListener, MainCaller {
@@ -73,22 +65,6 @@ public class HistoryFragment extends BaseFragment<FragmentHistoryBinding, Histor
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel.setNavigator(this);
-
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Timber.w(task.getException(), TAG, "getInstanceId failed");
-                        return;
-                    }
-
-                    // Get new Instance ID token
-                    String token = Objects.requireNonNull(task.getResult()).getToken();
-
-                    // Log and toast
-                    String msg = getString(R.string.msg_token_fmt, token);
-                    Timber.d(TAG, msg);
-                    Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-                });
     }
 
     @Override

@@ -64,7 +64,7 @@ public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewM
 
     @Override
     public void openCreatorLink() {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://mtyn.ir"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/arefhosseini/ToDoReminder"));
         startActivity(browserIntent);
     }
 }
