@@ -10,8 +10,8 @@ if (keystorePropertiesFile.exists()) {
 }
 
 def versionMajor = 1
-def versionMinor = 0
-def versionPatch = 3
+def versionMinor = 1
+def versionPatch = 0
 
 def versionFinal = "${versionMajor}.${versionMinor}.${versionPatch}"
 
@@ -152,7 +152,7 @@ dependencies {
     implementation "com.android.installreferrer:installreferrer:$rootProject.installreferrerVersion"
 
     // adtrace SDK
-//    implementation "io.adtrace:android-sdk:$rootProject.adtraceVersion"
+    implementation "io.adtrace:android-sdk:$rootProject.adtraceVersion"
 
     implementation "com.google.android.gms:play-services-analytics:$rootProject.playServicesVersion"
 
