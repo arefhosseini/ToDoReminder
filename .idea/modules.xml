@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ToDoReminder.iml" filepath="$PROJECT_DIR$/ToDoReminder.iml" group="ToDoReminder" />
+      <module fileurl="file://$PROJECT_DIR$/adtrace-sdk/adtrace-sdk.iml" filepath="$PROJECT_DIR$/adtrace-sdk/adtrace-sdk.iml" group="ToDoReminder/adtrace-sdk" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="ToDoReminder/app" />
+    </modules>
+  </component>
+</project>
