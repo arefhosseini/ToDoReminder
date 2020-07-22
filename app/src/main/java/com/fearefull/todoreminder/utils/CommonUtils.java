@@ -25,6 +25,7 @@ import java.util.Map;
 
 import io.adtrace.sdk.AdTrace;
 import io.adtrace.sdk.AdTraceEvent;
+import ir.metrix.sdk.Metrix;
 
 public final class CommonUtils {
 
@@ -117,14 +118,12 @@ public final class CommonUtils {
         FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
-    public static void sendAdtraceSampleEvent(String eventToken) {
+    public static void sendAdtraceEvent(String eventToken) {
         AdTraceEvent event = new AdTraceEvent(eventToken);
         AdTrace.trackEvent(event);
     }
 
-    public static void sendAdtraceSampleRevenueEvent(String revenueEventToken) {
-        AdTraceEvent event = new AdTraceEvent(revenueEventToken);
-        event.setRevenue(1, "EUR");
-        AdTrace.trackEvent(event);
+    public  static  void sendMetrixEvent(String eventToken) {
+        Metrix.getInstance().newEvent(eventToken);
     }
 }
