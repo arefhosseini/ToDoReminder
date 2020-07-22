@@ -32,6 +32,7 @@ import dagger.Provides;
 import io.adtrace.sdk.AdTraceConfig;
 import io.adtrace.sdk.LogLevel;
 import io.github.inflationx.calligraphy3.CalligraphyConfig;
+import ir.metrix.sdk.MetrixConfig;
 
 @Module
 public class AppModule {
@@ -122,5 +123,11 @@ public class AppModule {
         String adtraceToken = AppConstants.ADTRACE_TOKEN;
         String environment = AdTraceConfig.ENVIRONMENT_SANDBOX;
         return new AdTraceConfig(context, adtraceToken, environment);
+    }
+
+    @Provides
+    MetrixConfig provideMetrixConfig(Context context) {
+        String metrixToken = AppConstants.METRIX_APP_ID;
+        return new MetrixConfig((Application) context, metrixToken);
     }
 }
