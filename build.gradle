@@ -7,8 +7,8 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
-        classpath 'com.google.gms:google-services:4.2.0'
+        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.google.gms:google-services:4.3.3'
         classpath 'io.fabric.tools:gradle:1.31.0'
         classpath 'com.google.firebase:perf-plugin:1.3.1'
     }
@@ -130,11 +130,11 @@ ext {
 
     // adtrace SDK
     // source: https://github.com/adtrace/adtrace_sdk_android
-    adtraceVersion = '1.0.0'
+    adtraceVersion = '1.0.3'
 
     // metrix SDK
     // https://metrix.ir/docs/sdk/android/
-    metrixVersion = '0.11.0'
+    metrixVersion = '0.15.5'
 
     // google play services
     playServicesVersion = '17.0.0'
