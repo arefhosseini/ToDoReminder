@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">یادآور</string>
+    <string name="english_app_name">Reminder</string>
     <string name="login_dummy">ورود</string>
     <string name="username">نام کاربری</string>
     <string name="password">رمزعبور</string>
