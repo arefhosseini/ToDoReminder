@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Android-ToDoReminder.iml" filepath="$PROJECT_DIR$/.idea/modules/Android-ToDoReminder.iml" group="ToDoReminder" />
       <module fileurl="file://$PROJECT_DIR$/ToDoReminder.iml" filepath="$PROJECT_DIR$/ToDoReminder.iml" group="ToDoReminder" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ToDoReminder-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ToDoReminder-app.iml" group="ToDoReminder/app" />
       <module fileurl="file://$PROJECT_DIR$/adtrace-sdk/adtrace-sdk.iml" filepath="$PROJECT_DIR$/adtrace-sdk/adtrace-sdk.iml" group="ToDoReminder/adtrace-sdk" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="ToDoReminder/app" />
     </modules>

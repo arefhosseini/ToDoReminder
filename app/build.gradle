@@ -153,7 +153,6 @@ dependencies {
 
     // adtrace SDK
 //    implementation "io.adtrace:android-sdk:$rootProject.adtraceVersion"
-    implementation project(path: ':adtrace-sdk')
 
     implementation "com.google.android.gms:play-services-analytics:$rootProject.playServicesVersion"
 
