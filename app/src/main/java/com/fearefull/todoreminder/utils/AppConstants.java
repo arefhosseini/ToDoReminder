@@ -6,10 +6,11 @@ public final class AppConstants {
     public static final String PREF_NAME = "to_do_reminder_pref";
     public static final String TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
     public static final String ADTRACE_TOKEN = "h7aw4gqv1e4p";
-    public static final String METRIX_APP_ID = "ntagnssijwpjivd";
+    public static final String METRIX_APP_ID = "pavmyypdgwnacgf";
     public static final String ADTRACE_EVENT_TOKEN_INIT1 = "pdoau6";
     public static final String ADTRACE_EVENT_TOKEN_INIT2 = "c1ezai";
     public static final String ADTRACE_EVENT_TOKEN_SHOW_ABOUT = "n8nzkf";
+    public static final String METRIX_EVENT_TOKEN_SAMPLE = "vxopf";
 
     public static final int START_YEAR = 1397;
     public static final int END_YEAR = 1450;
